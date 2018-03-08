@@ -17,7 +17,10 @@
     "lint": "eslint *.js model/"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "setupFiles": [
+      "./test/jest-setup.js"
+    ]
   },
   "dependencies": {
     "eslint": "^4.18.2",
@@ -29,6 +32,7 @@
     "query-string": "5.1.0",
     "react": "16.2.0",
     "react-native": "0.52.0",
-    "react-navigation": "^1.0.3"
+    "react-navigation": "^1.0.3",
+    "xhr2": "^0.1.3"
   }
 }

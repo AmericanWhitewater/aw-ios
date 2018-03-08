@@ -35,15 +35,26 @@ module.exports.getFlowGraphUrl = getFlowGraphUrl
 
 
 async function getReachesBySearch(searchText) {
-    const searchResponses = await _fetchJson(BASE_URL + SEARCH_ENDPOINT)
+    const url = urlWithParams(BASE_URL + SEARCH_ENDPOINT, {
+        river: searchText
+    })
     
+    const searchResponses = await _fetchJson(url)
     const results = _parseReachSearchResults(searchResponses)
     
     return results
 }
 
 async function getReachesByGeo(bounds) {
+    const boundsString = [bounds.sw.lng, bounds.sw.lat, bounds.ne.lng, bounds.ne.lat].join()
+    const url = urlWithParams(BASE_URL + GEO_SEARCH_ENDPOINT, {
+        BBOX: boundsString
+    })
     
+    const searchResponses = await _fetchJson(url)
+    const results = _parseReachSearchResults(searchResponses)
+    
+    return results
 }
 
 async function getReachesByFilter(filter) {
