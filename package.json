@@ -13,12 +13,16 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "test": "node node_modules/jest/bin/jest.js"
+    "test": "node node_modules/jest/bin/jest.js",
+    "lint": "eslint *.js model/"
   },
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
+    "eslint": "^4.18.2",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-react-native": "^3.2.1",
     "expo": "^25.0.0",
     "lodash": "4.17.5",
     "moment": "2.21.0",
