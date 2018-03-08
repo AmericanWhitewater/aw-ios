@@ -6,7 +6,7 @@ const awApi = require('./model/api/awApi')
 export default class App extends React.Component {
   render() {
       
-      awApi.getReachesBySearch('')
+      awApi.getReach('10386')
       .then(function(results){
           console.log(results)
       })
