@@ -54,6 +54,7 @@ async function getReachesBySearch(searchText) {
 
 async function getReachesByGeo(bounds) {
     const boundsString = [bounds.sw.lng, bounds.sw.lat, bounds.ne.lng, bounds.ne.lat].join()
+    
     const url = _urlWithParams(BASE_URL + GEO_SEARCH_ENDPOINT, {
         BBOX: boundsString
     })
@@ -70,7 +71,9 @@ async function getReachesByFilter(filter) {
         const point = turf.point([latLng.lat, latLng.lng])
         const buffered = turf.buffer(point, filter.radius, 'miles');
         const bbox = turf.bbox(buffered);
-        return await getReachesByGeo(bbox)
+        
+        
+        return await getReachesByGeo(_latLngBounds(bbox))
     }
     
     const params = {
@@ -158,6 +161,19 @@ async function getFlowGraphUrl(gage) {
 
 function getPhotoUrl(photoId) {
     return PHOTO_BASE_URL + photoId + '.jpg'
+}
+
+function _latLngBounds(bbox) {
+    return {
+        sw: {
+            lat: bbox[0],
+            lng: bbox[1]
+        },
+        ne: {
+            lat: bbox[2],
+            lng: bbox[3]
+        }
+    }
 }
 
 // Returns a latLng object

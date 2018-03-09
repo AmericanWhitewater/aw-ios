@@ -16,7 +16,13 @@ describe('awApi', function() {
         console.log(result)
     })
     
-    it.skip('should get reaches by geo', async function() {
+    it('should get reaches by geo', async function() {
+        // const latLngBounds = [ 
+        //     -72.63562390909091,
+        //     43.31350409090909,
+        //     -71.9121920909091,
+        //     44.036935909090914
+        // ]
         const latLngBounds = {
             sw: {
                 lat: 43.513041,
@@ -67,7 +73,7 @@ describe('awApi', function() {
     })
     
     const turf = require('turf')
-    it('should turf', function() {
+    it.skip('should turf', function() {
         var point = turf.point([43.675220, -72.273908])
         var buffered = turf.buffer(point, 25, 'miles');
         var bbox = turf.bbox(buffered);
