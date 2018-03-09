@@ -12,6 +12,7 @@ it('renders without crashing', () => {
 describe('awApi', function() {
     it.skip('should get reaches by search', async function() {
         const result = await awApi.getReachesBySearch('tuolumne')
+        
         console.log(result)
     })
     
@@ -28,6 +29,40 @@ describe('awApi', function() {
         }
         
         const result = await awApi.getReachesByGeo(latLngBounds)
+        
+        console.log(result)
+    })
+    
+    it('should get reaches by filter', async function() {
+        
+    })
+    
+    it.skip('should get a list of reaches', async function() {
+        const reachIds = ['10386', '3242']
+        const result = await awApi.getReachList(reachIds)
+        
+        console.log(result)
+    })
+    
+    it.skip('should get a reach', async function() {
+        const reachId = '3242'
+        const result = await awApi.getReach(reachId)
+        
+        console.log(result)
+    })
+    
+    it.skip('should get reaches for a gage', async function() {
+        const gage = {
+            id: '68'
+        }
+        const result = await awApi.getGageReaches(gage)
+        
+        console.log(result)
+    })
+    
+    it('should get articles list', async function() {
+        const result = await awApi.getArticlesList()
+        
         console.log(result)
     })
 })

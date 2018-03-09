@@ -3,12 +3,14 @@
 const _ = require('lodash')
 const queryString = require('query-string')
 
-
+// Urls
 const BASE_URL = 'https://www.americanwhitewater.org/content/'
 
 const PHOTO_BASE_URL = 'https://www.americanwhitewater.org/photos/archive/'
 const ARTICLE_PHOTO_BASE_URL = 'https://www.americanwhitewater.org/resources/images/abstract/'
-const FLOW_GRAPH_URL = 'https://www.americanwhitewater.org/content/Gauge2/graph/id/%s/metric/%d/.raw'
+function flowGraphUrl(gageId, metricId) {
+     return `https://www.americanwhitewater.org/content/Gauge2/graph/id/${gageId}/metric/${metricId}/.raw`
+}
 
 const SEARCH_ENDPOINT = 'River/search/.json'
 const GEO_SEARCH_ENDPOINT = 'River/geo-summary/.json'
@@ -30,12 +32,13 @@ module.exports.getReachList = getReachList
 module.exports.getReach = getReach
 module.exports.getGageReaches = getGageReaches
 module.exports.getArticlesList = getArticlesList
+module.exports.getPhotoUrl = getPhotoUrl
 module.exports.getArticlePhotoUrl = getArticlePhotoUrl
 module.exports.getFlowGraphUrl = getFlowGraphUrl
 
 
 async function getReachesBySearch(searchText) {
-    const url = urlWithParams(BASE_URL + SEARCH_ENDPOINT, {
+    const url = _urlWithParams(BASE_URL + SEARCH_ENDPOINT, {
         river: searchText
     })
     
@@ -47,7 +50,7 @@ async function getReachesBySearch(searchText) {
 
 async function getReachesByGeo(bounds) {
     const boundsString = [bounds.sw.lng, bounds.sw.lat, bounds.ne.lng, bounds.ne.lat].join()
-    const url = urlWithParams(BASE_URL + GEO_SEARCH_ENDPOINT, {
+    const url = _urlWithParams(BASE_URL + GEO_SEARCH_ENDPOINT, {
         BBOX: boundsString
     })
     
@@ -65,7 +68,7 @@ async function getReachesByFilter(filter) {
 * @param {Array} reachIds
 */
 async function getReachList(reachIds) {
-    const url = BASE_URL + getReachListEndpoint(reachIds.join())
+    const url = BASE_URL + getReachListEndpoint(reachIds.join(':'))
     const responses = await _fetchJson(url)
     
     return _parseReachSearchResults(responses)
@@ -74,10 +77,12 @@ async function getReachList(reachIds) {
 async function getReach(reachId) {
     const url = BASE_URL + getReachDetailEndpoint(reachId)
     const response = await _fetchJson(url)
-    
     const reachDetailResponse = response.CContainerViewJSON_view.CRiverMainGadgetJSON_main.info
     
-    const name = response.altname ? response.altname : response.section
+    const name = reachDetailResponse.altname ? reachDetailResponse.altname : reachDetailResponse.section
+    const putinLatLng = _parseLatLng(reachDetailResponse.plat, reachDetailResponse.plon)
+    const takeoutLatLng = _parseLatLng(reachDetailResponse.tlat, reachDetailResponse.tlon)
+    
     return {
         id: reachDetailResponse.id,
         name: name,
@@ -88,8 +93,8 @@ async function getReach(reachId) {
         difficulty: reachDetailResponse.class,
         avgGradient: reachDetailResponse.avggradient,
         maxGradient: reachDetailResponse.maxgradient,
-        // putinLatLng: reachDetailResponse.putinLatLng,
-        // takeoutLatLng: reachDetailResponse.takeoutLatLng,
+        putinLatLng: putinLatLng,
+        takeoutLatLng: takeoutLatLng,
         description: reachDetailResponse.description,
         shuttleDetails: reachDetailResponse.shuttledetails,
         // gages: reachDetailResponse,
@@ -98,24 +103,48 @@ async function getReach(reachId) {
 }
 
 async function getGageReaches(gage) {
+    const url = BASE_URL + getGageDetailEndpoint(gage.id)
+    const response = await _fetchJson(url)
+    const reachSearchResponses = response.riverinfo
     
+    return _parseReachSearchResults(reachSearchResponses)
 }
 
 async function getArticlesList() {
+    const response = await _fetchJson(BASE_URL + ARTICLE_LIST_ENDPOINT)
+    const articleResponses = response.articles.CArticleGadgetJSON_view_list
     
+    return articleResponses
 }
 
-async function getArticlePhotoUrl() {
-    
+async function getArticlePhotoUrl(articleId, abstractPhotoNumber) {
+    return ARTICLE_PHOTO_BASE_URL + articleId + "-" + abstractPhotoNumber + ".jpg"
 }
 
 async function getFlowGraphUrl(gage) {
-    
+    if (!gage.awGageMetricId) {
+        return ""
+    } else {
+        return flowGraphUrl(gage.id, gage.awGageMetricId)
+    }
+}
+
+function getPhotoUrl(photoId) {
+    return PHOTO_BASE_URL + photoId + '.jpg'
+}
+
+// Returns a latLng object
+function _parseLatLng(lat, lng) {
+    return  {
+        lat: lat, 
+        lng: lng
+    }
 }
 
 function _parseReachSearchResults(reachSearchResponses) {
     return _.map(reachSearchResponses, function(response) {
         const name = response.altname ? response.altname : response.section
+        const putinLatLng = _parseLatLng(response.plat, response.plon)
         return {
             id: response.id,
             name: name,
@@ -123,12 +152,12 @@ function _parseReachSearchResults(reachSearchResponses) {
             difficulty: response.class,
             lastGageReading: response.reading_formatted,
             // TODO flowLevel: ,
-            // putInLatLng: 
+            putInLatLng: putinLatLng
         }
     })
 }
 
-function urlWithParams(url, params) {
+function _urlWithParams(url, params) {
     return url + '?' + queryString.stringify(params)
 }
 
