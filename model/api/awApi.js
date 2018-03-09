@@ -4,6 +4,7 @@ const _ = require('lodash')
 const queryString = require('query-string')
 
 const FlowLevel = require('../FlowLevel')
+const Gage = require('../Gage')
 
 // Urls
 const BASE_URL = 'https://www.americanwhitewater.org/content/'
@@ -97,10 +98,14 @@ async function getReach(reachId) {
     const url = BASE_URL + getReachDetailEndpoint(reachId)
     const response = await _fetchJson(url)
     const reachDetailResponse = response.CContainerViewJSON_view.CRiverMainGadgetJSON_main.info
+    const gageResponses = response.CContainerViewJSON_view.CRiverMainGadgetJSON_main.guagesummary.gauges
+    const rapids = response.CContainerViewJSON_view['CRiverRapidsGadgetJSON_view-rapids'].rapids
     
     const name = reachDetailResponse.altname ? reachDetailResponse.altname : reachDetailResponse.section
     const putinLatLng = _parseLatLng(reachDetailResponse.plat, reachDetailResponse.plon)
     const takeoutLatLng = _parseLatLng(reachDetailResponse.tlat, reachDetailResponse.tlon)
+    
+    const gages = _.map(gageResponses, response => Gage.fromResponse(response))
     
     return {
         id: reachDetailResponse.id,
@@ -116,9 +121,8 @@ async function getReach(reachId) {
         takeoutLatLng: takeoutLatLng,
         description: reachDetailResponse.description,
         shuttleDetails: reachDetailResponse.shuttledetails,
-        // TODO
-        // gages: reachDetailResponse,
-        // rapids: reachDetailResponse,
+        gages: gages,
+        rapids: rapids,
     }
 }
 

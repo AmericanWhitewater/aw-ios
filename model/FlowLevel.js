@@ -36,5 +36,20 @@ function fromAWApiCondField(cond) {
     }
 }
 
+function fromAWApiRCField(rc) {
+        if (rc == null) {
+            return FlowLevel.NoInfo;
+        }
+
+        if (rc < 0) {
+            return FlowLevel.Low;
+        } else if (rc > 1) {
+            return FlowLevel.High;
+        } else {
+            return FlowLevel.Runnable;
+        }
+    }
+
 module.exports = FlowLevel
 module.exports.fromAWApiCondField = fromAWApiCondField
+module.exports.fromAWApiRCField = fromAWApiRCField

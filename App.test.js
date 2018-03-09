@@ -44,8 +44,8 @@ describe('awApi', function() {
         console.log(result)
     })
     
-    it.skip('should get a reach', async function() {
-        const reachId = '3242'
+    it('should get a reach', async function() {
+        const reachId = '1074'
         const result = await awApi.getReach(reachId)
         
         console.log(result)
@@ -60,7 +60,7 @@ describe('awApi', function() {
         console.log(result)
     })
     
-    it('should get articles list', async function() {
+    it.skip('should get articles list', async function() {
         const result = await awApi.getArticlesList()
         
         console.log(result)
