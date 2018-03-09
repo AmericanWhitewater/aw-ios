@@ -3,6 +3,8 @@
 const _ = require('lodash')
 const queryString = require('query-string')
 
+const FlowLevel = require('../FlowLevel')
+
 // Urls
 const BASE_URL = 'https://www.americanwhitewater.org/content/'
 
@@ -61,7 +63,24 @@ async function getReachesByGeo(bounds) {
 }
 
 async function getReachesByFilter(filter) {
+    if (filter.hasRadius() && filter.hasCurrentLocation()) {
+        // TODO calculate bounds from latlng/center
+        // const bounds
+        // return await getReachesByGeo(bounds)
+    }
     
+    const params = {
+        state: filter.regions.join(':'),
+        level: filter.flowLevel.apiQueryCode,
+        atleast: filter.difficultyLowerBound.title,
+        atmost: filter.difficultyUpperBound.title,
+    }
+    
+    const url = _urlWithParams(BASE_URL + SEARCH_ENDPOINT, params)
+    const searchResponses = await _fetchJson(url)
+    const results = _parseReachSearchResults(searchResponses)
+    
+    return results
 }
 
 /**
@@ -97,6 +116,7 @@ async function getReach(reachId) {
         takeoutLatLng: takeoutLatLng,
         description: reachDetailResponse.description,
         shuttleDetails: reachDetailResponse.shuttledetails,
+        // TODO
         // gages: reachDetailResponse,
         // rapids: reachDetailResponse,
     }
@@ -151,7 +171,7 @@ function _parseReachSearchResults(reachSearchResponses) {
             river: response.river,
             difficulty: response.class,
             lastGageReading: response.reading_formatted,
-            // TODO flowLevel: ,
+            flowLevel: FlowLevel.fromAWApiCondField(response.cond),
             putInLatLng: putinLatLng
         }
     })
