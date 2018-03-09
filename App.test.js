@@ -44,7 +44,7 @@ describe('awApi', function() {
         console.log(result)
     })
     
-    it('should get a reach', async function() {
+    it.skip('should get a reach', async function() {
         const reachId = '1074'
         const result = await awApi.getReach(reachId)
         
@@ -64,5 +64,14 @@ describe('awApi', function() {
         const result = await awApi.getArticlesList()
         
         console.log(result)
+    })
+    
+    const turf = require('turf')
+    it('should turf', function() {
+        var point = turf.point([43.675220, -72.273908])
+        var buffered = turf.buffer(point, 25, 'miles');
+        var bbox = turf.bbox(buffered);
+        
+        console.log(bbox)
     })
 })

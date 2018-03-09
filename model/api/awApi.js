@@ -2,6 +2,7 @@
 
 const _ = require('lodash')
 const queryString = require('query-string')
+const turf = require('turf')
 
 const FlowLevel = require('../FlowLevel')
 const Gage = require('../Gage')
@@ -65,9 +66,11 @@ async function getReachesByGeo(bounds) {
 
 async function getReachesByFilter(filter) {
     if (filter.hasRadius() && filter.hasCurrentLocation()) {
-        // TODO calculate bounds from latlng/center
-        // const bounds
-        // return await getReachesByGeo(bounds)
+        const latLng = filter.currentLocation
+        const point = turf.point([latLng.lat, latLng.lng])
+        const buffered = turf.buffer(point, filter.radius, 'miles');
+        const bbox = turf.bbox(buffered);
+        return await getReachesByGeo(bbox)
     }
     
     const params = {
