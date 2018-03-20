@@ -59,8 +59,12 @@ def get_value(attrib_name, value):
             return 'row'
         else:
             return 'column'
-            
-    return value
+    
+    if '@color/' in value:
+        color = 'color.' + value.replace('@color/', '')
+        return color
+    
+    return value.replace('@color/', '')
 
 # Does basic parsing and formatting
 def get_style_from_attribs(element, dict):
@@ -127,7 +131,7 @@ def attribs_out(styles_dict):
         f.write(style_name + ': {\n')
         
         for name, value in attribs_dict.items():
-            if (name == 'flex'):
+            if (name == 'flex' or 'color' in value):
                 f.write('    ' + name + ': ' + value + ',\n')
             else:
                 f.write('    ' + name + ': \'' + value + '\',\n')
