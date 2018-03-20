@@ -20,7 +20,7 @@ print(root.attrib)
 styles = {}
 counter = 1
 
-opening_tag_style_template = Template('<$tag styles={styles.$styles_name}')
+opening_tag_style_template = Template('<$tag style={styles.$styles_name}')
 opening_tag_template = Template('<$tag')
 closing_tag_template = Template('</$tag>\n')
 
@@ -51,6 +51,7 @@ def get_attrib_name(attrib_name):
         'ellipsize': 'ellipsizeMode',
         'textColor': 'color',
         'textSize': 'fontSize',
+        'srcCompat': 'source',
     }.get(raw, raw)
     
 def get_value(attrib_name, value):
@@ -66,8 +67,11 @@ def get_value(attrib_name, value):
     if '@color/' in value:
         color = 'color.' + value.replace('@color/', '')
         return color
+        
+    if attrib_name == 'fontSize':
+        return value.replace('sp', '')
     
-    return value.replace('@color/', '')
+    return value.replace('dp', '')
 
 # Does basic parsing and formatting
 def get_style_from_attribs(element, dict):
@@ -136,21 +140,23 @@ def attribs_out(styles_dict):
         for name, value in attribs_dict.items():
             output = ''
             
-            if (should_comment_out(name)):
+            if (should_comment_out(name, value)):
                 output = '// '
                 
-            if (name == 'flex' or 'color' in value):
+            if (name in ('flex', 'fontSize', 'height', 'width', 'marginLeft', 'marginRight') or 'color' in value):
                 f.write(output + '    ' + name + ': ' + value + ',\n')
             else:
                 f.write(output + '    ' + name + ': \'' + value + '\',\n')
             
         f.write('},\n')
         
-def should_comment_out(attrib):
-    return attrib in ('style', 'gravity', 'layout_gravity')
+def should_comment_out(attrib, value):
+    if attrib in ('style', 'gravity', 'layout_gravity', 'visibility', 'source'):
+        return True
+    
+    return value in ('match_parent', 'wrap_content')
     
 with open(out_file, 'w') as f:
-    f.write('hello')
     tags_out(root, f, 0)
     f.write('\n')
     attribs_out(styles)
