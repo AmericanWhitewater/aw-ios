@@ -25,18 +25,16 @@ opening_tag_template = Template('<$tag')
 closing_tag_template = Template('</$tag>\n')
 
 def get_tag(tag_name):
-    if tag_name == 'LinearLayout':
-        return 'View'
-    if tag_name == 'TextView':
-        return 'Text'
-    if tag_name == 'ImageView':
-        return 'Image'
-    return tag_name
+    return {
+        'LinearLayout': 'View',
+        'TextView': 'Text',
+        'ImageView': 'Image'
+    }.get(tag_name, tag_name)
 
 # Manual required for ellipsize, alpha
 def get_attrib_name(attrib_name):
     # Remove xml namespace that's in curly brackets
-    raw = re.sub('{.*?}', '', attrib_name) 
+    rawTag = re.sub('{.*?}', '', attrib_name) 
     # Replace or return the tag
     return {
         'orientation': 'flexDirection',
@@ -52,7 +50,9 @@ def get_attrib_name(attrib_name):
         'textColor': 'color',
         'textSize': 'fontSize',
         'srcCompat': 'source',
-    }.get(raw, raw)
+        'alpha': 'opacity',
+        'background': 'backgroundColor'
+    }.get(rawTag, rawTag)
     
 def get_value(attrib_name, value):
     if (attrib_name == 'id'):
@@ -143,15 +143,41 @@ def attribs_out(styles_dict):
             if (should_comment_out(name, value)):
                 output = '// '
                 
-            if (name in ('flex', 'fontSize', 'height', 'width', 'marginLeft', 'marginRight') or 'color' in value):
-                f.write(output + '    ' + name + ': ' + value + ',\n')
-            else:
+            if (should_quote_value(name, value)):
                 f.write(output + '    ' + name + ': \'' + value + '\',\n')
+            else:
+                f.write(output + '    ' + name + ': ' + value + ',\n')
             
         f.write('},\n')
         
+def should_quote_value(attrib, value):
+    dont_quote_tags = [
+        'flex', 
+        'fontSize', 
+        'height', 
+        'width', 
+        'marginLeft', 
+        'marginRight',
+        'marginTop',
+        'marginBottom',
+        'opacity',
+    ]
+    
+    return not (attrib in (dont_quote_tags) or 'color' in value)
+        
 def should_comment_out(attrib, value):
-    if attrib in ('style', 'gravity', 'layout_gravity', 'visibility', 'source'):
+    comment_out_tags = [
+        'style', 
+        'gravity', 
+        'layout_gravity', 
+        'visibility', 
+        'source', 
+        'scaleType',
+        'ellipsizeMode',
+        'numberOfLines',
+    ]
+    
+    if attrib in (comment_out_tags):
         return True
     
     return value in ('match_parent', 'wrap_content')
