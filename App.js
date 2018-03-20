@@ -8,9 +8,9 @@ export default class App extends React.Component {
   render() {
           
     return (
-        // <View style={styles.container}>
-            <FilterRegionCell/>
-        // </View>
+        <View style={styles.container}>
+            <FilterRegionCell letter='A' title='hello'/>
+        </View>
     )
   }
 }
@@ -18,7 +18,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     //     width: match_parent,
         height: 56,
         flexDirection: 'row',
+        alignItems: 'center'
     },
     letter: {
         width: 24,
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     //     height: match_parent,
         marginLeft: 32,
         flex: 1,
-    //     gravity: 'center_vertical',
+        textAlign: 'left',
         color: color.font_black,
         fontSize: 16,
     },
