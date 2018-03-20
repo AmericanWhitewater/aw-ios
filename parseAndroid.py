@@ -48,6 +48,9 @@ def get_attrib_name(attrib_name):
         'layout_marginTop': 'marginTop',
         'layout_marginBottom': 'marginBottom',
         'maxLines': 'numberOfLines',
+        'ellipsize': 'ellipsizeMode',
+        'textColor': 'color',
+        'textSize': 'fontSize',
     }.get(raw, raw)
     
 def get_value(attrib_name, value):
@@ -131,17 +134,25 @@ def attribs_out(styles_dict):
         f.write(style_name + ': {\n')
         
         for name, value in attribs_dict.items():
+            output = ''
+            
+            if (should_comment_out(name)):
+                output = '// '
+                
             if (name == 'flex' or 'color' in value):
-                f.write('    ' + name + ': ' + value + ',\n')
+                f.write(output + '    ' + name + ': ' + value + ',\n')
             else:
-                f.write('    ' + name + ': \'' + value + '\',\n')
+                f.write(output + '    ' + name + ': \'' + value + '\',\n')
             
         f.write('},\n')
+        
+def should_comment_out(attrib):
+    return attrib in ('style', 'gravity', 'layout_gravity')
     
 with open(out_file, 'w') as f:
+    f.write('hello')
     tags_out(root, f, 0)
     f.write('\n')
-    print(styles)
     attribs_out(styles)
     
     
