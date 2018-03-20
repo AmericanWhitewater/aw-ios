@@ -1,6 +1,9 @@
 import xml.etree.ElementTree as ET
 import re
 import sys
+import string
+import random
+random.seed(0)
 from string import Template
 
 # Run this script like python3 parseAndroid.py ~/dev/AmericanWhitewaterAndroid/app/src/main/res/layout/cell_run.xml
@@ -15,9 +18,9 @@ print(root)
 print(root.attrib)
 
 styles = {}
-counter = 0
+counter = 1
 
-opening_tag_style_template = Template('<$tag styles={style.$styles_name}')
+opening_tag_style_template = Template('<$tag styles={styles.$styles_name}')
 opening_tag_template = Template('<$tag')
 closing_tag_template = Template('</$tag>\n')
 
@@ -30,33 +33,61 @@ def get_tag(tag_name):
         return 'Image'
     return tag_name
 
+# Manual required for ellipsize, alpha
 def get_attrib_name(attrib_name):
     # Remove xml namespace that's in curly brackets
     raw = re.sub('{.*?}', '', attrib_name) 
     # Replace or return the tag
     return {
+        'orientation': 'flexDirection',
         'layout_width': 'width',
         'layout_height': 'height',
-        # 'layout_weight': ''
+        'layout_weight': 'flex',
+        'layout_marginRight': 'marginRight',
+        'layout_marginLeft': 'marginLeft',
+        'layout_marginTop': 'marginTop',
+        'layout_marginBottom': 'marginBottom',
+        'maxLines': 'numberOfLines',
     }.get(raw, raw)
+    
+def get_value(attrib_name, value):
+    if (attrib_name == 'id'):
+        return value.replace('@+id/', '')
+        
+    if (attrib_name == 'flexDirection'):
+        if (value == 'horizontal'):
+            return 'row'
+        else:
+            return 'column'
+            
+    return value
 
 # Does basic parsing and formatting
 def get_style_from_attribs(element, dict):
     newAttribs = {}
+    
+    # Transform the attribute name and value to react
     for name, value in element.items():
         newAttribName = get_attrib_name(name)
         if (len(newAttribName) > 0):
-            # Delete id mumbo jumbo
-            newValue = value.replace('@+id/', '')
-            newAttribs[newAttribName] = newValue
+            newAttribs[newAttribName] = get_value(newAttribName, value)
     
-    # The counter is ugly but it guarantees uniqueness
-    global counter
-    style_name = newAttribs.get('id', str(counter))
-    counter += 1
+    style_name = get_style_name(newAttribs)
+    
+    newAttribs.pop('id', None)
     dict[style_name] = newAttribs
     
     return style_name
+    
+# Uses the id or a random string 
+def get_style_name(attribs):
+    # The counter is ugly but it guarantees uniqueness
+    global counter
+    randomString = ''.join(random.choices(string.ascii_uppercase, k=counter))
+    counter += 1
+    
+    return attribs.get('id', randomString)
+    
     
 def write_with_indent(f, str, indent):
     indentationStr = ' ' * indent
@@ -96,7 +127,10 @@ def attribs_out(styles_dict):
         f.write(style_name + ': {\n')
         
         for name, value in attribs_dict.items():
-            f.write('    ' + name + ': \'' + value + '\',\n')
+            if (name == 'flex'):
+                f.write('    ' + name + ': ' + value + ',\n')
+            else:
+                f.write('    ' + name + ': \'' + value + '\',\n')
             
         f.write('},\n')
     
