@@ -1,12 +1,26 @@
 'use strict'
 import React from 'react'
-import { StyleSheet, FlatList } from 'react-native'
+import { StyleSheet, FlatList, NavigatorIOS } from 'react-native'
 
 const ReachSearchCell = require('./reachSearchCell')
 
 const color = require('./resources/color')
 
 module.exports = class RunsListView extends React.Component {
+    render() {
+        return (
+            <NavigatorIOS
+                initialRoute={{
+                    component: RunList,
+                    title: "American Whitewater",
+                    passProps: {reaches: this.props.reaches}
+                }}
+                style={styles.navigator} />
+        )
+    }
+}
+
+class RunList extends React.Component {
     render() {
         return (
             <FlatList
@@ -23,5 +37,8 @@ const styles = StyleSheet.create({
     reachList: {
         flex: 1,
         backgroundColor: color.background
+    },
+    navigator: {
+        flex: 1
     }
 })
