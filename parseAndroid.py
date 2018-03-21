@@ -27,6 +27,7 @@ closing_tag_template = Template('</$tag>\n')
 def get_tag(tag_name):
     return {
         'LinearLayout': 'View',
+        'RelativeLayout': 'View',
         'TextView': 'Text',
         'ImageView': 'Image'
     }.get(tag_name, tag_name)

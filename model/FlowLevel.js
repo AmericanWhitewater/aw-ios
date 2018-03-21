@@ -1,25 +1,27 @@
 'use strict'
 
+const color = require('../view/resources/color')
+
 const FlowLevel = {
     Low: {
         apiQueryCode: "low",
-        colorCode: 'R.color.status_yellow'
+        colorCode: color.status_yellow
     },
     Runnable: {
         apiQueryCode: "run",
-        colorCode: 'R.color.status_green'
+        colorCode: color.status_green
     },
     High: {
         apiQueryCode: "hig",
-        colorCode: 'R.color.status_red'
+        colorCode: color.status_red
     },
     Frozen: {
         apiQueryCode: null,
-        colorCode: 'R.color.status_blue'
+        colorCode: color.status_blue
     },
     NoInfo: {
         apiQueryCode: null,
-        colorCode: 'R.color.status_grey'
+        colorCode: color.status_grey
     },
 }
 

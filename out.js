@@ -1,96 +1,95 @@
 <View style={styles.V}>
-    <View style={styles.cell_run_highlight}/>
-    <View style={styles.GNK}>
-        <Text style={styles.cell_run_title}/>
-        <Text style={styles.cell_run_detail}/>
-        <Text style={styles.cell_run_level}/>
-        <View style={styles.SXRMCLP}/>
-        <View style={styles.XZMWGUOA}/>
-    </View>
-    <View style={styles.SKVRAMWGI}>
-        <Text style={styles.cell_run_length}/>
-        <View style={styles.YCOSOVOZPPL}/>
-        <Image style={styles.cell_run_favorite}/>
-        <View style={styles.YVXYOKSHVWXPY}/>
+    <Text style={styles.view_run_last_updated_text}/>
+    <android.support.v4.widget.SwipeRefreshLayout style={styles.swipeContainer}>
+        <android.support.v7.widget.RecyclerView style={styles.view_run_list}/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <Text style={styles.view_run_no_results_text}/>
+    <Text style={styles.view_run_go_to_filter}/>
+    <View style={styles.view_run_runnable_layout}>
+        <Text style={styles.XZMWGUOA}/>
+        <android.support.v4.widget.Space style={styles.SKVRAMWGI}/>
+        <Switch style={styles.view_run_show_runnable}/>
     </View>
 </View>
 
 V: {
 //     width: match_parent,
-    height: 100,
-    flexDirection: 'row',
-},
-cell_run_highlight: {
-    width: 8,
 //     height: match_parent,
-},
-GNK: {
-    width: 0,
-//     height: match_parent,
-    marginLeft: 14,
-    flex: 1,
+    backgroundColor: color.white,
     flexDirection: 'column',
 },
-cell_run_title: {
+view_run_last_updated_text: {
+//     style: '@style/Text2',
+//     width: match_parent,
+//     height: wrap_content,
+    layout_alignParentLeft: 'true',
+    layout_alignParentTop: 'true',
+    backgroundColor: color.background,
+//     gravity: 'center_horizontal',
+    padding: '12',
+},
+swipeContainer: {
+//     width: match_parent,
+//     height: match_parent,
+    layout_alignParentLeft: 'true',
+    layout_below: '@id/view_run_last_updated_text',
+},
+view_run_list: {
+//     width: match_parent,
+//     height: match_parent,
+},
+view_run_no_results_text: {
 //     style: '@style/Headline1',
 //     width: match_parent,
 //     height: wrap_content,
-    marginTop: 16,
+    layout_alignParentLeft: 'true',
+    layout_below: '@id/view_run_last_updated_text',
+    padding: '16',
+    text: '@string/no_results_try_changing_your_filter',
+//     visibility: 'gone',
 },
-cell_run_detail: {
-//     style: '@style/Text1',
-//     width: match_parent,
-//     height: wrap_content,
-//     ellipsizeMode: 'end',
-//     numberOfLines: '1',
-},
-cell_run_level: {
+view_run_go_to_filter: {
 //     style: '@style/Label1',
 //     width: match_parent,
-//     height: wrap_content,
-    marginBottom: 16,
-    marginTop: 6,
+    height: 45,
+    layout_below: '@id/view_run_no_results_text',
+    layout_margin: '16',
+    backgroundColor: '@drawable/black_oval_outline',
+//     gravity: 'center',
+    text: '@string/change_filters',
+    color: color.font_black,
+//     visibility: 'gone',
 },
-SXRMCLP: {
+view_run_runnable_layout: {
 //     width: match_parent,
-    height: 0,
-    flex: 1,
+//     height: wrap_content,
+    layout_alignParentBottom: 'true',
+    layout_alignParentLeft: 'true',
+    layout_margin: '16',
+    opacity: .9,
+    backgroundColor: '@drawable/blue_oval',
 },
 XZMWGUOA: {
-//     width: match_parent,
-    height: .5,
-    opacity: .2,
-    backgroundColor: color.font_grey,
-},
-SKVRAMWGI: {
-//     width: wrap_content,
-//     height: match_parent,
-    flexDirection: 'column',
-},
-cell_run_length: {
-//     style: '@style/Headline1',
 //     width: wrap_content,
 //     height: wrap_content,
-    marginRight: 16,
-    marginTop: 16,
+    marginBottom: 14,
+    marginLeft: 20,
+    marginTop: 14,
+    text: '@string/show_runnable',
+    color: color.white,
+    fontSize: 14,
 },
-YCOSOVOZPPL: {
-//     width: match_parent,
-    height: 0,
+SKVRAMWGI: {
+    width: 0,
+//     height: wrap_content,
     flex: 1,
 },
-cell_run_favorite: {
-    width: 32,
-    height: 32,
-    marginBottom: 16,
+view_run_show_runnable: {
+//     width: wrap_content,
+//     height: match_parent,
+//     layout_gravity: 'center_vertical',
+    marginLeft: 16,
     marginRight: 16,
-    opacity: .5,
-//     scaleType: 'centerInside',
-//     source: '@drawable/ic_fav_no',
-},
-YVXYOKSHVWXPY: {
-//     width: match_parent,
-    height: .5,
-    opacity: .2,
-    backgroundColor: color.font_grey,
+    showText: 'false',
+    thumb: '@drawable/switch_thumb',
 },

@@ -6,18 +6,28 @@ const color = require('./resources/color')
 
 module.exports = class ReachSearchCell extends React.Component {
     render() {
+        console.log(this.props)
+        const reach = this.props.reach
+        
+        const levelText = `Level: ${reach.lastGageReading}, Class: ${reach.difficulty}`
+        
         return (
             <View style={styles.V}>
-                <View style={styles.cell_run_highlight}/>
+                <View style={styles.cell_run_highlight} backgroundColor={reach.flowLevel.colorCode}/>
                 <View style={styles.GNK}>
-                    <Text style={styles.cell_run_title}/>
-                    <Text numberOfLines={1} style={styles.cell_run_detail}/>
-                    <Text style={styles.cell_run_level}/>
+                    <Text style={styles.cell_run_title}>
+                        {reach.river}
+                    </Text>
+                    <Text numberOfLines={1} style={styles.cell_run_detail}>
+                        {reach.name}
+                    </Text>
+                    <Text style={ [styles.cell_run_level, { color: reach.flowLevel.colorCode }] }>
+                        {levelText}
+                    </Text>
                     <View style={styles.SXRMCLP}/>
                     <View style={styles.XZMWGUOA}/>
                 </View>
                 <View style={styles.SKVRAMWGI}>
-                    <Text style={styles.cell_run_length}/>
                     <View style={styles.YCOSOVOZPPL}/>
                     <Image style={styles.cell_run_favorite}/>
                     <View style={styles.YVXYOKSHVWXPY}/>
