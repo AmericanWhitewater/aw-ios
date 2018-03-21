@@ -5,6 +5,7 @@ const ReachSearchCell = require('./view/reachSearchCell')
 const FilterRegionCell = require('./view/filterRegionCell')
 // const RunsListView = require('./view/runsListView')
 const RunsListView = require('./view/runsListView')
+const MapView = require('./view/mapView')
 
 const color = require('./view/resources/color')
 
