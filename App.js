@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList, SafeAreaView} from 'react-native';
 
 const ReachSearchCell = require('./view/reachSearchCell')
 const FilterRegionCell = require('./view/filterRegionCell')
@@ -31,11 +31,15 @@ export default class App extends React.Component {
             )
         }
         
-        console.log(this.state.reaches[0])
         return (
-            <View style={styles.container}>
-                <ReachSearchCell reach={this.state.reaches[0]}/>
-            </View>
+            <SafeAreaView style={styles.container}>
+                <FlatList
+                    style={styles.reachList}
+                    data={this.state.reaches}
+                    keyExtractor={(item) => item.id}
+                    renderItem={(item) => <ReachSearchCell reach={item.item} />}
+                />
+            </SafeAreaView>
         )
     }
 }
@@ -46,4 +50,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  reachList: {
+      flex: 1,
+      width: "100%"
+  }
 });
