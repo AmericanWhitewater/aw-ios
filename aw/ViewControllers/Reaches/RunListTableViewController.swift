@@ -25,9 +25,9 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         initialize()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateFetchPredicates()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -46,6 +46,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     }
 }
 
+// MARK: - RunListTableViewExtension
 extension RunListTableViewController {
     func initialize() {
         tableView.delegate = self
@@ -63,45 +64,58 @@ extension RunListTableViewController {
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
         
         fetchedResultsController?.delegate = self
-        
-        do {
-            try fetchedResultsController?.performFetch()
-        } catch {
-            print("fetch request failed")
-        }
+        updateFetchPredicates()
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search runs"
         navigationItem.searchController = searchController
     }
+    
+    func updateFetchPredicates() {
+        var combinedPredicates = predicates
+        
+        if let searchText = searchController.searchBar.text {
+            if searchText.count > 0 {
+                let searchName = NSPredicate(format: "name contains[c] %@", searchText)
+                let searchSection = NSPredicate(format: "section contains[c] %@", searchText)
+                
+                let searchPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [searchName, searchSection])
+                
+                combinedPredicates.append(searchPredicate)
+            }
+        }
+        
+        
+        let difficulties = DefaultsManager.classFilter
+        print(difficulties)
+        if difficulties.count > 0 {
+            var classPredicates: [NSPredicate] = []
+            
+            for value in difficulties {
+                classPredicates.append(NSPredicate(format: "difficulty\(value) == TRUE"))
+                print(value)
+            }
+            
+            let classPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: classPredicates)
+            combinedPredicates.append(classPredicate)
+        }
+        
+        self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: combinedPredicates)
+        
+        do {
+            try self.fetchedResultsController?.performFetch()
+        } catch {
+            print("fetch request failed")
+        }
+        self.tableView.reloadData()
+    }
 }
 
+// MARK: - UISearchResultsUpdating
 extension RunListTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text {
-            var searchPredicates = predicates
-            
-            if searchText.count > 0 {
-                let searchPredicateName = NSPredicate(format: "name contains[c] %@", searchText)
-                let searchPredicateSection = NSPredicate(format: "section contains[c] %@", searchText)
-                
-                let searchPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [searchPredicateName, searchPredicateSection])
-                
-                searchPredicates.append(searchPredicate)
-            }
-            
-            self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: searchPredicates)
-            
-            
-            do {
-                try self.fetchedResultsController?.performFetch()
-            } catch {
-                print("fetch request failed")
-            }
-            self.tableView.reloadData()
-            print(searchText)
-        }
+        updateFetchPredicates()
     }
 }
 
@@ -134,6 +148,7 @@ extension RunListTableViewController: NSFetchedResultsControllerDelegate {
     }
 }
 
+// MARK: - UITableViewDelegate, UITableViewDataSource
 extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

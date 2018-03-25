@@ -957,7 +957,7 @@ plan for your next run!</string>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="Lg1-93-49R">
                             <connections>
-                                <action selector="doneHit:" destination="ATx-FW-h4a" id="6Yx-mg-ufM"/>
+                                <action selector="doneHit:" destination="ATx-FW-h4a" id="cSU-Bm-Dax"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

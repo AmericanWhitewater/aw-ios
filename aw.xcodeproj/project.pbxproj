@@ -41,6 +41,7 @@
 		38B3CD1620672F310016630F /* Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B3CD1520672F310016630F /* Segues.swift */; };
 		38BE74A420681B9D00DE555D /* FilterViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */; };
 		38BE74A6206827A200DE555D /* DifficultyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A5206827A200DE555D /* DifficultyHelper.swift */; };
+		38BE74A8206839F200DE555D /* FilterManagerViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A7206839F200DE555D /* FilterManagerViewControllerType.swift */; };
 		38C421542065C7DE0044D717 /* AWApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C421532065C7DE0044D717 /* AWApiHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,7 @@
 		38B3CD1520672F310016630F /* Segues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segues.swift; sourceTree = "<group>"; };
 		38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewControllerType.swift; sourceTree = "<group>"; };
 		38BE74A5206827A200DE555D /* DifficultyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyHelper.swift; sourceTree = "<group>"; };
+		38BE74A7206839F200DE555D /* FilterManagerViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterManagerViewControllerType.swift; sourceTree = "<group>"; };
 		38C421532065C7DE0044D717 /* AWApiHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,6 +154,7 @@
 			children = (
 				38A6C8E2206687EC00B5BA29 /* MOCViewControllerType.swift */,
 				38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */,
+				38BE74A7206839F200DE555D /* FilterManagerViewControllerType.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				38A6C8E3206687EC00B5BA29 /* MOCViewControllerType.swift in Sources */,
 				38150B262067F75800CBE8D8 /* Regions.swift in Sources */,
 				38A98F772067ED3F009853E1 /* AboutAWStewardshipViewController.swift in Sources */,
+				38BE74A8206839F200DE555D /* FilterManagerViewControllerType.swift in Sources */,
 				38A98F602067E32D009853E1 /* DefaultsManager.swift in Sources */,
 				38A98F8C2067EFCD009853E1 /* FilterClassViewController.swift in Sources */,
 				38A98F622067E6E7009853E1 /* AboutAWViewController.swift in Sources */,
