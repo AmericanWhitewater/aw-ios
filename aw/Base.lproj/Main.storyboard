@@ -97,6 +97,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="American Whitewater" id="VBB-33-e34">
                         <barButtonItem key="backBarButtonItem" title="Runs" id="E8n-Ca-HOy"/>
+                        <barButtonItem key="rightBarButtonItem" title="Filters" id="nvV-Hl-gq6">
+                            <connections>
+                                <segue destination="YFK-7r-CMH" kind="presentation" id="BDm-bc-Bvj"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="vJS-Mw-Q5Q" id="QaJ-mf-3yq"/>
@@ -105,6 +110,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uyy-aW-vdx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="211" y="1825"/>
+        </scene>
+        <!--Filters-->
+        <scene sceneID="XXF-ly-6ks">
+            <objects>
+                <viewController title="Filters" id="5Uo-iZ-AmY" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pXf-4H-Tqm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Gfe-vc-yT6"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Filters" id="fqd-Za-K4C">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="X5I-xi-5ui"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="vjC-Ja-fHz"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UbD-nM-1Gj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="210" y="3596"/>
         </scene>
         <!--Run Detail-->
         <scene sceneID="qLy-XA-sAM">
@@ -333,7 +357,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EL2-9Y-pm3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="621.60000000000002" y="2730.5847076461773"/>
+            <point key="canvasLocation" x="1848.8" y="2838.530734632684"/>
         </scene>
         <!--Map-->
         <scene sceneID="SQ7-3d-HAD">
@@ -690,53 +714,62 @@ plan for your next run!</string>
             </objects>
             <point key="canvasLocation" x="4687" y="902"/>
         </scene>
-        <!--View Controller-->
+        <!--American Whitewater-->
         <scene sceneID="kmA-12-WeM">
             <objects>
-                <viewController id="94h-6c-w4T" sceneMemberID="viewController">
+                <viewController title="American Whitewater" id="94h-6c-w4T" customClass="AboutAWViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VUd-BU-aYG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7zF-Ho-H1J" customClass="AboutAWExtendedNavBarView" customModule="aw" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FUq-4e-2By">
+                                        <rect key="frame" x="53" y="8" width="269" height="29"/>
+                                        <segments>
+                                            <segment title="Mission"/>
+                                            <segment title="Stewardship"/>
+                                            <segment title="Funding"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="segmentedControlChanged:" destination="94h-6c-w4T" eventType="valueChanged" id="Snb-Jd-EYK"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" name="primary"/>
+                                <color key="tintColor" name="white"/>
+                                <constraints>
+                                    <constraint firstItem="FUq-4e-2By" firstAttribute="top" secondItem="7zF-Ho-H1J" secondAttribute="top" constant="8" id="5b7-Lt-lSC"/>
+                                    <constraint firstItem="FUq-4e-2By" firstAttribute="centerX" secondItem="7zF-Ho-H1J" secondAttribute="centerX" id="BHE-h4-oGa"/>
+                                    <constraint firstAttribute="bottom" secondItem="FUq-4e-2By" secondAttribute="bottom" constant="8" id="Rec-be-CJw"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h0S-DT-8Q6">
+                                <rect key="frame" x="0.0" y="108" width="375" height="510"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="h0S-DT-8Q6" firstAttribute="top" secondItem="7zF-Ho-H1J" secondAttribute="bottom" id="2Kb-A0-d6P"/>
+                            <constraint firstItem="7zF-Ho-H1J" firstAttribute="top" secondItem="dt1-rI-BOY" secondAttribute="top" id="4KN-sJ-HTM"/>
+                            <constraint firstItem="dt1-rI-BOY" firstAttribute="bottom" secondItem="h0S-DT-8Q6" secondAttribute="bottom" id="XAt-I9-9aB"/>
+                            <constraint firstItem="7zF-Ho-H1J" firstAttribute="leading" secondItem="dt1-rI-BOY" secondAttribute="leading" id="ZXV-jp-iEh"/>
+                            <constraint firstItem="h0S-DT-8Q6" firstAttribute="leading" secondItem="dt1-rI-BOY" secondAttribute="leading" id="a0z-Ne-SSz"/>
+                            <constraint firstItem="dt1-rI-BOY" firstAttribute="trailing" secondItem="7zF-Ho-H1J" secondAttribute="trailing" id="mC0-Ax-nik"/>
+                            <constraint firstItem="dt1-rI-BOY" firstAttribute="trailing" secondItem="h0S-DT-8Q6" secondAttribute="trailing" id="pda-gb-gIf"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="dt1-rI-BOY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="xGM-oj-n2j">
-                        <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="e7V-xD-idQ">
-                            <rect key="frame" x="187.5" y="22" width="0.0" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="OSo-rW-jcK">
-                                    <rect key="frame" x="-134.5" y="-24.5" width="269" height="49"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About American Whitewater" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ixC-bX-OoH">
-                                            <rect key="frame" x="0.0" y="0.0" width="269" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="etm-la-SCB">
-                                            <rect key="frame" x="0.0" y="20.5" width="269" height="29.5"/>
-                                            <segments>
-                                                <segment title="Mission"/>
-                                                <segment title="Stewardship"/>
-                                                <segment title="Funding"/>
-                                            </segments>
-                                        </segmentedControl>
-                                    </subviews>
-                                </stackView>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstItem="OSo-rW-jcK" firstAttribute="centerX" secondItem="e7V-xD-idQ" secondAttribute="centerX" id="lS0-dA-mA5"/>
-                                <constraint firstItem="OSo-rW-jcK" firstAttribute="centerY" secondItem="e7V-xD-idQ" secondAttribute="centerY" id="tDV-bx-kbW"/>
-                            </constraints>
-                        </view>
-                    </navigationItem>
+                    <connections>
+                        <outlet property="containerView" destination="h0S-DT-8Q6" id="jnl-Md-F4u"/>
+                        <outlet property="segmentedControl" destination="FUq-4e-2By" id="Ulq-qx-ugK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gqI-yW-ElC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5462" y="902"/>
+            <point key="canvasLocation" x="5461.6000000000004" y="901.79910044977521"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Lnq-L1-Epk">
@@ -849,6 +882,24 @@ plan for your next run!</string>
             </objects>
             <point key="canvasLocation" x="1510" y="1825"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="YiY-cR-9Tr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YFK-7r-CMH" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rnk-LZ-L4H">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="5Uo-iZ-AmY" kind="relationship" relationship="rootViewController" id="nzT-fP-QGJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ATf-eN-rzo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="209.59999999999999" y="2838.9805097451276"/>
+        </scene>
     </scenes>
     <resources>
         <image name="icon_favorite" width="18" height="17"/>
@@ -864,11 +915,17 @@ plan for your next run!</string>
         <namedColor name="primary">
             <color red="0.0" green="0.48627450980392156" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="primary">
+            <color red="0.0" green="0.48627450980392156" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="status_grey">
             <color red="0.48627450980392156" green="0.54509803921568623" blue="0.5725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="status_grey">
             <color red="0.48627450979999998" green="0.5450980392" blue="0.57254901960000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
