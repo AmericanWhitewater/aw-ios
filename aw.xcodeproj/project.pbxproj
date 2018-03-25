@@ -31,6 +31,14 @@
 		38A98F782067ED3F009853E1 /* AboutAWStewardshipViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A98F762067ED3F009853E1 /* AboutAWStewardshipViewController.xib */; };
 		38A98F7B2067ED4D009853E1 /* AboutAWFundingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F792067ED4D009853E1 /* AboutAWFundingViewController.swift */; };
 		38A98F7C2067ED4D009853E1 /* AboutAWFundingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A98F7A2067ED4D009853E1 /* AboutAWFundingViewController.xib */; };
+		38A98F7F2067EF90009853E1 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F7E2067EF90009853E1 /* FilterViewController.swift */; };
+		38A98F822067EFA3009853E1 /* FilterRegionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F802067EFA3009853E1 /* FilterRegionViewController.swift */; };
+		38A98F832067EFA3009853E1 /* FilterRegionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A98F812067EFA3009853E1 /* FilterRegionViewController.xib */; };
+		38A98F882067EFC0009853E1 /* FilterDistanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F862067EFC0009853E1 /* FilterDistanceViewController.swift */; };
+		38A98F892067EFC0009853E1 /* FilterDistanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A98F872067EFC0009853E1 /* FilterDistanceViewController.xib */; };
+		38A98F8C2067EFCD009853E1 /* FilterClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F8A2067EFCD009853E1 /* FilterClassViewController.swift */; };
+		38A98F8D2067EFCD009853E1 /* FilterClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A98F8B2067EFCD009853E1 /* FilterClassViewController.xib */; };
+		38A98F8F2067F0B4009853E1 /* FilterExtendedNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F8E2067F0B4009853E1 /* FilterExtendedNavBarView.swift */; };
 		38B3CD1320672EAA0016630F /* RunDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B3CD1220672EAA0016630F /* RunDetailTableViewController.swift */; };
 		38B3CD1620672F310016630F /* Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B3CD1520672F310016630F /* Segues.swift */; };
 		38C421542065C7DE0044D717 /* AWApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C421532065C7DE0044D717 /* AWApiHelper.swift */; };
@@ -63,6 +71,14 @@
 		38A98F762067ED3F009853E1 /* AboutAWStewardshipViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutAWStewardshipViewController.xib; sourceTree = "<group>"; };
 		38A98F792067ED4D009853E1 /* AboutAWFundingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAWFundingViewController.swift; sourceTree = "<group>"; };
 		38A98F7A2067ED4D009853E1 /* AboutAWFundingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutAWFundingViewController.xib; sourceTree = "<group>"; };
+		38A98F7E2067EF90009853E1 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		38A98F802067EFA3009853E1 /* FilterRegionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRegionViewController.swift; sourceTree = "<group>"; };
+		38A98F812067EFA3009853E1 /* FilterRegionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterRegionViewController.xib; sourceTree = "<group>"; };
+		38A98F862067EFC0009853E1 /* FilterDistanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDistanceViewController.swift; sourceTree = "<group>"; };
+		38A98F872067EFC0009853E1 /* FilterDistanceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterDistanceViewController.xib; sourceTree = "<group>"; };
+		38A98F8A2067EFCD009853E1 /* FilterClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterClassViewController.swift; sourceTree = "<group>"; };
+		38A98F8B2067EFCD009853E1 /* FilterClassViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterClassViewController.xib; sourceTree = "<group>"; };
+		38A98F8E2067F0B4009853E1 /* FilterExtendedNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExtendedNavBarView.swift; sourceTree = "<group>"; };
 		38B3CD1220672EAA0016630F /* RunDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDetailTableViewController.swift; sourceTree = "<group>"; };
 		38B3CD1520672F310016630F /* Segues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segues.swift; sourceTree = "<group>"; };
 		38C421532065C7DE0044D717 /* AWApiHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiHelper.swift; sourceTree = "<group>"; };
@@ -172,6 +188,21 @@
 			path = About;
 			sourceTree = "<group>";
 		};
+		38A98F7D2067EF7F009853E1 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				38A98F7E2067EF90009853E1 /* FilterViewController.swift */,
+				38A98F802067EFA3009853E1 /* FilterRegionViewController.swift */,
+				38A98F812067EFA3009853E1 /* FilterRegionViewController.xib */,
+				38A98F862067EFC0009853E1 /* FilterDistanceViewController.swift */,
+				38A98F872067EFC0009853E1 /* FilterDistanceViewController.xib */,
+				38A98F8A2067EFCD009853E1 /* FilterClassViewController.swift */,
+				38A98F8B2067EFCD009853E1 /* FilterClassViewController.xib */,
+				38A98F8E2067F0B4009853E1 /* FilterExtendedNavBarView.swift */,
+			);
+			path = Filters;
+			sourceTree = "<group>";
+		};
 		38B3CD1420672F1D0016630F /* Etc */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,6 +241,7 @@
 		38C421572065C9A40044D717 /* Reaches */ = {
 			isa = PBXGroup;
 			children = (
+				38A98F7D2067EF7F009853E1 /* Filters */,
 				38A6C8D82066759A00B5BA29 /* RunListTableViewController.swift */,
 				38A6C8DA206677EC00B5BA29 /* RunListTableViewCell.swift */,
 				38A6C8F020670AEF00B5BA29 /* MapViewController.swift */,
@@ -293,10 +325,13 @@
 			files = (
 				385E59CC2063047B00A68EC9 /* LaunchScreen.storyboard in Resources */,
 				385E59C92063047B00A68EC9 /* Assets.xcassets in Resources */,
+				38A98F892067EFC0009853E1 /* FilterDistanceViewController.xib in Resources */,
 				38A98F742067ED2E009853E1 /* AboutAWMissionViewController.xib in Resources */,
+				38A98F8D2067EFCD009853E1 /* FilterClassViewController.xib in Resources */,
 				385E59C72063047B00A68EC9 /* Main.storyboard in Resources */,
 				38A98F7C2067ED4D009853E1 /* AboutAWFundingViewController.xib in Resources */,
 				38A98F782067ED3F009853E1 /* AboutAWStewardshipViewController.xib in Resources */,
+				38A98F832067EFA3009853E1 /* FilterRegionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +342,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38A98F822067EFA3009853E1 /* FilterRegionViewController.swift in Sources */,
+				38A98F7F2067EF90009853E1 /* FilterViewController.swift in Sources */,
+				38A98F882067EFC0009853E1 /* FilterDistanceViewController.swift in Sources */,
 				38B3CD1320672EAA0016630F /* RunDetailTableViewController.swift in Sources */,
 				38A6C8F120670AEF00B5BA29 /* MapViewController.swift in Sources */,
 				38A98F692067EA78009853E1 /* AboutAWExtendedNavBarView.swift in Sources */,
@@ -317,8 +355,10 @@
 				38A6C8E3206687EC00B5BA29 /* MOCViewControllerType.swift in Sources */,
 				38A98F772067ED3F009853E1 /* AboutAWStewardshipViewController.swift in Sources */,
 				38A98F602067E32D009853E1 /* DefaultsManager.swift in Sources */,
+				38A98F8C2067EFCD009853E1 /* FilterClassViewController.swift in Sources */,
 				38A98F622067E6E7009853E1 /* AboutAWViewController.swift in Sources */,
 				38A98F5E2067CAF8009853E1 /* FavoriteListTableViewController.swift in Sources */,
+				38A98F8F2067F0B4009853E1 /* FilterExtendedNavBarView.swift in Sources */,
 				38A98F732067ED2E009853E1 /* AboutAWMissionViewController.swift in Sources */,
 				38A6C8DB206677EC00B5BA29 /* RunListTableViewCell.swift in Sources */,
 				38A98F7B2067ED4D009853E1 /* AboutAWFundingViewController.swift in Sources */,

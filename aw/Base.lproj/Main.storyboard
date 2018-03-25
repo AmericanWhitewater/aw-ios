@@ -99,7 +99,7 @@
                         <barButtonItem key="backBarButtonItem" title="Runs" id="E8n-Ca-HOy"/>
                         <barButtonItem key="rightBarButtonItem" title="Filters" id="nvV-Hl-gq6">
                             <connections>
-                                <segue destination="YFK-7r-CMH" kind="presentation" id="BDm-bc-Bvj"/>
+                                <segue destination="YFK-7r-CMH" kind="presentation" identifier="ShowFilters" id="BDm-bc-Bvj"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -114,17 +114,58 @@
         <!--Filters-->
         <scene sceneID="XXF-ly-6ks">
             <objects>
-                <viewController title="Filters" id="5Uo-iZ-AmY" sceneMemberID="viewController">
+                <viewController title="Filters" id="5Uo-iZ-AmY" customClass="FilterViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pXf-4H-Tqm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CkZ-d5-ZQF" customClass="FilterExtendedNavBarView" customModule="aw" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dDV-ZJ-uCU">
+                                        <rect key="frame" x="57.5" y="8" width="260" height="29"/>
+                                        <segments>
+                                            <segment title="By Region"/>
+                                            <segment title="By Class"/>
+                                            <segment title="By Distance"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="segmentedControllerChanged:" destination="5Uo-iZ-AmY" eventType="valueChanged" id="SW9-dz-6dK"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" name="primary"/>
+                                <color key="tintColor" name="white"/>
+                                <constraints>
+                                    <constraint firstItem="dDV-ZJ-uCU" firstAttribute="centerX" secondItem="CkZ-d5-ZQF" secondAttribute="centerX" id="Le8-TB-nY4"/>
+                                    <constraint firstAttribute="bottom" secondItem="dDV-ZJ-uCU" secondAttribute="bottom" constant="8" id="Pf5-dQ-pXa"/>
+                                    <constraint firstItem="dDV-ZJ-uCU" firstAttribute="top" secondItem="CkZ-d5-ZQF" secondAttribute="top" constant="8" id="uoz-YS-f8m"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T4E-eQ-FIf">
+                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Gfe-vc-yT6" firstAttribute="bottom" secondItem="T4E-eQ-FIf" secondAttribute="bottom" id="0Ux-V6-BCO"/>
+                            <constraint firstItem="T4E-eQ-FIf" firstAttribute="leading" secondItem="Gfe-vc-yT6" secondAttribute="leading" id="1YZ-Er-Lgi"/>
+                            <constraint firstItem="CkZ-d5-ZQF" firstAttribute="top" secondItem="Gfe-vc-yT6" secondAttribute="top" id="7g4-Za-dyb"/>
+                            <constraint firstItem="T4E-eQ-FIf" firstAttribute="top" secondItem="CkZ-d5-ZQF" secondAttribute="bottom" id="TCo-ON-173"/>
+                            <constraint firstItem="CkZ-d5-ZQF" firstAttribute="leading" secondItem="Gfe-vc-yT6" secondAttribute="leading" id="cfS-qe-SmX"/>
+                            <constraint firstItem="Gfe-vc-yT6" firstAttribute="trailing" secondItem="CkZ-d5-ZQF" secondAttribute="trailing" id="gqX-G8-M8q"/>
+                            <constraint firstItem="Gfe-vc-yT6" firstAttribute="trailing" secondItem="T4E-eQ-FIf" secondAttribute="trailing" id="lQq-RR-tCy"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Gfe-vc-yT6"/>
                     </view>
                     <navigationItem key="navigationItem" title="Filters" id="fqd-Za-K4C">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="X5I-xi-5ui"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="vjC-Ja-fHz"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="containerView" destination="T4E-eQ-FIf" id="LvP-4K-ybd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UbD-nM-1Gj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -915,17 +956,8 @@ plan for your next run!</string>
         <namedColor name="primary">
             <color red="0.0" green="0.48627450980392156" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="primary">
-            <color red="0.0" green="0.48627450980392156" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="status_grey">
             <color red="0.48627450980392156" green="0.54509803921568623" blue="0.5725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="status_grey">
-            <color red="0.48627450979999998" green="0.5450980392" blue="0.57254901960000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="white">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

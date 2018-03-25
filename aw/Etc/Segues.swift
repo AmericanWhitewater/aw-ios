@@ -10,4 +10,5 @@ import Foundation
 
 enum Segue: String {
     case RunDetail
+    case ShowFilters
 }
