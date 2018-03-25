@@ -17,6 +17,8 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     
     var predicates: [NSPredicate] = []
     
+    let searchController = UISearchController(searchResultsController: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,6 +56,7 @@ extension RunListTableViewController {
         
         let request = NSFetchRequest<Reach>(entityName: "Reach")
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true), NSSortDescriptor(key: "section", ascending: true)]
+        
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
         
@@ -63,6 +66,32 @@ extension RunListTableViewController {
             try fetchedResultsController?.performFetch()
         } catch {
             print("fetch request failed")
+        }
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search runs"
+        navigationItem.searchController = searchController
+    }
+}
+
+extension RunListTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+            if searchText.count > 0 {
+                let searchPredicate = NSPredicate(format: "name contains[c] %@", searchText)
+                self.fetchedResultsController?.fetchRequest.predicate = searchPredicate
+            } else {
+                self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+            }
+            
+            do {
+                try self.fetchedResultsController?.performFetch()
+            } catch {
+                print("fetch request failed")
+            }
+            self.tableView.reloadData()
+            print(searchText)
         }
     }
 }
