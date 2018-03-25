@@ -78,12 +78,19 @@ extension RunListTableViewController {
 extension RunListTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
+            var searchPredicates = predicates
+            
             if searchText.count > 0 {
-                let searchPredicate = NSPredicate(format: "name contains[c] %@", searchText)
-                self.fetchedResultsController?.fetchRequest.predicate = searchPredicate
-            } else {
-                self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+                let searchPredicateName = NSPredicate(format: "name contains[c] %@", searchText)
+                let searchPredicateSection = NSPredicate(format: "section contains[c] %@", searchText)
+                
+                let searchPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [searchPredicateName, searchPredicateSection])
+                
+                searchPredicates.append(searchPredicate)
             }
+            
+            self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: searchPredicates)
+            
             
             do {
                 try self.fetchedResultsController?.performFetch()
