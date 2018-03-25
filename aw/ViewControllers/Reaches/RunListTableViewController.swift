@@ -113,6 +113,9 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
         
         guard let reach = fetchedResultsController?.object(at: indexPath) else { return cell }
         cell.setup(reach: reach)
+        
+        cell.managedObjectContext = managedObjectContext
+        
         return cell
     }
 }

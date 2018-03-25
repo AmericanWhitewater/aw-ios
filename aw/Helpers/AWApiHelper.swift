@@ -80,11 +80,25 @@ struct AWApiHelper {
         }
     }
     
+    func findOrNewReach(byID id: Int, inContext context: NSManagedObjectContext) -> Reach {
+        let predicate = NSPredicate(format: "id == %i", id)
+        let request: NSFetchRequest<Reach> = Reach.fetchRequest()
+        request.predicate = predicate
+        
+        guard let result = try? context.fetch(request) else {
+            let reach = Reach(context: context)
+            reach.id = Int16(id)
+            return reach
+        }
+        
+        return result.first!
+    }
+    
     func createOrUpdateReach(newReach: AWReach, context: NSManagedObjectContext) {
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         
         context.persist {
-            let reach = Reach(context: context)
+            let reach = self.findOrNewReach(byID: newReach.id, inContext: context)
             reach.section = newReach.section
             reach.putInLat = newReach.putInLat
             reach.putInLon = newReach.putInLon
