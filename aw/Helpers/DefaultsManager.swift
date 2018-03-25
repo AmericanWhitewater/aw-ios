@@ -35,6 +35,14 @@ class DefaultsManager {
     }
     
     private static let distanceFilterKey = "distanceFilterKey"
+    static var distanceFilter: Float {
+        get {
+            return UserDefaults.standard.float(forKey: distanceFilterKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: distanceFilterKey)
+        }
+    }
     
     private static let classFilterKey = "classFilterKey"
 }

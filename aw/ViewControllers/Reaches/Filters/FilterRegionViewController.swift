@@ -27,6 +27,8 @@ extension FilterRegionViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        selectedRegions = DefaultsManager.regionsFilter
+        
         setRegionsLabel()
     }
     
@@ -36,6 +38,12 @@ extension FilterRegionViewController {
         } else {
             selectedRegionsLabel.text = "Showing runs from: \(selectedRegions.joined(separator: ", "))"
         }
+    }
+}
+
+extension FilterRegionViewController: FilterViewControllerType {
+    func save() {
+        DefaultsManager.regionsFilter = selectedRegions
     }
 }
 
@@ -55,6 +63,12 @@ extension FilterRegionViewController: UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "regionFilterCell", for: indexPath)
         
         cell.textLabel?.text = region.title
+        
+        if selectedRegions.contains(region.title) {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
         
         return cell
     }

@@ -39,6 +39,7 @@
 		38A98F8F2067F0B4009853E1 /* FilterExtendedNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F8E2067F0B4009853E1 /* FilterExtendedNavBarView.swift */; };
 		38B3CD1320672EAA0016630F /* RunDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B3CD1220672EAA0016630F /* RunDetailTableViewController.swift */; };
 		38B3CD1620672F310016630F /* Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B3CD1520672F310016630F /* Segues.swift */; };
+		38BE74A420681B9D00DE555D /* FilterViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */; };
 		38C421542065C7DE0044D717 /* AWApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C421532065C7DE0044D717 /* AWApiHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 		38A98F8E2067F0B4009853E1 /* FilterExtendedNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExtendedNavBarView.swift; sourceTree = "<group>"; };
 		38B3CD1220672EAA0016630F /* RunDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDetailTableViewController.swift; sourceTree = "<group>"; };
 		38B3CD1520672F310016630F /* Segues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segues.swift; sourceTree = "<group>"; };
+		38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewControllerType.swift; sourceTree = "<group>"; };
 		38C421532065C7DE0044D717 /* AWApiHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				38A6C8E2206687EC00B5BA29 /* MOCViewControllerType.swift */,
+				38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				38A98F7B2067ED4D009853E1 /* AboutAWFundingViewController.swift in Sources */,
 				38A6C8E82066882300B5BA29 /* NSPersistentContainer.swift in Sources */,
 				38A6C8F42067189300B5BA29 /* Onboard1ViewController.swift in Sources */,
+				38BE74A420681B9D00DE555D /* FilterViewControllerType.swift in Sources */,
 				38A6C8EF2067074700B5BA29 /* Reach.swift in Sources */,
 				38A6C8D92066759A00B5BA29 /* RunListTableViewController.swift in Sources */,
 				38C421542065C7DE0044D717 /* AWApiHelper.swift in Sources */,

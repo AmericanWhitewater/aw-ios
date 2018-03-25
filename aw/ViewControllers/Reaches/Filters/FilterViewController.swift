@@ -69,5 +69,11 @@ class FilterViewController: UIViewController {
     
     @IBAction func doneHit(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+        
+        //let regionVC = regionView.subviews.first.responder
+        for childVC in childViewControllers {
+            guard let childVC = childVC as? FilterViewControllerType else { return }
+            childVC.save()
+        }
     }
 }
