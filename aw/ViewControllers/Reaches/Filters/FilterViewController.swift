@@ -10,27 +10,18 @@ import UIKit
 
 class FilterViewController: UIViewController {
 
-    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var regionView: UIView!
+    @IBOutlet weak var classView: UIView!
+    @IBOutlet weak var distanceView: UIView!
     
-    var regionView: UIView!
-    var classView: UIView!
-    var distanceView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        regionView = FilterRegionViewController().view
-        classView = FilterClassViewController().view
-        distanceView = FilterDistanceViewController().view
-        
-        containerView.addSubview(distanceView)
-        containerView.addSubview(classView)
-        containerView.addSubview(regionView)
-        
-
         // make our segmented control view blend in with the navigation bar
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.shadowImage = UIImage(named: "TransparentPixel")
+        
+        setViewShown(name: "region")
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,16 +29,45 @@ class FilterViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func setViewShown(name: String) {
+        switch name {
+        case "region":
+            regionView.isHidden = false
+            classView.isHidden = true
+            distanceView.isHidden = true
+        case "class":
+            regionView.isHidden = true
+            classView.isHidden = false
+            distanceView.isHidden = true
+        case "distance":
+            regionView.isHidden = true
+            classView.isHidden = true
+            distanceView.isHidden = false
+        default:
+            regionView.isHidden = false
+            classView.isHidden = true
+            distanceView.isHidden = true
+        }
+    }
+    
     @IBAction func segmentedControllerChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            containerView.bringSubview(toFront: regionView)
+            setViewShown(name: "region")
         case 1:
-            containerView.bringSubview(toFront: classView)
+            setViewShown(name: "class")
         case 2:
-            containerView.bringSubview(toFront: distanceView)
+            setViewShown(name: "distance")
         default:
             break
         }
+    }
+    
+    @IBAction func cancelHit(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func doneHit(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38150B262067F75800CBE8D8 /* Regions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38150B252067F75800CBE8D8 /* Regions.swift */; };
 		385E59C22063047B00A68EC9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E59C12063047B00A68EC9 /* AppDelegate.swift */; };
 		385E59C72063047B00A68EC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 385E59C52063047B00A68EC9 /* Main.storyboard */; };
 		385E59C92063047B00A68EC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 385E59C82063047B00A68EC9 /* Assets.xcassets */; };
@@ -33,11 +34,8 @@
 		38A98F7C2067ED4D009853E1 /* AboutAWFundingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A98F7A2067ED4D009853E1 /* AboutAWFundingViewController.xib */; };
 		38A98F7F2067EF90009853E1 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F7E2067EF90009853E1 /* FilterViewController.swift */; };
 		38A98F822067EFA3009853E1 /* FilterRegionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F802067EFA3009853E1 /* FilterRegionViewController.swift */; };
-		38A98F832067EFA3009853E1 /* FilterRegionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A98F812067EFA3009853E1 /* FilterRegionViewController.xib */; };
 		38A98F882067EFC0009853E1 /* FilterDistanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F862067EFC0009853E1 /* FilterDistanceViewController.swift */; };
-		38A98F892067EFC0009853E1 /* FilterDistanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A98F872067EFC0009853E1 /* FilterDistanceViewController.xib */; };
 		38A98F8C2067EFCD009853E1 /* FilterClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F8A2067EFCD009853E1 /* FilterClassViewController.swift */; };
-		38A98F8D2067EFCD009853E1 /* FilterClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A98F8B2067EFCD009853E1 /* FilterClassViewController.xib */; };
 		38A98F8F2067F0B4009853E1 /* FilterExtendedNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F8E2067F0B4009853E1 /* FilterExtendedNavBarView.swift */; };
 		38B3CD1320672EAA0016630F /* RunDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B3CD1220672EAA0016630F /* RunDetailTableViewController.swift */; };
 		38B3CD1620672F310016630F /* Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B3CD1520672F310016630F /* Segues.swift */; };
@@ -45,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		38150B252067F75800CBE8D8 /* Regions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regions.swift; sourceTree = "<group>"; };
 		385E59BE2063047B00A68EC9 /* aw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		385E59C12063047B00A68EC9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		385E59C62063047B00A68EC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -73,11 +72,8 @@
 		38A98F7A2067ED4D009853E1 /* AboutAWFundingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutAWFundingViewController.xib; sourceTree = "<group>"; };
 		38A98F7E2067EF90009853E1 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		38A98F802067EFA3009853E1 /* FilterRegionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRegionViewController.swift; sourceTree = "<group>"; };
-		38A98F812067EFA3009853E1 /* FilterRegionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterRegionViewController.xib; sourceTree = "<group>"; };
 		38A98F862067EFC0009853E1 /* FilterDistanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDistanceViewController.swift; sourceTree = "<group>"; };
-		38A98F872067EFC0009853E1 /* FilterDistanceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterDistanceViewController.xib; sourceTree = "<group>"; };
 		38A98F8A2067EFCD009853E1 /* FilterClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterClassViewController.swift; sourceTree = "<group>"; };
-		38A98F8B2067EFCD009853E1 /* FilterClassViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterClassViewController.xib; sourceTree = "<group>"; };
 		38A98F8E2067F0B4009853E1 /* FilterExtendedNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExtendedNavBarView.swift; sourceTree = "<group>"; };
 		38B3CD1220672EAA0016630F /* RunDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDetailTableViewController.swift; sourceTree = "<group>"; };
 		38B3CD1520672F310016630F /* Segues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segues.swift; sourceTree = "<group>"; };
@@ -193,11 +189,8 @@
 			children = (
 				38A98F7E2067EF90009853E1 /* FilterViewController.swift */,
 				38A98F802067EFA3009853E1 /* FilterRegionViewController.swift */,
-				38A98F812067EFA3009853E1 /* FilterRegionViewController.xib */,
 				38A98F862067EFC0009853E1 /* FilterDistanceViewController.swift */,
-				38A98F872067EFC0009853E1 /* FilterDistanceViewController.xib */,
 				38A98F8A2067EFCD009853E1 /* FilterClassViewController.swift */,
-				38A98F8B2067EFCD009853E1 /* FilterClassViewController.xib */,
 				38A98F8E2067F0B4009853E1 /* FilterExtendedNavBarView.swift */,
 			);
 			path = Filters;
@@ -216,6 +209,7 @@
 			children = (
 				38C421532065C7DE0044D717 /* AWApiHelper.swift */,
 				38A98F5F2067E32D009853E1 /* DefaultsManager.swift */,
+				38150B252067F75800CBE8D8 /* Regions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -325,13 +319,10 @@
 			files = (
 				385E59CC2063047B00A68EC9 /* LaunchScreen.storyboard in Resources */,
 				385E59C92063047B00A68EC9 /* Assets.xcassets in Resources */,
-				38A98F892067EFC0009853E1 /* FilterDistanceViewController.xib in Resources */,
 				38A98F742067ED2E009853E1 /* AboutAWMissionViewController.xib in Resources */,
-				38A98F8D2067EFCD009853E1 /* FilterClassViewController.xib in Resources */,
 				385E59C72063047B00A68EC9 /* Main.storyboard in Resources */,
 				38A98F7C2067ED4D009853E1 /* AboutAWFundingViewController.xib in Resources */,
 				38A98F782067ED3F009853E1 /* AboutAWStewardshipViewController.xib in Resources */,
-				38A98F832067EFA3009853E1 /* FilterRegionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +344,7 @@
 				385E59C22063047B00A68EC9 /* AppDelegate.swift in Sources */,
 				38A6C8ED2066E6EC00B5BA29 /* AmericanWhitewater.xcdatamodeld in Sources */,
 				38A6C8E3206687EC00B5BA29 /* MOCViewControllerType.swift in Sources */,
+				38150B262067F75800CBE8D8 /* Regions.swift in Sources */,
 				38A98F772067ED3F009853E1 /* AboutAWStewardshipViewController.swift in Sources */,
 				38A98F602067E32D009853E1 /* DefaultsManager.swift in Sources */,
 				38A98F8C2067EFCD009853E1 /* FilterClassViewController.swift in Sources */,

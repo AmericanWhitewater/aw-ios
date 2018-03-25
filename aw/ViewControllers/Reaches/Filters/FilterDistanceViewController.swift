@@ -9,11 +9,13 @@
 import UIKit
 
 class FilterDistanceViewController: UIViewController {
-
+    @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var slider: UISlider!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        setDistanceLabel()
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,15 +23,15 @@ class FilterDistanceViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    fileprivate func setDistanceLabel() {
+        if slider.value == 0.0 {
+            distanceLabel.text = "Search anywhere"
+        } else {
+            distanceLabel.text = "\(Int(slider.value)) miles"
+        }
     }
-    */
-
+    
+    @IBAction func distanceChanged(_ sender: UISlider) {
+        setDistanceLabel()
+    }
 }
