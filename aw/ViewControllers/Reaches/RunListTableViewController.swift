@@ -15,6 +15,8 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     var managedObjectContext: NSManagedObjectContext?
     var fetchedResultsController: NSFetchedResultsController<Reach>?
     
+    var predicates: [NSPredicate] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,6 +54,7 @@ extension RunListTableViewController {
         
         let request = NSFetchRequest<Reach>(entityName: "Reach")
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true), NSSortDescriptor(key: "section", ascending: true)]
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
         
         fetchedResultsController?.delegate = self
