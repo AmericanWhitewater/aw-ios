@@ -40,6 +40,7 @@
 		38B3CD1320672EAA0016630F /* RunDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B3CD1220672EAA0016630F /* RunDetailTableViewController.swift */; };
 		38B3CD1620672F310016630F /* Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B3CD1520672F310016630F /* Segues.swift */; };
 		38BE74A420681B9D00DE555D /* FilterViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */; };
+		38BE74A6206827A200DE555D /* DifficultyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A5206827A200DE555D /* DifficultyHelper.swift */; };
 		38C421542065C7DE0044D717 /* AWApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C421532065C7DE0044D717 /* AWApiHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +80,7 @@
 		38B3CD1220672EAA0016630F /* RunDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDetailTableViewController.swift; sourceTree = "<group>"; };
 		38B3CD1520672F310016630F /* Segues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segues.swift; sourceTree = "<group>"; };
 		38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewControllerType.swift; sourceTree = "<group>"; };
+		38BE74A5206827A200DE555D /* DifficultyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyHelper.swift; sourceTree = "<group>"; };
 		38C421532065C7DE0044D717 /* AWApiHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -213,6 +215,7 @@
 				38C421532065C7DE0044D717 /* AWApiHelper.swift */,
 				38A98F5F2067E32D009853E1 /* DefaultsManager.swift */,
 				38150B252067F75800CBE8D8 /* Regions.swift */,
+				38BE74A5206827A200DE555D /* DifficultyHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				38A98F692067EA78009853E1 /* AboutAWExtendedNavBarView.swift in Sources */,
 				38B3CD1620672F310016630F /* Segues.swift in Sources */,
 				38A6C8EA2066884800B5BA29 /* NSManagedObjectContext.swift in Sources */,
+				38BE74A6206827A200DE555D /* DifficultyHelper.swift in Sources */,
 				385E59C22063047B00A68EC9 /* AppDelegate.swift in Sources */,
 				38A6C8ED2066E6EC00B5BA29 /* AmericanWhitewater.xcdatamodeld in Sources */,
 				38A6C8E3206687EC00B5BA29 /* MOCViewControllerType.swift in Sources */,

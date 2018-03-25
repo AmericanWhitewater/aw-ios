@@ -4,6 +4,11 @@
         <attribute name="condition" attributeType="String" syncable="YES"/>
         <attribute name="delta" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="difficulty" attributeType="String" syncable="YES"/>
+        <attribute name="difficulty1" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="difficulty2" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="difficulty3" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="difficulty4" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="difficulty5" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="favorite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lastGageReading" attributeType="String" syncable="YES"/>
@@ -22,6 +27,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Reach" positionX="-54" positionY="-9" width="128" height="255"/>
+        <element name="Reach" positionX="-54" positionY="-9" width="128" height="330"/>
     </elements>
 </model>

@@ -12,21 +12,18 @@ class FilterDistanceViewController: UIViewController {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var slider: UISlider!
     
-    var distance: Float!
+    var distance: Float! {
+        didSet {
+            setDistanceLabel()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         distance = DefaultsManager.distanceFilter
-
-        setDistanceLabel()
         
         slider.value = distance
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     fileprivate func setDistanceLabel() {
@@ -39,7 +36,6 @@ class FilterDistanceViewController: UIViewController {
     
     @IBAction func distanceChanged(_ sender: UISlider) {
         distance = slider.value
-        setDistanceLabel()
     }
 }
 

@@ -97,6 +97,8 @@ struct AWApiHelper {
     func createOrUpdateReach(newReach: AWReach, context: NSManagedObjectContext) {
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         
+        let difficultyRange = DifficultyHelper.parseDifficulty(difficulty: newReach.difficulty)
+        
         context.persist {
             let reach = self.findOrNewReach(byID: newReach.id, inContext: context)
             reach.section = newReach.section
@@ -112,6 +114,22 @@ struct AWApiHelper {
             reach.takeOutLon = newReach.takeOutLon
             reach.state = newReach.state
             reach.delta = newReach.delta
+            
+            if difficultyRange.contains(1) {
+                reach.difficulty1 = true
+            }
+            if difficultyRange.contains(2) {
+                reach.difficulty2 = true
+            }
+            if difficultyRange.contains(3) {
+                reach.difficulty3 = true
+            }
+            if difficultyRange.contains(4) {
+                reach.difficulty4 = true
+            }
+            if difficultyRange.contains(5) {
+                reach.difficulty5 = true
+            }
         }
     }
     
