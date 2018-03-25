@@ -45,4 +45,16 @@ class DefaultsManager {
     }
     
     private static let classFilterKey = "classFilterKey"
+    static var classFilter: [Int] {
+        get {
+            if let classes = UserDefaults.standard.array(forKey: classFilterKey) {
+                return classes as! [Int]
+            } else {
+                return []
+            }
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: classFilterKey)
+        }
+    }
 }

@@ -37,7 +37,9 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
                 let indexPath = tableView.indexPathForSelectedRow,
                 let reach = fetchedResultsController?.fetchedObjects![indexPath.row] else { return }
             
-            detailVC.reach = reach    
+            detailVC.reach = reach
+        case Segue.ShowFilters.rawValue:
+            break
         default:
             print("Unknown segue!")
         }
