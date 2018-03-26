@@ -115,6 +115,13 @@ struct AWApiHelper {
         
         let difficultyRange = DifficultyHelper.parseDifficulty(difficulty: newReach.difficulty)
         
+        var region: Region!
+        
+        if let state = newReach.state {
+            region = Region.apiDict[state]
+        }
+        
+        
         context.persist {
             let reach = self.findOrNewReach(byID: newReach.id, inContext: context)
             reach.section = newReach.section
@@ -128,7 +135,7 @@ struct AWApiHelper {
             reach.unit = newReach.unit
             reach.takeOutLat = newReach.takeOutLat
             reach.takeOutLon = newReach.takeOutLon
-            reach.state = newReach.state
+            reach.state = region.title 
             reach.delta = newReach.delta
             
             if difficultyRange.contains(1) {
