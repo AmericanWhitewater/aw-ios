@@ -75,6 +75,16 @@ extension RunListTableViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search runs"
+        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            if let backgroundView = textField.subviews.first {
+                // set background color
+                backgroundView.backgroundColor = .white
+                
+                // round corners
+                backgroundView.layer.cornerRadius = 10
+                backgroundView.clipsToBounds = true
+            }
+        }
         navigationItem.searchController = searchController
     }
     
