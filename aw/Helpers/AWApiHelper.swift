@@ -67,6 +67,22 @@ struct AWApiHelper {
         task.resume()
     }
     
+    func fetchReachesByRegion(region: String, callback: @escaping ReachCallback) {
+        let url_string = riverURL + "?state=\(region)"
+        
+        guard let url = URL(string: url_string) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            print("Data retrieved from AW API for \(region), decoding reaches")
+            
+            let decoder = JSONDecoder()
+            guard let data = data, let reaches = try? decoder.decode([AWReach].self, from: data) else { return }
+            
+            callback(reaches)
+        }
+        task.resume()
+    }
+    
     func conditionFromApi(condition: String) -> Condition {
         switch condition {
         case "low":
@@ -85,7 +101,7 @@ struct AWApiHelper {
         let request: NSFetchRequest<Reach> = Reach.fetchRequest()
         request.predicate = predicate
         
-        guard let result = try? context.fetch(request) else {
+        guard let result = try? context.fetch(request), result.count > 0 else {
             let reach = Reach(context: context)
             reach.id = Int16(id)
             return reach
@@ -138,11 +154,9 @@ struct AWApiHelper {
             let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
             
             let context = container.viewContext
-            
-            self.createOrUpdateReach(newReach: newReach, context: context)
-            
+
             //container.performBackgroundTask { (context) in
-            
+            self.createOrUpdateReach(newReach: newReach, context: context)
             //}
         }
     }
@@ -155,6 +169,22 @@ struct AWApiHelper {
             
             for reach in reaches {
                 self.createOrUpdateReach(newReach: reach)
+            }
+        }
+    }
+    
+    func updateReachedForAllRegions() {
+        DispatchQueue.global(qos: .background).async {
+            for region in Region.all {
+                self.fetchReachesByRegion(region: region.code) { (reaches) in
+                    guard let reaches = reaches else { return }
+                    
+                    print("reaches fetched from API for \(region.title): \(reaches.count)")
+                    
+                    for reach in reaches {
+                        self.createOrUpdateReach(newReach: reach)
+                    }
+                }
             }
         }
     }

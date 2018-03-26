@@ -21,7 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         globalStyles()
         
         // start load reaches on launch
-        AWApiHelper.shared.updateReaches()
+        //AWApiHelper.shared.updateReaches()
+        AWApiHelper.shared.updateReachedForAllRegions()
         
         return true
     }

@@ -30,6 +30,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         updateFetchPredicates()
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
         case Segue.RunDetail.rawValue:
@@ -155,9 +156,6 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        print("reaches in database:", fetchedResultsController?.fetchedObjects?.count)
-        
         return fetchedResultsController?.fetchedObjects?.count ?? 0
     }
     

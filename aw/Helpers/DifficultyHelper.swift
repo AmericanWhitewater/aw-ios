@@ -44,8 +44,9 @@ struct DifficultyHelper {
             range = Array(splitDifficulties.first! ..< splitDifficulties.last!)
             range.append(splitDifficulties.last!)
         } else {
-            let single = Difficulty(rawValue: cleanedDifficulty)?.toInteger()
-            range.append(single!)
+            if let single = Difficulty(rawValue: cleanedDifficulty)?.toInteger() {
+                range.append(single)
+            }
         }
         return range
     }
