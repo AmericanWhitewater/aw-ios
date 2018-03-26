@@ -10,28 +10,19 @@ import UIKit
 
 class AboutAWViewController: UIViewController {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
-    @IBOutlet weak var containerView: UIView!
+
+    @IBOutlet weak var missionView: UIView!
+    @IBOutlet weak var stewardshipView: UIView!
+    @IBOutlet weak var fundingView: UIView!
     
-    var missionView: UIView!
-    var stewardshipView: UIView!
-    var fundingView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        missionView = AboutAWMissionViewController().view
-        stewardshipView = AboutAWStewardshipViewController().view
-        fundingView = AboutAWFundingViewController().view
-        
-        containerView.addSubview(stewardshipView)
-        containerView.addSubview(fundingView)
-        
-        // add mission view last, so it shows up on load
-        containerView.addSubview(missionView)
-
         // make our segmented control view blend in with the navigation bar
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.shadowImage = UIImage(named: "TransparentPixel")
+        
+        setViewShown(view: .mission)
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,13 +33,36 @@ class AboutAWViewController: UIViewController {
     @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            containerView.bringSubview(toFront: missionView)
+            setViewShown(view: AboutViews.mission)
         case 1:
-            containerView.bringSubview(toFront: stewardshipView)
+            setViewShown(view: AboutViews.stewardship)
         case 2:
-            containerView.bringSubview(toFront: fundingView)
+            setViewShown(view: AboutViews.funding)
         default:
             break
+        }
+    }
+}
+
+enum AboutViews: String {
+    case mission, stewardship, funding
+}
+
+extension AboutAWViewController {
+    func setViewShown(view: AboutViews) {
+        switch view {
+        case .mission:
+            missionView.isHidden = false
+            stewardshipView.isHidden = true
+            fundingView.isHidden = true
+        case .stewardship:
+            missionView.isHidden = true
+            stewardshipView.isHidden = false
+            fundingView.isHidden = true
+        case .funding:
+            missionView.isHidden = true
+            stewardshipView.isHidden = true
+            fundingView.isHidden = false
         }
     }
 }

@@ -19,8 +19,8 @@ extension Reach: MKAnnotation {
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
-
 extension Reach {
+
     var readingFormatted: String {
         guard let lastGuageReading = lastGageReading, let unit = unit else {
             //print(self.lastGageReading, self.unit)

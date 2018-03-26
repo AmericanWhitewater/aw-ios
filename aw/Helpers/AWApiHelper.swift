@@ -157,7 +157,7 @@ struct AWApiHelper {
     }
     
     func createOrUpdateReach(newReach: AWReach) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async(qos: .utility) {
             let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
             
             let context = container.viewContext
@@ -196,7 +196,7 @@ struct AWApiHelper {
     }
     
     func updateReachesForAllRegionsAsync() {
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .utility).async {
             self.updateReachesForAllRegions()
         }
     }

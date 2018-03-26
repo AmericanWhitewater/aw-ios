@@ -727,26 +727,50 @@ plan for your next run!</string>
                                     <constraint firstAttribute="bottom" secondItem="FUq-4e-2By" secondAttribute="bottom" constant="8" id="Rec-be-CJw"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h0S-DT-8Q6">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qE1-vg-0pn">
                                 <rect key="frame" x="0.0" y="108" width="375" height="510"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
+                                <connections>
+                                    <segue destination="wFc-cp-RCG" kind="embed" id="sZH-eX-PWf"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ho-aF-Sak">
+                                <rect key="frame" x="0.0" y="108" width="375" height="510"/>
+                                <connections>
+                                    <segue destination="qiV-7d-lKS" kind="embed" id="Lzc-rt-7JA"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LXe-fH-eXh">
+                                <rect key="frame" x="0.0" y="108" width="375" height="510"/>
+                                <connections>
+                                    <segue destination="adF-1R-he5" kind="embed" id="l9l-WC-zCb"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="h0S-DT-8Q6" firstAttribute="top" secondItem="7zF-Ho-H1J" secondAttribute="bottom" id="2Kb-A0-d6P"/>
                             <constraint firstItem="7zF-Ho-H1J" firstAttribute="top" secondItem="dt1-rI-BOY" secondAttribute="top" id="4KN-sJ-HTM"/>
-                            <constraint firstItem="dt1-rI-BOY" firstAttribute="bottom" secondItem="h0S-DT-8Q6" secondAttribute="bottom" id="XAt-I9-9aB"/>
+                            <constraint firstItem="LXe-fH-eXh" firstAttribute="leading" secondItem="dt1-rI-BOY" secondAttribute="leading" id="Ld6-FO-RRN"/>
+                            <constraint firstItem="LXe-fH-eXh" firstAttribute="top" secondItem="7zF-Ho-H1J" secondAttribute="bottom" id="Qtk-dq-1h0"/>
+                            <constraint firstItem="dt1-rI-BOY" firstAttribute="bottom" secondItem="qE1-vg-0pn" secondAttribute="bottom" id="SB2-l6-aLt"/>
+                            <constraint firstItem="qE1-vg-0pn" firstAttribute="leading" secondItem="dt1-rI-BOY" secondAttribute="leading" id="X2q-jp-kXc"/>
                             <constraint firstItem="7zF-Ho-H1J" firstAttribute="leading" secondItem="dt1-rI-BOY" secondAttribute="leading" id="ZXV-jp-iEh"/>
-                            <constraint firstItem="h0S-DT-8Q6" firstAttribute="leading" secondItem="dt1-rI-BOY" secondAttribute="leading" id="a0z-Ne-SSz"/>
+                            <constraint firstItem="dt1-rI-BOY" firstAttribute="trailing" secondItem="LXe-fH-eXh" secondAttribute="trailing" id="fk9-FY-wDS"/>
+                            <constraint firstItem="dt1-rI-BOY" firstAttribute="bottom" secondItem="LXe-fH-eXh" secondAttribute="bottom" id="fxO-yL-YkC"/>
                             <constraint firstItem="dt1-rI-BOY" firstAttribute="trailing" secondItem="7zF-Ho-H1J" secondAttribute="trailing" id="mC0-Ax-nik"/>
-                            <constraint firstItem="dt1-rI-BOY" firstAttribute="trailing" secondItem="h0S-DT-8Q6" secondAttribute="trailing" id="pda-gb-gIf"/>
+                            <constraint firstItem="dt1-rI-BOY" firstAttribute="trailing" secondItem="qE1-vg-0pn" secondAttribute="trailing" id="mVA-Wb-Bia"/>
+                            <constraint firstItem="2ho-aF-Sak" firstAttribute="top" secondItem="7zF-Ho-H1J" secondAttribute="bottom" id="pnQ-oJ-e9N"/>
+                            <constraint firstItem="dt1-rI-BOY" firstAttribute="bottom" secondItem="2ho-aF-Sak" secondAttribute="bottom" id="rPj-8d-QfI"/>
+                            <constraint firstItem="qE1-vg-0pn" firstAttribute="top" secondItem="7zF-Ho-H1J" secondAttribute="bottom" id="sj2-YB-PAh"/>
+                            <constraint firstItem="dt1-rI-BOY" firstAttribute="trailing" secondItem="2ho-aF-Sak" secondAttribute="trailing" id="vez-iJ-tKa"/>
+                            <constraint firstItem="2ho-aF-Sak" firstAttribute="leading" secondItem="dt1-rI-BOY" secondAttribute="leading" id="yyo-5q-Wns"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dt1-rI-BOY"/>
                     </view>
                     <connections>
-                        <outlet property="containerView" destination="h0S-DT-8Q6" id="jnl-Md-F4u"/>
+                        <outlet property="fundingView" destination="LXe-fH-eXh" id="0Vh-ju-47h"/>
+                        <outlet property="missionView" destination="qE1-vg-0pn" id="xPy-wB-l2u"/>
                         <outlet property="segmentedControl" destination="FUq-4e-2By" id="Ulq-qx-ugK"/>
+                        <outlet property="stewardshipView" destination="2ho-aF-Sak" id="kp4-cp-N69"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gqI-yW-ElC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1284,9 +1308,78 @@ plan for your next run!</string>
             </objects>
             <point key="canvasLocation" x="822" y="4380"/>
         </scene>
+        <!--Mission-->
+        <scene sceneID="Wem-I2-TaK">
+            <objects>
+                <viewController title="Mission" id="wFc-cp-RCG" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="W1a-Tm-uDv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="510"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mission" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akK-KQ-wDZ">
+                                <rect key="frame" x="126" y="200" width="59" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qqA-RK-n0V" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6580" y="411"/>
+        </scene>
+        <!--Stewardship-->
+        <scene sceneID="K6f-aJ-3vw">
+            <objects>
+                <viewController title="Stewardship" id="qiV-7d-lKS" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Y0t-nz-kXw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="510"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stewardship" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Is8-hG-jRd">
+                                <rect key="frame" x="166" y="223" width="95" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hLY-au-gof" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6580" y="1094"/>
+        </scene>
+        <!--Funding-->
+        <scene sceneID="Lr9-Ay-N4P">
+            <objects>
+                <viewController title="Funding" id="adF-1R-he5" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6Db-6y-O6A">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="510"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Funding" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DHp-dI-Dms">
+                                <rect key="frame" x="166" y="127" width="62" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iSs-0u-IZY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6580" y="1710.9445277361322"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="icon_favorite" width="18" height="17"/>
+        <image name="icon_favorite" width="25" height="24"/>
         <image name="icon_favorites" width="24" height="17"/>
         <image name="icon_favorites_selected" width="23" height="15"/>
         <image name="icon_map" width="21" height="18"/>

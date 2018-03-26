@@ -87,7 +87,7 @@ extension RunListTableViewController {
     }
     
     @objc private func refreshReaches(sender: UIRefreshControl) {
-        AWApiHelper.shared.updateReachesForAllRegions()
+        AWApiHelper.shared.updateReachesForAllRegionsAsync()
         sender.endRefreshing()
     }
     
