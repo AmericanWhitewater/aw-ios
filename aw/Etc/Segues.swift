@@ -11,4 +11,7 @@ import Foundation
 enum Segue: String {
     case RunDetail
     case ShowFilters
+    case ShowFiltersFavorites
+    case onboardingNeeded
+    case alreadyOnboarded
 }

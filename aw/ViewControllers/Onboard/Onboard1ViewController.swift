@@ -22,7 +22,7 @@ class Onboard1ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        performSegue(withIdentifier: "alreadyOnboardedSegue", sender: nil)
+        performSegue(withIdentifier: Segue.alreadyOnboarded.rawValue, sender: nil)
     }
     
 

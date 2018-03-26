@@ -39,7 +39,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
                 let reach = fetchedResultsController?.fetchedObjects![indexPath.row] else { return }
             
             detailVC.reach = reach
-        case Segue.ShowFilters.rawValue:
+        case Segue.ShowFilters.rawValue, Segue.ShowFiltersFavorites.rawValue:
             break
         default:
             print("Unknown segue!")
