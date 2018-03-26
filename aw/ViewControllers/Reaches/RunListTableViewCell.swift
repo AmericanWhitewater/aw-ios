@@ -43,8 +43,6 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
     }
 
     @IBAction func favoriteButtonTapped(_ sender: Any) {
-        print("button tapped")
-        
         managedObjectContext?.persist {
             guard let reach = self.reach else { return }
             reach.favorite = !reach.favorite

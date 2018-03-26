@@ -67,10 +67,28 @@ extension RunListTableViewController {
         fetchedResultsController?.delegate = self
         updateFetchPredicates()
         
+        setupSearchControl()
+        setupRefreshControl()
+    }
+    
+    func setupSearchControl() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search runs"
         navigationItem.searchController = searchController
+    }
+    
+    func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        let title = NSLocalizedString("PullToRefresh", comment: "Pull to refresh")
+        refreshControl.attributedTitle = NSAttributedString(string: title)
+        refreshControl.addTarget(self, action: #selector(refreshReaches(sender:)), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
+    @objc private func refreshReaches(sender: UIRefreshControl) {
+        AWApiHelper.shared.updateReachesForAllRegions()
+        sender.endRefreshing()
     }
     
     func updateFetchPredicates() {

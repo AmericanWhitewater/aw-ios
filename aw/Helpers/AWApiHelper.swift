@@ -180,19 +180,24 @@ struct AWApiHelper {
         }
     }
     
-    func updateReachedForAllRegions() {
-        DispatchQueue.global(qos: .background).async {
-            for region in Region.all {
-                self.fetchReachesByRegion(region: region.code) { (reaches) in
-                    guard let reaches = reaches else { return }
-                    
-                    print("reaches fetched from API for \(region.title): \(reaches.count)")
-                    
-                    for reach in reaches {
-                        self.createOrUpdateReach(newReach: reach)
-                    }
+    
+    func updateReachesForAllRegions() {
+        for region in Region.all {
+            self.fetchReachesByRegion(region: region.code) { (reaches) in
+                guard let reaches = reaches else { return }
+                
+                print("reaches fetched from API for \(region.title): \(reaches.count)")
+                
+                for reach in reaches {
+                    self.createOrUpdateReach(newReach: reach)
                 }
             }
+        }
+    }
+    
+    func updateReachesForAllRegionsAsync() {
+        DispatchQueue.global(qos: .background).async {
+            self.updateReachesForAllRegions()
         }
     }
 }
