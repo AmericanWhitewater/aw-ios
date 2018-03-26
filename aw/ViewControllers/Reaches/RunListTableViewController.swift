@@ -89,17 +89,26 @@ extension RunListTableViewController {
         
         
         let difficulties = DefaultsManager.classFilter
-        print(difficulties)
         if difficulties.count > 0 {
             var classPredicates: [NSPredicate] = []
             
             for value in difficulties {
                 classPredicates.append(NSPredicate(format: "difficulty\(value) == TRUE"))
-                print(value)
             }
             
             let classPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: classPredicates)
             combinedPredicates.append(classPredicate)
+        }
+        
+        let regions = DefaultsManager.regionsFilter
+        if regions.count > 0 {
+            var regionPredicates: [NSPredicate] = []
+            
+            for region in regions {
+                regionPredicates.append(NSPredicate(format: "state = %@", region))
+            }
+            let regionPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: regionPredicates)
+            combinedPredicates.append(regionPredicate)
         }
         
         self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: combinedPredicates)

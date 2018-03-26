@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // start load reaches on launch
         //AWApiHelper.shared.updateReaches()
-        AWApiHelper.shared.updateReachedForAllRegions()
+        //AWApiHelper.shared.updateReachedForAllRegions()
         
         return true
     }
