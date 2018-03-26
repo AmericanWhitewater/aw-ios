@@ -14,6 +14,8 @@ class MapViewController: UIViewController, MOCViewControllerType {
     @IBOutlet weak var mapView: MKMapView!
     
     var managedObjectContext: NSManagedObjectContext?
+    var persistentContainer: NSPersistentContainer?
+    
     var fetchedresultsController: NSFetchedResultsController<Reach>?
     
     override func viewDidLoad() {
@@ -25,12 +27,7 @@ class MapViewController: UIViewController, MOCViewControllerType {
 
 extension MapViewController {
     func initialize() {
-        print("initilize")
         mapView.delegate = self
-        
-        let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
-        
-        managedObjectContext = container.viewContext
         
         guard let moc = managedObjectContext else { return }
         

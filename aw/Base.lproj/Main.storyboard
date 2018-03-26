@@ -455,10 +455,10 @@ plan for your next run!</string>
             </objects>
             <point key="canvasLocation" x="2529" y="-1110"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab View Controller-->
         <scene sceneID="Pzb-aN-gIM">
             <objects>
-                <tabBarController id="VKa-ja-tv3" sceneMemberID="viewController">
+                <tabBarController id="VKa-ja-tv3" customClass="TabViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Bxu-qX-wJz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

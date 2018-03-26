@@ -110,9 +110,7 @@ struct AWApiHelper {
         return result.first!
     }
     
-    func createOrUpdateReach(newReach: AWReach, context: NSManagedObjectContext) {
-        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        
+    fileprivate func setupReach(_ reach: Reach, newReach: AWReach) {
         let difficultyRange = DifficultyHelper.parseDifficulty(difficulty: newReach.difficulty)
         
         var region: Region!
@@ -121,38 +119,62 @@ struct AWApiHelper {
             region = Region.apiDict[state]
         }
         
+        reach.section = newReach.section
+        reach.putInLat = newReach.putInLat
+        reach.putInLon = newReach.putInLon
+        reach.name = newReach.name
+        reach.lastGageReading = newReach.lastGageReading ?? "n/a"
+        reach.id = Int16(newReach.id)
+        reach.difficulty = newReach.difficulty
+        reach.condition = newReach.condition
+        reach.unit = newReach.unit
+        reach.takeOutLat = newReach.takeOutLat
+        reach.takeOutLon = newReach.takeOutLon
+        reach.state = region.title
+        reach.delta = newReach.delta
+        
+        if difficultyRange.contains(1) {
+            reach.difficulty1 = true
+        }
+        if difficultyRange.contains(2) {
+            reach.difficulty2 = true
+        }
+        if difficultyRange.contains(3) {
+            reach.difficulty3 = true
+        }
+        if difficultyRange.contains(4) {
+            reach.difficulty4 = true
+        }
+        if difficultyRange.contains(5) {
+            reach.difficulty5 = true
+        }
+    }
+    
+    func createOrUpdateReach(newReach: AWReach, context: NSManagedObjectContext) {
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         
         context.persist {
             let reach = self.findOrNewReach(byID: newReach.id, inContext: context)
-            reach.section = newReach.section
-            reach.putInLat = newReach.putInLat
-            reach.putInLon = newReach.putInLon
-            reach.name = newReach.name
-            reach.lastGageReading = newReach.lastGageReading ?? "n/a"
-            reach.id = Int16(newReach.id)
-            reach.difficulty = newReach.difficulty
-            reach.condition = newReach.condition
-            reach.unit = newReach.unit
-            reach.takeOutLat = newReach.takeOutLat
-            reach.takeOutLon = newReach.takeOutLon
-            reach.state = region.title 
-            reach.delta = newReach.delta
-            
-            if difficultyRange.contains(1) {
-                reach.difficulty1 = true
-            }
-            if difficultyRange.contains(2) {
-                reach.difficulty2 = true
-            }
-            if difficultyRange.contains(3) {
-                reach.difficulty3 = true
-            }
-            if difficultyRange.contains(4) {
-                reach.difficulty4 = true
-            }
-            if difficultyRange.contains(5) {
-                reach.difficulty5 = true
-            }
+            self.setupReach(reach, newReach: newReach)
+        }
+    }
+    
+    
+    func createOrUpdateReaches(newReaches: [AWReach], context: NSManagedObjectContext) {
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        
+        var reaches: [Reach] = []
+        
+        for newReach in newReaches {
+            let reach = self.findOrNewReach(byID: newReach.id, inContext: context)
+            self.setupReach(reach, newReach: newReach)
+            reaches.append(reach)
+        }
+        
+        do {
+            try context.save()
+        } catch {
+            fatalError("Failure to save context: \(error)")
         }
     }
     
@@ -168,15 +190,18 @@ struct AWApiHelper {
         }
     }
     
+    
     func updateReaches() {
         fetchReaches() { (reaches) in
             guard let reaches = reaches else { return }
             
             print("reaches fetched from API:", reaches.count)
-            
+            /*
             for reach in reaches {
                 self.createOrUpdateReach(newReach: reach)
             }
+            */
+            
         }
     }
     
@@ -191,6 +216,30 @@ struct AWApiHelper {
                 for reach in reaches {
                     self.createOrUpdateReach(newReach: reach)
                 }
+                /*
+                DispatchQueue.main.async(qos: .utility) {
+                    let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+                    
+                    let context = container.viewContext
+                    let privateMOC = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+                    
+                    privateMOC.perform {
+                        self.createOrUpdateReaches(newReaches: reaches, context: privateMOC)
+                        do {
+                            try privateMOC.save()
+                            context.performAndWait {
+                                do {
+                                    try context.save()
+                                } catch {
+                                    fatalError("Failure to save viewContext: \(error)")
+                                }
+                            }
+                        } catch {
+                            fatalError("Failure to save private context: \(error)")
+                        }
+                    }
+                }
+                */
             }
         }
     }

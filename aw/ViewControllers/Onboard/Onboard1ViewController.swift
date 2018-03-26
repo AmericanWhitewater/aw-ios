@@ -6,9 +6,13 @@
 //  Copyright © 2018 Alex Kerney. All rights reserved.
 //
 
+import CoreData
 import UIKit
 
-class Onboard1ViewController: UIViewController {
+class Onboard1ViewController: UIViewController, MOCViewControllerType {
+    
+    var managedObjectContext: NSManagedObjectContext?
+    var persistentContainer: NSPersistentContainer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,15 +29,14 @@ class Onboard1ViewController: UIViewController {
         performSegue(withIdentifier: Segue.alreadyOnboarded.rawValue, sender: nil)
     }
     
-
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        switch segue.identifier! {
+        //case Segue.alreadyOnboarded.rawValue:
+        //    injectContextAndContainerToTabChildVC(segue: segue)
+        default:
+            injectContextAndContainerToChildVC(segue: segue)
+        }
     }
-    */
-
 }

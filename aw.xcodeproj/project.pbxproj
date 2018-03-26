@@ -10,6 +10,7 @@
 		38150B262067F75800CBE8D8 /* Regions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38150B252067F75800CBE8D8 /* Regions.swift */; };
 		3858D23120689313004A39C6 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D22F20689313004A39C6 /* About.storyboard */; };
 		3858D23320689345004A39C6 /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D23220689345004A39C6 /* News.storyboard */; };
+		3858D23520693A36004A39C6 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3858D23420693A36004A39C6 /* TabViewController.swift */; };
 		385E59C22063047B00A68EC9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E59C12063047B00A68EC9 /* AppDelegate.swift */; };
 		385E59C72063047B00A68EC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 385E59C52063047B00A68EC9 /* Main.storyboard */; };
 		385E59C92063047B00A68EC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 385E59C82063047B00A68EC9 /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 		38150B252067F75800CBE8D8 /* Regions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regions.swift; sourceTree = "<group>"; };
 		3858D23020689313004A39C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = aw/Base.lproj/About.storyboard; sourceTree = "<group>"; };
 		3858D23220689345004A39C6 /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
+		3858D23420693A36004A39C6 /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
 		385E59BE2063047B00A68EC9 /* aw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		385E59C12063047B00A68EC9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		385E59C62063047B00A68EC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				38C421582065C9AF0044D717 /* More */,
 				38C421572065C9A40044D717 /* Reaches */,
 				38C421562065C99E0044D717 /* News */,
+				3858D23420693A36004A39C6 /* TabViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				38A98F602067E32D009853E1 /* DefaultsManager.swift in Sources */,
 				38A98F8C2067EFCD009853E1 /* FilterClassViewController.swift in Sources */,
 				38A98F622067E6E7009853E1 /* AboutAWViewController.swift in Sources */,
+				3858D23520693A36004A39C6 /* TabViewController.swift in Sources */,
 				38A98F5E2067CAF8009853E1 /* FavoriteListTableViewController.swift in Sources */,
 				38A98F8F2067F0B4009853E1 /* FilterExtendedNavBarView.swift in Sources */,
 				38A98F732067ED2E009853E1 /* AboutAWMissionViewController.swift in Sources */,

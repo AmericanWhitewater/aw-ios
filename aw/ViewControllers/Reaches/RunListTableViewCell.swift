@@ -10,14 +10,16 @@ import CoreData
 import UIKit
 
 class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
-    var managedObjectContext: NSManagedObjectContext?
-    var reach: Reach?
-    
     @IBOutlet weak var conditionColorView: UIView!
     @IBOutlet weak var riverName: UILabel!
     @IBOutlet weak var sectionLabel: UILabel!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
+    
+    var managedObjectContext: NSManagedObjectContext?
+    var persistentContainer: NSPersistentContainer?
+
+    var reach: Reach?
     
     override func awakeFromNib() {
         super.awakeFromNib()

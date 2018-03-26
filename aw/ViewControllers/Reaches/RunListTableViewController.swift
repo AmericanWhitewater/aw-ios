@@ -13,6 +13,8 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     @IBOutlet var tableView: UITableView!
     
     var managedObjectContext: NSManagedObjectContext?
+    var persistentContainer: NSPersistentContainer?
+    
     var fetchedResultsController: NSFetchedResultsController<Reach>?
     
     var predicates: [NSPredicate] = []
@@ -52,10 +54,7 @@ extension RunListTableViewController {
     func initialize() {
         tableView.delegate = self
         tableView.dataSource = self
-        
-        let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
-        managedObjectContext = container.viewContext
-        
+       
         guard let moc = managedObjectContext else { return }
         
         let request = NSFetchRequest<Reach>(entityName: "Reach")
@@ -206,6 +205,7 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
         cell.setup(reach: reach)
         
         cell.managedObjectContext = managedObjectContext
+        cell.persistentContainer = persistentContainer
         
         return cell
     }
