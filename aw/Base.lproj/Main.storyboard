@@ -339,7 +339,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EL2-9Y-pm3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1848.8" y="2838.530734632684"/>
+            <point key="canvasLocation" x="1510" y="2839"/>
         </scene>
         <!--Map-->
         <scene sceneID="SQ7-3d-HAD">
@@ -369,7 +369,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HVi-DN-gBj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2868" y="1700.5997001499252"/>
+            <point key="canvasLocation" x="2868" y="1825"/>
         </scene>
         <!--Onboard1-->
         <scene sceneID="yWA-yb-TNG">
@@ -610,6 +610,7 @@ plan for your next run!</string>
                                     <outlet property="favoriteButton" destination="jbg-rp-uO3" id="i1T-tk-CcF"/>
                                     <outlet property="riverName" destination="tkN-ig-IW4" id="ogn-ZW-V7J"/>
                                     <outlet property="sectionLabel" destination="e52-p4-o3I" id="L5t-kz-izg"/>
+                                    <segue destination="Q7y-fb-YGD" kind="show" identifier="RunDetailFavorites" id="Ml0-sc-RWe"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -735,7 +736,7 @@ plan for your next run!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ic4-Ry-2hL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="823" y="3612"/>
+            <point key="canvasLocation" x="217" y="3627"/>
         </scene>
         <!--Region Filter-->
         <scene sceneID="KNl-m4-Y05">
@@ -802,7 +803,7 @@ plan for your next run!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vQT-Ja-lmk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="124" y="4381"/>
+            <point key="canvasLocation" x="-481" y="4397"/>
         </scene>
         <!--Filter Distance View Controller-->
         <scene sceneID="sOX-1o-azr">
@@ -854,7 +855,7 @@ plan for your next run!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="osZ-xU-BFk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1510" y="4379"/>
+            <point key="canvasLocation" x="905" y="4395"/>
         </scene>
         <!--Filter Class View Controller-->
         <scene sceneID="QZI-5I-J7c">
@@ -1048,7 +1049,7 @@ plan for your next run!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ugk-Mk-7bL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="822" y="4380"/>
+            <point key="canvasLocation" x="217" y="4396"/>
         </scene>
         <!--About-->
         <scene sceneID="x9S-xH-nHC">
@@ -1096,6 +1097,7 @@ plan for your next run!</string>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BCF-g5-YXb"/>
+        <segue reference="BDm-bc-Bvj"/>
+        <segue reference="k4G-Sy-kKU"/>
     </inferredMetricsTieBreakers>
 </document>

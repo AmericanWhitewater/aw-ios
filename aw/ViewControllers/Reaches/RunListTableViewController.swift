@@ -33,7 +33,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
-        case Segue.RunDetail.rawValue:
+        case Segue.RunDetail.rawValue, Segue.RunDetailFavorites.rawValue:
             guard let detailVC = segue.destination as? RunDetailTableViewController,
                 let indexPath = tableView.indexPathForSelectedRow,
                 let reach = fetchedResultsController?.fetchedObjects![indexPath.row] else { return }
