@@ -33,15 +33,22 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
     func setup(reach: Reach) {
         self.reach = reach
         
-        conditionColorView.backgroundColor = reach.color
+        draw()
+    }
+    
+    func draw() {
+        if let reach = reach {
+            conditionColorView.backgroundColor = reach.color
         
-        riverName.text = reach.name
-        sectionLabel.text = reach.section
-        difficultyLabel.text = "Level: \(reach.readingFormatted) Class: \(reach.difficulty ?? "Unknown")"
-        difficultyLabel.textColor = reach.color
-        
-        let favorite_icon = reach.favorite ? UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite")
-        favoriteButton.setImage(favorite_icon, for: .normal)
+            riverName.text = reach.name
+            sectionLabel.text = reach.section
+            difficultyLabel.text = "Level: \(reach.readingFormatted) Class: \(reach.difficulty ?? "Unknown")"
+            difficultyLabel.textColor = reach.color
+            
+            let favorite_icon = reach.favorite ? UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite")
+            favoriteButton.setImage(favorite_icon, for: .normal)
+            
+        }
     }
 
     @IBAction func favoriteButtonTapped(_ sender: Any) {

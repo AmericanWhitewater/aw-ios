@@ -89,20 +89,26 @@ extension RunListTableViewController {
     
     func setupRefreshControl() {
         let refreshControl = UIRefreshControl()
-        let title = NSLocalizedString("PullToRefresh", comment: "Pull to refresh")
+        let title = NSLocalizedString("Pull to Refresh", comment: "Pull to refresh")
         refreshControl.attributedTitle = NSAttributedString(string: title)
         refreshControl.addTarget(self, action: #selector(refreshReaches(sender:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }
     
     @objc private func refreshReaches(sender: UIRefreshControl) {
-        //AWApiHelper.shared.updateReachesForAllRegionsAsync()
-        if let container = persistentContainer {
-            AWApiHelper.updateRegions(container: container) {
-                self.updateFetchPredicates()
+        let attributedTitle = sender.attributedTitle
+        
+        let refreshingTitle = NSLocalizedString("Refreshing runs from AW", comment: "Refreshing Runs from AW")
+        sender.attributedTitle = NSAttributedString(string: refreshingTitle)
+        
+        if let context = managedObjectContext {
+            AWApiHelper.updateRegions(viewContext: context) {
+                //self.updateFetchPredicates()
+                
+                sender.endRefreshing()
+                sender.attributedTitle = attributedTitle
             }
         }
-        sender.endRefreshing()
     }
     
     func updateFetchPredicates() {
