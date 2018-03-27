@@ -50,6 +50,7 @@ struct AWApiHelper {
     static let shared = AWApiHelper()
     
     typealias ReachCallback = ([AWReach]?) -> Void
+    typealias updateCallback = () -> Void
     
     func fetchReaches(callback: @escaping ReachCallback) {
         
@@ -247,6 +248,149 @@ struct AWApiHelper {
     func updateReachesForAllRegionsAsync() {
         DispatchQueue.global(qos: .utility).async {
             self.updateReachesForAllRegions()
+        }
+    }
+    
+    static func fetchReachesByRegionStatic(region: String, callback: @escaping ReachCallback) {
+        let url_string = riverURL + "?state=\(region)"
+        
+        guard let url = URL(string: url_string) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            print("Data retrieved from AW API for \(region), decoding reaches")
+            
+            let decoder = JSONDecoder()
+            guard let data = data, let reaches = try? decoder.decode([AWReach].self, from: data) else { return }
+            
+            callback(reaches)
+        }
+        task.resume()
+    }
+    
+    static func createOrUpdateReachesStatic(newReaches: [AWReach], context: NSManagedObjectContext) {
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        
+        print("\(newReaches.count) AWReaches found, creating")
+        
+        var reaches: [Reach] = []
+        
+        for newReach in newReaches {
+            let reach = self.findOrNewReachStatic(byID: newReach.id, inContext: context)
+            self.setupReachStatic(reach, newReach: newReach)
+            reaches.append(reach)
+        }
+        
+        print("\(newReaches.count) found, \(reaches.count) updated or created")
+        
+        do {
+            try context.save()
+            print("\(newReaches.count) saved")
+        } catch {
+            fatalError("Failure to save \(newReaches.count) reaches context: \(error)")
+        }
+    }
+    
+    static func findOrNewReachStatic(byID id: Int, inContext context: NSManagedObjectContext) -> Reach {
+        let predicate = NSPredicate(format: "id == %i", id)
+        let request: NSFetchRequest<Reach> = Reach.fetchRequest()
+        request.predicate = predicate
+        
+        guard let result = try? context.fetch(request), result.count > 0 else {
+            let reach = Reach(context: context)
+            reach.id = Int16(id)
+            return reach
+        }
+        
+        return result.first!
+    }
+    
+    static fileprivate func setupReachStatic(_ reach: Reach, newReach: AWReach) {
+        let difficultyRange = DifficultyHelper.parseDifficulty(difficulty: newReach.difficulty)
+        
+        var region: Region!
+        
+        if let state = newReach.state {
+            region = Region.apiDict[state]
+        }
+        
+        reach.section = newReach.section
+        reach.putInLat = newReach.putInLat
+        reach.putInLon = newReach.putInLon
+        reach.name = newReach.name
+        reach.lastGageReading = newReach.lastGageReading ?? "n/a"
+        reach.id = Int16(newReach.id)
+        reach.difficulty = newReach.difficulty
+        reach.condition = newReach.condition
+        reach.unit = newReach.unit
+        reach.takeOutLat = newReach.takeOutLat
+        reach.takeOutLon = newReach.takeOutLon
+        reach.state = region.title
+        reach.delta = newReach.delta
+        
+        if difficultyRange.contains(1) {
+            reach.difficulty1 = true
+        }
+        if difficultyRange.contains(2) {
+            reach.difficulty2 = true
+        }
+        if difficultyRange.contains(3) {
+            reach.difficulty3 = true
+        }
+        if difficultyRange.contains(4) {
+            reach.difficulty4 = true
+        }
+        if difficultyRange.contains(5) {
+            reach.difficulty5 = true
+        }
+    }
+    
+    static func updateRegions(container: NSPersistentContainer, callback: @escaping updateCallback) {
+        let regions = Region.all
+        let dispatchGroup = DispatchGroup()
+        for region in regions {
+            dispatchGroup.enter()
+            /*
+            container.performBackgroundTask { (backgroundContext) in
+                fetchReachesByRegionStatic(region: region.code) { (reaches) in
+                    print("aw reaches decoded for \(region.code)")
+                    if let reaches = reaches {
+                        self.createOrUpdateReachesStatic(newReaches: reaches, context: backgroundContext)
+                    }
+                    do {
+                        try backgroundContext.save()
+                        print("background context saved for \(region.code)")
+                    } catch {
+                        print("unable to save background context")
+                    }
+                    dispatchGroup.leave()
+                }
+                
+            } */
+            fetchReachesByRegionStatic(region: region.code) { (reaches) in
+                container.performBackgroundTask{ (backgroundContext) in
+                    print("aw reaches decoded for \(region.code)")
+                    if let reaches = reaches {
+                        self.createOrUpdateReachesStatic(newReaches: reaches, context: backgroundContext)
+                    }
+                    do {
+                        try backgroundContext.save()
+                        print("background context saved for \(region.code)")
+                    } catch {
+                        print("unable to save background context")
+                    }
+                    dispatchGroup.leave()
+                }
+            }
+        }
+        dispatchGroup.notify(queue: .main) {
+            print("updateRegions complete")
+            do {
+                try container.viewContext.save()
+                print("view context saved")
+            } catch {
+                print("unable to save view context")
+            }
+            callback()
         }
     }
 }

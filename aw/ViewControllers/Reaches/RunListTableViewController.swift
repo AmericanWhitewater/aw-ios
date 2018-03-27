@@ -96,7 +96,12 @@ extension RunListTableViewController {
     }
     
     @objc private func refreshReaches(sender: UIRefreshControl) {
-        AWApiHelper.shared.updateReachesForAllRegionsAsync()
+        //AWApiHelper.shared.updateReachesForAllRegionsAsync()
+        if let container = persistentContainer {
+            AWApiHelper.updateRegions(container: container) {
+                self.updateFetchPredicates()
+            }
+        }
         sender.endRefreshing()
     }
     
