@@ -15,6 +15,9 @@ class FilterRegionViewController: UIViewController {
 
     var selectedRegions: [String] = []
 
+    var isFiltered = false
+    var filteredRegions: [Region] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,10 +25,12 @@ class FilterRegionViewController: UIViewController {
     }
 }
 
+// MARK: - Extension
 extension FilterRegionViewController {
     func initialize() {
         tableView.delegate = self
         tableView.dataSource = self
+        searchBar.delegate = self
 
         selectedRegions = DefaultsManager.regionsFilter
 
@@ -41,12 +46,28 @@ extension FilterRegionViewController {
     }
 }
 
+// MARK: - FilterViewControllerType
 extension FilterRegionViewController: FilterViewControllerType {
     func save() {
         DefaultsManager.regionsFilter = selectedRegions
     }
 }
 
+extension FilterRegionViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count == 0 {
+            isFiltered = false
+        } else {
+            isFiltered = true
+            filteredRegions = Region.all.filter { (region) in
+                return region.title.contains(searchText)
+            }
+        }
+        self.tableView.reloadData()
+    }
+}
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
 extension FilterRegionViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -54,12 +75,22 @@ extension FilterRegionViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Region.all.count
+        if isFiltered {
+            return filteredRegions.count
+        } else {
+            return Region.all.count
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let region = Region.all[indexPath.row]
+        let region: Region
+
+        if isFiltered {
+            region = filteredRegions[indexPath.row]
+        } else {
+            region = Region.all[indexPath.row]
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "regionFilterCell", for: indexPath)
 
         cell.textLabel?.text = region.title
