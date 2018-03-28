@@ -173,7 +173,6 @@ struct AWApiHelper {
                         print("unable to save background context \(error) \(error.userInfo)")
                     }
                     dispatchGroup.leave()
-                
                 }
             }
         }

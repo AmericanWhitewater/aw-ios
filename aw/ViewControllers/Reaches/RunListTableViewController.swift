@@ -74,6 +74,7 @@ extension RunListTableViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search runs"
+        searchController.searchBar.tintColor = .white
         if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
             if let backgroundView = textField.subviews.first {
                 // set background color
