@@ -32,6 +32,10 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         updateFetchPredicates()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        dismissSearch()
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
@@ -75,6 +79,7 @@ extension RunListTableViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search runs"
         searchController.searchBar.tintColor = .white
+        searchController.hidesNavigationBarDuringPresentation = false
         if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
             if let backgroundView = textField.subviews.first {
                 // set background color
@@ -86,6 +91,10 @@ extension RunListTableViewController {
             }
         }
         navigationItem.searchController = searchController
+    }
+    
+    func dismissSearch() {
+        searchController.dismiss(animated: false, completion: nil)
     }
     
     func setupRefreshControl() {

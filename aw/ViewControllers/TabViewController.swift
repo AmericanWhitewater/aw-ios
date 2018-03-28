@@ -15,7 +15,10 @@ class TabViewController: UITabBarController, MOCViewControllerType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.delegate = self
 
+        // MARK: - Inject CoreData dependencies
         for childVC in childViewControllers {
             if let navVC = childVC as? UINavigationController, var destinationVC = navVC.childViewControllers[0] as? MOCViewControllerType {
                 destinationVC.managedObjectContext = managedObjectContext
@@ -23,21 +26,18 @@ class TabViewController: UITabBarController, MOCViewControllerType {
             }
         }
     }
+}
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+// MARK: - TabBarControllerDelegate
+extension TabViewController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        
+        
+        if let navController = viewControllers?[selectedIndex] as? UINavigationController {
+            for controller in navController.viewControllers.flatMap({ $0 as? RunListTableViewController }) {
+                controller.dismissSearch()
+            }
+        }
+        return true
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
