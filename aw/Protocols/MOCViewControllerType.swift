@@ -18,22 +18,22 @@ protocol MOCViewControllerType {
 extension MOCViewControllerType {
     func injectContextAndContainerToChildVC(segue: UIStoryboardSegue) {
         guard var destinationVC = segue.destination as? MOCViewControllerType else { return }
-        
+
         destinationVC.managedObjectContext = managedObjectContext
         destinationVC.persistentContainer = persistentContainer
     }
-    
+
     func injectContextAndContainerToNavChildVC(segue: UIStoryboardSegue) {
         guard let navVC = segue.destination as? UINavigationController,
             var destinationVC = navVC.viewControllers[0] as? MOCViewControllerType else { return }
-        
+
         destinationVC.managedObjectContext = managedObjectContext
         destinationVC.persistentContainer = persistentContainer
     }
-    
+
     func injectContextAndContainerToTabChildVC(segue: UIStoryboardSegue) {
         guard let tabVC = segue.destination as? UITabBarController else { return }
-        
+
         for childVC in tabVC.childViewControllers {
             if var childVC = childVC as? MOCViewControllerType {
                 childVC.managedObjectContext = managedObjectContext

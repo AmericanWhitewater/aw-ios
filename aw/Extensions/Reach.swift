@@ -15,7 +15,7 @@ extension Reach: MKAnnotation {
         guard let lat = putInLat, let latitude = Double(lat), let lon = putInLon, let longitude = Double(lon) else {
             return kCLLocationCoordinate2DInvalid
         }
-        
+
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
@@ -28,10 +28,10 @@ extension Reach {
         }
         return "\(lastGuageReading) \(unit)"
     }
-    
+
     var color: UIColor {
         let con = AWApiHelper.conditionFromApi(condition: condition ?? "")
-        
+
         return con.color
     }
 }

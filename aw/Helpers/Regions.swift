@@ -13,7 +13,7 @@ struct Region {
     let title: String
     let country: String
     let apiResponse: String
-    
+
     static let all: [Region] = [
         Region(code: "stAL", title: "Alabama", country: "US", apiResponse: "USA-ALB"),
         Region(code: "stAK", title: "Alaska", country: "US", apiResponse: "USA-ALK"),
@@ -67,7 +67,7 @@ struct Region {
         Region(code: "stWV", title: "West Virginia", country: "US", apiResponse: "USA-WVR"),
         Region(code: "stWI", title: "Wisconsin", country: "US", apiResponse: "USA-WIS"),
         Region(code: "stWY", title: "Wyoming", country: "US", apiResponse: "USA-WYM"),
-        
+
         /*    Region(code: "rgLP", title: "Lower Pacific", country: "US"),
             Region(code: "rgMC", title: "MidAtlantic", country: "US"),
             Region(code: "rgMW", title: "MidWest", country: "US"),
@@ -75,7 +75,7 @@ struct Region {
             Region(code: "rgNW", title: "North West", country: "US"),
             Region(code: "rgSE", title: "South East", country: "US"),
             Region(code: "rgWT", title: "West", country: "US"), */
-        
+
         //  Region(code: "stAB", title: "Alberta", country: "CA"),
         Region(code: "stBC", title: "British Columbia", country: "CA", apiResponse: "CAN-BCL"),
         Region(code: "stMB", title: "Manitoba", country: "CA", apiResponse: "CAN-MNT"),
@@ -90,9 +90,9 @@ struct Region {
         // Region(code: "stYT", title: "Yukon Territory", country: "CA"),
         Region(code: "stCR", title: "Costa Rica", country: "CS", apiResponse: "CRI-SJO"),
         Region(code: "stLV", title: "Dominican Republic", country: "DR", apiResponse: "DOM-SDM"),
-        Region(code: "stMX", title: "Mexico", country: "MX", apiResponse: "MEX-DTD"),
-        // Region(code: "rgIN", title: "International", country: "N/A")
+        Region(code: "stMX", title: "Mexico", country: "MX", apiResponse: "MEX-DTD")
+        // ,Region(code: "rgIN", title: "International", country: "N/A")
     ]
-    
+
     static let apiDict = Dictionary(grouping: Region.all, by: { $0.apiResponse }).mapValues { $0.first! }
 }

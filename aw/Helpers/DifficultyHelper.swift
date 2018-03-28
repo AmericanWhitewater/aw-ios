@@ -15,7 +15,7 @@ struct DifficultyHelper {
         case class3 = "III"
         case class4 = "IV"
         case class5 = "V"
-        
+
         func toInteger() -> Int {
             switch self {
             case .class1:
@@ -31,13 +31,13 @@ struct DifficultyHelper {
             }
         }
     }
-    
+
     static func parseDifficulty(difficulty: String) -> [Int] {
         var cleanedDifficulty = difficulty.replacingOccurrences(of: "+", with: "")
         cleanedDifficulty = String(cleanedDifficulty.split(separator: "(").first!)
-        
+
         var range: [Int] = []
-        
+
         if cleanedDifficulty.contains("-") {
             let split = cleanedDifficulty.split(separator: "-")
             let splitDifficulties = split.map { Difficulty(rawValue: String($0))}.flatMap { $0?.toInteger() }

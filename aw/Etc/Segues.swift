@@ -9,8 +9,8 @@
 import Foundation
 
 enum Segue: String {
-    case RunDetail, RunDetailFavorites
-    case ShowFilters, ShowFiltersFavorites
+    case runDetail, runDetailFavorites
+    case showFilters, showFiltersFavorites
     case onboardingNeeded
     case alreadyOnboarded
 }

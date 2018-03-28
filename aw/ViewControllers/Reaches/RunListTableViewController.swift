@@ -11,41 +11,41 @@ import UIKit
 
 class RunListTableViewController: UIViewController, MOCViewControllerType {
     @IBOutlet var tableView: UITableView!
-    
+
     var managedObjectContext: NSManagedObjectContext?
     var persistentContainer: NSPersistentContainer?
-    
+
     var fetchedResultsController: NSFetchedResultsController<Reach>?
-    
+
     var predicates: [NSPredicate] = []
-    
+
     let searchController = UISearchController(searchResultsController: nil)
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         initialize()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateFetchPredicates()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         dismissSearch()
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
-        case Segue.RunDetail.rawValue, Segue.RunDetailFavorites.rawValue:
+        case Segue.runDetail.rawValue, Segue.runDetailFavorites.rawValue:
             guard let detailVC = segue.destination as? RunDetailTableViewController,
                 let indexPath = tableView.indexPathForSelectedRow,
                 let reach = fetchedResultsController?.fetchedObjects![indexPath.row] else { return }
-            
+
             detailVC.reach = reach
-        case Segue.ShowFilters.rawValue, Segue.ShowFiltersFavorites.rawValue:
+        case Segue.showFilters.rawValue, Segue.showFiltersFavorites.rawValue:
             break
         default:
             print("Unknown segue!")
@@ -58,22 +58,27 @@ extension RunListTableViewController {
     func initialize() {
         tableView.delegate = self
         tableView.dataSource = self
-       
+
         guard let moc = managedObjectContext else { return }
-        
+
         let request = NSFetchRequest<Reach>(entityName: "Reach")
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true), NSSortDescriptor(key: "section", ascending: true)]
-        
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "name", ascending: true),
+            NSSortDescriptor(key: "section", ascending: true)]
+
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
-        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
+                                                              managedObjectContext: moc,
+                                                              sectionNameKeyPath: nil,
+                                                              cacheName: nil)
+
         fetchedResultsController?.delegate = self
         updateFetchPredicates()
-        
+
         setupSearchControl()
         setupRefreshControl()
     }
-    
+
     func setupSearchControl() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -84,7 +89,7 @@ extension RunListTableViewController {
             if let backgroundView = textField.subviews.first {
                 // set background color
                 backgroundView.backgroundColor = .white
-                
+
                 // round corners
                 backgroundView.layer.cornerRadius = 10
                 backgroundView.clipsToBounds = true
@@ -92,11 +97,11 @@ extension RunListTableViewController {
         }
         navigationItem.searchController = searchController
     }
-    
+
     func dismissSearch() {
         searchController.dismiss(animated: false, completion: nil)
     }
-    
+
     func setupRefreshControl() {
         let refreshControl = UIRefreshControl()
         let title = NSLocalizedString("Pull to Refresh", comment: "Pull to refresh")
@@ -104,63 +109,63 @@ extension RunListTableViewController {
         refreshControl.addTarget(self, action: #selector(refreshReaches(sender:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }
-    
+
     @objc private func refreshReaches(sender: UIRefreshControl) {
         let attributedTitle = sender.attributedTitle
-        
+
         let refreshingTitle = NSLocalizedString("Refreshing runs from AW", comment: "Refreshing Runs from AW")
         sender.attributedTitle = NSAttributedString(string: refreshingTitle)
-        
+
         if let context = managedObjectContext {
             AWApiHelper.updateRegions(viewContext: context) {
                 //self.updateFetchPredicates()
-                
+
                 sender.endRefreshing()
                 sender.attributedTitle = attributedTitle
             }
         }
     }
-    
+
     func updateFetchPredicates() {
         var combinedPredicates = predicates
-        
+
         if let searchText = searchController.searchBar.text {
             if searchText.count > 0 {
                 let searchName = NSPredicate(format: "name contains[c] %@", searchText)
                 let searchSection = NSPredicate(format: "section contains[c] %@", searchText)
-                
+
                 let searchPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [searchName, searchSection])
-                
+
                 combinedPredicates.append(searchPredicate)
             }
         }
-        
-        
+
         let difficulties = DefaultsManager.classFilter
         if difficulties.count > 0 {
             var classPredicates: [NSPredicate] = []
-            
+
             for value in difficulties {
                 classPredicates.append(NSPredicate(format: "difficulty\(value) == TRUE"))
             }
-            
+
             let classPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: classPredicates)
             combinedPredicates.append(classPredicate)
         }
-        
+
         let regions = DefaultsManager.regionsFilter
         if regions.count > 0 {
             var regionPredicates: [NSPredicate] = []
-            
+
             for region in regions {
                 regionPredicates.append(NSPredicate(format: "state = %@", region))
             }
             let regionPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: regionPredicates)
             combinedPredicates.append(regionPredicate)
         }
-        
-        self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: combinedPredicates)
-        
+
+        self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(
+            andPredicateWithSubpredicates: combinedPredicates)
+
         do {
             try self.fetchedResultsController?.performFetch()
         } catch {
@@ -182,13 +187,17 @@ extension RunListTableViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
-    
+
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+
         switch type {
         case .insert:
             guard let insertIndex = newIndexPath else { return }
@@ -211,24 +220,28 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController?.fetchedObjects?.count ?? 0
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "runCell", for: indexPath) as! RunListTableViewCell
-        
-        //let reach = reaches[indexPath.row]
-        
-        guard let reach = fetchedResultsController?.object(at: indexPath) else { return cell }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "runCell",
+                                                       for: indexPath) as? RunListTableViewCell
+            else {
+            fatalError("Failed to deque cell as RunListTableViewCell")
+        }
+
+        guard let reach = fetchedResultsController?.object(at: indexPath) else {
+            print("Can't get reach from fetch results")
+            return cell
+        }
         cell.setup(reach: reach)
-        
+
         cell.managedObjectContext = managedObjectContext
         cell.persistentContainer = persistentContainer
-        
+
         return cell
     }
 }
-

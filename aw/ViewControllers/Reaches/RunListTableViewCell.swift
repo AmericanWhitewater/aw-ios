@@ -15,12 +15,12 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
     @IBOutlet weak var sectionLabel: UILabel!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
-    
+
     var managedObjectContext: NSManagedObjectContext?
     var persistentContainer: NSPersistentContainer?
 
     var reach: Reach?
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -29,25 +29,26 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     func setup(reach: Reach) {
         self.reach = reach
-        
+
         draw()
     }
-    
+
     func draw() {
         if let reach = reach {
             conditionColorView.backgroundColor = reach.color
-        
+
             riverName.text = reach.name
             sectionLabel.text = reach.section
             difficultyLabel.text = "Level: \(reach.readingFormatted) Class: \(reach.difficulty ?? "Unknown")"
             difficultyLabel.textColor = reach.color
-            
-            let favorite_icon = reach.favorite ? UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite")
+
+            let favorite_icon = reach.favorite ?
+                UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite")
             favoriteButton.setImage(favorite_icon, for: .normal)
-            
+
         }
     }
 
@@ -56,7 +57,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
             guard let reach = self.reach else { return }
             reach.favorite = !reach.favorite
         }
-        
+
         favoriteButton.setImage(UIImage(named: "icon_favorite_selected"), for: .normal)
     }
 }

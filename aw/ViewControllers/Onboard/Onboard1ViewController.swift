@@ -10,7 +10,7 @@ import CoreData
 import UIKit
 
 class Onboard1ViewController: UIViewController, MOCViewControllerType {
-    
+
     var managedObjectContext: NSManagedObjectContext?
     var persistentContainer: NSPersistentContainer?
 
@@ -22,14 +22,14 @@ class Onboard1ViewController: UIViewController, MOCViewControllerType {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         performSegue(withIdentifier: Segue.alreadyOnboarded.rawValue, sender: nil)
+        //performSegue(withIdentifier: Segue.onboardingNeeded.rawValue, sender: nil)
     }
-    
-    
+
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {

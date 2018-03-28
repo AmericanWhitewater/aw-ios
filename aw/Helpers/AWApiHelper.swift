@@ -28,7 +28,7 @@ struct AWReach: Codable {
     let takeOutLon: String?
     let state: String?
     let delta: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case id, name, section, unit, state, delta
         case difficulty = "class"
@@ -48,8 +48,8 @@ struct Condition {
 
 struct AWApiHelper {
     typealias ReachCallback = ([AWReach]?) -> Void
-    typealias updateCallback = () -> Void
-    
+    typealias UpdateCallback = () -> Void
+
     static func conditionFromApi(condition: String) -> Condition {
         switch condition {
         case "low":
@@ -62,64 +62,64 @@ struct AWApiHelper {
             return Condition(name: "No Info", color: UIColor(named: "status_grey")!)
         }
     }
-    
+
     static func fetchReachesByRegion(region: String, callback: @escaping ReachCallback) {
         let url_string = riverURL + "?state=\(region)"
-        
+
         guard let url = URL(string: url_string) else { return }
-        
+
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             print("Data retrieved from AW API for \(region), decoding reaches")
-            
+
             let decoder = JSONDecoder()
             guard let data = data, let reaches = try? decoder.decode([AWReach].self, from: data) else { return }
-            
+
             callback(reaches)
         }
         task.resume()
     }
-    
+
     static func createOrUpdateReaches(newReaches: [AWReach], context: NSManagedObjectContext) {
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        
+
         var reaches: [Reach] = []
-        
+
         for newReach in newReaches {
             let reach = self.findOrNewReach(byID: newReach.id, inContext: context)
             self.setupReach(reach, newReach: newReach)
             reaches.append(reach)
         }
-        
+
         do {
             try context.save()
         } catch {
             fatalError("Failure to save \(newReaches.count) reaches context: \(error)")
         }
     }
-    
+
     static func findOrNewReach(byID id: Int, inContext context: NSManagedObjectContext) -> Reach {
         let predicate = NSPredicate(format: "id == %i", id)
         let request: NSFetchRequest<Reach> = Reach.fetchRequest()
         request.predicate = predicate
-        
+
         guard let result = try? context.fetch(request), result.count > 0 else {
             let reach = Reach(context: context)
             reach.id = Int16(id)
             return reach
         }
-        
+
         return result.first!
     }
-    
+
     static fileprivate func setupReach(_ reach: Reach, newReach: AWReach) {
         let difficultyRange = DifficultyHelper.parseDifficulty(difficulty: newReach.difficulty)
-        
+
         var region: Region!
-        
+
         if let state = newReach.state {
             region = Region.apiDict[state]
         }
-        
+
         reach.section = newReach.section
         reach.putInLat = newReach.putInLat
         reach.putInLon = newReach.putInLon
@@ -133,7 +133,7 @@ struct AWApiHelper {
         reach.takeOutLon = newReach.takeOutLon
         reach.state = region.title
         reach.delta = newReach.delta
-        
+
         if difficultyRange.contains(1) {
             reach.difficulty1 = true
         }
@@ -150,8 +150,8 @@ struct AWApiHelper {
             reach.difficulty5 = true
         }
     }
-    
-    static func updateRegions(viewContext: NSManagedObjectContext, callback: @escaping updateCallback) {
+
+    static func updateRegions(viewContext: NSManagedObjectContext, callback: @escaping UpdateCallback) {
         let regions = Region.all
         let dispatchGroup = DispatchGroup()
         for region in regions {
@@ -159,7 +159,7 @@ struct AWApiHelper {
             fetchReachesByRegion(region: region.code) { (reaches) in
                 let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
                 context.parent = viewContext
-                
+
                 context.perform {
                     print("aw reaches decoded for \(region.code)")
                     if let reaches = reaches {

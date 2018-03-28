@@ -14,14 +14,13 @@ class AboutAWViewController: UIViewController {
     @IBOutlet weak var missionView: UIView!
     @IBOutlet weak var stewardshipView: UIView!
     @IBOutlet weak var fundingView: UIView!
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // make our segmented control view blend in with the navigation bar
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.shadowImage = UIImage(named: "TransparentPixel")
-        
+
         setViewShown(view: .mission)
     }
 

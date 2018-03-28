@@ -91,7 +91,7 @@
                                     <outlet property="favoriteButton" destination="aaY-df-Jqq" id="3JD-Mf-OIJ"/>
                                     <outlet property="riverName" destination="QGK-9P-EDa" id="5gp-FU-Y9s"/>
                                     <outlet property="sectionLabel" destination="UYf-47-N2e" id="Bjy-Zg-OLD"/>
-                                    <segue destination="Q7y-fb-YGD" kind="show" identifier="RunDetail" id="k4G-Sy-kKU"/>
+                                    <segue destination="Q7y-fb-YGD" kind="show" identifier="runDetail" id="k4G-Sy-kKU"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -100,7 +100,7 @@
                         <barButtonItem key="backBarButtonItem" title="Runs" id="E8n-Ca-HOy"/>
                         <barButtonItem key="rightBarButtonItem" title="Filters" id="nvV-Hl-gq6">
                             <connections>
-                                <segue destination="YFK-7r-CMH" kind="presentation" identifier="ShowFilters" id="BDm-bc-Bvj"/>
+                                <segue destination="YFK-7r-CMH" kind="presentation" identifier="showFilters" id="BDm-bc-Bvj"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -396,7 +396,7 @@
                     </view>
                     <connections>
                         <segue destination="VKa-ja-tv3" kind="show" identifier="alreadyOnboarded" id="J5Q-Dj-XRe"/>
-                        <segue destination="LNl-Ac-cP5" kind="show" id="zeM-vH-Gsy"/>
+                        <segue destination="LNl-Ac-cP5" kind="show" identifier="onboardingNeeded" id="zeM-vH-Gsy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pst-1r-Ou4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -406,7 +406,7 @@
         <!--Onboard2-->
         <scene sceneID="9i3-kQ-lZu">
             <objects>
-                <viewController title="Onboard2" id="LNl-Ac-cP5" sceneMemberID="viewController">
+                <viewController title="Onboard2" id="LNl-Ac-cP5" customClass="Onboard2ViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XGd-dn-ldf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -425,14 +425,17 @@ plan for your next run!</string>
                                 <color key="textColor" name="white"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="BLG-wd-svF">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="BLG-wd-svF">
                                 <rect key="frame" x="97.5" y="416" width="181" height="30"/>
                                 <color key="backgroundColor" name="white"/>
                                 <state key="normal" title="Use your current location?">
                                     <color key="titleColor" name="primary"/>
                                 </state>
+                                <connections>
+                                    <action selector="allowLocationPressed:" destination="LNl-Ac-cP5" eventType="touchUpInside" id="HwI-j7-HZj"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="sGh-gQ-323">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="sGh-gQ-323">
                                 <rect key="frame" x="75" y="490" width="226" height="30"/>
                                 <state key="normal" title="Browse without enabling location">
                                     <color key="titleColor" name="white"/>
@@ -442,9 +445,11 @@ plan for your next run!</string>
                         <color key="backgroundColor" name="primary"/>
                         <constraints>
                             <constraint firstItem="6nW-RO-4cC" firstAttribute="top" secondItem="IIh-HC-8MY" secondAttribute="bottom" constant="30" id="2SF-mq-yfY"/>
+                            <constraint firstItem="sGh-gQ-323" firstAttribute="top" secondItem="BLG-wd-svF" secondAttribute="bottom" constant="44" id="38T-1S-7KH"/>
                             <constraint firstItem="6nW-RO-4cC" firstAttribute="centerX" secondItem="XGd-dn-ldf" secondAttribute="centerX" id="55U-Un-tni"/>
                             <constraint firstItem="BLG-wd-svF" firstAttribute="centerX" secondItem="XGd-dn-ldf" secondAttribute="centerX" id="8Pg-lF-Yrq"/>
                             <constraint firstItem="sGh-gQ-323" firstAttribute="centerX" secondItem="XGd-dn-ldf" secondAttribute="centerX" id="Kvb-ib-zvW"/>
+                            <constraint firstItem="BLG-wd-svF" firstAttribute="top" secondItem="6nW-RO-4cC" secondAttribute="bottom" constant="174.5" id="QWf-4P-ydZ"/>
                             <constraint firstItem="IIh-HC-8MY" firstAttribute="top" secondItem="43e-gY-2j4" secondAttribute="top" constant="110" id="beo-Bb-bDn"/>
                             <constraint firstItem="IIh-HC-8MY" firstAttribute="centerX" secondItem="XGd-dn-ldf" secondAttribute="centerX" id="gP1-b0-SL5"/>
                         </constraints>
@@ -556,8 +561,8 @@ plan for your next run!</string>
                                                 <constraint firstAttribute="width" constant="8" id="ahV-W1-ZfZ"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="RiverName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tkN-ig-IW4">
-                                            <rect key="frame" x="16" y="11" width="42" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RiverName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tkN-ig-IW4">
+                                            <rect key="frame" x="16" y="11" width="87.5" height="21"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -610,7 +615,7 @@ plan for your next run!</string>
                                     <outlet property="favoriteButton" destination="jbg-rp-uO3" id="i1T-tk-CcF"/>
                                     <outlet property="riverName" destination="tkN-ig-IW4" id="ogn-ZW-V7J"/>
                                     <outlet property="sectionLabel" destination="e52-p4-o3I" id="L5t-kz-izg"/>
-                                    <segue destination="Q7y-fb-YGD" kind="show" identifier="RunDetailFavorites" id="Ml0-sc-RWe"/>
+                                    <segue destination="Q7y-fb-YGD" kind="show" identifier="runDetailFavorites" id="Ml0-sc-RWe"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -619,7 +624,7 @@ plan for your next run!</string>
                         <barButtonItem key="backBarButtonItem" title="Runs" id="EDM-s5-t4Z"/>
                         <barButtonItem key="rightBarButtonItem" title="Filters" id="cvP-0M-mNb">
                             <connections>
-                                <segue destination="YFK-7r-CMH" kind="presentation" identifier="ShowFiltersFavorites" id="BCF-g5-YXb"/>
+                                <segue destination="YFK-7r-CMH" kind="presentation" identifier="showFiltersFavorites" id="BCF-g5-YXb"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1097,7 +1102,7 @@ plan for your next run!</string>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BDm-bc-Bvj"/>
-        <segue reference="k4G-Sy-kKU"/>
+        <segue reference="BCF-g5-YXb"/>
+        <segue reference="Ml0-sc-RWe"/>
     </inferredMetricsTieBreakers>
 </document>

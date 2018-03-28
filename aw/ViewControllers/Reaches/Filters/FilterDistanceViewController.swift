@@ -11,21 +11,21 @@ import UIKit
 class FilterDistanceViewController: UIViewController {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var slider: UISlider!
-    
+
     var distance: Float! {
         didSet {
             setDistanceLabel()
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         distance = DefaultsManager.distanceFilter
-        
+
         slider.value = distance
     }
-    
+
     fileprivate func setDistanceLabel() {
         if distance == 0.0 {
             distanceLabel.text = "Search anywhere"
@@ -33,7 +33,7 @@ class FilterDistanceViewController: UIViewController {
             distanceLabel.text = "\(Int(distance)) miles"
         }
     }
-    
+
     @IBAction func distanceChanged(_ sender: UISlider) {
         distance = slider.value
     }

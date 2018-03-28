@@ -16,15 +16,14 @@ class RunDetailTableViewController: UITableViewController {
     @IBOutlet weak var gradientLabel: UILabel!
     @IBOutlet weak var readingLabel: UILabel!
     @IBOutlet weak var unitsLabel: UILabel!
-    
+
     var reach: Reach?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         initialize()
     }
-
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -47,13 +46,13 @@ class RunDetailTableViewController: UITableViewController {
 
 extension RunDetailTableViewController {
     func initialize() {
-        tableView.contentInset = UIEdgeInsetsMake(-36, 0, 0, 0)
-        
+        tableView.contentInset = UIEdgeInsets(top: -36, left: 0, bottom: 0, right: 0) //UIEdgeInsetsMake(-36, 0, 0, 0)
+
         guard let reach = reach else { return }
         nameLabel.text = reach.name
         sectionLabel.text = reach.section
         difficultyLabel.text = reach.difficulty
-        
+
         guard let reading = reach.lastGageReading, let unit = reach.unit else { return }
         readingLabel.text = reading
         readingLabel.textColor = reach.color
