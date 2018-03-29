@@ -1060,7 +1060,7 @@ plan for your next run!</string>
         <scene sceneID="x9S-xH-nHC">
             <objects>
                 <viewControllerPlaceholder storyboardName="About" id="Alq-ay-8h5" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="kiI-eI-dIr"/>
+                    <tabBarItem key="tabBarItem" title="More" image="icon_more" selectedImage="icon_more_selected" id="kiI-eI-dIr"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RKI-Dr-mH6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1070,7 +1070,7 @@ plan for your next run!</string>
         <scene sceneID="tM5-X2-arZ">
             <objects>
                 <viewControllerPlaceholder storyboardName="News" id="hyL-Gz-HYK" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="uAi-4X-qPR"/>
+                    <tabBarItem key="tabBarItem" title="News" image="icon_news" selectedImage="icon_news_selected" id="uAi-4X-qPR"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="azy-mL-FOR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1083,6 +1083,10 @@ plan for your next run!</string>
         <image name="icon_favorites_selected" width="30" height="22"/>
         <image name="icon_map" width="26" height="23"/>
         <image name="icon_map_selected" width="26" height="23"/>
+        <image name="icon_more" width="20" height="15"/>
+        <image name="icon_more_selected" width="20" height="15"/>
+        <image name="icon_news" width="24" height="24"/>
+        <image name="icon_news_selected" width="22" height="22"/>
         <image name="icon_runs" width="22" height="22"/>
         <image name="icon_runs_selected" width="22" height="22"/>
         <image name="round_logo" width="97" height="97"/>
