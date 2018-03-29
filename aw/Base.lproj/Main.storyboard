@@ -523,7 +523,7 @@ plan for your next run!</string>
         <scene sceneID="c0X-pe-VVq">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="O1P-a1-sjl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" image="icon_map" id="pEO-RW-V6K"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="icon_map" selectedImage="icon_map_selected" id="pEO-RW-V6K"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bgv-gi-Wwp">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -1079,11 +1079,12 @@ plan for your next run!</string>
     </scenes>
     <resources>
         <image name="icon_favorite" width="25" height="24"/>
-        <image name="icon_favorites" width="24" height="17"/>
-        <image name="icon_favorites_selected" width="23" height="15"/>
-        <image name="icon_map" width="21" height="18"/>
-        <image name="icon_runs" width="18" height="18"/>
-        <image name="icon_runs_selected" width="17" height="17"/>
+        <image name="icon_favorites" width="30" height="20"/>
+        <image name="icon_favorites_selected" width="30" height="22"/>
+        <image name="icon_map" width="26" height="23"/>
+        <image name="icon_map_selected" width="26" height="23"/>
+        <image name="icon_runs" width="22" height="22"/>
+        <image name="icon_runs_selected" width="22" height="22"/>
         <image name="round_logo" width="97" height="97"/>
         <namedColor name="font_light_grey">
             <color red="0.36862745098039218" green="0.36862745098039218" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1102,7 +1103,7 @@ plan for your next run!</string>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BCF-g5-YXb"/>
-        <segue reference="Ml0-sc-RWe"/>
+        <segue reference="BDm-bc-Bvj"/>
+        <segue reference="k4G-Sy-kKU"/>
     </inferredMetricsTieBreakers>
 </document>

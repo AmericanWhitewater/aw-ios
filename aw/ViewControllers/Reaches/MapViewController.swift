@@ -55,7 +55,27 @@ extension MapViewController {
 
 // MARK: - MKMapViewDelegate
 extension MapViewController: MKMapViewDelegate {
-
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let reach = annotation as? Reach {
+            var view = mapView.dequeueReusableAnnotationView(withIdentifier: "reach") as? MKMarkerAnnotationView
+            if view == nil {
+                view = MKMarkerAnnotationView(annotation: nil, reuseIdentifier: "reach")
+            }
+            view?.annotation = annotation
+            view?.clusteringIdentifier = "reach"
+            return view
+        } else if let cluster = annotation as? MKClusterAnnotation {
+            var view = mapView.dequeueReusableAnnotationView(withIdentifier: "cluster") as? MKMarkerAnnotationView
+            if view == nil {
+                view = MKMarkerAnnotationView(annotation: nil, reuseIdentifier: "cluster")
+            }
+            view?.annotation = cluster
+            return view
+        } else {
+            // default view for user location and unknown annotations
+            return nil
+        }
+    }
 }
 
 // MARK: - NSFetchedResultsControllerDelegate

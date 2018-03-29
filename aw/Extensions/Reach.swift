@@ -19,6 +19,7 @@ extension Reach: MKAnnotation {
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
+
 extension Reach {
 
     var readingFormatted: String {
