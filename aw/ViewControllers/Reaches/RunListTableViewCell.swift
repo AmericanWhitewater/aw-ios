@@ -45,9 +45,9 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
             difficultyLabel.text = "Level: \(reach.readingFormatted) Class: \(reach.difficulty ?? "Unknown")"
             difficultyLabel.textColor = reach.color
 
-            let favorite_icon = reach.favorite ?
+            let favoriteIcon = reach.favorite ?
                 UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite")
-            favoriteButton.setImage(favorite_icon, for: .normal)
+            favoriteButton.setImage(favoriteIcon, for: .normal)
 
         }
     }

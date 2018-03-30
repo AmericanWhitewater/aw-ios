@@ -25,6 +25,13 @@ class ReachAnnotation: NSObject {
         self.subtitle = subtitle
         self.condition = condition
     }
+
+    var icon: UIImage? {
+        guard let condition = condition else {
+            return nil
+        }
+        return AWApiHelper.conditionFromApi(condition: condition).icon
+    }
 }
 
 extension ReachAnnotation: MKAnnotation {

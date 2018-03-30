@@ -18,6 +18,8 @@ class MapViewController: UIViewController, MOCViewControllerType {
 
     var fetchedresultsController: NSFetchedResultsController<Reach>?
 
+    var selectedReachID: String?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,19 +53,39 @@ extension MapViewController {
             mapView.addAnnotations(reaches.map { $0.annotation })
         }
     }
+
+    @objc func reachButtonTapped(sender: UIButton!) {
+        print("button tapped")
+        if let reach = mapView.selectedAnnotations.first as? ReachAnnotation {
+            print(reach.title)
+        }
+    }
 }
 
 // MARK: - MKMapViewDelegate
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let reach = annotation as? ReachAnnotation {
-            var view = mapView.dequeueReusableAnnotationView(withIdentifier: "reach") as? MKMarkerAnnotationView
+            var view = mapView.dequeueReusableAnnotationView(withIdentifier: "reach") as? MKAnnotationView
             if view == nil {
-                view = MKMarkerAnnotationView(annotation: nil, reuseIdentifier: "reach")
+                view = MKAnnotationView(annotation: nil, reuseIdentifier: "reach")
             }
             view?.annotation = annotation
             view?.canShowCallout = true
-            view?.clusteringIdentifier = "reach"
+            //view?.clusteringIdentifier = "reach" // cluster view is causing exc_bad_access crashes see: https://forums.developer.apple.com/thread/92799
+            if let icon = reach.icon {
+                view?.image = icon
+            }
+            // change display priority based on current conditions
+//            switch reach.condition {
+//            case "low", "med", "high":
+//                break
+//            default:
+//                view?.displayPriority = .defaultLow
+//            }
+            let button = UIButton(type: .detailDisclosure)
+            button.addTarget(self, action: #selector(reachButtonTapped), for: .touchUpInside)
+            view?.rightCalloutAccessoryView = button
             return view
         } else if let cluster = annotation as? MKClusterAnnotation {
             var view = mapView.dequeueReusableAnnotationView(withIdentifier: "cluster") as? MKMarkerAnnotationView

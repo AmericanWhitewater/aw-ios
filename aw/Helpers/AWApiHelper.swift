@@ -44,6 +44,7 @@ struct AWReach: Codable {
 struct Condition {
     let name: String
     let color: UIColor
+    let icon: UIImage?
 }
 
 struct AWApiHelper {
@@ -53,20 +54,20 @@ struct AWApiHelper {
     static func conditionFromApi(condition: String) -> Condition {
         switch condition {
         case "low":
-            return Condition(name: "Low", color: UIColor(named: "status_yellow")!)
+            return Condition(name: "Low", color: UIColor(named: "status_yellow")!, icon: UIImage(named: "lowPin"))
         case "med":
-            return Condition(name: "Runnable", color: UIColor(named: "status_green")!)
+            return Condition(name: "Runnable", color: UIColor(named: "status_green")!, icon: UIImage(named: "runnablePin"))
         case "high":
-            return Condition(name: "High", color: UIColor(named: "status_red")!)
+            return Condition(name: "High", color: UIColor(named: "status_red")!, icon: UIImage(named: "highPin"))
         default:
-            return Condition(name: "No Info", color: UIColor(named: "status_grey")!)
+            return Condition(name: "No Info", color: UIColor(named: "status_grey")!, icon: UIImage(named: "noinfoPin"))
         }
     }
 
     static func fetchReachesByRegion(region: String, callback: @escaping ReachCallback) {
-        let url_string = riverURL + "?state=\(region)"
+        let urlString = riverURL + "?state=\(region)"
 
-        guard let url = URL(string: url_string) else { return }
+        guard let url = URL(string: urlString) else { return }
 
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             print("Data retrieved from AW API for \(region), decoding reaches")

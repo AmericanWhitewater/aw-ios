@@ -9,17 +9,6 @@
 import Foundation
 import MapKit
 
-extension Reach: MKAnnotation {
-    public var coordinate: CLLocationCoordinate2D {
-        // put in latitude and longitude are optional strings
-        guard let lat = putInLat, let latitude = Double(lat), let lon = putInLon, let longitude = Double(lon) else {
-            return kCLLocationCoordinate2DInvalid
-        }
-
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-    }
-}
-
 extension Reach {
 
     var readingFormatted: String {
@@ -37,6 +26,12 @@ extension Reach {
     }
 
     var annotation: ReachAnnotation {
-        return ReachAnnotation(lat: putInLat, lon: putInLon, id: id, title: name, subtitle: section, condition: condition)
+        let title: String?
+        if let difficulty = difficulty, let name = name {
+            title = "\(name) (\(difficulty))"
+        } else {
+            title = name
+        }
+        return ReachAnnotation(lat: putInLat, lon: putInLon, id: id, title: title, subtitle: section, condition: condition)
     }
 }
