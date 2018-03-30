@@ -62,6 +62,7 @@ extension MapViewController: MKMapViewDelegate {
                 view = MKMarkerAnnotationView(annotation: nil, reuseIdentifier: "reach")
             }
             view?.annotation = annotation
+            view?.canShowCallout = true
             view?.clusteringIdentifier = "reach"
             return view
         } else if let cluster = annotation as? MKClusterAnnotation {
@@ -74,6 +75,12 @@ extension MapViewController: MKMapViewDelegate {
         } else {
             // default view for user location and unknown annotations
             return nil
+        }
+    }
+
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let annotation = view.annotation as? ReachAnnotation {
+            print(annotation.title)
         }
     }
 }

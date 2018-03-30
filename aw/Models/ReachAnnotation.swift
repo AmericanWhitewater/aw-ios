@@ -30,8 +30,15 @@ class ReachAnnotation: NSObject {
 extension ReachAnnotation: MKAnnotation {
     public var coordinate: CLLocationCoordinate2D {
         guard let lat = lat, let latitude = Double(lat), let lon = lon, let longitude = Double(lon) else {
+            print("\(id) has invalid coordinates, can't make Doubles")
             return kCLLocationCoordinate2DInvalid
         }
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        if CLLocationCoordinate2DIsValid(coordinate) {
+            return coordinate
+        } else {
+            print("\(id) has invalid coordinates")
+            return kCLLocationCoordinate2DInvalid
+        }
     }
 }

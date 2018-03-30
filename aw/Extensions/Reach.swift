@@ -9,10 +9,6 @@
 import Foundation
 import MapKit
 
-
-
-
-
 extension Reach: MKAnnotation {
     public var coordinate: CLLocationCoordinate2D {
         // put in latitude and longitude are optional strings
