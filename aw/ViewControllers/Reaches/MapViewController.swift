@@ -18,12 +18,19 @@ class MapViewController: UIViewController, MOCViewControllerType {
 
     var fetchedresultsController: NSFetchedResultsController<Reach>?
 
-    var selectedReachID: String?
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initialize()
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case Segue.runDetailMap.rawValue:
+            prepareDetailSegue(segue)
+        default:
+            print("Unknown segue \(segue.identifier ?? "unknown identifier")")
+        }
     }
 }
 
@@ -55,9 +62,25 @@ extension MapViewController {
     }
 
     @objc func reachButtonTapped(sender: UIButton!) {
-        print("button tapped")
-        if let reach = mapView.selectedAnnotations.first as? ReachAnnotation {
-            print(reach.title)
+        performSegue(withIdentifier: Segue.runDetailMap.rawValue, sender: nil)
+    }
+
+    func prepareDetailSegue(_ segue: UIStoryboardSegue) {
+        if let selectedReachAnnotation = mapView.selectedAnnotations.first as? ReachAnnotation,
+            let context = managedObjectContext {
+            let request: NSFetchRequest<Reach> = Reach.fetchRequest()
+            request.predicate = NSPredicate(format: "id = %i", selectedReachAnnotation.id)
+
+            do {
+                let reaches = try context.fetch(request)
+                if let reach = reaches.first, let destinationVC = segue.destination as? RunDetailTableViewController {
+                    destinationVC.reach = reach
+                } else {
+                    print("No reach")
+                }
+            } catch {
+                print("Failed to fetch reach \(selectedReachAnnotation.id)")
+            }
         }
     }
 }
@@ -66,13 +89,15 @@ extension MapViewController {
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let reach = annotation as? ReachAnnotation {
-            var view = mapView.dequeueReusableAnnotationView(withIdentifier: "reach") as? MKAnnotationView
+            var view = mapView.dequeueReusableAnnotationView(withIdentifier: "reach")
             if view == nil {
                 view = MKAnnotationView(annotation: nil, reuseIdentifier: "reach")
             }
             view?.annotation = annotation
             view?.canShowCallout = true
-            //view?.clusteringIdentifier = "reach" // cluster view is causing exc_bad_access crashes see: https://forums.developer.apple.com/thread/92799
+            //view?.clusteringIdentifier = "reach"
+            // cluster view is causing exc_bad_access crashes
+            // see: https://forums.developer.apple.com/thread/92799
             if let icon = reach.icon {
                 view?.image = icon
             }
@@ -97,12 +122,6 @@ extension MapViewController: MKMapViewDelegate {
         } else {
             // default view for user location and unknown annotations
             return nil
-        }
-    }
-
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if let annotation = view.annotation as? ReachAnnotation {
-            print(annotation.title)
         }
     }
 }
