@@ -17,6 +17,7 @@
 		385E59CC2063047B00A68EC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 385E59CA2063047B00A68EC9 /* LaunchScreen.storyboard */; };
 		385E59D52063073900A68EC9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 385E59D42063073900A68EC9 /* MapKit.framework */; };
 		3864857D206BC355009B360F /* Onboard2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3864857C206BC355009B360F /* Onboard2ViewController.swift */; };
+		38648580206E7749009B360F /* ReachAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3864857F206E7749009B360F /* ReachAnnotation.swift */; };
 		38A6C8D92066759A00B5BA29 /* RunListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8D82066759A00B5BA29 /* RunListTableViewController.swift */; };
 		38A6C8DB206677EC00B5BA29 /* RunListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8DA206677EC00B5BA29 /* RunListTableViewCell.swift */; };
 		38A6C8E3206687EC00B5BA29 /* MOCViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8E2206687EC00B5BA29 /* MOCViewControllerType.swift */; };
@@ -62,6 +63,7 @@
 		385E59CD2063047B00A68EC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		385E59D42063073900A68EC9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3864857C206BC355009B360F /* Onboard2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboard2ViewController.swift; sourceTree = "<group>"; };
+		3864857F206E7749009B360F /* ReachAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachAnnotation.swift; sourceTree = "<group>"; };
 		38A6C8D82066759A00B5BA29 /* RunListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunListTableViewController.swift; sourceTree = "<group>"; };
 		38A6C8DA206677EC00B5BA29 /* RunListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunListTableViewCell.swift; sourceTree = "<group>"; };
 		38A6C8E2206687EC00B5BA29 /* MOCViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOCViewControllerType.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		38A6C8DC206685AE00B5BA29 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3864857F206E7749009B360F /* ReachAnnotation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				38A6C8E3206687EC00B5BA29 /* MOCViewControllerType.swift in Sources */,
 				38150B262067F75800CBE8D8 /* Regions.swift in Sources */,
 				38A98F772067ED3F009853E1 /* AboutAWStewardshipViewController.swift in Sources */,
+				38648580206E7749009B360F /* ReachAnnotation.swift in Sources */,
 				38BE74A8206839F200DE555D /* FilterManagerViewControllerType.swift in Sources */,
 				38A98F602067E32D009853E1 /* DefaultsManager.swift in Sources */,
 				38A98F8C2067EFCD009853E1 /* FilterClassViewController.swift in Sources */,

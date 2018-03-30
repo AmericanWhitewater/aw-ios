@@ -48,7 +48,7 @@ extension MapViewController {
 
         // add the reaches in core data
         if let reaches = fetchedresultsController?.fetchedObjects {
-            mapView.addAnnotations(reaches)
+            mapView.addAnnotations(reaches.map { $0.annotation })
         }
     }
 }
@@ -56,7 +56,7 @@ extension MapViewController {
 // MARK: - MKMapViewDelegate
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if let reach = annotation as? Reach {
+        if let reach = annotation as? ReachAnnotation {
             var view = mapView.dequeueReusableAnnotationView(withIdentifier: "reach") as? MKMarkerAnnotationView
             if view == nil {
                 view = MKMarkerAnnotationView(annotation: nil, reuseIdentifier: "reach")
@@ -94,15 +94,15 @@ extension MapViewController: NSFetchedResultsControllerDelegate {
 
         switch type {
         case .insert:
-            mapView.addAnnotation(reach)
+            mapView.addAnnotation(reach.annotation)
         case .delete:
-            mapView.removeAnnotation(reach)
+            mapView.removeAnnotation(reach.annotation)
         case .update:
-            mapView.removeAnnotation(reach)
-            mapView.addAnnotation(reach)
+            mapView.removeAnnotation(reach.annotation)
+            mapView.addAnnotation(reach.annotation)
         case .move:
-            mapView.removeAnnotation(reach)
-            mapView.addAnnotation(reach)
+            mapView.removeAnnotation(reach.annotation)
+            mapView.addAnnotation(reach.annotation)
             print("reach moved: \(reach.name ?? "unknown reach")) - \(reach.section ?? "unknown section")")
         }
     }

@@ -9,6 +9,10 @@
 import Foundation
 import MapKit
 
+
+
+
+
 extension Reach: MKAnnotation {
     public var coordinate: CLLocationCoordinate2D {
         // put in latitude and longitude are optional strings
@@ -34,5 +38,9 @@ extension Reach {
         let con = AWApiHelper.conditionFromApi(condition: condition ?? "")
 
         return con.color
+    }
+
+    var annotation: ReachAnnotation {
+        return ReachAnnotation(lat: putInLat, lon: putInLon, id: id, title: name, subtitle: section, condition: condition)
     }
 }
