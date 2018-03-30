@@ -16,7 +16,8 @@ class MapViewController: UIViewController, MOCViewControllerType {
     var managedObjectContext: NSManagedObjectContext?
     var persistentContainer: NSPersistentContainer?
 
-    var fetchedresultsController: NSFetchedResultsController<Reach>?
+    var fetchedResultsController: NSFetchedResultsController<Reach>?
+    var predicates: [NSPredicate] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,41 +25,32 @@ class MapViewController: UIViewController, MOCViewControllerType {
         initialize()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateFetchPredicates()
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case Segue.runDetailMap.rawValue:
             prepareDetailSegue(segue)
+        case Segue.showFiltersMap.rawValue:
+            break
         default:
             print("Unknown segue \(segue.identifier ?? "unknown identifier")")
         }
     }
 }
 
+// MARK: - Extension
 extension MapViewController {
     func initialize() {
         mapView.delegate = self
 
-        guard let moc = managedObjectContext else { return }
+        fetchedResultsController = initializeFetchedResultController()
+        fetchedResultsController?.delegate = self
 
-        let request = NSFetchRequest<Reach>(entityName: "Reach")
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        fetchedresultsController = NSFetchedResultsController(fetchRequest: request,
-                                                              managedObjectContext: moc,
-                                                              sectionNameKeyPath: nil,
-                                                              cacheName: nil)
-
-        fetchedresultsController?.delegate = self
-
-        do {
-            try fetchedresultsController?.performFetch()
-        } catch {
-            print("fetch request failed")
-        }
-
-        // add the reaches in core data
-        if let reaches = fetchedresultsController?.fetchedObjects {
-            mapView.addAnnotations(reaches.map { $0.annotation })
-        }
+        updateFetchPredicates()
     }
 
     @objc func reachButtonTapped(sender: UIButton!) {
@@ -83,6 +75,58 @@ extension MapViewController {
             }
         }
     }
+
+    func updateFetchPredicates() {
+        var combinedPredicates = predicates
+
+        let difficulties = DefaultsManager.classFilter
+        if difficulties.count > 0 {
+            var classPredicates: [NSPredicate] = []
+
+            for value in difficulties {
+                classPredicates.append(NSPredicate(format: "difficulty\(value) == TRUE"))
+            }
+
+            let classPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: classPredicates)
+            combinedPredicates.append(classPredicate)
+        }
+
+        let regions = DefaultsManager.regionsFilter
+        if regions.count > 0 {
+            var regionPredicates: [NSPredicate] = []
+
+            for region in regions {
+                regionPredicates.append(NSPredicate(format: "state = %@", region))
+            }
+            let regionPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: regionPredicates)
+            combinedPredicates.append(regionPredicate)
+        }
+
+        self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(
+            andPredicateWithSubpredicates: combinedPredicates)
+
+        do {
+            try self.fetchedResultsController?.performFetch()
+        } catch {
+            print("fetch request failed")
+        }
+        mapView.removeAnnotations(mapView.annotations)
+        do {
+            try fetchedResultsController?.performFetch()
+        } catch {
+            print("fetch request failed")
+        }
+
+        // add the reaches in core data
+        if let reaches = fetchedResultsController?.fetchedObjects {
+            mapView.addAnnotations(reaches.map { $0.annotation })
+        }
+    }
+}
+
+// MARK: - ReachFetchRequestControllerType
+extension MapViewController: ReachFetchRequestControllerType {
+
 }
 
 // MARK: - MKMapViewDelegate

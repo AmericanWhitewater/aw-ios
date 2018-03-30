@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		38150B262067F75800CBE8D8 /* Regions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38150B252067F75800CBE8D8 /* Regions.swift */; };
+		381ED393206F012400B03F13 /* ReachFetchRequestControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED392206F012400B03F13 /* ReachFetchRequestControllerType.swift */; };
 		3858D23120689313004A39C6 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D22F20689313004A39C6 /* About.storyboard */; };
 		3858D23320689345004A39C6 /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D23220689345004A39C6 /* News.storyboard */; };
 		3858D23520693A36004A39C6 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3858D23420693A36004A39C6 /* TabViewController.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		38150B252067F75800CBE8D8 /* Regions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regions.swift; sourceTree = "<group>"; };
+		381ED392206F012400B03F13 /* ReachFetchRequestControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFetchRequestControllerType.swift; sourceTree = "<group>"; };
 		3858D23020689313004A39C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = aw/Base.lproj/About.storyboard; sourceTree = "<group>"; };
 		3858D23220689345004A39C6 /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
 		3858D23420693A36004A39C6 /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				38A6C8E2206687EC00B5BA29 /* MOCViewControllerType.swift */,
 				38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */,
 				38BE74A7206839F200DE555D /* FilterManagerViewControllerType.swift */,
+				381ED392206F012400B03F13 /* ReachFetchRequestControllerType.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				38A98F622067E6E7009853E1 /* AboutAWViewController.swift in Sources */,
 				3858D23520693A36004A39C6 /* TabViewController.swift in Sources */,
 				38A98F5E2067CAF8009853E1 /* FavoriteListTableViewController.swift in Sources */,
+				381ED393206F012400B03F13 /* ReachFetchRequestControllerType.swift in Sources */,
 				38A98F8F2067F0B4009853E1 /* FilterExtendedNavBarView.swift in Sources */,
 				38A98F732067ED2E009853E1 /* AboutAWMissionViewController.swift in Sources */,
 				38A6C8DB206677EC00B5BA29 /* RunListTableViewCell.swift in Sources */,

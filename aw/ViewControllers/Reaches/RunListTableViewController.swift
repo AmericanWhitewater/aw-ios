@@ -59,19 +59,7 @@ extension RunListTableViewController {
         tableView.delegate = self
         tableView.dataSource = self
 
-        guard let moc = managedObjectContext else { return }
-
-        let request = NSFetchRequest<Reach>(entityName: "Reach")
-        request.sortDescriptors = [
-            NSSortDescriptor(key: "name", ascending: true),
-            NSSortDescriptor(key: "section", ascending: true)]
-
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
-                                                              managedObjectContext: moc,
-                                                              sectionNameKeyPath: nil,
-                                                              cacheName: nil)
-
+        fetchedResultsController = initializeFetchedResultController()
         fetchedResultsController?.delegate = self
         updateFetchPredicates()
 
@@ -173,6 +161,11 @@ extension RunListTableViewController {
         }
         self.tableView.reloadData()
     }
+}
+
+// MARK: - ReachFetchRequestControllerType
+extension RunListTableViewController: ReachFetchRequestControllerType {
+
 }
 
 // MARK: - UISearchResultsUpdating

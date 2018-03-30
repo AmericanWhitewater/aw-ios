@@ -275,11 +275,11 @@
                                         <rect key="frame" x="0.0" y="613" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ck4-k1-jkv" id="BDc-bL-xKE">
-                                            <rect key="frame" x="0.0" y="0.0" width="349" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="See gauge info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xub-w9-EeW">
-                                                    <rect key="frame" x="15" y="0.0" width="325" height="43.5"/>
+                                                    <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -338,7 +338,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EL2-9Y-pm3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1510" y="2839"/>
+            <point key="canvasLocation" x="2202" y="2830"/>
         </scene>
         <!--Map-->
         <scene sceneID="SQ7-3d-HAD">
@@ -363,6 +363,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="American Whitewater" id="YiE-Tm-z2w">
                         <barButtonItem key="backBarButtonItem" title="Map" id="0ZH-Yx-oG2"/>
+                        <barButtonItem key="rightBarButtonItem" title="Filters" id="8z3-0y-QQi">
+                            <connections>
+                                <segue destination="YFK-7r-CMH" kind="presentation" identifier="showFiltersMap" id="35b-Ee-eOR"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="NbB-v1-cby" id="kHf-yu-Jy2"/>
@@ -654,7 +659,7 @@ plan for your next run!</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ATf-eN-rzo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="209.59999999999999" y="2838.9805097451276"/>
+            <point key="canvasLocation" x="902" y="2830"/>
         </scene>
         <!--Filters-->
         <scene sceneID="dre-VB-4OK">
@@ -743,7 +748,7 @@ plan for your next run!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ic4-Ry-2hL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="217" y="3627"/>
+            <point key="canvasLocation" x="910" y="3618"/>
         </scene>
         <!--Region Filter-->
         <scene sceneID="KNl-m4-Y05">
@@ -810,7 +815,7 @@ plan for your next run!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vQT-Ja-lmk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-481" y="4397"/>
+            <point key="canvasLocation" x="210" y="4388"/>
         </scene>
         <!--Filter Distance View Controller-->
         <scene sceneID="sOX-1o-azr">
@@ -862,7 +867,7 @@ plan for your next run!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="osZ-xU-BFk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="905" y="4395"/>
+            <point key="canvasLocation" x="1598" y="4387"/>
         </scene>
         <!--Filter Class View Controller-->
         <scene sceneID="QZI-5I-J7c">
@@ -1056,7 +1061,7 @@ plan for your next run!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ugk-Mk-7bL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="217" y="4396"/>
+            <point key="canvasLocation" x="910" y="4388"/>
         </scene>
         <!--About-->
         <scene sceneID="x9S-xH-nHC">
