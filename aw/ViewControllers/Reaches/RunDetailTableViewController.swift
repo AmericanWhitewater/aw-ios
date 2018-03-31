@@ -27,6 +27,12 @@ class RunDetailTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        initialize()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if let reach = reach,
             let moc = managedObjectContext,
             reach.detailUpdated == nil {
@@ -35,9 +41,10 @@ class RunDetailTableViewController: UITableViewController {
                 print("Updated reach details")
                 self.drawView()
             }
+        } else {
+            print("Details already updated")
+            drawView()
         }
-
-        initialize()
     }
 
     // MARK: - Table view data source
@@ -69,6 +76,24 @@ extension RunDetailTableViewController {
 
         drawView()
         setupRefreshControl()
+        //setupSegmentedControl()
+    }
+
+    func setupSegmentedControl() {
+        let segmentedControl = UISegmentedControl(items: ["Details", "Map"])
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.addTarget(self, action: #selector(segmentedControlToggled), for: .valueChanged)
+        self.navigationItem.titleView = segmentedControl
+    }
+
+    @objc func segmentedControlToggled(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 1:
+            print("show map")
+
+        default:
+            print("show details")
+        }
     }
 
     func setupRefreshControl() {
@@ -160,6 +185,10 @@ extension RunDetailTableViewController {
             action: #selector(tapFavoriteIcon))
         self.navigationItem.rightBarButtonItem = favoriteButton
     }
+}
+
+extension RunDetailTableViewController: RunDetailViewControllerType {
+    
 }
 
 extension RunDetailTableViewController: MOCViewControllerType {

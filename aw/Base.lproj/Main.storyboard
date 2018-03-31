@@ -90,7 +90,7 @@
                                     <outlet property="favoriteButton" destination="aaY-df-Jqq" id="3JD-Mf-OIJ"/>
                                     <outlet property="riverName" destination="QGK-9P-EDa" id="5gp-FU-Y9s"/>
                                     <outlet property="sectionLabel" destination="UYf-47-N2e" id="Bjy-Zg-OLD"/>
-                                    <segue destination="Q7y-fb-YGD" kind="show" identifier="runDetail" id="k4G-Sy-kKU"/>
+                                    <segue destination="lOP-Q4-YiZ" kind="show" identifier="runDetail" id="v1j-tX-Cxp"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -116,7 +116,7 @@
             <objects>
                 <tableViewController title="Run Detail" automaticallyAdjustsScrollViewInsets="NO" id="Q7y-fb-YGD" customClass="RunDetailTableViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="9" id="dbN-7s-y0m">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -377,7 +377,50 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EL2-9Y-pm3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2200.8000000000002" y="2829.5352323838083"/>
+            <point key="canvasLocation" x="2529" y="3567"/>
+        </scene>
+        <!--Reach Detail Container View Controller-->
+        <scene sceneID="AyB-hX-rZl">
+            <objects>
+                <viewController id="lOP-Q4-YiZ" customClass="ReachDetailContainerViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="b6j-1l-tEj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g8o-9v-cCY" userLabel="Detail Container View">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <connections>
+                                    <segue destination="Q7y-fb-YGD" kind="embed" id="Fu7-3J-VEB"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rxY-UZ-W5D" userLabel="Map Container View">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <connections>
+                                    <segue destination="0rz-rU-DfO" kind="embed" id="t4B-9w-1kf"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="rxY-UZ-W5D" firstAttribute="leading" secondItem="y8z-LH-UPy" secondAttribute="leading" id="5Og-Ku-Yuj"/>
+                            <constraint firstItem="y8z-LH-UPy" firstAttribute="bottom" secondItem="rxY-UZ-W5D" secondAttribute="bottom" id="OfS-Zz-TOy"/>
+                            <constraint firstItem="y8z-LH-UPy" firstAttribute="trailing" secondItem="g8o-9v-cCY" secondAttribute="trailing" id="Ug7-g2-0iO"/>
+                            <constraint firstItem="rxY-UZ-W5D" firstAttribute="top" secondItem="y8z-LH-UPy" secondAttribute="top" id="WdO-6R-SYX"/>
+                            <constraint firstItem="y8z-LH-UPy" firstAttribute="bottom" secondItem="g8o-9v-cCY" secondAttribute="bottom" id="d9G-NW-Fm2"/>
+                            <constraint firstItem="y8z-LH-UPy" firstAttribute="trailing" secondItem="rxY-UZ-W5D" secondAttribute="trailing" id="f1U-SQ-oii"/>
+                            <constraint firstItem="g8o-9v-cCY" firstAttribute="top" secondItem="y8z-LH-UPy" secondAttribute="top" id="ju2-mF-ZUh"/>
+                            <constraint firstItem="g8o-9v-cCY" firstAttribute="leading" secondItem="y8z-LH-UPy" secondAttribute="leading" id="rXa-xA-fxq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="y8z-LH-UPy"/>
+                    </view>
+                    <connections>
+                        <outlet property="detailView" destination="g8o-9v-cCY" id="B04-Xz-rfH"/>
+                        <outlet property="mapView" destination="rxY-UZ-W5D" id="27t-XU-Gik"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8dJ-Kc-MYF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3070" y="2830"/>
         </scene>
         <!--Map-->
         <scene sceneID="SQ7-3d-HAD">
@@ -410,7 +453,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="NbB-v1-cby" id="kHf-yu-Jy2"/>
-                        <segue destination="Q7y-fb-YGD" kind="show" identifier="runDetailMap" id="go5-n3-xNy"/>
+                        <segue destination="lOP-Q4-YiZ" kind="show" identifier="runDetailMap" id="nNq-n1-7H9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HVi-DN-gBj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -661,7 +704,7 @@ plan for your next run!</string>
                                     <outlet property="favoriteButton" destination="jbg-rp-uO3" id="i1T-tk-CcF"/>
                                     <outlet property="riverName" destination="tkN-ig-IW4" id="ogn-ZW-V7J"/>
                                     <outlet property="sectionLabel" destination="e52-p4-o3I" id="L5t-kz-izg"/>
-                                    <segue destination="Q7y-fb-YGD" kind="show" identifier="runDetailFavorites" id="Ml0-sc-RWe"/>
+                                    <segue destination="lOP-Q4-YiZ" kind="show" identifier="runDetailFavorites" id="HZW-Im-KWw"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1122,6 +1165,32 @@ plan for your next run!</string>
             </objects>
             <point key="canvasLocation" x="-728" y="616"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="91G-kj-07R">
+            <objects>
+                <viewController id="0rz-rU-DfO" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="abg-nC-fRc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0z9-PG-sc3">
+                                <rect key="frame" x="170.5" y="266.5" width="33.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0z9-PG-sc3" firstAttribute="centerY" secondItem="abg-nC-fRc" secondAttribute="centerY" id="Vws-tX-FfJ"/>
+                            <constraint firstItem="0z9-PG-sc3" firstAttribute="centerX" secondItem="abg-nC-fRc" secondAttribute="centerX" id="dPj-JO-LEm"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lFJ-sy-OZB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3607" y="3567"/>
+        </scene>
     </scenes>
     <resources>
         <image name="icon_favorite" width="25" height="24"/>
@@ -1156,7 +1225,7 @@ plan for your next run!</string>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="35b-Ee-eOR"/>
-        <segue reference="go5-n3-xNy"/>
+        <segue reference="BDm-bc-Bvj"/>
+        <segue reference="v1j-tX-Cxp"/>
     </inferredMetricsTieBreakers>
 </document>

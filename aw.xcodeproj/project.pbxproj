@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		38150B262067F75800CBE8D8 /* Regions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38150B252067F75800CBE8D8 /* Regions.swift */; };
 		381ED393206F012400B03F13 /* ReachFetchRequestControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED392206F012400B03F13 /* ReachFetchRequestControllerType.swift */; };
+		381ED39B206FBA3B00B03F13 /* ReachDetailContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED39A206FBA3B00B03F13 /* ReachDetailContainerViewController.swift */; };
+		381ED39D206FBE1900B03F13 /* RunDetailViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED39C206FBE1900B03F13 /* RunDetailViewControllerType.swift */; };
 		3858D23120689313004A39C6 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D22F20689313004A39C6 /* About.storyboard */; };
 		3858D23320689345004A39C6 /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D23220689345004A39C6 /* News.storyboard */; };
 		3858D23520693A36004A39C6 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3858D23420693A36004A39C6 /* TabViewController.swift */; };
@@ -54,6 +56,8 @@
 /* Begin PBXFileReference section */
 		38150B252067F75800CBE8D8 /* Regions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regions.swift; sourceTree = "<group>"; };
 		381ED392206F012400B03F13 /* ReachFetchRequestControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFetchRequestControllerType.swift; sourceTree = "<group>"; };
+		381ED39A206FBA3B00B03F13 /* ReachDetailContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachDetailContainerViewController.swift; sourceTree = "<group>"; };
+		381ED39C206FBE1900B03F13 /* RunDetailViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDetailViewControllerType.swift; sourceTree = "<group>"; };
 		3858D23020689313004A39C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = aw/Base.lproj/About.storyboard; sourceTree = "<group>"; };
 		3858D23220689345004A39C6 /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
 		3858D23420693A36004A39C6 /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
@@ -171,6 +175,7 @@
 				38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */,
 				38BE74A7206839F200DE555D /* FilterManagerViewControllerType.swift */,
 				381ED392206F012400B03F13 /* ReachFetchRequestControllerType.swift */,
+				381ED39C206FBE1900B03F13 /* RunDetailViewControllerType.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -268,6 +273,7 @@
 				38A6C8F020670AEF00B5BA29 /* MapViewController.swift */,
 				38B3CD1220672EAA0016630F /* RunDetailTableViewController.swift */,
 				38A98F5D2067CAF8009853E1 /* FavoriteListTableViewController.swift */,
+				381ED39A206FBA3B00B03F13 /* ReachDetailContainerViewController.swift */,
 			);
 			path = Reaches;
 			sourceTree = "<group>";
@@ -402,6 +408,7 @@
 				3858D23520693A36004A39C6 /* TabViewController.swift in Sources */,
 				38A98F5E2067CAF8009853E1 /* FavoriteListTableViewController.swift in Sources */,
 				381ED393206F012400B03F13 /* ReachFetchRequestControllerType.swift in Sources */,
+				381ED39D206FBE1900B03F13 /* RunDetailViewControllerType.swift in Sources */,
 				38A98F8F2067F0B4009853E1 /* FilterExtendedNavBarView.swift in Sources */,
 				38A98F732067ED2E009853E1 /* AboutAWMissionViewController.swift in Sources */,
 				38A6C8DB206677EC00B5BA29 /* RunListTableViewCell.swift in Sources */,
@@ -409,6 +416,7 @@
 				38A6C8E82066882300B5BA29 /* NSPersistentContainer.swift in Sources */,
 				3864857D206BC355009B360F /* Onboard2ViewController.swift in Sources */,
 				38A6C8F42067189300B5BA29 /* Onboard1ViewController.swift in Sources */,
+				381ED39B206FBA3B00B03F13 /* ReachDetailContainerViewController.swift in Sources */,
 				38BE74A420681B9D00DE555D /* FilterViewControllerType.swift in Sources */,
 				38A6C8EF2067074700B5BA29 /* Reach.swift in Sources */,
 				38A6C8D92066759A00B5BA29 /* RunListTableViewController.swift in Sources */,

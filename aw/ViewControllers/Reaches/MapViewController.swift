@@ -64,7 +64,7 @@ extension MapViewController {
 
             do {
                 let reaches = try context.fetch(request)
-                if let reach = reaches.first, let detailVC = segue.destination as?   RunDetailTableViewController {
+                if let reach = reaches.first, let detailVC = segue.destination as?   ReachDetailContainerViewController {
                     detailVC.reach = reach
                 } else {
                     print("No reach")
