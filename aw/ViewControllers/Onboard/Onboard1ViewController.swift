@@ -15,6 +15,8 @@ class Onboard1ViewController: UIViewController, MOCViewControllerType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        DefaultsManager.latitude = 43.6570
+        DefaultsManager.longitude = -70.9667
     }
 
     override func didReceiveMemoryWarning() {

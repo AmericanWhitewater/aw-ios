@@ -201,7 +201,7 @@ struct AWApiHelper {
         reach.state = region.title
         reach.delta = newReach.delta
 
-        if let distance = newReach.distanceFrom(location: CLLocation(latitude: 43.8502, longitude: -69.6460)) {
+        if let distance = newReach.distanceFrom(location: CLLocation(latitude: DefaultsManager.latitude, longitude: DefaultsManager.longitude)) {
             reach.distance = distance / 1609
         }
 

@@ -44,6 +44,25 @@ class DefaultsManager {
         }
     }
 
+    private static let latitudeKey = "latitudeKey"
+    private static let longitudeKey = "longitudeKey"
+    static var latitude: Double {
+        get {
+            return UserDefaults.standard.double(forKey: latitudeKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: latitudeKey)
+        }
+    }
+    static var longitude: Double {
+        get {
+            return UserDefaults.standard.double(forKey: longitudeKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: longitudeKey)
+        }
+    }
+
     private static let classFilterKey = "classFilterKey"
     static var classFilter: [Int] {
         get {
