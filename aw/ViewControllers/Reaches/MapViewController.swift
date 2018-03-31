@@ -89,6 +89,10 @@ extension MapViewController {
             combinedPredicates.append(regionsPredicate())
         }
 
+        if DefaultsManager.distanceFilter > 0 {
+            combinedPredicates.append(distancePredicate())
+        }
+
         self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(
             andPredicateWithSubpredicates: combinedPredicates)
 

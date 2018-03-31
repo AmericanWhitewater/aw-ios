@@ -45,4 +45,9 @@ extension ReachFetchRequestControllerType {
         }
         return NSCompoundPredicate(orPredicateWithSubpredicates: regionPredicates)
     }
+
+    func distancePredicate() -> NSPredicate {
+        let distance = DefaultsManager.distanceFilter
+        return NSPredicate(format: "distance <= %lf", distance)
+    }
 }

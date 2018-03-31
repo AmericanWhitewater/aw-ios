@@ -691,18 +691,26 @@ plan for your next run!</string>
                                                 <action selector="favoriteButtonTapped:" destination="QTx-HH-Vqi" eventType="touchUpInside" id="wQl-fC-hLX"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qyM-C9-7rQ">
+                                            <rect key="frame" x="265" y="11" width="60" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" name="font_light_grey"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="e52-p4-o3I" firstAttribute="leading" secondItem="Klh-o3-ouo" secondAttribute="trailing" constant="8" id="I4y-Ns-sMj"/>
                                         <constraint firstItem="lyo-3x-0EU" firstAttribute="top" secondItem="e52-p4-o3I" secondAttribute="bottom" constant="2" id="JaN-KV-txz"/>
                                         <constraint firstAttribute="trailing" secondItem="jbg-rp-uO3" secondAttribute="trailing" constant="16" id="Mbs-W8-Ple"/>
                                         <constraint firstAttribute="bottom" secondItem="lyo-3x-0EU" secondAttribute="bottom" constant="8" id="RZH-wU-aSn"/>
+                                        <constraint firstItem="qyM-C9-7rQ" firstAttribute="top" secondItem="byw-9i-Zrd" secondAttribute="topMargin" id="b5v-7T-Pxm"/>
                                         <constraint firstItem="Klh-o3-ouo" firstAttribute="top" secondItem="byw-9i-Zrd" secondAttribute="top" id="bSs-Du-Zzl"/>
                                         <constraint firstItem="tkN-ig-IW4" firstAttribute="top" secondItem="byw-9i-Zrd" secondAttribute="top" constant="11" id="exv-SR-hh6"/>
                                         <constraint firstItem="Klh-o3-ouo" firstAttribute="leading" secondItem="byw-9i-Zrd" secondAttribute="leading" id="h0c-F7-HYK"/>
                                         <constraint firstItem="tkN-ig-IW4" firstAttribute="leading" secondItem="Klh-o3-ouo" secondAttribute="trailing" constant="8" id="iSb-nv-n8L"/>
                                         <constraint firstItem="lyo-3x-0EU" firstAttribute="leading" secondItem="Klh-o3-ouo" secondAttribute="trailing" constant="8" id="lWx-1P-CCb"/>
                                         <constraint firstAttribute="bottom" secondItem="Klh-o3-ouo" secondAttribute="bottom" constant="-0.5" id="nfM-4F-Vsv"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="qyM-C9-7rQ" secondAttribute="trailing" constant="8" id="qdb-Zk-mMK"/>
                                         <constraint firstItem="e52-p4-o3I" firstAttribute="top" secondItem="tkN-ig-IW4" secondAttribute="bottom" constant="2" id="wW9-qZ-26S"/>
                                         <constraint firstAttribute="bottom" secondItem="jbg-rp-uO3" secondAttribute="bottom" constant="19" id="zZ9-Yl-YEt"/>
                                     </constraints>
@@ -710,6 +718,7 @@ plan for your next run!</string>
                                 <connections>
                                     <outlet property="conditionColorView" destination="Klh-o3-ouo" id="EEm-pr-Vmo"/>
                                     <outlet property="difficultyLabel" destination="lyo-3x-0EU" id="f26-4p-6k4"/>
+                                    <outlet property="distanceLabel" destination="qyM-C9-7rQ" id="0Hb-nJ-yjU"/>
                                     <outlet property="favoriteButton" destination="jbg-rp-uO3" id="i1T-tk-CcF"/>
                                     <outlet property="riverName" destination="tkN-ig-IW4" id="ogn-ZW-V7J"/>
                                     <outlet property="sectionLabel" destination="e52-p4-o3I" id="L5t-kz-izg"/>
@@ -922,7 +931,7 @@ plan for your next run!</string>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="dzt-yc-rhj">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="250" translatesAutoresizingMaskIntoConstraints="NO" id="dzt-yc-rhj">
                                 <rect key="frame" x="16" y="64.5" width="345" height="31"/>
                                 <connections>
                                     <action selector="distanceChanged:" destination="Ync-eu-HPl" eventType="valueChanged" id="6C5-ku-M5m"/>
@@ -1223,6 +1232,9 @@ plan for your next run!</string>
         <namedColor name="font_light_grey">
             <color red="0.36862745098039218" green="0.36862745098039218" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="font_light_grey">
+            <color red="0.36862745099999999" green="0.36862745099999999" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="grey_divider">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -1237,7 +1249,7 @@ plan for your next run!</string>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BDm-bc-Bvj"/>
-        <segue reference="v1j-tX-Cxp"/>
+        <segue reference="BCF-g5-YXb"/>
+        <segue reference="HZW-Im-KWw"/>
     </inferredMetricsTieBreakers>
 </document>

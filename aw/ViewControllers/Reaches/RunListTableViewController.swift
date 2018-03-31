@@ -138,6 +138,16 @@ extension RunListTableViewController {
             combinedPredicates.append(regionsPredicate())
         }
 
+        if DefaultsManager.distanceFilter > 0 {
+            combinedPredicates.append(distancePredicate())
+            self.fetchedResultsController?.fetchRequest.sortDescriptors = [
+                NSSortDescriptor(key: "distance", ascending: true),
+                NSSortDescriptor(key: "name", ascending: true)]
+        } else {
+            self.fetchedResultsController?.fetchRequest.sortDescriptors = [
+                NSSortDescriptor(key: "name", ascending: true)]
+        }
+
         self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(
             andPredicateWithSubpredicates: combinedPredicates)
 
