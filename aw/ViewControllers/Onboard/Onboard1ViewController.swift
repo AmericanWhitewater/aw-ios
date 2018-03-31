@@ -12,7 +12,6 @@ import UIKit
 class Onboard1ViewController: UIViewController, MOCViewControllerType {
 
     var managedObjectContext: NSManagedObjectContext?
-    var persistentContainer: NSPersistentContainer?
 
     override func viewDidLoad() {
         super.viewDidLoad()

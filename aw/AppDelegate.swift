@@ -26,7 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //AWApiHelper.shared.updateReachedForAllRegions()
 
         if var initialVC = window?.rootViewController as? MOCViewControllerType {
-            initialVC.persistentContainer = persistentContainer
             initialVC.managedObjectContext = persistentContainer.viewContext
         }
 

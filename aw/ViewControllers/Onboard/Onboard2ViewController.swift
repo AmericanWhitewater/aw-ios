@@ -13,7 +13,6 @@ import UIKit
 class Onboard2ViewController: UITabBarController, MOCViewControllerType {
 
     var managedObjectContext: NSManagedObjectContext?
-    var persistentContainer: NSPersistentContainer?
 
     let locationManager = CLLocationManager()
 

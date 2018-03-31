@@ -11,7 +11,6 @@ import UIKit
 
 class TabViewController: UITabBarController, MOCViewControllerType {
     var managedObjectContext: NSManagedObjectContext?
-    var persistentContainer: NSPersistentContainer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +22,6 @@ class TabViewController: UITabBarController, MOCViewControllerType {
             if let navVC = childVC as? UINavigationController,
                 var destinationVC = navVC.childViewControllers[0] as? MOCViewControllerType {
                 destinationVC.managedObjectContext = managedObjectContext
-                destinationVC.persistentContainer = persistentContainer
             }
         }
     }

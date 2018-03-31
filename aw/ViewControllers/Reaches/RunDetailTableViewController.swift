@@ -6,6 +6,7 @@
 //  Copyright © 2018 Alex Kerney. All rights reserved.
 //
 
+import CoreData
 import UIKit
 
 class RunDetailTableViewController: UITableViewController {
@@ -17,10 +18,21 @@ class RunDetailTableViewController: UITableViewController {
     @IBOutlet weak var readingLabel: UILabel!
     @IBOutlet weak var unitsLabel: UILabel!
 
+    var managedObjectContext: NSManagedObjectContext?
+
     var reach: Reach?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let reach = reach, let moc = managedObjectContext {
+            /*AWApiHelper.fetchReachDetail(reachID: String(reach.id)) { (detail) in
+                print(detail)
+            } */
+            AWApiHelper.updateReachDetail(reachID: String(reach.id), viewContext: moc) {
+                print("Updated reach details")
+                self.drawView()
+            }
+        }
 
         initialize()
     }
@@ -48,14 +60,35 @@ extension RunDetailTableViewController {
     func initialize() {
         tableView.contentInset = UIEdgeInsets(top: -36, left: 0, bottom: 0, right: 0) //UIEdgeInsetsMake(-36, 0, 0, 0)
 
+        drawView()
+    }
+
+    func drawView() {
         guard let reach = reach else { return }
         nameLabel.text = reach.name
         sectionLabel.text = reach.section
         difficultyLabel.text = reach.difficulty
 
-        guard let reading = reach.lastGageReading, let unit = reach.unit else { return }
-        readingLabel.text = reading
-        readingLabel.textColor = reach.color
-        unitsLabel.text = unit
+        if let reading = reach.lastGageReading, let unit = reach.unit {
+            readingLabel.text = reading
+            readingLabel.textColor = reach.color
+            unitsLabel.text = unit
+        } else {
+            readingLabel.text = ""
+            unitsLabel.textColor = reach.color
+            unitsLabel.text = "Unknown"
+        }
+
+        lengthLabel.text = reach.length ?? "Unknown"
+        if reach.avgGradient != 0 {
+            gradientLabel.text = "\(reach.avgGradient) fpm"
+        } else {
+            gradientLabel.text = "Unknown"
+        }
     }
+}
+
+
+extension RunDetailTableViewController: MOCViewControllerType {
+
 }

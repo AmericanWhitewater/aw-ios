@@ -47,9 +47,49 @@ struct Condition {
     let icon: UIImage?
 }
 
+struct AWReachInfo: Codable {
+    let id: Int
+    let abstract: String?
+    let avgGradient: Int16?
+    let photoId: Int16?
+    let length: String?
+    let maxGradient: Int16?
+    let description: String?
+    let shuttleDetails: String?
+    let zipcode: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id, abstract, length, description, zipcode
+        case avgGradient = "avggradient"
+        case photoId = "photoid"
+        case maxGradient = "maxgradient"
+        case shuttleDetails = "shuttledetails"
+    }
+}
+
+struct AWReachMain: Codable {
+    let info: AWReachInfo
+}
+
+struct AWReachDetailResponse: Codable {
+    struct AWReachDetailSubResponse: Codable {
+        let main: AWReachMain
+
+        enum CodingKeys: String, CodingKey {
+            case main = "CRiverMainGadgetJSON_main"
+        }
+    }
+    let view: AWReachDetailSubResponse
+
+    enum CodingKeys: String, CodingKey {
+        case view = "CContainerViewJSON_view"
+    }
+}
+
 struct AWApiHelper {
     typealias ReachCallback = ([AWReach]?) -> Void
     typealias UpdateCallback = () -> Void
+    typealias ReachDetailCallback = (AWReachMain) -> Void
 
     static func conditionFromApi(condition: String) -> Condition {
         switch condition {
@@ -198,6 +238,93 @@ struct AWApiHelper {
                 }
             }
             callback()
+        }
+    }
+
+    static func fetchReachDetail(reachID: String, callback: @escaping ReachDetailCallback) {
+        let url = URL(string: "https://www.americanwhitewater.org/content/River/detail/id/\(reachID)/.json")!
+
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            let decoder = JSONDecoder()
+
+            guard let data = data,
+                let detail = try? decoder.decode(AWReachDetailResponse.self, from: data) else { return }
+            callback(detail.view.main)
+        }
+        task.resume()
+    }
+
+    static func updateReachDetail(reachID: String,
+                                  viewContext: NSManagedObjectContext,
+                                  callback: @escaping UpdateCallback) {
+
+        // check for last update time
+
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        fetchReachDetail(reachID: reachID) { (awReachDetail) in
+            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+            context.parent = viewContext
+
+            let info = awReachDetail.info
+
+            context.perform {
+                let request: NSFetchRequest<Reach> = Reach.fetchRequest()
+                /*guard let reachId = Int16(reachID) else {
+                    print("It's all broken")
+                    return
+                } */
+                request.predicate = NSPredicate(format: "id = %@", reachID)
+
+                do {
+                    let reaches = try context.fetch(request)
+                    if let reach = reaches.first {
+                        if let avgGradient = info.avgGradient,
+                            let photoId = info.photoId,
+                            let maxGradient = info.maxGradient {
+                            reach.abstract = info.abstract
+                            reach.avgGradient = avgGradient
+                            reach.photoId = photoId
+                            reach.length = info.length
+                            reach.maxGradient = maxGradient
+                            reach.longDescription = info.description
+                            reach.shuttleDetails = info.shuttleDetails
+                            reach.zipcode = info.zipcode
+                            reach.detailUpdated = Date()
+                            do {
+                                try context.save()
+                                print("Reach detail background context saved")
+                            } catch {
+                                let error = error as NSError
+                                print("unable to save background context \(error) \(error.userInfo)")
+                            }
+                            dispatchGroup.leave()
+                        } else {
+                            print("Unable to change AWReach attributes")
+                        }
+                    } else {
+                        print("no reach found")
+                    }
+                } catch {
+                    print("Unable to fetch reach")
+                }
+            }
+        }
+        dispatchGroup.notify(queue: .main) {
+            viewContext.perform {
+                print("update reach detail complete")
+                viewContext.perform {
+                    viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                    do {
+                        try viewContext.save()
+                        print("saved view context")
+                    } catch {
+                        let error = error as NSError
+                        print("unable to save view context \(error) \(error.userInfo)")
+                    }
+                }
+                callback()
+            }
         }
     }
 }

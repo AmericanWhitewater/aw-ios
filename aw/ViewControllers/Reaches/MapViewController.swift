@@ -14,7 +14,6 @@ class MapViewController: UIViewController, MOCViewControllerType {
     @IBOutlet weak var mapView: MKMapView!
 
     var managedObjectContext: NSManagedObjectContext?
-    var persistentContainer: NSPersistentContainer?
 
     var fetchedResultsController: NSFetchedResultsController<Reach>?
     var predicates: [NSPredicate] = []
@@ -74,6 +73,7 @@ extension MapViewController {
                 print("Failed to fetch reach \(selectedReachAnnotation.id)")
             }
         }
+        injectContextAndContainerToChildVC(segue: segue)
     }
 
     func updateFetchPredicates() {

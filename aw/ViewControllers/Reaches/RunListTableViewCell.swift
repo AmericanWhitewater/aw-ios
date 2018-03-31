@@ -17,7 +17,6 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
     @IBOutlet weak var favoriteButton: UIButton!
 
     var managedObjectContext: NSManagedObjectContext?
-    var persistentContainer: NSPersistentContainer?
 
     var reach: Reach?
 

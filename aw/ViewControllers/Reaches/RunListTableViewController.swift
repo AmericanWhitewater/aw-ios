@@ -13,7 +13,6 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     @IBOutlet var tableView: UITableView!
 
     var managedObjectContext: NSManagedObjectContext?
-    var persistentContainer: NSPersistentContainer?
 
     var fetchedResultsController: NSFetchedResultsController<Reach>?
 
@@ -45,6 +44,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
                 let reach = fetchedResultsController?.fetchedObjects![indexPath.row] else { return }
 
             detailVC.reach = reach
+            injectContextAndContainerToChildVC(segue: segue)
         case Segue.showFilters.rawValue, Segue.showFiltersFavorites.rawValue:
             break
         default:
@@ -220,7 +220,6 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
         cell.setup(reach: reach)
 
         cell.managedObjectContext = managedObjectContext
-        cell.persistentContainer = persistentContainer
 
         return cell
     }
