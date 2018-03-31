@@ -53,6 +53,10 @@ extension Reach {
         }
     }
 
+    var distanceFormatted: String? {
+        return "\(Int(distance)) mi"
+    }
+
     var updatedString: String? {
         guard let date = detailUpdated else { return nil }
         let dateFormat = DateFormatter()

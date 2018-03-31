@@ -68,12 +68,19 @@
                                                 <action selector="favoriteButtonTapped:" destination="xUa-2m-8xF" eventType="touchUpInside" id="BZB-Bj-Jb8"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wX1-B0-0va">
+                                            <rect key="frame" x="281" y="11" width="60" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" name="font_light_grey"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="VZ1-kB-SJx" secondAttribute="bottom" constant="-0.5" id="3mh-Ko-dpu"/>
                                         <constraint firstItem="dQx-Bv-BGY" firstAttribute="leading" secondItem="VZ1-kB-SJx" secondAttribute="trailing" constant="8" id="4Ll-IG-yvc"/>
                                         <constraint firstItem="UYf-47-N2e" firstAttribute="leading" secondItem="VZ1-kB-SJx" secondAttribute="trailing" constant="8" id="8ax-4R-Ibj"/>
                                         <constraint firstAttribute="trailing" secondItem="aaY-df-Jqq" secondAttribute="trailing" constant="16" id="9Vi-E4-zA8"/>
+                                        <constraint firstAttribute="trailing" secondItem="wX1-B0-0va" secondAttribute="trailing" id="Exg-JM-1QC"/>
                                         <constraint firstItem="VZ1-kB-SJx" firstAttribute="top" secondItem="OE1-Ml-Jmj" secondAttribute="top" id="KtE-yV-R39"/>
                                         <constraint firstAttribute="bottom" secondItem="aaY-df-Jqq" secondAttribute="bottom" constant="19" id="YG1-ag-7VU"/>
                                         <constraint firstAttribute="bottom" secondItem="dQx-Bv-BGY" secondAttribute="bottom" constant="8" id="ZdT-ck-XBV"/>
@@ -82,11 +89,13 @@
                                         <constraint firstItem="QGK-9P-EDa" firstAttribute="top" secondItem="OE1-Ml-Jmj" secondAttribute="top" constant="11" id="w0w-3F-mee"/>
                                         <constraint firstItem="QGK-9P-EDa" firstAttribute="leading" secondItem="VZ1-kB-SJx" secondAttribute="trailing" constant="8" id="wgS-A2-3eJ"/>
                                         <constraint firstItem="VZ1-kB-SJx" firstAttribute="leading" secondItem="OE1-Ml-Jmj" secondAttribute="leading" id="xLW-1Q-5IF"/>
+                                        <constraint firstItem="wX1-B0-0va" firstAttribute="top" secondItem="OE1-Ml-Jmj" secondAttribute="top" constant="11" id="y8q-uD-7RE"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="conditionColorView" destination="VZ1-kB-SJx" id="cEc-cn-arQ"/>
                                     <outlet property="difficultyLabel" destination="dQx-Bv-BGY" id="aQI-pd-H3a"/>
+                                    <outlet property="distanceLabel" destination="wX1-B0-0va" id="IlT-Yn-phP"/>
                                     <outlet property="favoriteButton" destination="aaY-df-Jqq" id="3JD-Mf-OIJ"/>
                                     <outlet property="riverName" destination="QGK-9P-EDa" id="5gp-FU-Y9s"/>
                                     <outlet property="sectionLabel" destination="UYf-47-N2e" id="Bjy-Zg-OLD"/>
@@ -1184,6 +1193,7 @@ plan for your next run!</string>
                             <constraint firstItem="yUK-uR-5qi" firstAttribute="leading" secondItem="abg-nC-fRc" secondAttribute="leading" id="lUd-7a-34b"/>
                             <constraint firstAttribute="bottom" secondItem="yUK-uR-5qi" secondAttribute="bottom" id="ljh-G9-Coe"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="R7Z-69-w4e"/>
                     </view>
                     <connections>
                         <outlet property="mapView" destination="yUK-uR-5qi" id="qeH-h8-A9Z"/>
@@ -1227,7 +1237,7 @@ plan for your next run!</string>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="35b-Ee-eOR"/>
-        <segue reference="nNq-n1-7H9"/>
+        <segue reference="BDm-bc-Bvj"/>
+        <segue reference="v1j-tX-Cxp"/>
     </inferredMetricsTieBreakers>
 </document>

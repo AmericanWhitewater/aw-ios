@@ -8,6 +8,7 @@
 
 import CoreData
 import Foundation
+import MapKit
 import UIKit
 
 let baseURL = "https://www.americanwhitewater.org/content/"
@@ -40,6 +41,17 @@ struct AWReach: Codable {
         case lastGageReading = "last_gauge_reading" // "reading_formatted"
         case takeOutLat = "tlat"
         case takeOutLon = "tlon"
+    }
+
+    func distanceFrom(location: CLLocation) -> Double? {
+        guard let lat = putInLat, let latitude = Double(lat),
+            let lon = putInLon, let longitude = Double(lon) else { return nil }
+
+        let reachCoordinate = CLLocation(latitude: latitude, longitude: longitude)
+
+        guard CLLocationCoordinate2DIsValid(reachCoordinate.coordinate) else { return nil }
+
+        return reachCoordinate.distance(from: location)
     }
 }
 
@@ -188,6 +200,10 @@ struct AWApiHelper {
         reach.takeOutLon = newReach.takeOutLon
         reach.state = region.title
         reach.delta = newReach.delta
+
+        if let distance = newReach.distanceFrom(location: CLLocation(latitude: 43.8502, longitude: -69.6460)) {
+            reach.distance = distance / 1609
+        }
 
         if difficultyRange.contains(1) {
             reach.difficulty1 = true

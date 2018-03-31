@@ -15,6 +15,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
     @IBOutlet weak var sectionLabel: UILabel!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var distanceLabel: UILabel!
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -43,6 +44,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
             sectionLabel.text = reach.sectionCleanedHTML
             difficultyLabel.text = "Level: \(reach.readingFormatted) Class: \(reach.difficulty ?? "Unknown")"
             difficultyLabel.textColor = reach.color
+            distanceLabel.text = reach.distanceFormatted
 
             let favoriteIcon = reach.favorite ?
                 UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite")

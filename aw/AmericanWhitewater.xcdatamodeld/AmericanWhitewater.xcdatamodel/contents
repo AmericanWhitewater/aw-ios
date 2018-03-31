@@ -12,6 +12,7 @@
         <attribute name="difficulty3" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="difficulty4" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="difficulty5" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="favorite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lastGageReading" attributeType="String" syncable="YES"/>
@@ -36,6 +37,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Reach" positionX="-54" positionY="-9" width="128" height="465"/>
+        <element name="Reach" positionX="-54" positionY="-9" width="128" height="480"/>
     </elements>
 </model>
