@@ -81,25 +81,12 @@ extension MapViewController {
 
         let difficulties = DefaultsManager.classFilter
         if difficulties.count > 0 {
-            var classPredicates: [NSPredicate] = []
-
-            for value in difficulties {
-                classPredicates.append(NSPredicate(format: "difficulty\(value) == TRUE"))
-            }
-
-            let classPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: classPredicates)
-            combinedPredicates.append(classPredicate)
+            combinedPredicates.append(difficultiesPredicate())
         }
 
         let regions = DefaultsManager.regionsFilter
         if regions.count > 0 {
-            var regionPredicates: [NSPredicate] = []
-
-            for region in regions {
-                regionPredicates.append(NSPredicate(format: "state = %@", region))
-            }
-            let regionPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: regionPredicates)
-            combinedPredicates.append(regionPredicate)
+            combinedPredicates.append(regionsPredicate())
         }
 
         self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(
