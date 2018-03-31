@@ -76,24 +76,6 @@ extension RunDetailTableViewController {
 
         drawView()
         setupRefreshControl()
-        //setupSegmentedControl()
-    }
-
-    func setupSegmentedControl() {
-        let segmentedControl = UISegmentedControl(items: ["Details", "Map"])
-        segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(segmentedControlToggled), for: .valueChanged)
-        self.navigationItem.titleView = segmentedControl
-    }
-
-    @objc func segmentedControlToggled(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 1:
-            print("show map")
-
-        default:
-            print("show details")
-        }
     }
 
     func setupRefreshControl() {
@@ -177,13 +159,6 @@ extension RunDetailTableViewController {
                 imageView.image = UIImage(data: data)
             }
         }
-
-        let favoriteButton = UIBarButtonItem(
-            image: reach.favorite ? UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite"),
-            style: .plain,
-            target: self,
-            action: #selector(tapFavoriteIcon))
-        self.navigationItem.rightBarButtonItem = favoriteButton
     }
 }
 

@@ -16,7 +16,7 @@ enum SubViews {
 class ReachDetailContainerViewController: UIViewController {
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var mapView: UIView!
-    
+
     var managedObjectContext: NSManagedObjectContext?
     var reach: Reach?
 
@@ -25,6 +25,10 @@ class ReachDetailContainerViewController: UIViewController {
         initialize()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupFavoriteIcon()
+    }
 }
 
 extension ReachDetailContainerViewController {
@@ -45,6 +49,14 @@ extension ReachDetailContainerViewController {
                 childVC.managedObjectContext = managedObjectContext
             }
         }
+    }
+
+    func setupFavoriteIcon() {
+        guard let reach = reach else { return }
+        let favoriteButton = UIBarButtonItem(
+            image: reach.favorite ? UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite"),
+            style: .plain, target: self, action: #selector(tapFavoriteIcon))
+        self.navigationItem.rightBarButtonItem = favoriteButton
     }
 
     func setupSegmentedControl() {
@@ -70,6 +82,15 @@ extension ReachDetailContainerViewController {
         default:
             detailView.isHidden = false
             mapView.isHidden = true
+        }
+    }
+
+    @objc func tapFavoriteIcon(_ sender: Any) {
+        guard let reach = reach, let context = managedObjectContext else { return }
+
+        context.persist {
+            reach.favorite = !reach.favorite
+            self.setupFavoriteIcon()
         }
     }
 }
