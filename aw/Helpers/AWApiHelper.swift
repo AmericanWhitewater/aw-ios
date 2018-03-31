@@ -17,6 +17,7 @@ let riverURL = baseURL + "River/search/.json"
 struct AWReach: Codable {
     let difficulty: String
     let condition: String
+    //swiftlint:disable:next identifier_name
     let id: Int
     let name: String
     let putInLat: String?
@@ -30,6 +31,7 @@ struct AWReach: Codable {
     let delta: String?
 
     enum CodingKeys: String, CodingKey {
+        //swiftlint:disable:next identifier_name
         case id, name, section, unit, state, delta
         case difficulty = "class"
         case condition = "cond"
@@ -48,6 +50,7 @@ struct Condition {
 }
 
 struct AWReachInfo: Codable {
+    //swiftlint:disable:next identifier_name
     let id: Int
     let abstract: String?
     let avgGradient: Int16?
@@ -59,6 +62,7 @@ struct AWReachInfo: Codable {
     let zipcode: String?
 
     enum CodingKeys: String, CodingKey {
+        //swiftlint:disable:next identifier_name
         case id, abstract, length, description, zipcode
         case avgGradient = "avggradient"
         case photoId = "photoid"
@@ -71,14 +75,15 @@ struct AWReachMain: Codable {
     let info: AWReachInfo
 }
 
-struct AWReachDetailResponse: Codable {
-    struct AWReachDetailSubResponse: Codable {
-        let main: AWReachMain
+struct AWReachDetailSubResponse: Codable {
+    let main: AWReachMain
 
-        enum CodingKeys: String, CodingKey {
-            case main = "CRiverMainGadgetJSON_main"
-        }
+    enum CodingKeys: String, CodingKey {
+        case main = "CRiverMainGadgetJSON_main"
     }
+}
+
+struct AWReachDetailResponse: Codable {
     let view: AWReachDetailSubResponse
 
     enum CodingKeys: String, CodingKey {
@@ -146,6 +151,7 @@ struct AWApiHelper {
         }
     }
 
+    //swiftlint:disable:next identifier_name
     static func findOrNewReach(byID id: Int, inContext context: NSManagedObjectContext) -> Reach {
         let predicate = NSPredicate(format: "id == %i", id)
         let request: NSFetchRequest<Reach> = Reach.fetchRequest()

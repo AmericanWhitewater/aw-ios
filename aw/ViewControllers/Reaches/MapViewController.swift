@@ -143,13 +143,13 @@ extension MapViewController: MKMapViewDelegate {
             button.addTarget(self, action: #selector(reachButtonTapped), for: .touchUpInside)
             view?.rightCalloutAccessoryView = button
             return view
-        } else if let cluster = annotation as? MKClusterAnnotation {
+        /*} else if let cluster = annotation as? MKClusterAnnotation {
             var view = mapView.dequeueReusableAnnotationView(withIdentifier: "cluster") as? MKMarkerAnnotationView
             if view == nil {
                 view = MKMarkerAnnotationView(annotation: nil, reuseIdentifier: "cluster")
             }
             view?.annotation = cluster
-            return view
+            return view*/
         } else {
             // default view for user location and unknown annotations
             return nil

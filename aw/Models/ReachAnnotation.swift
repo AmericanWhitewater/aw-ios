@@ -12,11 +12,13 @@ import MapKit
 class ReachAnnotation: NSObject {
     let lat: String?
     let lon: String?
+    //swiftlint:disable:next identifier_name
     let id: Int16
     let title: String?
     let subtitle: String?
     let condition: String?
 
+    //swiftlint:disable:next identifier_name
     init(lat: String?, lon: String?, id: Int16, title: String?, subtitle: String?, condition: String?) {
         self.lat = lat
         self.lon = lon

@@ -32,7 +32,12 @@ extension Reach {
         } else {
             title = name
         }
-        return ReachAnnotation(lat: putInLat, lon: putInLon, id: id, title: title, subtitle: section, condition: condition)
+        return ReachAnnotation(lat: putInLat,
+                               lon: putInLon,
+                               id: id,
+                               title: title,
+                               subtitle: section,
+                               condition: condition)
     }
 
     var photoUrl: String? {

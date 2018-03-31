@@ -27,10 +27,10 @@ class RunDetailTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let reach = reach, let moc = managedObjectContext {
-            /*AWApiHelper.fetchReachDetail(reachID: String(reach.id)) { (detail) in
-                print(detail)
-            } */
+        if let reach = reach,
+            let moc = managedObjectContext,
+            reach.detailUpdated == nil {
+            print("Updating reach detail")
             AWApiHelper.updateReachDetail(reachID: String(reach.id), viewContext: moc) {
                 print("Updated reach details")
                 self.drawView()
@@ -64,6 +64,30 @@ extension RunDetailTableViewController {
         tableView.contentInset = UIEdgeInsets(top: -36, left: 0, bottom: 0, right: 0) //UIEdgeInsetsMake(-36, 0, 0, 0)
 
         drawView()
+        setupRefreshControl()
+    }
+
+    func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        let title = NSLocalizedString("Pull to Refresh", comment: "Pull to Refresh")
+        refreshControl.attributedTitle = NSAttributedString(string: title)
+        refreshControl.addTarget(self, action: #selector(refreshReach(sender:)), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+
+    @objc func refreshReach(sender: UIRefreshControl) {
+        let attributedTitle = sender.attributedTitle
+        let refreshingTitle = NSLocalizedString("Refreshing run details from AW",
+                                                comment: "Refreshing run details from AW")
+        sender.attributedTitle = NSAttributedString(string: refreshingTitle)
+
+        if let reach = reach, let context = managedObjectContext {
+            AWApiHelper.updateReachDetail(reachID: String(reach.id), viewContext: context) {
+                sender.endRefreshing()
+                sender.attributedTitle = attributedTitle
+                self.drawView()
+            }
+        }
     }
 
     func drawView() {
@@ -82,7 +106,12 @@ extension RunDetailTableViewController {
             unitsLabel.text = "Unknown"
         }
 
-        lengthLabel.text = reach.length ?? "Unknown"
+        if let length = reach.length {
+            lengthLabel.text = "\(length) miles"
+        } else {
+            lengthLabel.text = "Unknown"
+        }
+
         if reach.avgGradient != 0 {
             gradientLabel.text = "\(reach.avgGradient) fpm"
         } else {
@@ -94,8 +123,9 @@ extension RunDetailTableViewController {
         if detailUpdated != nil {
             if let description = reach.longDescription, let data = description.data(using: .utf8) {
                 if let html = try? NSMutableAttributedString(data: data,
-                                                             options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
-                                                             documentAttributes: nil) {
+                         options: [NSAttributedString.DocumentReadingOptionKey.documentType:
+                            NSAttributedString.DocumentType.html],
+                         documentAttributes: nil) {
                     descriptionLabel.attributedText = html
                 }
             } else {
