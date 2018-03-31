@@ -18,6 +18,7 @@ class RunDetailTableViewController: UITableViewController {
     @IBOutlet weak var readingLabel: UILabel!
     @IBOutlet weak var unitsLabel: UILabel!
     @IBOutlet weak var detailUpdated: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -88,6 +89,21 @@ extension RunDetailTableViewController {
         }
 
         detailUpdated.text = reach.detailUpdated?.description ?? "Updating Run Details"
+
+        if detailUpdated != nil {
+            if let description = reach.longDescription, let data = description.data(using: .utf8) {
+                if let html = try? NSMutableAttributedString(data: data,
+                                                             options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
+                                                             documentAttributes: nil) {
+                    descriptionLabel.attributedText = html
+                }
+            } else {
+                descriptionLabel.text = "No description"
+            }
+        } else {
+            descriptionLabel.text = "Updating run details"
+        }
+
     }
 }
 

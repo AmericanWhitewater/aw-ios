@@ -200,6 +200,20 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nt6-rQ-nNG" id="1ae-aq-1ug">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="167.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MHQ-gG-Eyu">
+                                                    <rect key="frame" x="16" y="11" width="343" height="146"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" name="font_light_grey"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="MHQ-gG-Eyu" firstAttribute="top" secondItem="1ae-aq-1ug" secondAttribute="topMargin" id="SfS-ij-FKh"/>
+                                                <constraint firstItem="MHQ-gG-Eyu" firstAttribute="leading" secondItem="1ae-aq-1ug" secondAttribute="leadingMargin" id="Uhg-5Z-3c1"/>
+                                                <constraint firstItem="MHQ-gG-Eyu" firstAttribute="bottom" secondItem="1ae-aq-1ug" secondAttribute="bottomMargin" id="aiG-YJ-bxg"/>
+                                                <constraint firstItem="MHQ-gG-Eyu" firstAttribute="trailing" secondItem="1ae-aq-1ug" secondAttribute="trailingMargin" id="r7t-VQ-A2q"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -338,6 +352,7 @@
                         </sections>
                     </tableView>
                     <connections>
+                        <outlet property="descriptionLabel" destination="MHQ-gG-Eyu" id="jpF-ag-U85"/>
                         <outlet property="detailUpdated" destination="mnO-AT-iYR" id="FQg-ee-UPm"/>
                         <outlet property="difficultyLabel" destination="6hh-CY-rTg" id="PYi-ZS-vWT"/>
                         <outlet property="gradientLabel" destination="jhA-gs-7BP" id="d5r-ls-O5c"/>
@@ -350,7 +365,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EL2-9Y-pm3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2202" y="2830"/>
+            <point key="canvasLocation" x="2200.8000000000002" y="2829.5352323838083"/>
         </scene>
         <!--Map-->
         <scene sceneID="SQ7-3d-HAD">
