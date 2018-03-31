@@ -17,6 +17,7 @@ class RunDetailTableViewController: UITableViewController {
     @IBOutlet weak var gradientLabel: UILabel!
     @IBOutlet weak var readingLabel: UILabel!
     @IBOutlet weak var unitsLabel: UILabel!
+    @IBOutlet weak var detailUpdated: UILabel!
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -85,9 +86,10 @@ extension RunDetailTableViewController {
         } else {
             gradientLabel.text = "Unknown"
         }
+
+        detailUpdated.text = reach.detailUpdated?.description ?? "Updating Run Details"
     }
 }
-
 
 extension RunDetailTableViewController: MOCViewControllerType {
 

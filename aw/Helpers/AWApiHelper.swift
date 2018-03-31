@@ -279,29 +279,29 @@ struct AWApiHelper {
                 do {
                     let reaches = try context.fetch(request)
                     if let reach = reaches.first {
-                        if let avgGradient = info.avgGradient,
-                            let photoId = info.photoId,
-                            let maxGradient = info.maxGradient {
-                            reach.abstract = info.abstract
+                        if let avgGradient = info.avgGradient {
                             reach.avgGradient = avgGradient
+                        } else { print("Can't unwrap avgGradient")}
+                        if let photoId = info.photoId {
                             reach.photoId = photoId
-                            reach.length = info.length
+                        } else { print("Can't unwrap photoId")}
+                        if let maxGradient = info.maxGradient {
                             reach.maxGradient = maxGradient
-                            reach.longDescription = info.description
-                            reach.shuttleDetails = info.shuttleDetails
-                            reach.zipcode = info.zipcode
-                            reach.detailUpdated = Date()
-                            do {
-                                try context.save()
-                                print("Reach detail background context saved")
-                            } catch {
-                                let error = error as NSError
-                                print("unable to save background context \(error) \(error.userInfo)")
-                            }
-                            dispatchGroup.leave()
-                        } else {
-                            print("Unable to change AWReach attributes")
+                        } else { print("Can't unwrap maxGradient") }
+                        reach.length = info.length
+                        reach.abstract = info.abstract
+                        reach.longDescription = info.description
+                        reach.shuttleDetails = info.shuttleDetails
+                        reach.zipcode = info.zipcode
+                        reach.detailUpdated = Date()
+                        do {
+                            try context.save()
+                            print("Reach detail background context saved")
+                        } catch {
+                            let error = error as NSError
+                            print("unable to save background context \(error) \(error.userInfo)")
                         }
+                        dispatchGroup.leave()
                     } else {
                         print("no reach found")
                     }
