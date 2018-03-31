@@ -51,15 +51,15 @@ struct Condition {
 
 struct AWReachInfo: Codable {
     //swiftlint:disable:next identifier_name
-    let id: Int
-    let abstract: String?
-    let avgGradient: Int16?
-    let photoId: Int16?
-    let length: String?
-    let maxGradient: Int16?
-    let description: String?
-    let shuttleDetails: String?
-    let zipcode: String?
+    let id: Int //
+    let abstract: String? //
+    let avgGradient: Int16? //
+    let photoId: Int32? //
+    let length: String? //
+    let maxGradient: Int16? //
+    let description: String? //
+    let shuttleDetails: String? //
+    let zipcode: String? //
 
     enum CodingKeys: String, CodingKey {
         //swiftlint:disable:next identifier_name
@@ -209,6 +209,7 @@ struct AWApiHelper {
     static func updateRegions(viewContext: NSManagedObjectContext, callback: @escaping UpdateCallback) {
         let regions = Region.all
         let dispatchGroup = DispatchGroup()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         for region in regions {
             dispatchGroup.enter()
             fetchReachesByRegion(region: region.code) { (reaches) in
@@ -243,6 +244,7 @@ struct AWApiHelper {
                     print("unable to save view context \(error) \(error.userInfo)")
                 }
             }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             callback()
         }
     }
@@ -250,12 +252,18 @@ struct AWApiHelper {
     static func fetchReachDetail(reachID: String, callback: @escaping ReachDetailCallback) {
         let url = URL(string: "https://www.americanwhitewater.org/content/River/detail/id/\(reachID)/.json")!
 
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        let task = URLSession.shared.dataTask(with: url) { dataOptional, response, error in
             let decoder = JSONDecoder()
 
-            guard let data = data,
+            guard let data = dataOptional,
                 let detail = try? decoder.decode(AWReachDetailResponse.self, from: data) else {
                     print("Unable to decode \(reachID)")
+                    if let data = dataOptional, let json = try? JSONSerialization.jsonObject(with: data, options: []) {
+                        print("info:")
+                        print(json)
+                    } else {
+                        print("JSONSerilization can't unwrap it")
+                    }
                     return
 
             }
@@ -269,7 +277,7 @@ struct AWApiHelper {
                                   callback: @escaping UpdateCallback) {
 
         // check for last update time
-
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
         fetchReachDetail(reachID: reachID) { (awReachDetail) in
@@ -329,6 +337,7 @@ struct AWApiHelper {
                         print("unable to save view context \(error) \(error.userInfo)")
                     }
                 }
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 callback()
             }
         }

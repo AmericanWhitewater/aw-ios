@@ -163,7 +163,7 @@ extension RunDetailTableViewController {
 }
 
 extension RunDetailTableViewController: RunDetailViewControllerType {
-    
+
 }
 
 extension RunDetailTableViewController: MOCViewControllerType {

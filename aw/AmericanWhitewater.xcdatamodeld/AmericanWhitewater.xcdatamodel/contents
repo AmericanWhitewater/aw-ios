@@ -19,7 +19,7 @@
         <attribute name="longDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="maxGradient" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="photoId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="photoId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="putInLat" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="putInLon" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="section" attributeType="String" syncable="YES"/>
@@ -36,6 +36,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Reach" positionX="-54" positionY="-9" width="128" height="463"/>
+        <element name="Reach" positionX="-54" positionY="-9" width="128" height="465"/>
     </elements>
 </model>
