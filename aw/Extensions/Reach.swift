@@ -53,6 +53,18 @@ extension Reach {
         }
     }
 
+    var updatedString: String? {
+        guard let date = detailUpdated else { return nil }
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .medium
+        dateFormat.doesRelativeDateFormatting = true
+
+        let timeFormat = DateFormatter()
+        timeFormat.dateFormat = "h:mm a"
+
+        return "\(dateFormat.string(from: date)) at \(timeFormat.string(from: date))"
+    }
+
     var photoUrl: String? {
         if photoId != 0 {
             return "https://www.americanwhitewater.org/photos/archive/medium/\(photoId).jpg"

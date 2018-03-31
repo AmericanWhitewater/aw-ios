@@ -140,7 +140,7 @@ extension RunDetailTableViewController {
             gradientLabel.text = "Unknown"
         }
 
-        detailUpdated.text = reach.detailUpdated?.description ?? "Updating Run Details"
+        detailUpdated.text = reach.updatedString ?? "Updating Run Details"
 
         if detailUpdated != nil {
             if let description = reach.longDescription, let data = description.data(using: .utf8) {
