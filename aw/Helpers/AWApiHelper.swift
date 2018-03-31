@@ -248,7 +248,11 @@ struct AWApiHelper {
             let decoder = JSONDecoder()
 
             guard let data = data,
-                let detail = try? decoder.decode(AWReachDetailResponse.self, from: data) else { return }
+                let detail = try? decoder.decode(AWReachDetailResponse.self, from: data) else {
+                    print("Unable to decode \(reachID)")
+                    return
+
+            }
             callback(detail.view.main)
         }
         task.resume()
@@ -270,10 +274,6 @@ struct AWApiHelper {
 
             context.perform {
                 let request: NSFetchRequest<Reach> = Reach.fetchRequest()
-                /*guard let reachId = Int16(reachID) else {
-                    print("It's all broken")
-                    return
-                } */
                 request.predicate = NSPredicate(format: "id = %@", reachID)
 
                 do {

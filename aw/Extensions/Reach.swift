@@ -34,4 +34,12 @@ extension Reach {
         }
         return ReachAnnotation(lat: putInLat, lon: putInLon, id: id, title: title, subtitle: section, condition: condition)
     }
+
+    var photoUrl: String? {
+        if photoId != 0 {
+            return "https://www.americanwhitewater.org/photos/archive/medium/\(photoId).jpg"
+        } else {
+            return nil
+        }
+    }
 }

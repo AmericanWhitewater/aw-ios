@@ -19,6 +19,7 @@ class RunDetailTableViewController: UITableViewController {
     @IBOutlet weak var unitsLabel: UILabel!
     @IBOutlet weak var detailUpdated: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -103,7 +104,11 @@ extension RunDetailTableViewController {
         } else {
             descriptionLabel.text = "Updating run details"
         }
-
+        if let photoUrl = reach.photoUrl {
+            if let url = URL(string: photoUrl), let data = try? Data(contentsOf: url) {
+                imageView.image = UIImage(data: data)
+            }
+        }
     }
 }
 

@@ -192,6 +192,17 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aXd-zd-AW2" id="sBn-qy-AqY">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="185.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g8W-io-yJF">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="185.5"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="g8W-io-yJF" secondAttribute="bottom" id="Drb-XV-hOg"/>
+                                                <constraint firstItem="g8W-io-yJF" firstAttribute="top" secondItem="sBn-qy-AqY" secondAttribute="top" id="bkE-0t-CJ9"/>
+                                                <constraint firstAttribute="trailing" secondItem="g8W-io-yJF" secondAttribute="trailing" id="kJ8-SR-aaI"/>
+                                                <constraint firstItem="g8W-io-yJF" firstAttribute="leading" secondItem="sBn-qy-AqY" secondAttribute="leading" id="vmh-Md-8i4"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="168" id="nt6-rQ-nNG">
@@ -356,6 +367,7 @@
                         <outlet property="detailUpdated" destination="mnO-AT-iYR" id="FQg-ee-UPm"/>
                         <outlet property="difficultyLabel" destination="6hh-CY-rTg" id="PYi-ZS-vWT"/>
                         <outlet property="gradientLabel" destination="jhA-gs-7BP" id="d5r-ls-O5c"/>
+                        <outlet property="imageView" destination="g8W-io-yJF" id="57f-rR-DKH"/>
                         <outlet property="lengthLabel" destination="Yom-8R-JHN" id="2Om-eS-DlS"/>
                         <outlet property="nameLabel" destination="S9f-5l-pA7" id="p2c-7S-JwG"/>
                         <outlet property="readingLabel" destination="ZtZ-4I-4fN" id="SDq-T3-zUF"/>
