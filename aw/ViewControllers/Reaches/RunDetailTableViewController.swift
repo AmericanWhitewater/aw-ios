@@ -57,6 +57,10 @@ class RunDetailTableViewController: UITableViewController {
             return 0
         }
     }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 extension RunDetailTableViewController {
@@ -75,10 +79,19 @@ extension RunDetailTableViewController {
         tableView.refreshControl = refreshControl
     }
 
+    @objc func tapFavoriteIcon(_ sender: Any) {
+        guard let reach = reach, let context = managedObjectContext else { return }
+
+        context.persist {
+            reach.favorite = !reach.favorite
+            self.drawView()
+        }
+    }
+
     @objc func refreshReach(sender: UIRefreshControl) {
         let attributedTitle = sender.attributedTitle
         let refreshingTitle = NSLocalizedString("Refreshing run details from AW",
-                                                comment: "Refreshing run details from AW")
+            comment: "Refreshing run details from AW")
         sender.attributedTitle = NSAttributedString(string: refreshingTitle)
 
         if let reach = reach, let context = managedObjectContext {
@@ -139,6 +152,13 @@ extension RunDetailTableViewController {
                 imageView.image = UIImage(data: data)
             }
         }
+
+        let favoriteButton = UIBarButtonItem(
+            image: reach.favorite ? UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite"),
+            style: .plain,
+            target: self,
+            action: #selector(tapFavoriteIcon))
+        self.navigationItem.rightBarButtonItem = favoriteButton
     }
 }
 
