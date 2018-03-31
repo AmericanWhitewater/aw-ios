@@ -113,8 +113,10 @@ extension RunDetailTableViewController {
     func drawView() {
         guard let reach = reach else { return }
         nameLabel.text = reach.name
-        sectionLabel.text = reach.section
+        sectionLabel.text = reach.sectionCleanedHTML
         difficultyLabel.text = reach.difficulty
+
+        
 
         if let reading = reach.lastGageReading, let unit = reach.unit {
             readingLabel.text = reading

@@ -36,8 +36,21 @@ extension Reach {
                                lon: putInLon,
                                id: id,
                                title: title,
-                               subtitle: section,
+                               subtitle: sectionCleanedHTML,
                                condition: condition)
+    }
+
+    var sectionCleanedHTML: String? {
+        if let section = section,
+            let data = section.data(using: .utf8),
+            let html = try? NSMutableAttributedString(
+                data: data,
+                options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
+                documentAttributes: nil) {
+            return html.string
+        } else {
+            return nil
+        }
     }
 
     var photoUrl: String? {

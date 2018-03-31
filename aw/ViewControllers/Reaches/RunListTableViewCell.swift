@@ -40,7 +40,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
             conditionColorView.backgroundColor = reach.color
 
             riverName.text = reach.name
-            sectionLabel.text = reach.section
+            sectionLabel.text = reach.sectionCleanedHTML
             difficultyLabel.text = "Level: \(reach.readingFormatted) Class: \(reach.difficulty ?? "Unknown")"
             difficultyLabel.textColor = reach.color
 
