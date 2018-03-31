@@ -39,11 +39,9 @@ extension ReachDetailContainerViewController {
         for childVC in childViewControllers {
             print("childVC")
             if var childVC = childVC as? RunDetailViewControllerType {
-                print("Run detail type")
                 childVC.reach = reach
             }
             if var childVC = childVC as? MOCViewControllerType {
-                print("MOC type")
                 childVC.managedObjectContext = managedObjectContext
             }
         }

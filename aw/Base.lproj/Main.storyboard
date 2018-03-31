@@ -1165,27 +1165,29 @@ plan for your next run!</string>
             </objects>
             <point key="canvasLocation" x="-728" y="616"/>
         </scene>
-        <!--View Controller-->
+        <!--Reach Detail Map View Controller-->
         <scene sceneID="91G-kj-07R">
             <objects>
-                <viewController id="0rz-rU-DfO" sceneMemberID="viewController">
+                <viewController id="0rz-rU-DfO" customClass="ReachDetailMapViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="abg-nC-fRc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0z9-PG-sc3">
-                                <rect key="frame" x="170.5" y="266.5" width="33.5" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="yUK-uR-5qi">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="0z9-PG-sc3" firstAttribute="centerY" secondItem="abg-nC-fRc" secondAttribute="centerY" id="Vws-tX-FfJ"/>
-                            <constraint firstItem="0z9-PG-sc3" firstAttribute="centerX" secondItem="abg-nC-fRc" secondAttribute="centerX" id="dPj-JO-LEm"/>
+                            <constraint firstAttribute="trailing" secondItem="yUK-uR-5qi" secondAttribute="trailing" id="9D1-Gz-xs5"/>
+                            <constraint firstItem="yUK-uR-5qi" firstAttribute="top" secondItem="abg-nC-fRc" secondAttribute="top" id="Vix-F1-pbZ"/>
+                            <constraint firstItem="yUK-uR-5qi" firstAttribute="leading" secondItem="abg-nC-fRc" secondAttribute="leading" id="lUd-7a-34b"/>
+                            <constraint firstAttribute="bottom" secondItem="yUK-uR-5qi" secondAttribute="bottom" id="ljh-G9-Coe"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="yUK-uR-5qi" id="qeH-h8-A9Z"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lFJ-sy-OZB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1225,7 +1227,7 @@ plan for your next run!</string>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BDm-bc-Bvj"/>
-        <segue reference="v1j-tX-Cxp"/>
+        <segue reference="35b-Ee-eOR"/>
+        <segue reference="nNq-n1-7H9"/>
     </inferredMetricsTieBreakers>
 </document>
