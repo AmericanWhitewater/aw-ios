@@ -39,8 +39,15 @@ struct AWReachInfo: Codable {
     }
 }
 
+struct AWGageInfo: Codable {
+    let id: Int
+    //let name: String
+    //let metricid: Int
+}
+
 struct AWReachMain: Codable {
     let info: AWReachInfo
+    let guages: [AWGageInfo]
 }
 
 struct AWReachDetailSubResponse: Codable {

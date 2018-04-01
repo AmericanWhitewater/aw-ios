@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17D102" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Article" representedClassName="Article" syncable="YES" codeGenerationType="class">
+        <attribute name="abstract" attributeType="String" syncable="YES"/>
+        <attribute name="abstractPhoto" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="articleID" attributeType="String" syncable="YES"/>
+        <attribute name="author" attributeType="String" syncable="YES"/>
+        <attribute name="contact" attributeType="String" syncable="YES"/>
+        <attribute name="contents" attributeType="String" syncable="YES"/>
+        <attribute name="contentsPhoto" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="posted" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
     <entity name="Reach" representedClassName="Reach" syncable="YES" codeGenerationType="class">
         <attribute name="abstract" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="avgGradient" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -38,5 +48,6 @@
     </entity>
     <elements>
         <element name="Reach" positionX="-54" positionY="-9" width="128" height="480"/>
+        <element name="Article" positionX="-54" positionY="144" width="128" height="165"/>
     </elements>
 </model>

@@ -1,30 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RYa-Ho-b14">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RYa-Ho-b14">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--American Whitewater-->
-        <scene sceneID="948-ap-5Vg">
+        <!--News Table View Controller-->
+        <scene sceneID="nlO-qF-hbq">
             <objects>
-                <viewController id="bTs-WB-bbS" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="zi1-u3-njE">
+                <tableViewController id="3ys-v3-MBW" customClass="NewsTableViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uJe-Yz-gca">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="4Yq-bE-JSj"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="American Whitewater" id="oQw-RF-Nnb"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Lqy-Pn-JPl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="supportAWCell" rowHeight="204" id="NLd-ya-mzw">
+                                <rect key="frame" x="0.0" y="28" width="375" height="204"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NLd-ya-mzw" id="nsx-dA-ZnG">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="203.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart" translatesAutoresizingMaskIntoConstraints="NO" id="2EF-ao-X9W">
+                                            <rect key="frame" x="16" y="22" width="17" height="14"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let’s Support AW together!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBM-hO-TuS">
+                                            <rect key="frame" x="41" y="16" width="218" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="URo-tO-TZU">
+                                            <rect key="frame" x="16" y="142.5" width="343" height="45"/>
+                                            <color key="backgroundColor" name="accent"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="45" id="nWx-gv-lSf"/>
+                                            </constraints>
+                                            <state key="normal" title="Donate Now &gt;">
+                                                <color key="titleColor" name="white"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="2EF-ao-X9W" firstAttribute="leading" secondItem="nsx-dA-ZnG" secondAttribute="leading" constant="16" id="8iw-yq-bdH"/>
+                                        <constraint firstItem="EBM-hO-TuS" firstAttribute="top" secondItem="nsx-dA-ZnG" secondAttribute="top" constant="16" id="AkS-Aj-pOQ"/>
+                                        <constraint firstItem="URo-tO-TZU" firstAttribute="leading" secondItem="nsx-dA-ZnG" secondAttribute="leading" constant="16" id="N5g-4T-zUw"/>
+                                        <constraint firstAttribute="trailing" secondItem="URo-tO-TZU" secondAttribute="trailing" constant="16" id="nxb-Ar-kZZ"/>
+                                        <constraint firstItem="2EF-ao-X9W" firstAttribute="top" secondItem="nsx-dA-ZnG" secondAttribute="top" constant="22" id="qwd-XO-NDu"/>
+                                        <constraint firstAttribute="bottom" secondItem="URo-tO-TZU" secondAttribute="bottom" constant="16" id="rbM-SK-sLM"/>
+                                        <constraint firstItem="EBM-hO-TuS" firstAttribute="leading" secondItem="2EF-ao-X9W" secondAttribute="trailing" constant="8" id="ulX-37-2if"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="newsCell" rowHeight="196" id="05I-jc-nBw">
+                                <rect key="frame" x="0.0" y="232" width="375" height="196"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="05I-jc-nBw" id="3XQ-Ok-1uD">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="195.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3ys-v3-MBW" id="HiN-vh-6aN"/>
+                            <outlet property="delegate" destination="3ys-v3-MBW" id="stN-Rw-97o"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="ff0-xJ-72j"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EZx-kU-PAN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1249" y="2007"/>
+            <point key="canvasLocation" x="-1249" y="1662"/>
         </scene>
         <!--News-->
         <scene sceneID="A8Q-zt-c9D">
@@ -39,7 +89,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="bTs-WB-bbS" kind="relationship" relationship="rootViewController" id="C0T-OR-Sko"/>
+                        <segue destination="3ys-v3-MBW" kind="relationship" relationship="rootViewController" id="Wlc-9m-Nqa"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g8g-37-ujW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -48,7 +98,14 @@
         </scene>
     </scenes>
     <resources>
+        <image name="heart" width="17" height="14"/>
         <image name="icon_news" width="24" height="24"/>
         <image name="icon_news_selected" width="22" height="22"/>
+        <namedColor name="accent">
+            <color red="0.95294117647058818" green="0.36078431372549019" blue="0.28627450980392155" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

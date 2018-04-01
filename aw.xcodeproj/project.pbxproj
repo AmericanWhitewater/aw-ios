@@ -13,6 +13,7 @@
 		381ED39D206FBE1900B03F13 /* RunDetailViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED39C206FBE1900B03F13 /* RunDetailViewControllerType.swift */; };
 		381ED39F206FC15700B03F13 /* ReachDetailMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED39E206FC15700B03F13 /* ReachDetailMapViewController.swift */; };
 		381ED3A2206FC7AB00B03F13 /* RunAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED3A1206FC7AB00B03F13 /* RunAnnotation.swift */; };
+		3836C48A2070803500490999 /* AWArticleAPIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C4892070803500490999 /* AWArticleAPIHelper.swift */; };
 		3858D23120689313004A39C6 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D22F20689313004A39C6 /* About.storyboard */; };
 		3858D23320689345004A39C6 /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D23220689345004A39C6 /* News.storyboard */; };
 		3858D23520693A36004A39C6 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3858D23420693A36004A39C6 /* TabViewController.swift */; };
@@ -55,6 +56,7 @@
 		38BE74A6206827A200DE555D /* DifficultyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A5206827A200DE555D /* DifficultyHelper.swift */; };
 		38BE74A8206839F200DE555D /* FilterManagerViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A7206839F200DE555D /* FilterManagerViewControllerType.swift */; };
 		38C421542065C7DE0044D717 /* AWApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C421532065C7DE0044D717 /* AWApiHelper.swift */; };
+		38EBD1CE2070785600D7B1C1 /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EBD1CD2070785600D7B1C1 /* NewsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,7 @@
 		381ED39C206FBE1900B03F13 /* RunDetailViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDetailViewControllerType.swift; sourceTree = "<group>"; };
 		381ED39E206FC15700B03F13 /* ReachDetailMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachDetailMapViewController.swift; sourceTree = "<group>"; };
 		381ED3A1206FC7AB00B03F13 /* RunAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunAnnotation.swift; sourceTree = "<group>"; };
+		3836C4892070803500490999 /* AWArticleAPIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWArticleAPIHelper.swift; sourceTree = "<group>"; };
 		3858D23020689313004A39C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = aw/Base.lproj/About.storyboard; sourceTree = "<group>"; };
 		3858D23220689345004A39C6 /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
 		3858D23420693A36004A39C6 /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +111,7 @@
 		38BE74A5206827A200DE555D /* DifficultyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyHelper.swift; sourceTree = "<group>"; };
 		38BE74A7206839F200DE555D /* FilterManagerViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterManagerViewControllerType.swift; sourceTree = "<group>"; };
 		38C421532065C7DE0044D717 /* AWApiHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiHelper.swift; sourceTree = "<group>"; };
+		38EBD1CD2070785600D7B1C1 /* NewsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,8 +166,8 @@
 				385E59C52063047B00A68EC9 /* Main.storyboard */,
 				3858D23220689345004A39C6 /* News.storyboard */,
 				3858D22F20689313004A39C6 /* About.storyboard */,
-				385E59C82063047B00A68EC9 /* Assets.xcassets */,
 				385E59CA2063047B00A68EC9 /* LaunchScreen.storyboard */,
+				385E59C82063047B00A68EC9 /* Assets.xcassets */,
 				385E59CD2063047B00A68EC9 /* Info.plist */,
 				38A6C8EB2066E6EC00B5BA29 /* AmericanWhitewater.xcdatamodeld */,
 			);
@@ -257,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				38C421532065C7DE0044D717 /* AWApiHelper.swift */,
+				3836C4892070803500490999 /* AWArticleAPIHelper.swift */,
 				38A98F5F2067E32D009853E1 /* DefaultsManager.swift */,
 				38150B252067F75800CBE8D8 /* Regions.swift */,
 				38BE74A5206827A200DE555D /* DifficultyHelper.swift */,
@@ -267,11 +272,11 @@
 		38C421552065C9940044D717 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				3858D23420693A36004A39C6 /* TabViewController.swift */,
 				38A6C8F22067187900B5BA29 /* Onboard */,
 				38C421582065C9AF0044D717 /* More */,
 				38C421572065C9A40044D717 /* Reaches */,
 				38C421562065C99E0044D717 /* News */,
-				3858D23420693A36004A39C6 /* TabViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -279,6 +284,7 @@
 		38C421562065C99E0044D717 /* News */ = {
 			isa = PBXGroup;
 			children = (
+				38EBD1CD2070785600D7B1C1 /* NewsTableViewController.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -432,6 +438,7 @@
 				38A98F5E2067CAF8009853E1 /* FavoriteListTableViewController.swift in Sources */,
 				381ED393206F012400B03F13 /* ReachFetchRequestControllerType.swift in Sources */,
 				381ED39D206FBE1900B03F13 /* RunDetailViewControllerType.swift in Sources */,
+				3836C48A2070803500490999 /* AWArticleAPIHelper.swift in Sources */,
 				38A98F8F2067F0B4009853E1 /* FilterExtendedNavBarView.swift in Sources */,
 				38A98F732067ED2E009853E1 /* AboutAWMissionViewController.swift in Sources */,
 				38A6C8DB206677EC00B5BA29 /* RunListTableViewCell.swift in Sources */,
@@ -439,6 +446,7 @@
 				38A6C8E82066882300B5BA29 /* NSPersistentContainer.swift in Sources */,
 				3864857D206BC355009B360F /* Onboard2ViewController.swift in Sources */,
 				38A6C8F42067189300B5BA29 /* Onboard1ViewController.swift in Sources */,
+				38EBD1CE2070785600D7B1C1 /* NewsTableViewController.swift in Sources */,
 				381ED39B206FBA3B00B03F13 /* ReachDetailContainerViewController.swift in Sources */,
 				381ED3A2206FC7AB00B03F13 /* RunAnnotation.swift in Sources */,
 				38BE74A420681B9D00DE555D /* FilterViewControllerType.swift in Sources */,
