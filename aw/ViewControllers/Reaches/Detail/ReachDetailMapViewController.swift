@@ -35,6 +35,7 @@ extension ReachDetailMapViewController {
     }
 
     func setupMap() {
+        mapView.showsUserLocation = true
         if let reach = reach {
             if let lat = reach.putInLat,
                 let latitude = Double(lat),

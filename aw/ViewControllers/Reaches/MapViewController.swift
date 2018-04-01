@@ -45,6 +45,7 @@ class MapViewController: UIViewController, MOCViewControllerType {
 extension MapViewController {
     func initialize() {
         mapView.delegate = self
+        mapView.showsUserLocation = true
 
         fetchedResultsController = initializeFetchedResultController()
         fetchedResultsController?.delegate = self
