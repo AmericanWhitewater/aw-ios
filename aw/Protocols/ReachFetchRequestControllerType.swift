@@ -48,6 +48,9 @@ extension ReachFetchRequestControllerType {
 
     func distancePredicate() -> NSPredicate {
         let distance = DefaultsManager.distanceFilter
-        return NSPredicate(format: "distance <= %lf", distance)
+        let predicates: [NSPredicate] = [
+            NSPredicate(format: "distance <= %lf", distance),
+            NSPredicate(format: "distance != 0")] // hide invalid distances
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
 }

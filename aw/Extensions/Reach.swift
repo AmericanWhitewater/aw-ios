@@ -54,7 +54,7 @@ extension Reach {
     }
 
     var distanceFormatted: String? {
-        return "\(Int(distance)) mi"
+        return distance != 0 ? "\(Int(distance)) mi" : ""
     }
 
     var updatedString: String? {
