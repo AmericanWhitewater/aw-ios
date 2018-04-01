@@ -44,8 +44,7 @@ class MapViewController: UIViewController, MOCViewControllerType {
 // MARK: - Extension
 extension MapViewController {
     func initialize() {
-        mapView.delegate = self
-        mapView.showsUserLocation = true
+        setupMapView()
 
         fetchedResultsController = initializeFetchedResultController()
         fetchedResultsController?.delegate = self
@@ -55,6 +54,25 @@ extension MapViewController {
 
     @objc func reachButtonTapped(sender: UIButton!) {
         performSegue(withIdentifier: Segue.runDetailMap.rawValue, sender: nil)
+    }
+
+    func setupMapView() {
+        mapView.delegate = self
+        mapView.showsUserLocation = true
+
+        let distance = Double(DefaultsManager.distanceFilter)
+        let latitude = DefaultsManager.latitude
+        let longitude = DefaultsManager.longitude
+
+        if distance != 0 {
+            let scalingFactor = abs( (cos(2 * Double.pi * latitude / 360.0)))
+            let span = MKCoordinateSpan(latitudeDelta: distance / 69.0, longitudeDelta: distance/(scalingFactor * 69.0))
+            let region = MKCoordinateRegion(center:
+                CLLocationCoordinate2D(
+                    latitude: latitude, longitude: longitude),
+                span: span)
+            mapView.setRegion(region, animated: false)
+        }
     }
 
     func prepareDetailSegue(_ segue: UIStoryboardSegue) {
