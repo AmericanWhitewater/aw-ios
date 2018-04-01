@@ -30,6 +30,7 @@ struct AWArticle: Codable {
     let contents: String
     let contentsPhoto: String
     let posted: String
+    let title: String
 
     // make date as a computed property
 
@@ -49,6 +50,7 @@ struct AWArticle: Codable {
         case abstractPhoto = "abstract_photo"
         case contentsPhoto = "contents_photo"
         case posted = "postedepoch"
+        case title
 
     }
 }
@@ -92,6 +94,7 @@ struct AWArticleAPIHelper {
         article.contents = newArticle.contents
         article.contentsPhoto = newArticle.contentsPhoto
         article.posted = newArticle.date
+        article.title = newArticle.title
     }
 
     static func updateArticles(viewContext: NSManagedObjectContext, callback: @escaping UpdateCallback) {

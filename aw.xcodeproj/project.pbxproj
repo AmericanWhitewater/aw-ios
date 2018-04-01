@@ -14,6 +14,8 @@
 		381ED39F206FC15700B03F13 /* ReachDetailMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED39E206FC15700B03F13 /* ReachDetailMapViewController.swift */; };
 		381ED3A2206FC7AB00B03F13 /* RunAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED3A1206FC7AB00B03F13 /* RunAnnotation.swift */; };
 		3836C48A2070803500490999 /* AWArticleAPIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C4892070803500490999 /* AWArticleAPIHelper.swift */; };
+		3836C48C20708B5400490999 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C48B20708B5400490999 /* NewsTableViewCell.swift */; };
+		3836C48E20708E7900490999 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C48D20708E7900490999 /* Article.swift */; };
 		3858D23120689313004A39C6 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D22F20689313004A39C6 /* About.storyboard */; };
 		3858D23320689345004A39C6 /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D23220689345004A39C6 /* News.storyboard */; };
 		3858D23520693A36004A39C6 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3858D23420693A36004A39C6 /* TabViewController.swift */; };
@@ -67,6 +69,8 @@
 		381ED39E206FC15700B03F13 /* ReachDetailMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachDetailMapViewController.swift; sourceTree = "<group>"; };
 		381ED3A1206FC7AB00B03F13 /* RunAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunAnnotation.swift; sourceTree = "<group>"; };
 		3836C4892070803500490999 /* AWArticleAPIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWArticleAPIHelper.swift; sourceTree = "<group>"; };
+		3836C48B20708B5400490999 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
+		3836C48D20708E7900490999 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		3858D23020689313004A39C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = aw/Base.lproj/About.storyboard; sourceTree = "<group>"; };
 		3858D23220689345004A39C6 /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
 		3858D23420693A36004A39C6 /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 				38A6C8E72066882300B5BA29 /* NSPersistentContainer.swift */,
 				38A6C8E92066884800B5BA29 /* NSManagedObjectContext.swift */,
 				38A6C8EE2067074700B5BA29 /* Reach.swift */,
+				3836C48D20708E7900490999 /* Article.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -285,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				38EBD1CD2070785600D7B1C1 /* NewsTableViewController.swift */,
+				3836C48B20708B5400490999 /* NewsTableViewCell.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -422,10 +428,12 @@
 				38A6C8F120670AEF00B5BA29 /* MapViewController.swift in Sources */,
 				38A98F692067EA78009853E1 /* AboutAWExtendedNavBarView.swift in Sources */,
 				38B3CD1620672F310016630F /* Segues.swift in Sources */,
+				3836C48C20708B5400490999 /* NewsTableViewCell.swift in Sources */,
 				38A6C8EA2066884800B5BA29 /* NSManagedObjectContext.swift in Sources */,
 				38BE74A6206827A200DE555D /* DifficultyHelper.swift in Sources */,
 				385E59C22063047B00A68EC9 /* AppDelegate.swift in Sources */,
 				38A6C8ED2066E6EC00B5BA29 /* AmericanWhitewater.xcdatamodeld in Sources */,
+				3836C48E20708E7900490999 /* Article.swift in Sources */,
 				38A6C8E3206687EC00B5BA29 /* MOCViewControllerType.swift in Sources */,
 				38150B262067F75800CBE8D8 /* Regions.swift in Sources */,
 				38A98F772067ED3F009853E1 /* AboutAWStewardshipViewController.swift in Sources */,

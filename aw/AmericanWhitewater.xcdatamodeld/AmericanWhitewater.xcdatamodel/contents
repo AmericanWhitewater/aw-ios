@@ -9,6 +9,7 @@
         <attribute name="contents" attributeType="String" syncable="YES"/>
         <attribute name="contentsPhoto" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="posted" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Reach" representedClassName="Reach" syncable="YES" codeGenerationType="class">
         <attribute name="abstract" optional="YES" attributeType="String" syncable="YES"/>
@@ -48,6 +49,6 @@
     </entity>
     <elements>
         <element name="Reach" positionX="-54" positionY="-9" width="128" height="480"/>
-        <element name="Article" positionX="-54" positionY="144" width="128" height="165"/>
+        <element name="Article" positionX="-54" positionY="144" width="128" height="180"/>
     </elements>
 </model>

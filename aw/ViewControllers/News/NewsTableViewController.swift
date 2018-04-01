@@ -12,8 +12,11 @@ import UIKit
 class NewsTableViewController: UITableViewController {
     var managedObjectContext: NSManagedObjectContext?
 
+    var fetchedResultsController: NSFetchedResultsController<Article>?
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        initialize()
 
         if let context = managedObjectContext {
             AWArticleAPIHelper.updateArticles(viewContext: context) {
@@ -32,7 +35,7 @@ class NewsTableViewController: UITableViewController {
         case 0:
             return 1
         default:
-            return 0
+            return fetchedResultsController?.fetchedObjects?.count ?? 0
         }
     }
 
@@ -42,7 +45,14 @@ class NewsTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "supportAWCell", for: indexPath)
             return cell
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "newsCell", for: indexPath)
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "newsCell", for: indexPath) as? NewsTableViewCell else {
+                fatalError("Failed to deque newsCell")
+            }
+
+            let article = fetchedResultsController?.object(at: convertToFetchedResults(indexPath))
+
+            cell.article = article
+            cell.update()
             return cell
         }
     }
@@ -55,22 +65,70 @@ class NewsTableViewController: UITableViewController {
             return 196
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension NewsTableViewController {
+    func initialize() {
+        initializeFetchedResultController()
+    }
 
+    func initializeFetchedResultController() {
+        guard let moc = managedObjectContext else { return }
+
+        let request = NSFetchRequest<Article>(entityName: "Article")
+        request.sortDescriptors = [NSSortDescriptor(key: "posted", ascending: false)]
+
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController?.delegate = self
+
+        do {
+            try fetchedResultsController?.performFetch()
+        } catch {
+            let error = error as NSError
+            print("fetch request failed \(error) \(error.userInfo)")
+        }
+
+    }
+
+    func convertToFetchedResults(_ indexPath: IndexPath) -> IndexPath {
+        return IndexPath(row: indexPath.row, section: indexPath.section - 1)
+    }
+
+    func convertToTableView(_ indexPath: IndexPath) -> IndexPath {
+        return IndexPath(row: indexPath.row, section: indexPath.section + 1)
+    }
 }
 
 extension NewsTableViewController: MOCViewControllerType {
+}
+
+extension NewsTableViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            guard let insertIndex = newIndexPath else { return }
+            tableView.insertRows(at: [convertToTableView(insertIndex)], with: .automatic)
+        case .delete:
+            guard let deleteIndex = indexPath else { return }
+            tableView.deleteRows(at: [convertToTableView(deleteIndex)], with: .automatic)
+        case .move:
+            guard let fromIndex = indexPath, let toIndex = newIndexPath else { return }
+            tableView.moveRow(at: convertToTableView(fromIndex), to: convertToTableView(toIndex))
+        case .update:
+            guard let updateIndex = indexPath else { return }
+            tableView.reloadRows(at: [convertToTableView(updateIndex)], with: .automatic)
+        }
+    }
 }
