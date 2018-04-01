@@ -314,7 +314,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3hf-UD-UqL">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="509.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="529.5"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="awLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Q8G-E5-Vml">
                                                 <rect key="frame" x="101.5" y="20" width="171" height="84"/>
@@ -324,8 +324,9 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qIW-6K-AS2">
-                                                <rect key="frame" x="16" y="124" width="343" height="365.5"/>
-                                                <mutableString key="text">Founded in 1954, American Whitewater is a national non-profit organization (Non-profit # 23-7083760) with a mission “to conserve and restore America's whitewater resources and to enhance opportunities to enjoy them safely.” American Whitewater is a membership organization representing a broad diversity of individual whitewater enthusiasts, river conservationists, and more than 100 local paddling club affiliates across America. 
+                                                <rect key="frame" x="16" y="124" width="343" height="385.5"/>
+                                                <mutableString key="text">Founded in 1954, American Whitewater is a national non-profit organization (Non-profit # 23-7083760) with a mission “to conserve and restore America's whitewater resources and to enhance opportunities to enjoy them safely.” American Whitewater is a membership organization representing a broad diversity of individual whitewater enthusiasts, river conservationists, and more than 100 local paddling club affiliates across America.
+
 The organization is the primary advocate for the preservation and protection of whitewater rivers throughout the United States, and connects the interests of human-powered recreational river users with ecological and science-based data to achieve the goals within its mission.</mutableString>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -377,21 +378,107 @@ The organization is the primary advocate for the preservation and protection of 
                         <rect key="frame" x="0.0" y="0.0" width="375" height="510"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stewardship" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Is8-hG-jRd">
-                                <rect key="frame" x="166" y="223" width="95" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6F9-ai-OdZ">
+                                <rect key="frame" x="0.0" y="400" width="375" height="110"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uE0-vb-WJF" customClass="AWButton" customModule="aw" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="16" width="343" height="45"/>
+                                        <color key="backgroundColor" name="blue_oval"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="oda-8R-xDC"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                        <state key="normal" title="Learn more about stewardship program">
+                                            <color key="titleColor" name="white"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="rounded" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="learnStewardshipTapped:" destination="qiV-7d-lKS" eventType="touchUpInside" id="6bp-5K-dVp"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIm-1J-htP">
+                                        <rect key="frame" x="57" y="69" width="260" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <state key="normal" title="Know more about American Whitewater "/>
+                                        <connections>
+                                            <action selector="knowMoreTapped:" destination="qiV-7d-lKS" eventType="touchUpInside" id="RwM-xL-9v3"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="TIm-1J-htP" secondAttribute="bottom" constant="11" id="6db-SS-x54"/>
+                                    <constraint firstItem="TIm-1J-htP" firstAttribute="centerX" secondItem="6F9-ai-OdZ" secondAttribute="centerX" id="Kpl-oF-6Va"/>
+                                    <constraint firstAttribute="trailing" secondItem="uE0-vb-WJF" secondAttribute="trailing" constant="16" id="MJ6-n0-82d"/>
+                                    <constraint firstItem="uE0-vb-WJF" firstAttribute="top" secondItem="6F9-ai-OdZ" secondAttribute="top" constant="16" id="Tx0-Iw-ufO"/>
+                                    <constraint firstItem="uE0-vb-WJF" firstAttribute="leading" secondItem="6F9-ai-OdZ" secondAttribute="leading" constant="16" id="Y4E-2F-bXa"/>
+                                    <constraint firstAttribute="height" constant="110" id="gvN-q4-dtd"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="110" id="gy0-ny-NXy"/>
+                                    <constraint firstItem="TIm-1J-htP" firstAttribute="top" secondItem="uE0-vb-WJF" secondAttribute="bottom" constant="8" id="l0q-a2-Nrk"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="26E-hF-wgk">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cfU-TQ-Xrz">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="590.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNC-4I-G3k">
+                                                <rect key="frame" x="16" y="124" width="343" height="446.5"/>
+                                                <mutableString key="text">American Whitewater works to protect and restore rivers, maintains a national inventory of whitewater rivers, monitors potential threats to whitewater river resources, publishes information on river conservation, works with government agencies to protect the ability of the public to have a voice in the management of rivers, advocates for legislation protecting our rivers and their aquatic resources, and provides technical advice to local groups regarding river conservation and management.
+
+American Whitewater is working full-time to assure protection of whitewater rivers and the ability of the public to enjoy clean, free-flowing rivers. This includes our access program that focuses on protecting navigability on our nation's waterways and acquisition of lands that provide public access to rivers.
+</mutableString>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="bNC-4I-G3k" firstAttribute="leading" secondItem="cfU-TQ-Xrz" secondAttribute="leadingMargin" constant="8" id="5gc-Ok-lwZ"/>
+                                            <constraint firstAttribute="bottom" secondItem="bNC-4I-G3k" secondAttribute="bottom" constant="20" id="MTr-jN-4hQ"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="bNC-4I-G3k" secondAttribute="trailing" constant="8" id="fMl-Ul-rd4"/>
+                                        </constraints>
+                                    </view>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="awLogo" translatesAutoresizingMaskIntoConstraints="NO" id="4GC-uh-Ytm">
+                                        <rect key="frame" x="102" y="20" width="171" height="84"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="84" id="2rK-Ko-Ztd"/>
+                                            <constraint firstAttribute="width" constant="171" id="uKY-J8-4nF"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="4GC-uh-Ytm" firstAttribute="centerX" secondItem="26E-hF-wgk" secondAttribute="centerX" id="0kc-c8-yZQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="cfU-TQ-Xrz" secondAttribute="trailing" id="4jz-j8-2Lc"/>
+                                    <constraint firstItem="cfU-TQ-Xrz" firstAttribute="leading" secondItem="26E-hF-wgk" secondAttribute="leading" id="8a1-KS-ovC"/>
+                                    <constraint firstAttribute="bottom" secondItem="cfU-TQ-Xrz" secondAttribute="bottom" id="CQa-ei-DFP"/>
+                                    <constraint firstItem="4GC-uh-Ytm" firstAttribute="top" secondItem="26E-hF-wgk" secondAttribute="top" constant="20" id="PiG-1L-HY8"/>
+                                    <constraint firstItem="cfU-TQ-Xrz" firstAttribute="top" secondItem="26E-hF-wgk" secondAttribute="top" id="dH3-N0-cEn"/>
+                                    <constraint firstItem="bNC-4I-G3k" firstAttribute="top" secondItem="4GC-uh-Ytm" secondAttribute="bottom" constant="20" id="dxH-b8-qm4"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="6F9-ai-OdZ" firstAttribute="leading" secondItem="Y0t-nz-kXw" secondAttribute="leading" id="3Of-Z9-bZh"/>
+                            <constraint firstItem="Xpp-Sj-cui" firstAttribute="bottom" secondItem="6F9-ai-OdZ" secondAttribute="bottom" id="7wX-7i-RoY"/>
+                            <constraint firstItem="26E-hF-wgk" firstAttribute="top" secondItem="Y0t-nz-kXw" secondAttribute="top" id="H8l-5L-Fn9"/>
+                            <constraint firstItem="26E-hF-wgk" firstAttribute="leading" secondItem="Xpp-Sj-cui" secondAttribute="leading" id="IUD-1X-VgV"/>
+                            <constraint firstItem="6F9-ai-OdZ" firstAttribute="top" secondItem="26E-hF-wgk" secondAttribute="bottom" id="JXR-DE-G7f"/>
+                            <constraint firstItem="cfU-TQ-Xrz" firstAttribute="width" secondItem="Y0t-nz-kXw" secondAttribute="width" id="Lu7-uI-jXO"/>
+                            <constraint firstItem="Xpp-Sj-cui" firstAttribute="trailing" secondItem="26E-hF-wgk" secondAttribute="trailing" id="T02-94-BBA"/>
+                            <constraint firstItem="Xpp-Sj-cui" firstAttribute="trailing" secondItem="6F9-ai-OdZ" secondAttribute="trailing" id="gro-9h-Hs9"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Xpp-Sj-cui"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hLY-au-gof" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6854" y="889"/>
+            <point key="canvasLocation" x="6853.6000000000004" y="888.75562218890559"/>
         </scene>
         <!--App Team-->
         <scene sceneID="faP-za-tSN">
@@ -443,10 +530,16 @@ The organization is the primary advocate for the preservation and protection of 
         <image name="icon_more_selected" width="20" height="15"/>
         <image name="rateApp" width="30" height="29"/>
         <namedColor name="blue_oval">
+            <color red="0.0039215686269999999" green="0.66666666669999997" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="blue_oval">
             <color red="0.0039215686274509803" green="0.66666666666666663" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="primary">
             <color red="0.0" green="0.48627450980392156" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
