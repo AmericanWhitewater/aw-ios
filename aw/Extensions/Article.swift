@@ -12,7 +12,10 @@ extension Article {
     var abstractCleanedHTML: String? {
         if let abstract = abstract,
             let data = abstract.data(using: .utf8),
-            let html = try? NSMutableAttributedString(data: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+            let html = try? NSMutableAttributedString(
+                data: data,
+                options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
+                documentAttributes: nil) {
             return html.string
         } else {
             return nil

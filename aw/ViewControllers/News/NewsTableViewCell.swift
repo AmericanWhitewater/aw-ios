@@ -32,7 +32,9 @@ class NewsTableViewCell: UITableViewCell {
             articleTitleLabel.text = article.title
             articleAbstractLabel.text = article.abstractCleanedHTML
             authorDateLabel.text = article.byline
-            if let photoURL = article.abstractPhotoURL, let url = URL(string: photoURL), let data = try? Data(contentsOf: url) {
+            if let photoURL = article.abstractPhotoURL,
+                let url = URL(string: photoURL),
+                let data = try? Data(contentsOf: url) {
                 abstractImage?.image = UIImage(data: data)
             }
         }

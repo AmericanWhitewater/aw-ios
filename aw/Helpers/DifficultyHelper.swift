@@ -40,7 +40,7 @@ struct DifficultyHelper {
 
         if cleanedDifficulty.contains("-") {
             let split = cleanedDifficulty.split(separator: "-")
-            let splitDifficulties = split.map { Difficulty(rawValue: String($0))}.flatMap { $0?.toInteger() }
+            let splitDifficulties = split.compactMap { Difficulty(rawValue: String($0))}.flatMap { $0?.toInteger() }
             range = Array(splitDifficulties.first! ..< splitDifficulties.last!)
             range.append(splitDifficulties.last!)
         } else {

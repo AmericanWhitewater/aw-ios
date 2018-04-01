@@ -15,119 +15,10 @@ let baseURL = "https://www.americanwhitewater.org/content/"
 
 let riverURL = baseURL + "River/search/.json"
 
-struct AWReach: Codable {
-    let difficulty: String
-    let condition: String
-    //swiftlint:disable:next identifier_name
-    let id: Int
-    let name: String
-    let putInLat: String?
-    let putInLon: String?
-    let lastGageReading: String?
-    let section: String
-    let unit: String?
-    let takeOutLat: String?
-    let takeOutLon: String?
-    let state: String?
-    let delta: String?
-
-    enum CodingKeys: String, CodingKey {
-        //swiftlint:disable:next identifier_name
-        case id, name, section, unit, state, delta
-        case difficulty = "class"
-        case condition = "cond"
-        case putInLat = "plat"
-        case putInLon = "plon"
-        case lastGageReading = "last_gauge_reading" // "reading_formatted"
-        case takeOutLat = "tlat"
-        case takeOutLon = "tlon"
-    }
-
-    func distanceFrom(location: CLLocation) -> Double? {
-        guard let lat = putInLat, let latitude = Double(lat),
-            let lon = putInLon, let longitude = Double(lon) else { return nil }
-
-        let reachCoordinate = CLLocation(latitude: latitude, longitude: longitude)
-
-        guard CLLocationCoordinate2DIsValid(reachCoordinate.coordinate) else { return nil }
-
-        return reachCoordinate.distance(from: location)
-    }
-}
-
-struct Condition {
-    let name: String
-    let color: UIColor
-    let icon: UIImage?
-}
-
-struct AWReachInfo: Codable {
-    //swiftlint:disable:next identifier_name
-    let id: Int //
-    let abstract: String? //
-    let avgGradient: Int16? //
-    let photoId: Int32? //
-    let length: String? //
-    let maxGradient: Int16? //
-    let description: String? //
-    let shuttleDetails: String? //
-    let zipcode: String? //
-
-    enum CodingKeys: String, CodingKey {
-        //swiftlint:disable:next identifier_name
-        case id, abstract, length, description, zipcode
-        case avgGradient = "avggradient"
-        case photoId = "photoid"
-        case maxGradient = "maxgradient"
-        case shuttleDetails = "shuttledetails"
-    }
-}
-
-struct AWReachMain: Codable {
-    let info: AWReachInfo
-}
-
-struct AWReachDetailSubResponse: Codable {
-    let main: AWReachMain
-
-    enum CodingKeys: String, CodingKey {
-        case main = "CRiverMainGadgetJSON_main"
-    }
-}
-
-struct AWReachDetailResponse: Codable {
-    let view: AWReachDetailSubResponse
-
-    enum CodingKeys: String, CodingKey {
-        case view = "CContainerViewJSON_view"
-    }
-}
-
 struct AWApiHelper {
     typealias ReachCallback = ([AWReach]?) -> Void
     typealias UpdateCallback = () -> Void
     typealias ReachDetailCallback = (AWReachMain) -> Void
-
-    static func conditionFromApi(condition: String) -> Condition {
-        switch condition {
-        case "low":
-            return Condition(name: "Low",
-                             color: UIColor(named: "status_yellow")!,
-                             icon: UIImage(named: "lowPin"))
-        case "med":
-            return Condition(name: "Runnable",
-                             color: UIColor(named: "status_green")!,
-                             icon: UIImage(named: "runnablePin"))
-        case "high":
-            return Condition(name: "High",
-                             color: UIColor(named: "status_red")!,
-                             icon: UIImage(named: "highPin"))
-        default:
-            return Condition(name: "No Info",
-                             color: UIColor(named: "status_grey")!,
-                             icon: UIImage(named: "noinfoPin"))
-        }
-    }
 
     static func fetchReachesByRegion(region: String, callback: @escaping ReachCallback) {
         let urlString = riverURL + "?state=\(region)"
@@ -201,7 +92,8 @@ struct AWApiHelper {
         reach.state = region.title
         reach.delta = newReach.delta
 
-        if let distance = newReach.distanceFrom(location: CLLocation(latitude: DefaultsManager.latitude, longitude: DefaultsManager.longitude)) {
+        if let distance = newReach.distanceFrom(location: CLLocation(latitude: DefaultsManager.latitude,
+                                                                     longitude: DefaultsManager.longitude)) {
             reach.distance = distance / 1609
         }
 
@@ -289,6 +181,44 @@ struct AWApiHelper {
         task.resume()
     }
 
+    fileprivate static func updateDetail(reachID: String, info: AWReachInfo, context: NSManagedObjectContext) {
+        let request: NSFetchRequest<Reach> = Reach.fetchRequest()
+        request.predicate = NSPredicate(format: "id = %@", reachID)
+
+        do {
+            let reaches = try context.fetch(request)
+            if let reach = reaches.first {
+                if let avgGradient = info.avgGradient {
+                    reach.avgGradient = avgGradient
+                } else { print("Can't unwrap avgGradient")}
+                if let photoId = info.photoId {
+                    reach.photoId = photoId
+                } else { print("Can't unwrap photoId")}
+                if let maxGradient = info.maxGradient {
+                    reach.maxGradient = maxGradient
+                } else { print("Can't unwrap maxGradient") }
+                reach.length = info.length
+                reach.abstract = info.abstract
+                reach.longDescription = info.description
+                reach.shuttleDetails = info.shuttleDetails
+                reach.zipcode = info.zipcode
+                reach.detailUpdated = Date()
+                do {
+                    try context.save()
+                    print("Reach detail background context saved")
+                } catch {
+                    let error = error as NSError
+                    print("unable to save background context \(error) \(error.userInfo)")
+                }
+
+            } else {
+                print("no reach found")
+            }
+        } catch {
+            print("Unable to fetch reach")
+        }
+    }
+
     static func updateReachDetail(reachID: String,
                                   viewContext: NSManagedObjectContext,
                                   callback: @escaping UpdateCallback) {
@@ -304,41 +234,7 @@ struct AWApiHelper {
             let info = awReachDetail.info
 
             context.perform {
-                let request: NSFetchRequest<Reach> = Reach.fetchRequest()
-                request.predicate = NSPredicate(format: "id = %@", reachID)
-
-                do {
-                    let reaches = try context.fetch(request)
-                    if let reach = reaches.first {
-                        if let avgGradient = info.avgGradient {
-                            reach.avgGradient = avgGradient
-                        } else { print("Can't unwrap avgGradient")}
-                        if let photoId = info.photoId {
-                            reach.photoId = photoId
-                        } else { print("Can't unwrap photoId")}
-                        if let maxGradient = info.maxGradient {
-                            reach.maxGradient = maxGradient
-                        } else { print("Can't unwrap maxGradient") }
-                        reach.length = info.length
-                        reach.abstract = info.abstract
-                        reach.longDescription = info.description
-                        reach.shuttleDetails = info.shuttleDetails
-                        reach.zipcode = info.zipcode
-                        reach.detailUpdated = Date()
-                        do {
-                            try context.save()
-                            print("Reach detail background context saved")
-                        } catch {
-                            let error = error as NSError
-                            print("unable to save background context \(error) \(error.userInfo)")
-                        }
-
-                    } else {
-                        print("no reach found")
-                    }
-                } catch {
-                    print("Unable to fetch reach")
-                }
+                updateDetail(reachID: reachID, info: info, context: context)
                 dispatchGroup.leave()
             }
         }

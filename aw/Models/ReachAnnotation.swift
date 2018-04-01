@@ -32,7 +32,7 @@ class ReachAnnotation: NSObject {
         guard let condition = condition else {
             return nil
         }
-        return AWApiHelper.conditionFromApi(condition: condition).icon
+        return Condition.fromApi(condition: condition).icon
     }
 }
 

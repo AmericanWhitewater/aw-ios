@@ -16,6 +16,12 @@
 		3836C48A2070803500490999 /* AWArticleAPIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C4892070803500490999 /* AWArticleAPIHelper.swift */; };
 		3836C48C20708B5400490999 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C48B20708B5400490999 /* NewsTableViewCell.swift */; };
 		3836C48E20708E7900490999 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C48D20708E7900490999 /* Article.swift */; };
+		3836C4902070941600490999 /* SingleArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C48F2070941600490999 /* SingleArticleViewController.swift */; };
+		3836C4922071007F00490999 /* NewsDonateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C4912071007F00490999 /* NewsDonateTableViewCell.swift */; };
+		3836C4942071031400490999 /* AWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C4932071031400490999 /* AWButton.swift */; };
+		3836C4962071077200490999 /* AWReach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C4952071077200490999 /* AWReach.swift */; };
+		3836C4992071088E00490999 /* Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C4982071088E00490999 /* Condition.swift */; };
+		3836C49D207109A100490999 /* AWArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C49C207109A100490999 /* AWArticle.swift */; };
 		3858D23120689313004A39C6 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D22F20689313004A39C6 /* About.storyboard */; };
 		3858D23320689345004A39C6 /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D23220689345004A39C6 /* News.storyboard */; };
 		3858D23520693A36004A39C6 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3858D23420693A36004A39C6 /* TabViewController.swift */; };
@@ -71,6 +77,12 @@
 		3836C4892070803500490999 /* AWArticleAPIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWArticleAPIHelper.swift; sourceTree = "<group>"; };
 		3836C48B20708B5400490999 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		3836C48D20708E7900490999 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
+		3836C48F2070941600490999 /* SingleArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleArticleViewController.swift; sourceTree = "<group>"; };
+		3836C4912071007F00490999 /* NewsDonateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDonateTableViewCell.swift; sourceTree = "<group>"; };
+		3836C4932071031400490999 /* AWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWButton.swift; sourceTree = "<group>"; };
+		3836C4952071077200490999 /* AWReach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWReach.swift; sourceTree = "<group>"; };
+		3836C4982071088E00490999 /* Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Condition.swift; sourceTree = "<group>"; };
+		3836C49C207109A100490999 /* AWArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWArticle.swift; sourceTree = "<group>"; };
 		3858D23020689313004A39C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = aw/Base.lproj/About.storyboard; sourceTree = "<group>"; };
 		3858D23220689345004A39C6 /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
 		3858D23420693A36004A39C6 /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +152,16 @@
 			path = Detail;
 			sourceTree = "<group>";
 		};
+		3836C4972071088300490999 /* AWApi */ = {
+			isa = PBXGroup;
+			children = (
+				3836C4982071088E00490999 /* Condition.swift */,
+				3836C4952071077200490999 /* AWReach.swift */,
+				3836C49C207109A100490999 /* AWArticle.swift */,
+			);
+			path = AWApi;
+			sourceTree = "<group>";
+		};
 		385E59B52063047B00A68EC9 = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +211,7 @@
 		38A6C8DC206685AE00B5BA29 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3836C4972071088300490999 /* AWApi */,
 				3864857F206E7749009B360F /* ReachAnnotation.swift */,
 				381ED3A1206FC7AB00B03F13 /* RunAnnotation.swift */,
 			);
@@ -214,6 +237,7 @@
 				38A6C8E92066884800B5BA29 /* NSManagedObjectContext.swift */,
 				38A6C8EE2067074700B5BA29 /* Reach.swift */,
 				3836C48D20708E7900490999 /* Article.swift */,
+				3836C4932071031400490999 /* AWButton.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -291,6 +315,8 @@
 			children = (
 				38EBD1CD2070785600D7B1C1 /* NewsTableViewController.swift */,
 				3836C48B20708B5400490999 /* NewsTableViewCell.swift */,
+				3836C48F2070941600490999 /* SingleArticleViewController.swift */,
+				3836C4912071007F00490999 /* NewsDonateTableViewCell.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -424,11 +450,14 @@
 				38A98F822067EFA3009853E1 /* FilterRegionViewController.swift in Sources */,
 				38A98F7F2067EF90009853E1 /* FilterViewController.swift in Sources */,
 				38A98F882067EFC0009853E1 /* FilterDistanceViewController.swift in Sources */,
+				3836C4902070941600490999 /* SingleArticleViewController.swift in Sources */,
 				38B3CD1320672EAA0016630F /* RunDetailTableViewController.swift in Sources */,
 				38A6C8F120670AEF00B5BA29 /* MapViewController.swift in Sources */,
 				38A98F692067EA78009853E1 /* AboutAWExtendedNavBarView.swift in Sources */,
 				38B3CD1620672F310016630F /* Segues.swift in Sources */,
+				3836C4942071031400490999 /* AWButton.swift in Sources */,
 				3836C48C20708B5400490999 /* NewsTableViewCell.swift in Sources */,
+				3836C4922071007F00490999 /* NewsDonateTableViewCell.swift in Sources */,
 				38A6C8EA2066884800B5BA29 /* NSManagedObjectContext.swift in Sources */,
 				38BE74A6206827A200DE555D /* DifficultyHelper.swift in Sources */,
 				385E59C22063047B00A68EC9 /* AppDelegate.swift in Sources */,
@@ -436,7 +465,9 @@
 				3836C48E20708E7900490999 /* Article.swift in Sources */,
 				38A6C8E3206687EC00B5BA29 /* MOCViewControllerType.swift in Sources */,
 				38150B262067F75800CBE8D8 /* Regions.swift in Sources */,
+				3836C4962071077200490999 /* AWReach.swift in Sources */,
 				38A98F772067ED3F009853E1 /* AboutAWStewardshipViewController.swift in Sources */,
+				3836C49D207109A100490999 /* AWArticle.swift in Sources */,
 				38648580206E7749009B360F /* ReachAnnotation.swift in Sources */,
 				38BE74A8206839F200DE555D /* FilterManagerViewControllerType.swift in Sources */,
 				38A98F602067E32D009853E1 /* DefaultsManager.swift in Sources */,
@@ -447,6 +478,7 @@
 				381ED393206F012400B03F13 /* ReachFetchRequestControllerType.swift in Sources */,
 				381ED39D206FBE1900B03F13 /* RunDetailViewControllerType.swift in Sources */,
 				3836C48A2070803500490999 /* AWArticleAPIHelper.swift in Sources */,
+				3836C4992071088E00490999 /* Condition.swift in Sources */,
 				38A98F8F2067F0B4009853E1 /* FilterExtendedNavBarView.swift in Sources */,
 				38A98F732067ED2E009853E1 /* AboutAWMissionViewController.swift in Sources */,
 				38A6C8DB206677EC00B5BA29 /* RunListTableViewCell.swift in Sources */,

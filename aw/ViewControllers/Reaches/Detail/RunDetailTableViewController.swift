@@ -116,8 +116,6 @@ extension RunDetailTableViewController {
         sectionLabel.text = reach.sectionCleanedHTML
         difficultyLabel.text = reach.difficulty
 
-        
-
         if let reading = reach.lastGageReading, let unit = reach.unit {
             readingLabel.text = reading
             readingLabel.textColor = reach.color

@@ -20,7 +20,7 @@ extension Reach {
     }
 
     var color: UIColor {
-        let con = AWApiHelper.conditionFromApi(condition: condition ?? "")
+        let con = Condition.fromApi(condition: condition ?? "")
 
         return con.color
     }

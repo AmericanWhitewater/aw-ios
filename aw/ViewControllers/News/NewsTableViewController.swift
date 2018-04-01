@@ -10,8 +10,9 @@ import CoreData
 import UIKit
 
 class NewsTableViewController: UITableViewController {
-    var managedObjectContext: NSManagedObjectContext?
+    @IBOutlet weak var donateButton: UIButton!
 
+    var managedObjectContext: NSManagedObjectContext?
     var fetchedResultsController: NSFetchedResultsController<Article>?
 
     override func viewDidLoad() {
@@ -22,6 +23,18 @@ class NewsTableViewController: UITableViewController {
             AWArticleAPIHelper.updateArticles(viewContext: context) {
                 print("fetched articles")
             }
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case Segue.articleDetail.rawValue:
+            guard let articleVC = segue.destination as? SingleArticleViewController,
+                let indexPath = tableView.indexPathForSelectedRow,
+                let article = fetchedResultsController?.object(at: convertToFetchedResults(indexPath)) else { return }
+            articleVC.article = article
+        default:
+            print("unknown segue")
         }
     }
 
@@ -42,10 +55,16 @@ class NewsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "supportAWCell", for: indexPath)
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "supportAWCell",
+                for: indexPath) as? NewsDonateTableViewCell else {
+                fatalError("Failed to deque donate cell")
+            }
             return cell
         default:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "newsCell", for: indexPath) as? NewsTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "newsCell",
+                for: indexPath) as? NewsTableViewCell else {
                 fatalError("Failed to deque newsCell")
             }
 
@@ -64,6 +83,19 @@ class NewsTableViewController: UITableViewController {
         default:
             return 196
         }
+    }
+
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0:
+            return 1
+        default:
+            return 18
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

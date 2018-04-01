@@ -14,4 +14,5 @@ enum Segue: String {
     case onboardingNeeded
     case alreadyOnboarded
     case onboardingCompleted
+    case articleDetail
 }

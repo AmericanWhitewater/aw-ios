@@ -59,7 +59,10 @@ extension RunListTableViewController {
         tableView.delegate = self
         tableView.dataSource = self
 
-        tableView.register(UINib(nibName: "RunHeaderTableViewCell", bundle: nil), forHeaderFooterViewReuseIdentifier: "headerCell")
+        tableView.register(UINib(
+                nibName: "RunHeaderTableViewCell",
+                bundle: nil),
+           forHeaderFooterViewReuseIdentifier: "headerCell")
 
         fetchedResultsController = initializeFetchedResultController()
         fetchedResultsController?.delegate = self

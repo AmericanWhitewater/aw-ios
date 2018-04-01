@@ -33,7 +33,7 @@ extension TabViewController: UITabBarControllerDelegate {
                           shouldSelect viewController: UIViewController) -> Bool {
 
         if let navController = viewControllers?[selectedIndex] as? UINavigationController {
-            for controller in navController.viewControllers.flatMap({ $0 as? RunListTableViewController }) {
+            for controller in navController.viewControllers.compactMap({ $0 as? RunListTableViewController }) {
                 controller.dismissSearch()
             }
         }

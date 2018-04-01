@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        print(persistentContainer.persistentStoreCoordinator.persistentStores.first?.url)
+        print(persistentContainer.persistentStoreCoordinator.persistentStores.first?.url as Any)
 
         globalStyles()
 
@@ -91,7 +91,8 @@ extension AppDelegate {
     func globalStyles() {
         UINavigationBar.appearance().barTintColor = UIColor(named: "primary")
         UINavigationBar.appearance().tintColor = UIColor(named: "white")
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor(named: "white")]
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSAttributedStringKey.foregroundColor: UIColor(named: "white")]
 
         UITabBar.appearance().tintColor = UIColor(named: "primary")
     }
