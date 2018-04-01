@@ -46,7 +46,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
             detailVC.reach = reach
             injectContextAndContainerToChildVC(segue: segue)
         case Segue.showFilters.rawValue, Segue.showFiltersFavorites.rawValue:
-            break
+            injectContextAndContainerToNavChildVC(segue: segue)
         default:
             print("Unknown segue!")
         }

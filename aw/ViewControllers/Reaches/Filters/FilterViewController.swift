@@ -6,26 +6,42 @@
 //  Copyright © 2018 Alex Kerney. All rights reserved.
 //
 
+import CoreData
 import UIKit
 
 class FilterViewController: UIViewController {
-
     @IBOutlet weak var regionView: UIView!
     @IBOutlet weak var classView: UIView!
     @IBOutlet weak var distanceView: UIView!
 
+    var managedObjectContext: NSManagedObjectContext?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // make our segmented control view blend in with the navigation bar
+        initialize()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    func initialize() {
+        initializeChildVC()
+
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.shadowImage = UIImage(named: "TransparentPixel")
 
         setViewShown(name: "region")
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func initializeChildVC() {
+        for childVC in childViewControllers {
+            if var childVC = childVC as? MOCViewControllerType {
+                childVC.managedObjectContext = managedObjectContext
+            }
+        }
     }
 
     func setViewShown(name: String) {
@@ -70,10 +86,13 @@ class FilterViewController: UIViewController {
         //let regionVC = regionView.subviews.first.responder
         for childVC in childViewControllers {
             if let childVC = childVC as? FilterViewControllerType {
-                childVC.save() }
-
+                childVC.save()
+            }
         }
 
         dismiss(animated: true, completion: nil)
     }
+}
+
+extension FilterViewController: MOCViewControllerType {
 }

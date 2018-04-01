@@ -6,12 +6,15 @@
 //  Copyright © 2018 Alex Kerney. All rights reserved.
 //
 
+import CoreData
 import CoreLocation
 import UIKit
 
 class FilterDistanceViewController: UIViewController {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var slider: UISlider!
+
+    var managedObjectContext: NSManagedObjectContext?
 
     let locationManager = CLLocationManager()
 
@@ -76,6 +79,9 @@ extension FilterDistanceViewController: FilterViewControllerType {
     }
 }
 
+extension FilterDistanceViewController: MOCViewControllerType {
+}
+
 extension FilterDistanceViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if locateTapped && status == .authorizedWhenInUse {
@@ -92,5 +98,9 @@ extension FilterDistanceViewController: CLLocationManagerDelegate {
 
         DefaultsManager.latitude = location.coordinate.latitude
         DefaultsManager.longitude = location.coordinate.longitude
+
+        if let context = managedObjectContext {
+            AWApiHelper.updateDistances(viewContext: context)
+        }
     }
 }

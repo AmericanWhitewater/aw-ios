@@ -332,13 +332,14 @@ struct AWApiHelper {
                             let error = error as NSError
                             print("unable to save background context \(error) \(error.userInfo)")
                         }
-                        dispatchGroup.leave()
+
                     } else {
                         print("no reach found")
                     }
                 } catch {
                     print("Unable to fetch reach")
                 }
+                dispatchGroup.leave()
             }
         }
         dispatchGroup.notify(queue: .main) {
@@ -356,6 +357,51 @@ struct AWApiHelper {
                 }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 callback()
+            }
+        }
+    }
+
+    static func updateDistances(viewContext: NSManagedObjectContext) {
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.parent = viewContext
+
+        let dispatchGroup = DispatchGroup()
+        let location = CLLocation(latitude: DefaultsManager.latitude, longitude: DefaultsManager.longitude)
+        dispatchGroup.enter()
+        context.perform {
+            let request: NSFetchRequest<Reach> = Reach.fetchRequest()
+            do {
+                let reaches = try context.fetch(request)
+
+                for reach in reaches {
+                    let coordinate = reach.annotation.coordinate
+                    let reachLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                    let distance = reachLocation.distance(from: location)
+                    reach.distance = distance / 1609
+                }
+                do {
+                    try context.save()
+                    print("Saved distance updates in background context")
+                } catch {
+                    let error = error as NSError
+                    print("Unable to save distances in background context \(error) \(error.userInfo)")
+                }
+            } catch {
+                print("Unable to fetch reaches")
+            }
+            dispatchGroup.leave()
+        }
+        dispatchGroup.notify(queue: .main) {
+            viewContext.perform {
+                viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+
+                do {
+                    try viewContext.save()
+                    print("saved view context")
+                } catch {
+                    let error = error as NSError
+                    print("unable to save view context \(error) \(error.userInfo)")
+                }
             }
         }
     }

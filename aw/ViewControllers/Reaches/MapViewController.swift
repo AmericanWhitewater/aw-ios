@@ -34,7 +34,7 @@ class MapViewController: UIViewController, MOCViewControllerType {
         case Segue.runDetailMap.rawValue:
             prepareDetailSegue(segue)
         case Segue.showFiltersMap.rawValue:
-            break
+            injectContextAndContainerToNavChildVC(segue: segue)
         default:
             print("Unknown segue \(segue.identifier ?? "unknown identifier")")
         }
