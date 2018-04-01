@@ -37,13 +37,9 @@ extension ReachFetchRequestControllerType {
         return NSCompoundPredicate(orPredicateWithSubpredicates: classPredicates)
     }
 
-    func regionsPredicate() -> NSCompoundPredicate {
-        var regionPredicates: [NSPredicate] = []
-
-        for region in DefaultsManager.regionsFilter {
-            regionPredicates.append(NSPredicate(format: "state = %@", region))
-        }
-        return NSCompoundPredicate(orPredicateWithSubpredicates: regionPredicates)
+    func regionsPredicate() -> NSPredicate {
+        let regions = DefaultsManager.regionsFilter
+        return NSPredicate(format: "state IN %@", regions)
     }
 
     func distancePredicate() -> NSPredicate {
