@@ -20,22 +20,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection id="vJy-2L-wSa">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="qXz-mS-pJA">
-                                        <rect key="frame" x="0.0" y="35" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qXz-mS-pJA" id="SPe-2f-eJs">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection id="M1D-fc-5cV">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="dA5-vt-UUo" imageView="CN8-Bq-Gjy" style="IBUITableViewCellStyleDefault" id="1IS-TV-xF3">
-                                        <rect key="frame" x="0.0" y="115" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="35" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1IS-TV-xF3" id="j1Y-9G-ZiS">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -59,7 +47,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="QeX-7O-hsM" imageView="obu-U3-WNU" style="IBUITableViewCellStyleDefault" id="3Eb-Gm-Vgt">
-                                        <rect key="frame" x="0.0" y="159" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="79" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3Eb-Gm-Vgt" id="BsX-hh-Dfy">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -83,7 +71,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="vEW-7g-9tz" imageView="pg3-2O-alv" style="IBUITableViewCellStyleDefault" id="Bdr-YB-Xie">
-                                        <rect key="frame" x="0.0" y="203" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="123" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bdr-YB-Xie" id="YRQ-k2-brX">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -104,7 +92,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="yUw-Hp-v3N" imageView="N2D-mk-qR4" style="IBUITableViewCellStyleDefault" id="H8x-eY-zmM">
-                                        <rect key="frame" x="0.0" y="247" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="167" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="H8x-eY-zmM" id="uMq-VT-tOC">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -125,7 +113,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Zna-r6-tw9" imageView="fJ5-1E-STd" style="IBUITableViewCellStyleDefault" id="oeK-MC-Hw9">
-                                        <rect key="frame" x="0.0" y="291" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="211" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oeK-MC-Hw9" id="AMc-5P-BSC">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -329,7 +317,7 @@
 
 The organization is the primary advocate for the preservation and protection of whitewater rivers throughout the United States, and connects the interests of human-powered recreational river users with ecological and science-based data to achieve the goals within its mission.</mutableString>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" name="font_grey"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -432,7 +420,7 @@ The organization is the primary advocate for the preservation and protection of 
 American Whitewater is working full-time to assure protection of whitewater rivers and the ability of the public to enjoy clean, free-flowing rivers. This includes our access program that focuses on protecting navigability on our nation's waterways and acquisition of lands that provide public access to rivers.
 </mutableString>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" name="font_grey"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -503,40 +491,153 @@ American Whitewater is working full-time to assure protection of whitewater rive
                         <rect key="frame" x="0.0" y="0.0" width="375" height="510"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Funding" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DHp-dI-Dms">
-                                <rect key="frame" x="166" y="127" width="62" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="USf-0g-h6y">
+                                <rect key="frame" x="0.0" y="400" width="375" height="110"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1i-aW-KyM" customClass="AWButton" customModule="aw" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="16" width="343" height="45"/>
+                                        <color key="backgroundColor" name="accent"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="oAR-QZ-lnN"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                        <state key="normal" title="Donate Now &gt;">
+                                            <color key="titleColor" name="white"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="rounded" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="donateNowTapped:" destination="adF-1R-he5" eventType="touchUpInside" id="FzX-TI-Pz0"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCX-Yy-h4E">
+                                        <rect key="frame" x="118.5" y="69" width="137" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <state key="normal" title="Join our membership"/>
+                                        <connections>
+                                            <action selector="joinMembershipTapped:" destination="adF-1R-he5" eventType="touchUpInside" id="Vfr-eb-MTI"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="tCX-Yy-h4E" firstAttribute="top" secondItem="a1i-aW-KyM" secondAttribute="bottom" constant="8" id="0DA-zM-JCj"/>
+                                    <constraint firstAttribute="height" constant="110" id="3Fd-Kv-GCU"/>
+                                    <constraint firstItem="a1i-aW-KyM" firstAttribute="leading" secondItem="USf-0g-h6y" secondAttribute="leading" constant="16" id="BvS-Mm-Dn2"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="110" id="Wjk-7K-abQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="a1i-aW-KyM" secondAttribute="trailing" constant="16" id="oMe-J7-SV4"/>
+                                    <constraint firstItem="tCX-Yy-h4E" firstAttribute="centerX" secondItem="USf-0g-h6y" secondAttribute="centerX" id="pQX-Vk-inl"/>
+                                    <constraint firstAttribute="bottom" secondItem="tCX-Yy-h4E" secondAttribute="bottom" constant="11" id="yGl-R1-BqR"/>
+                                    <constraint firstItem="a1i-aW-KyM" firstAttribute="top" secondItem="USf-0g-h6y" secondAttribute="top" constant="16" id="zd9-xr-FFg"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kwy-S8-IwG">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y12-GS-I48">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="628.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xeh-9n-p8Z">
+                                                <rect key="frame" x="16" y="162" width="343" height="446.5"/>
+                                                <mutableString key="text">American Whitewater works to protect and restore rivers, maintains a national inventory of whitewater rivers, monitors potential threats to whitewater river resources, publishes information on river conservation, works with government agencies to protect the ability of the public to have a voice in the management of rivers, advocates for legislation protecting our rivers and their aquatic resources, and provides technical advice to local groups regarding river conservation and management.
+
+American Whitewater is working full-time to assure protection of whitewater rivers and the ability of the public to enjoy clean, free-flowing rivers. This includes our access program that focuses on protecting navigability on our nation's waterways and acquisition of lands that provide public access to rivers.
+</mutableString>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" name="font_grey"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart" translatesAutoresizingMaskIntoConstraints="NO" id="kAT-Mz-t51">
+                                                <rect key="frame" x="16" y="124" width="17" height="14"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="14" id="Hbl-9p-ANB"/>
+                                                    <constraint firstAttribute="width" constant="17" id="I8p-Go-2QJ"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let’s Support AW together!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MJL-cy-59y">
+                                                <rect key="frame" x="41" y="121" width="218" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailingMargin" secondItem="xeh-9n-p8Z" secondAttribute="trailing" constant="8" id="8ud-AY-3vj"/>
+                                            <constraint firstItem="kAT-Mz-t51" firstAttribute="leading" secondItem="Y12-GS-I48" secondAttribute="leadingMargin" constant="8" id="GWd-dr-aD8"/>
+                                            <constraint firstItem="MJL-cy-59y" firstAttribute="centerY" secondItem="kAT-Mz-t51" secondAttribute="centerY" id="GqM-uy-u2Z"/>
+                                            <constraint firstAttribute="bottom" secondItem="xeh-9n-p8Z" secondAttribute="bottom" constant="20" id="K1X-Se-bbA"/>
+                                            <constraint firstItem="xeh-9n-p8Z" firstAttribute="leading" secondItem="Y12-GS-I48" secondAttribute="leadingMargin" constant="8" id="gPN-Ua-v1Y"/>
+                                            <constraint firstItem="xeh-9n-p8Z" firstAttribute="top" secondItem="MJL-cy-59y" secondAttribute="bottom" constant="20" id="qDc-Id-bGb"/>
+                                            <constraint firstItem="MJL-cy-59y" firstAttribute="leading" secondItem="kAT-Mz-t51" secondAttribute="trailing" constant="8" id="uVc-Bc-6D5"/>
+                                        </constraints>
+                                    </view>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="awLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Gav-zm-ZEo">
+                                        <rect key="frame" x="102" y="20" width="171" height="84"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="171" id="EO9-rQ-Nhz"/>
+                                            <constraint firstAttribute="height" constant="84" id="coz-RC-Khb"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Gav-zm-ZEo" firstAttribute="centerX" secondItem="Kwy-S8-IwG" secondAttribute="centerX" id="Foc-MZ-2vn"/>
+                                    <constraint firstAttribute="trailing" secondItem="Y12-GS-I48" secondAttribute="trailing" id="G1o-SV-vsq"/>
+                                    <constraint firstItem="Gav-zm-ZEo" firstAttribute="top" secondItem="Kwy-S8-IwG" secondAttribute="top" constant="20" id="Tdv-Mv-udS"/>
+                                    <constraint firstItem="Y12-GS-I48" firstAttribute="top" secondItem="Kwy-S8-IwG" secondAttribute="top" id="Zg4-wd-PWB"/>
+                                    <constraint firstItem="kAT-Mz-t51" firstAttribute="top" secondItem="Gav-zm-ZEo" secondAttribute="bottom" constant="20" id="mq2-32-JDN"/>
+                                    <constraint firstItem="Y12-GS-I48" firstAttribute="leading" secondItem="Kwy-S8-IwG" secondAttribute="leading" id="qli-rT-kTe"/>
+                                    <constraint firstAttribute="bottom" secondItem="Y12-GS-I48" secondAttribute="bottom" id="snR-nk-Ht5"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="USf-0g-h6y" firstAttribute="leading" secondItem="6Db-6y-O6A" secondAttribute="leading" id="6wJ-Wp-HZw"/>
+                            <constraint firstItem="Kwy-S8-IwG" firstAttribute="top" secondItem="6Db-6y-O6A" secondAttribute="top" id="9FS-3d-Jhg"/>
+                            <constraint firstItem="Y12-GS-I48" firstAttribute="width" secondItem="6Db-6y-O6A" secondAttribute="width" id="Ajf-oJ-2lC"/>
+                            <constraint firstItem="Kwy-S8-IwG" firstAttribute="leading" secondItem="Y5O-P3-kEx" secondAttribute="leading" id="JWH-ep-zl3"/>
+                            <constraint firstItem="Y5O-P3-kEx" firstAttribute="trailing" secondItem="Kwy-S8-IwG" secondAttribute="trailing" id="WHN-cV-tED"/>
+                            <constraint firstItem="Y5O-P3-kEx" firstAttribute="bottom" secondItem="USf-0g-h6y" secondAttribute="bottom" id="mcI-Un-lg3"/>
+                            <constraint firstItem="Y5O-P3-kEx" firstAttribute="trailing" secondItem="USf-0g-h6y" secondAttribute="trailing" id="z0d-xz-2ij"/>
+                            <constraint firstItem="USf-0g-h6y" firstAttribute="top" secondItem="Kwy-S8-IwG" secondAttribute="bottom" id="zfP-Fi-tDW"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Y5O-P3-kEx"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iSs-0u-IZY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6854" y="1419"/>
+            <point key="canvasLocation" x="6853.6000000000004" y="1418.5907046476764"/>
         </scene>
     </scenes>
     <resources>
         <image name="aboutAw" width="29" height="29"/>
         <image name="appTeam" width="30" height="29"/>
-        <image name="awLogo" width="171" height="84"/>
+        <image name="awLogo" width="1367" height="673"/>
         <image name="donate" width="29" height="29"/>
         <image name="feedback" width="30" height="29"/>
+        <image name="heart" width="17" height="14"/>
         <image name="icon_more" width="20" height="15"/>
         <image name="icon_more_selected" width="20" height="15"/>
         <image name="rateApp" width="30" height="29"/>
-        <namedColor name="blue_oval">
-            <color red="0.0039215686269999999" green="0.66666666669999997" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="accent">
+            <color red="0.95294117647058818" green="0.36078431372549019" blue="0.28627450980392155" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="blue_oval">
             <color red="0.0039215686274509803" green="0.66666666666666663" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="blue_oval">
+            <color red="0.0039215686269999999" green="0.66666666669999997" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="font_grey">
+            <color red="0.27058823529411763" green="0.35294117647058826" blue="0.39215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="primary">
             <color red="0.0" green="0.48627450980392156" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
