@@ -17,13 +17,13 @@
         <scene sceneID="YPg-mI-SGh">
             <objects>
                 <tableViewController title="Run List" id="jNn-Ly-7IT" customClass="RunListTableViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="vJS-Mw-Q5Q">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="36" sectionFooterHeight="28" id="vJS-Mw-Q5Q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="runCell" id="xUa-2m-8xF" customClass="RunListTableViewCell" customModule="aw" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="36" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xUa-2m-8xF" id="OE1-Ml-Jmj">
                                     <rect key="frame" x="0.0" y="0.0" width="341" height="99.5"/>
@@ -106,7 +106,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="American Whitewater" id="VBB-33-e34">
                         <barButtonItem key="backBarButtonItem" title="Runs" id="E8n-Ca-HOy"/>
-                        <barButtonItem key="rightBarButtonItem" title="Filters" id="nvV-Hl-gq6">
+                        <barButtonItem key="rightBarButtonItem" title="Filters" image="filter" id="nvV-Hl-gq6">
                             <connections>
                                 <segue destination="YFK-7r-CMH" kind="presentation" identifier="showFilters" id="BDm-bc-Bvj"/>
                             </connections>
@@ -454,7 +454,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="American Whitewater" id="YiE-Tm-z2w">
                         <barButtonItem key="backBarButtonItem" title="Map" id="0ZH-Yx-oG2"/>
-                        <barButtonItem key="rightBarButtonItem" title="Filters" id="8z3-0y-QQi">
+                        <barButtonItem key="rightBarButtonItem" title="Filters" image="filter" id="8z3-0y-QQi">
                             <connections>
                                 <segue destination="YFK-7r-CMH" kind="presentation" identifier="showFiltersMap" id="35b-Ee-eOR"/>
                             </connections>
@@ -499,7 +499,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pst-1r-Ou4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1510" y="-1110"/>
+            <point key="canvasLocation" x="999" y="-1093"/>
         </scene>
         <!--Onboard2-->
         <scene sceneID="9i3-kQ-lZu">
@@ -553,10 +553,13 @@ plan for your next run!</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="43e-gY-2j4"/>
                     </view>
+                    <connections>
+                        <segue destination="VKa-ja-tv3" kind="show" identifier="onboardingCompleted" id="HLz-3E-X9y"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wfg-dx-4cc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2529" y="-1110"/>
+            <point key="canvasLocation" x="2018" y="-1093"/>
         </scene>
         <!--Tab View Controller-->
         <scene sceneID="Pzb-aN-gIM">
@@ -640,13 +643,13 @@ plan for your next run!</string>
         <scene sceneID="Vg6-4h-UC1">
             <objects>
                 <tableViewController title="Run List" id="lCv-VW-E28" customClass="FavoriteListTableViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="np3-ty-ckn">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="36" sectionFooterHeight="28" id="np3-ty-ckn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="runCell" id="QTx-HH-Vqi" customClass="RunListTableViewCell" customModule="aw" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="36" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QTx-HH-Vqi" id="byw-9i-Zrd">
                                     <rect key="frame" x="0.0" y="0.0" width="341" height="99.5"/>
@@ -729,7 +732,7 @@ plan for your next run!</string>
                     </tableView>
                     <navigationItem key="navigationItem" title="American Whitewater" id="7hV-8Z-Upi">
                         <barButtonItem key="backBarButtonItem" title="Favorites" id="EDM-s5-t4Z"/>
-                        <barButtonItem key="rightBarButtonItem" title="Filters" id="cvP-0M-mNb">
+                        <barButtonItem key="rightBarButtonItem" title="Filters" image="filter" id="cvP-0M-mNb">
                             <connections>
                                 <segue destination="YFK-7r-CMH" kind="presentation" identifier="showFiltersFavorites" id="BCF-g5-YXb"/>
                             </connections>
@@ -1214,6 +1217,7 @@ plan for your next run!</string>
         </scene>
     </scenes>
     <resources>
+        <image name="filter" width="22" height="16"/>
         <image name="icon_favorite" width="25" height="24"/>
         <image name="icon_favorites" width="30" height="20"/>
         <image name="icon_favorites_selected" width="30" height="22"/>
@@ -1250,6 +1254,7 @@ plan for your next run!</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="BCF-g5-YXb"/>
+        <segue reference="HLz-3E-X9y"/>
         <segue reference="HZW-Im-KWw"/>
     </inferredMetricsTieBreakers>
 </document>

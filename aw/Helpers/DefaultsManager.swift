@@ -76,4 +76,14 @@ class DefaultsManager {
             UserDefaults.standard.set(newValue, forKey: classFilterKey)
         }
     }
+
+    private static let updatedKey = "updatedKey"
+    static var lastUpdated: Date? {
+        get {
+            return UserDefaults.standard.object(forKey: updatedKey) as? Date
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: updatedKey)
+        }
+    }
 }

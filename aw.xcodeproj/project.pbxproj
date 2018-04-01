@@ -23,6 +23,8 @@
 		385E59D52063073900A68EC9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 385E59D42063073900A68EC9 /* MapKit.framework */; };
 		3864857D206BC355009B360F /* Onboard2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3864857C206BC355009B360F /* Onboard2ViewController.swift */; };
 		38648580206E7749009B360F /* ReachAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3864857F206E7749009B360F /* ReachAnnotation.swift */; };
+		3898B4F52070586000B49B68 /* RunHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3898B4F32070586000B49B68 /* RunHeaderTableViewCell.swift */; };
+		3898B4F62070586000B49B68 /* RunHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3898B4F42070586000B49B68 /* RunHeaderTableViewCell.xib */; };
 		38A6C8D92066759A00B5BA29 /* RunListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8D82066759A00B5BA29 /* RunListTableViewController.swift */; };
 		38A6C8DB206677EC00B5BA29 /* RunListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8DA206677EC00B5BA29 /* RunListTableViewCell.swift */; };
 		38A6C8E3206687EC00B5BA29 /* MOCViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8E2206687EC00B5BA29 /* MOCViewControllerType.swift */; };
@@ -74,6 +76,8 @@
 		385E59D42063073900A68EC9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3864857C206BC355009B360F /* Onboard2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboard2ViewController.swift; sourceTree = "<group>"; };
 		3864857F206E7749009B360F /* ReachAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachAnnotation.swift; sourceTree = "<group>"; };
+		3898B4F32070586000B49B68 /* RunHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		3898B4F42070586000B49B68 /* RunHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RunHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		38A6C8D82066759A00B5BA29 /* RunListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunListTableViewController.swift; sourceTree = "<group>"; };
 		38A6C8DA206677EC00B5BA29 /* RunListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunListTableViewCell.swift; sourceTree = "<group>"; };
 		38A6C8E2206687EC00B5BA29 /* MOCViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOCViewControllerType.swift; sourceTree = "<group>"; };
@@ -285,6 +289,8 @@
 				38A98F7D2067EF7F009853E1 /* Filters */,
 				38A6C8D82066759A00B5BA29 /* RunListTableViewController.swift */,
 				38A6C8DA206677EC00B5BA29 /* RunListTableViewCell.swift */,
+				3898B4F32070586000B49B68 /* RunHeaderTableViewCell.swift */,
+				3898B4F42070586000B49B68 /* RunHeaderTableViewCell.xib */,
 				38A6C8F020670AEF00B5BA29 /* MapViewController.swift */,
 				38A98F5D2067CAF8009853E1 /* FavoriteListTableViewController.swift */,
 				381ED3A0206FC16200B03F13 /* Detail */,
@@ -367,6 +373,7 @@
 			files = (
 				385E59CC2063047B00A68EC9 /* LaunchScreen.storyboard in Resources */,
 				3858D23120689313004A39C6 /* About.storyboard in Resources */,
+				3898B4F62070586000B49B68 /* RunHeaderTableViewCell.xib in Resources */,
 				385E59C92063047B00A68EC9 /* Assets.xcassets in Resources */,
 				3858D23320689345004A39C6 /* News.storyboard in Resources */,
 				38A98F742067ED2E009853E1 /* AboutAWMissionViewController.xib in Resources */,
@@ -401,6 +408,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				381ED39F206FC15700B03F13 /* ReachDetailMapViewController.swift in Sources */,
+				3898B4F52070586000B49B68 /* RunHeaderTableViewCell.swift in Sources */,
 				38A98F822067EFA3009853E1 /* FilterRegionViewController.swift in Sources */,
 				38A98F7F2067EF90009853E1 /* FilterViewController.swift in Sources */,
 				38A98F882067EFC0009853E1 /* FilterDistanceViewController.swift in Sources */,

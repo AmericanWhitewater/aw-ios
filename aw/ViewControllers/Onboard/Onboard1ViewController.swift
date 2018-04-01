@@ -15,8 +15,6 @@ class Onboard1ViewController: UIViewController, MOCViewControllerType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        DefaultsManager.latitude = 43.6570
-        DefaultsManager.longitude = -70.9667
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,15 +25,16 @@ class Onboard1ViewController: UIViewController, MOCViewControllerType {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        performSegue(withIdentifier: Segue.alreadyOnboarded.rawValue, sender: nil)
-        //performSegue(withIdentifier: Segue.onboardingNeeded.rawValue, sender: nil)
+        if DefaultsManager.onboardingCompleted {
+            performSegue(withIdentifier: Segue.alreadyOnboarded.rawValue, sender: nil)
+        } else {
+            performSegue(withIdentifier: Segue.onboardingNeeded.rawValue, sender: nil)
+        }
     }
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
-        //case Segue.alreadyOnboarded.rawValue:
-        //    injectContextAndContainerToTabChildVC(segue: segue)
         default:
             injectContextAndContainerToChildVC(segue: segue)
         }

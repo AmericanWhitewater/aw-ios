@@ -10,7 +10,7 @@ import CoreData
 import CoreLocation
 import UIKit
 
-class Onboard2ViewController: UITabBarController, MOCViewControllerType {
+class Onboard2ViewController: UIViewController, MOCViewControllerType {
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -56,7 +56,9 @@ extension Onboard2ViewController {
     }
 
     func updateLocation() {
-        // soon
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+        }
     }
 }
 
@@ -66,6 +68,26 @@ extension Onboard2ViewController: CLLocationManagerDelegate {
         if status == .authorizedWhenInUse {
             // allow location updates
             print("Authorized to get location")
+            updateLocation()
         }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+
+        print(location)
+        locationManager.stopUpdatingLocation()
+
+        DefaultsManager.latitude = location.coordinate.latitude
+        DefaultsManager.longitude = location.coordinate.longitude
+        DefaultsManager.onboardingCompleted = true
+
+        if let context = managedObjectContext {
+            AWApiHelper.updateRegions(viewContext: context) {
+                // nothing needed to callback since this screeen is going away
+            }
+        }
+
+        performSegue(withIdentifier: Segue.onboardingCompleted.rawValue, sender: nil)
     }
 }

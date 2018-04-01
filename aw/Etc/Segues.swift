@@ -13,4 +13,5 @@ enum Segue: String {
     case showFilters, showFiltersFavorites, showFiltersMap
     case onboardingNeeded
     case alreadyOnboarded
+    case onboardingCompleted
 }

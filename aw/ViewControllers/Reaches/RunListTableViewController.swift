@@ -59,6 +59,8 @@ extension RunListTableViewController {
         tableView.delegate = self
         tableView.dataSource = self
 
+        tableView.register(UINib(nibName: "RunHeaderTableViewCell", bundle: nil), forHeaderFooterViewReuseIdentifier: "headerCell")
+
         fetchedResultsController = initializeFetchedResultController()
         fetchedResultsController?.delegate = self
         updateFetchPredicates()
@@ -106,10 +108,10 @@ extension RunListTableViewController {
 
         if let context = managedObjectContext {
             AWApiHelper.updateRegions(viewContext: context) {
-                //self.updateFetchPredicates()
-
                 sender.endRefreshing()
                 sender.attributedTitle = attributedTitle
+                let header = self.tableView.headerView(forSection: 0) as? RunHeaderTableViewCell
+                header?.update()
             }
         }
     }
@@ -232,5 +234,11 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
         cell.managedObjectContext = managedObjectContext
 
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerCell") as? RunHeaderTableViewCell
+
+        return header
     }
 }
