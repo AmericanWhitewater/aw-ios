@@ -51,6 +51,16 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
             print("Unknown segue!")
         }
     }
+    func noDataString() -> String {
+        if DefaultsManager.distanceFilter != 0 && DefaultsManager.regionsFilter.count != 0 {
+            return "No runs found with current filters. Is the distance filter hiding the selected regions?"
+        }
+        if DefaultsManager.distanceFilter != 0 {
+            return "No runs found with current filters. You might want to try searching a larger area?"
+        }
+
+        return "No runs found. Have you checked which filters are applied?"
+    }
 }
 
 // MARK: - RunListTableViewExtension
@@ -217,7 +227,23 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController?.fetchedObjects?.count ?? 0
+        let rows = fetchedResultsController?.fetchedObjects?.count ?? 0
+
+        if rows != 0 {
+            tableView.separatorStyle = .singleLine
+            tableView.backgroundView = nil
+        } else {
+            let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            noDataLabel.text = noDataString()
+            noDataLabel.textColor = UIColor.black
+            noDataLabel.textAlignment = .center
+            noDataLabel.lineBreakMode = .byWordWrapping
+            noDataLabel.numberOfLines = 0
+            tableView.backgroundView = noDataLabel
+            tableView.separatorStyle = .none
+        }
+
+        return rows
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
