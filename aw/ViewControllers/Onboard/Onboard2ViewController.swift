@@ -92,6 +92,7 @@ extension Onboard2ViewController: CLLocationManagerDelegate {
         DefaultsManager.latitude = location.coordinate.latitude
         DefaultsManager.longitude = location.coordinate.longitude
         DefaultsManager.onboardingCompleted = true
+        DefaultsManager.distanceFilter = 100
 
         if let context = managedObjectContext {
             AWApiHelper.updateRegions(viewContext: context) {
