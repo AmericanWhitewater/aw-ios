@@ -11,6 +11,7 @@ import CoreLocation
 import UIKit
 
 class Onboard2ViewController: UIViewController, MOCViewControllerType {
+    @IBOutlet weak var locationButton: UIButton!
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -40,6 +41,9 @@ class Onboard2ViewController: UIViewController, MOCViewControllerType {
 extension Onboard2ViewController {
     func initialize() {
         locationManager.delegate = self
+
+        locationButton.mask?.clipsToBounds = true
+        locationButton.layer.cornerRadius = 45/2
     }
 
     func setupLocationUpdates() {

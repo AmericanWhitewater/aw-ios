@@ -524,8 +524,11 @@ plan for your next run!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="BLG-wd-svF">
-                                <rect key="frame" x="97.5" y="416" width="181" height="30"/>
+                                <rect key="frame" x="18" y="416" width="339" height="45"/>
                                 <color key="backgroundColor" name="white"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="KFh-gL-1dH"/>
+                                </constraints>
                                 <state key="normal" title="Use your current location?">
                                     <color key="titleColor" name="primary"/>
                                 </state>
@@ -534,7 +537,7 @@ plan for your next run!</string>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="sGh-gQ-323">
-                                <rect key="frame" x="75" y="490" width="226" height="30"/>
+                                <rect key="frame" x="75" y="505" width="226" height="30"/>
                                 <state key="normal" title="Browse without enabling location">
                                     <color key="titleColor" name="white"/>
                                 </state>
@@ -550,10 +553,13 @@ plan for your next run!</string>
                             <constraint firstItem="BLG-wd-svF" firstAttribute="top" secondItem="6nW-RO-4cC" secondAttribute="bottom" constant="174.5" id="QWf-4P-ydZ"/>
                             <constraint firstItem="IIh-HC-8MY" firstAttribute="top" secondItem="43e-gY-2j4" secondAttribute="top" constant="110" id="beo-Bb-bDn"/>
                             <constraint firstItem="IIh-HC-8MY" firstAttribute="centerX" secondItem="XGd-dn-ldf" secondAttribute="centerX" id="gP1-b0-SL5"/>
+                            <constraint firstItem="BLG-wd-svF" firstAttribute="leading" secondItem="43e-gY-2j4" secondAttribute="leading" constant="18" id="vU6-4Y-UOb"/>
+                            <constraint firstItem="43e-gY-2j4" firstAttribute="trailing" secondItem="BLG-wd-svF" secondAttribute="trailing" constant="18" id="vti-D8-zbr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="43e-gY-2j4"/>
                     </view>
                     <connections>
+                        <outlet property="locationButton" destination="BLG-wd-svF" id="oUa-ez-1fK"/>
                         <segue destination="VKa-ja-tv3" kind="show" identifier="onboardingCompleted" id="HLz-3E-X9y"/>
                     </connections>
                 </viewController>
@@ -1254,7 +1260,7 @@ plan for your next run!</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="BCF-g5-YXb"/>
-        <segue reference="HLz-3E-X9y"/>
+        <segue reference="J5Q-Dj-XRe"/>
         <segue reference="HZW-Im-KWw"/>
     </inferredMetricsTieBreakers>
 </document>
