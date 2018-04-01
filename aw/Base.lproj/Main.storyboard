@@ -935,29 +935,38 @@ plan for your next run!</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How far from your current location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SdF-j4-4LW">
-                                <rect key="frame" x="16" y="36" width="375" height="20.5"/>
+                                <rect key="frame" x="16" y="56" width="375" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="250" translatesAutoresizingMaskIntoConstraints="NO" id="dzt-yc-rhj">
-                                <rect key="frame" x="16" y="64.5" width="345" height="31"/>
+                                <rect key="frame" x="16" y="84.5" width="345" height="31"/>
                                 <connections>
                                     <action selector="distanceChanged:" destination="Ync-eu-HPl" eventType="valueChanged" id="6C5-ku-M5m"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DistanceLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M8Z-OR-f2o">
-                                <rect key="frame" x="16" y="102.5" width="109" height="21"/>
+                                <rect key="frame" x="16" y="122.5" width="109" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uXs-ye-k7k">
+                                <rect key="frame" x="16" y="151" width="169" height="30"/>
+                                <state key="normal" title="Update Current Location"/>
+                                <connections>
+                                    <action selector="updateLocationTapped:" destination="Ync-eu-HPl" eventType="touchUpInside" id="PTX-vw-wsu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="SdF-j4-4LW" firstAttribute="top" secondItem="AUs-Is-squ" secondAttribute="top" constant="16" id="5KI-eH-PX6"/>
+                            <constraint firstItem="SdF-j4-4LW" firstAttribute="top" secondItem="AUs-Is-squ" secondAttribute="top" constant="36" id="5KI-eH-PX6"/>
                             <constraint firstItem="M8Z-OR-f2o" firstAttribute="top" secondItem="dzt-yc-rhj" secondAttribute="bottom" constant="8" id="7ry-TC-7VE"/>
+                            <constraint firstItem="uXs-ye-k7k" firstAttribute="top" secondItem="M8Z-OR-f2o" secondAttribute="bottom" constant="7.5" id="987-y9-G77"/>
                             <constraint firstItem="dzt-yc-rhj" firstAttribute="top" secondItem="SdF-j4-4LW" secondAttribute="bottom" constant="8" id="Lfa-L1-xIi"/>
+                            <constraint firstItem="uXs-ye-k7k" firstAttribute="leading" secondItem="AUs-Is-squ" secondAttribute="leading" constant="16" id="Onn-bg-72l"/>
                             <constraint firstItem="M8Z-OR-f2o" firstAttribute="top" secondItem="dzt-yc-rhj" secondAttribute="bottom" constant="8" id="V6F-DE-3QM"/>
                             <constraint firstItem="AUs-Is-squ" firstAttribute="trailing" secondItem="dzt-yc-rhj" secondAttribute="trailing" constant="16" id="Wok-8k-kiK"/>
                             <constraint firstItem="SdF-j4-4LW" firstAttribute="trailing" secondItem="AUs-Is-squ" secondAttribute="trailing" constant="16" id="ZSx-KN-mPr"/>
