@@ -22,6 +22,7 @@
 		3836C4962071077200490999 /* AWReach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C4952071077200490999 /* AWReach.swift */; };
 		3836C4992071088E00490999 /* Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C4982071088E00490999 /* Condition.swift */; };
 		3836C49D207109A100490999 /* AWArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C49C207109A100490999 /* AWArticle.swift */; };
+		3836C4A12071113D00490999 /* MoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3836C4A02071113D00490999 /* MoreTableViewController.swift */; };
 		3858D23120689313004A39C6 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D22F20689313004A39C6 /* About.storyboard */; };
 		3858D23320689345004A39C6 /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3858D23220689345004A39C6 /* News.storyboard */; };
 		3858D23520693A36004A39C6 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3858D23420693A36004A39C6 /* TabViewController.swift */; };
@@ -48,11 +49,8 @@
 		38A98F622067E6E7009853E1 /* AboutAWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F612067E6E7009853E1 /* AboutAWViewController.swift */; };
 		38A98F692067EA78009853E1 /* AboutAWExtendedNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F682067EA78009853E1 /* AboutAWExtendedNavBarView.swift */; };
 		38A98F732067ED2E009853E1 /* AboutAWMissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F712067ED2E009853E1 /* AboutAWMissionViewController.swift */; };
-		38A98F742067ED2E009853E1 /* AboutAWMissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A98F722067ED2E009853E1 /* AboutAWMissionViewController.xib */; };
 		38A98F772067ED3F009853E1 /* AboutAWStewardshipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F752067ED3F009853E1 /* AboutAWStewardshipViewController.swift */; };
-		38A98F782067ED3F009853E1 /* AboutAWStewardshipViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A98F762067ED3F009853E1 /* AboutAWStewardshipViewController.xib */; };
 		38A98F7B2067ED4D009853E1 /* AboutAWFundingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F792067ED4D009853E1 /* AboutAWFundingViewController.swift */; };
-		38A98F7C2067ED4D009853E1 /* AboutAWFundingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A98F7A2067ED4D009853E1 /* AboutAWFundingViewController.xib */; };
 		38A98F7F2067EF90009853E1 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F7E2067EF90009853E1 /* FilterViewController.swift */; };
 		38A98F822067EFA3009853E1 /* FilterRegionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F802067EFA3009853E1 /* FilterRegionViewController.swift */; };
 		38A98F882067EFC0009853E1 /* FilterDistanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F862067EFC0009853E1 /* FilterDistanceViewController.swift */; };
@@ -83,6 +81,7 @@
 		3836C4952071077200490999 /* AWReach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWReach.swift; sourceTree = "<group>"; };
 		3836C4982071088E00490999 /* Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Condition.swift; sourceTree = "<group>"; };
 		3836C49C207109A100490999 /* AWArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWArticle.swift; sourceTree = "<group>"; };
+		3836C4A02071113D00490999 /* MoreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewController.swift; sourceTree = "<group>"; };
 		3858D23020689313004A39C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = aw/Base.lproj/About.storyboard; sourceTree = "<group>"; };
 		3858D23220689345004A39C6 /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
 		3858D23420693A36004A39C6 /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
@@ -111,11 +110,8 @@
 		38A98F612067E6E7009853E1 /* AboutAWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAWViewController.swift; sourceTree = "<group>"; };
 		38A98F682067EA78009853E1 /* AboutAWExtendedNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAWExtendedNavBarView.swift; sourceTree = "<group>"; };
 		38A98F712067ED2E009853E1 /* AboutAWMissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAWMissionViewController.swift; sourceTree = "<group>"; };
-		38A98F722067ED2E009853E1 /* AboutAWMissionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutAWMissionViewController.xib; sourceTree = "<group>"; };
 		38A98F752067ED3F009853E1 /* AboutAWStewardshipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAWStewardshipViewController.swift; sourceTree = "<group>"; };
-		38A98F762067ED3F009853E1 /* AboutAWStewardshipViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutAWStewardshipViewController.xib; sourceTree = "<group>"; };
 		38A98F792067ED4D009853E1 /* AboutAWFundingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAWFundingViewController.swift; sourceTree = "<group>"; };
-		38A98F7A2067ED4D009853E1 /* AboutAWFundingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutAWFundingViewController.xib; sourceTree = "<group>"; };
 		38A98F7E2067EF90009853E1 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		38A98F802067EFA3009853E1 /* FilterRegionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRegionViewController.swift; sourceTree = "<group>"; };
 		38A98F862067EFC0009853E1 /* FilterDistanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDistanceViewController.swift; sourceTree = "<group>"; };
@@ -257,11 +253,8 @@
 				38A98F612067E6E7009853E1 /* AboutAWViewController.swift */,
 				38A98F682067EA78009853E1 /* AboutAWExtendedNavBarView.swift */,
 				38A98F712067ED2E009853E1 /* AboutAWMissionViewController.swift */,
-				38A98F722067ED2E009853E1 /* AboutAWMissionViewController.xib */,
 				38A98F752067ED3F009853E1 /* AboutAWStewardshipViewController.swift */,
-				38A98F762067ED3F009853E1 /* AboutAWStewardshipViewController.xib */,
 				38A98F792067ED4D009853E1 /* AboutAWFundingViewController.swift */,
-				38A98F7A2067ED4D009853E1 /* AboutAWFundingViewController.xib */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -340,6 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				38A98F6A2067ECCF009853E1 /* About */,
+				3836C4A02071113D00490999 /* MoreTableViewController.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -414,10 +408,7 @@
 				3898B4F62070586000B49B68 /* RunHeaderTableViewCell.xib in Resources */,
 				385E59C92063047B00A68EC9 /* Assets.xcassets in Resources */,
 				3858D23320689345004A39C6 /* News.storyboard in Resources */,
-				38A98F742067ED2E009853E1 /* AboutAWMissionViewController.xib in Resources */,
 				385E59C72063047B00A68EC9 /* Main.storyboard in Resources */,
-				38A98F7C2067ED4D009853E1 /* AboutAWFundingViewController.xib in Resources */,
-				38A98F782067ED3F009853E1 /* AboutAWStewardshipViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +453,7 @@
 				38BE74A6206827A200DE555D /* DifficultyHelper.swift in Sources */,
 				385E59C22063047B00A68EC9 /* AppDelegate.swift in Sources */,
 				38A6C8ED2066E6EC00B5BA29 /* AmericanWhitewater.xcdatamodeld in Sources */,
+				3836C4A12071113D00490999 /* MoreTableViewController.swift in Sources */,
 				3836C48E20708E7900490999 /* Article.swift in Sources */,
 				38A6C8E3206687EC00B5BA29 /* MOCViewControllerType.swift in Sources */,
 				38150B262067F75800CBE8D8 /* Regions.swift in Sources */,
