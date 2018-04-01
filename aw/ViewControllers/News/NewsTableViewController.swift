@@ -19,10 +19,12 @@ class NewsTableViewController: UITableViewController {
         super.viewDidLoad()
         initialize()
 
-        if let context = managedObjectContext {
-            AWArticleAPIHelper.updateArticles(viewContext: context) {
-                print("fetched articles")
+        if let lastUpdated = DefaultsManager.articlesLastUpdated {
+            if lastUpdated < Date(timeIntervalSinceNow: -86400) {
+                updateArticles()
             }
+        } else {
+            updateArticles()
         }
     }
 
@@ -102,6 +104,7 @@ class NewsTableViewController: UITableViewController {
 extension NewsTableViewController {
     func initialize() {
         initializeFetchedResultController()
+        setupRefreshControl()
     }
 
     func initializeFetchedResultController() {
@@ -110,7 +113,11 @@ extension NewsTableViewController {
         let request = NSFetchRequest<Article>(entityName: "Article")
         request.sortDescriptors = [NSSortDescriptor(key: "posted", ascending: false)]
 
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: moc,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
         fetchedResultsController?.delegate = self
 
         do {
@@ -120,6 +127,34 @@ extension NewsTableViewController {
             print("fetch request failed \(error) \(error.userInfo)")
         }
 
+    }
+
+    func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        let title = NSLocalizedString("Pull to Refresh", comment: "Pull to Refresh")
+        refreshControl.attributedTitle = NSAttributedString(string: title)
+        refreshControl.addTarget(self, action: #selector(refreshArticles), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+
+    @objc func refreshArticles(sender: UIRefreshControl) {
+        let attributedTitle = sender.attributedTitle
+        let refreshingTitle = NSLocalizedString("Refreshing News", comment: "Refreshing news")
+        sender.attributedTitle = NSAttributedString(string: refreshingTitle)
+
+        if let context = managedObjectContext {
+            AWArticleAPIHelper.updateArticles(viewContext: context) {
+                sender.endRefreshing()
+                sender.attributedTitle = attributedTitle
+            }
+        }
+    }
+
+    func updateArticles() {
+        if let context = managedObjectContext {
+            AWArticleAPIHelper.updateArticles(viewContext: context) {
+            }
+        }
     }
 
     func convertToFetchedResults(_ indexPath: IndexPath) -> IndexPath {

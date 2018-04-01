@@ -15,7 +15,7 @@ struct AWArticleAPIHelper {
     typealias UpdateCallback = () -> Void
 
     static func fetchArticles(callback: @escaping ArticlesCallback) {
-        let url = URL(string: "https://www.americanwhitewater.org/content/News/all/type/frontpagenews/subtype//page/0/.json?limit=10")!
+        let url = URL(string: "https://www.americanwhitewater.org/content/News/all/type/frontpagenews/subtype//page/0/.json")!
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             let decoder = JSONDecoder()
             guard let data = data, let json = try? decoder.decode(AWArticleResponse.self, from: data) else {
@@ -87,6 +87,7 @@ struct AWArticleAPIHelper {
                 }
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            DefaultsManager.articlesLastUpdated = Date()
             callback()
         }
     }

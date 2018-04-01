@@ -40,6 +40,7 @@ struct AWReachInfo: Codable {
 }
 
 struct AWGageInfo: Codable {
+    //swiftlint:disable:next identifier_name
     let id: Int
     //let name: String
     //let metricid: Int

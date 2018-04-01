@@ -86,4 +86,14 @@ class DefaultsManager {
             UserDefaults.standard.set(newValue, forKey: updatedKey)
         }
     }
+
+    private static let articlesUpdatedKey = "articlesUpdatedKey"
+    static var articlesLastUpdated: Date? {
+        get {
+            return UserDefaults.standard.object(forKey: articlesUpdatedKey) as? Date
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: articlesUpdatedKey)
+        }
+    }
 }

@@ -92,11 +92,12 @@ struct AWApiHelper {
         reach.state = region.title
         reach.delta = newReach.delta
 
-        if let distance = newReach.distanceFrom(location: CLLocation(latitude: DefaultsManager.latitude,
-                                                                     longitude: DefaultsManager.longitude)) {
+        if let distance = newReach.distanceFrom(
+            location: CLLocation(
+                latitude: DefaultsManager.latitude,
+                longitude: DefaultsManager.longitude)) {
             reach.distance = distance / 1609
         }
-
         if difficultyRange.contains(1) {
             reach.difficulty1 = true
         }

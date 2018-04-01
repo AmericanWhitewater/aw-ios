@@ -44,6 +44,13 @@ extension Onboard2ViewController {
 
         locationButton.mask?.clipsToBounds = true
         locationButton.layer.cornerRadius = 45/2
+
+        if let context = managedObjectContext {
+            AWArticleAPIHelper.updateArticles(viewContext: context) {
+                print("fetched articles")
+                print(DefaultsManager.articlesLastUpdated as Any)
+            }
+        }
     }
 
     func setupLocationUpdates() {
