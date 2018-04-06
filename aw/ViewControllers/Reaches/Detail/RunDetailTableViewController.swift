@@ -25,6 +25,8 @@ class RunDetailTableViewController: UITableViewController {
 
     var reach: Reach?
 
+    var expandDescription: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -67,6 +69,29 @@ class RunDetailTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath == IndexPath(row: 1, section: 1) {
+            expandDescription = !expandDescription
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath {
+        case IndexPath(row: 0, section: 0):
+            return 117
+        case IndexPath(row: 0, section: 1): // Image
+            if reach?.photoUrl != nil {
+                return 186
+            }
+            return 0
+        case IndexPath(row: 1, section: 1): // Description
+            return expandDescription ? 40 : 168
+        case IndexPath(row: 0, section: 2):
+            return 77
+        default:
+            return 44
+        }
     }
 }
 
@@ -161,6 +186,8 @@ extension RunDetailTableViewController {
                 imageView.image = UIImage(data: data)
             }
         }
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
     }
 }
 
