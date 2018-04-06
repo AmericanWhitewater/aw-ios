@@ -28,11 +28,6 @@ class MapViewController: UIViewController, MOCViewControllerType {
         initialize()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //updateFetchPredicates()
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateFetchPredicates()
@@ -83,10 +78,10 @@ extension MapViewController {
     }
 
     func prepareDetailSegue(_ segue: UIStoryboardSegue) {
-        if let selectedReachAnnotation = mapView.selectedAnnotations.first as? ReachAnnotation,
+        if let selectedReach = mapView.selectedAnnotations.first as? Reach,
             let context = managedObjectContext {
             let request: NSFetchRequest<Reach> = Reach.fetchRequest()
-            request.predicate = NSPredicate(format: "id = %i", selectedReachAnnotation.id)
+            request.predicate = NSPredicate(format: "id = %i", selectedReach.id)
 
             do {
                 let reaches = try context.fetch(request)
@@ -97,7 +92,7 @@ extension MapViewController {
                     print("No reach")
                 }
             } catch {
-                print("Failed to fetch reach \(selectedReachAnnotation.id)")
+                print("Failed to fetch reach \(selectedReach.id)")
             }
         }
         injectContextAndContainerToChildVC(segue: segue)
@@ -145,7 +140,7 @@ extension MapViewController {
 
         // add the reaches in core data
         if let reaches = fetchedResultsController?.fetchedObjects {
-            mapView.addAnnotations(reaches.map { $0.annotation })
+            mapView.addAnnotations(reaches)
 //            for reach in reaches {
 //                mapView.addAnnotation(reach.annotation)
 //            }
@@ -161,7 +156,7 @@ extension MapViewController: ReachFetchRequestControllerType {
 // MARK: - MKMapViewDelegate
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if let reach = annotation as? ReachAnnotation {
+        if let reach = annotation as? Reach {
             var view = mapView.dequeueReusableAnnotationView(withIdentifier: "reach")
             if view == nil {
                 view = MKAnnotationView(annotation: nil, reuseIdentifier: "reach")
@@ -215,15 +210,15 @@ extension MapViewController: NSFetchedResultsControllerDelegate {
 
         switch type {
         case .insert:
-            mapView.addAnnotation(reach.annotation)
+            mapView.addAnnotation(reach)
         case .delete:
-            mapView.removeAnnotation(reach.annotation)
+            mapView.removeAnnotation(reach)
         case .update:
-            mapView.removeAnnotation(reach.annotation)
-            mapView.addAnnotation(reach.annotation)
+            mapView.removeAnnotation(reach)
+            mapView.addAnnotation(reach)
         case .move:
-            mapView.removeAnnotation(reach.annotation)
-            mapView.addAnnotation(reach.annotation)
+            mapView.removeAnnotation(reach)
+            mapView.addAnnotation(reach)
             print("reach moved: \(reach.name ?? "unknown reach")) - \(reach.section ?? "unknown section")")
         }
     }

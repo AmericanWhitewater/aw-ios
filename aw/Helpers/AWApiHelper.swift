@@ -283,7 +283,7 @@ struct AWApiHelper {
                 let reaches = try context.fetch(request)
 
                 for reach in reaches {
-                    let coordinate = reach.annotation.coordinate
+                    let coordinate = reach.coordinate
                     let reachLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
                     let distance = reachLocation.distance(from: location)
                     reach.distance = distance / 1609

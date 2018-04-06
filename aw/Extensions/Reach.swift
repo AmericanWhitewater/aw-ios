@@ -25,19 +25,8 @@ extension Reach {
         return con.color
     }
 
-    var annotation: ReachAnnotation {
-        let title: String?
-        if let difficulty = difficulty, let name = name {
-            title = "\(name) (\(difficulty))"
-        } else {
-            title = name
-        }
-        return ReachAnnotation(lat: putInLat,
-                               lon: putInLon,
-                               id: id,
-                               title: title,
-                               subtitle: sectionCleanedHTML,
-                               condition: condition)
+    var icon: UIImage? {
+        return Condition.fromApi(condition: condition ?? "").icon
     }
 
     var sectionCleanedHTML: String? {
@@ -74,6 +63,35 @@ extension Reach {
             return "https://www.americanwhitewater.org/photos/archive/medium/\(photoId).jpg"
         } else {
             return nil
+        }
+    }
+}
+
+extension Reach: MKAnnotation {
+    public var title: String? {
+        if let difficulty = difficulty, let name = name {
+            return "\(name) (\(difficulty))"
+        } else {
+            return name
+        }
+    }
+
+    public var subtitle: String? {
+        return sectionCleanedHTML
+    }
+
+    public var coordinate: CLLocationCoordinate2D {
+        guard let lat = putInLat, let latitude = Double(lat),
+            let lon = putInLon, let longitude = Double(lon) else {
+                print("\(id) has invalid coordinates")
+                return kCLLocationCoordinate2DInvalid
+        }
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        if CLLocationCoordinate2DIsValid(coordinate) {
+            return coordinate
+        } else {
+            print("\(id) has invalid coordinates")
+            return kCLLocationCoordinate2DInvalid
         }
     }
 }
