@@ -26,6 +26,8 @@ class RunHeaderTableViewCell: UITableViewHeaderFooterView {
             timeFormat.dateFormat = "h:mm a"
 
             updateTimeLabel.text = "Last Update \(dateFormat.string(from: date)) at \(timeFormat.string(from: date))"
+        } else {
+            updateTimeLabel.text = "Update in progress"
         }
     }
 }

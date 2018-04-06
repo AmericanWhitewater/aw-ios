@@ -29,6 +29,8 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateFetchPredicates()
+        let header = self.tableView.headerView(forSection: 0) as? RunHeaderTableViewCell
+        header?.update()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -68,6 +70,8 @@ extension RunListTableViewController {
     func initialize() {
         tableView.delegate = self
         tableView.dataSource = self
+
+        
 
         tableView.register(UINib(
                 nibName: "RunHeaderTableViewCell",

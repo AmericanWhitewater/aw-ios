@@ -12,6 +12,10 @@ import UIKit
 
 class Onboard2ViewController: UIViewController, MOCViewControllerType {
     @IBOutlet weak var locationButton: UIButton!
+    @IBOutlet weak var buttonText: UILabel!
+    @IBOutlet weak var zipcodeField: UITextField!
+    @IBOutlet weak var orLabel: UILabel!
+    @IBOutlet weak var locationArrow: UIImageView!
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -32,8 +36,27 @@ class Onboard2ViewController: UIViewController, MOCViewControllerType {
         injectContextAndContainerToChildVC(segue: segue)
     }
 
+    @IBAction func zipcodeChanged(_ sender: UITextField) {
+        if sender.text?.count == 0 {
+            toggleLayout(.noZip)
+        } else if sender.text?.count == 5 {
+            toggleLayout(.fullZip)
+        } else {
+            toggleLayout(.partialZip)
+        }
+    }
+
+    @IBAction func zipcodeContinueHit(_ sender: UITextField) {
+        locationFromZip()
+    }
+
     @IBAction func allowLocationPressed(_ sender: Any) {
-        setupLocationUpdates()
+        if zipcodeField.text?.count == 0 {
+            setupLocationUpdates()
+        } else if zipcodeField.text?.count == 5 {
+            locationFromZip()
+        }
+
     }
 }
 
@@ -41,10 +64,7 @@ class Onboard2ViewController: UIViewController, MOCViewControllerType {
 extension Onboard2ViewController {
     func initialize() {
         locationManager.delegate = self
-
-        locationButton.mask?.clipsToBounds = true
-        locationButton.layer.cornerRadius = 45/2
-
+        
         if let context = managedObjectContext {
             AWArticleAPIHelper.updateArticles(viewContext: context) {
                 print("fetched articles")
@@ -53,7 +73,76 @@ extension Onboard2ViewController {
         }
     }
 
+    func saveLocationAndSegue(location: CLLocationCoordinate2D) {
+        DefaultsManager.latitude = location.latitude
+        DefaultsManager.longitude = location.longitude
+        DefaultsManager.onboardingCompleted = true
+        DefaultsManager.distanceFilter = 100
+
+        if let context = managedObjectContext {
+            AWApiHelper.updateRegions(viewContext: context) {
+                // nothing needed to callback since this screeen is going away
+            }
+        }
+
+        performSegue(withIdentifier: Segue.onboardingCompleted.rawValue, sender: nil)
+    }
+
+    func locationFromZip() {
+        guard zipcodeField.text?.count == 5,
+            let zipcode = zipcodeField.text else { return }
+
+        let decoder = CLGeocoder()
+        toggleLayout(.locating)
+        decoder.geocodeAddressString(zipcode) { (placemarks, error) in
+            guard error == nil,
+                let placemarks = placemarks,
+                let place = placemarks.first,
+                let coordinates = place.location?.coordinate else {
+                self.toggleLayout(.fullZip)
+                return
+            }
+            self.saveLocationAndSegue(location: coordinates)
+        }
+    }
+
+    enum LocationState {
+        case noZip, partialZip, fullZip, locating
+    }
+
+    func toggleLayout(_ zipEntry: LocationState) {
+        switch zipEntry {
+        case .noZip:
+            locationButton.isEnabled = true
+            orLabel.isHidden = false
+            buttonText.textColor = UIColor(named: "font_clickable")
+            buttonText.text = "Use your current location?"
+            locationArrow.isHidden = false
+            zipcodeField.isEnabled = true
+        case .partialZip:
+            locationButton.isEnabled = false
+            orLabel.isHidden = true
+            buttonText.textColor = UIColor(named: "font_grey")
+            buttonText.text = "Confirm location"
+            locationArrow.isHidden = true
+            zipcodeField.isEnabled = true
+        case .fullZip:
+            locationButton.isEnabled = true
+            orLabel.isHidden = true
+            buttonText.textColor = UIColor(named: "font_clickable")
+            buttonText.text = "Confirm location"
+            locationArrow.isHidden = true
+            zipcodeField.isEnabled = true
+        case .locating:
+            locationButton.isEnabled = false
+            buttonText.textColor = UIColor(named: "font_grey")
+            buttonText.text = "Locating..."
+            zipcodeField.isEnabled = false
+        }
+    }
+
     func setupLocationUpdates() {
+        toggleLayout(.locating)
         let authStatus = CLLocationManager.authorizationStatus()
 
         switch authStatus {
@@ -89,17 +178,6 @@ extension Onboard2ViewController: CLLocationManagerDelegate {
         print(location)
         locationManager.stopUpdatingLocation()
 
-        DefaultsManager.latitude = location.coordinate.latitude
-        DefaultsManager.longitude = location.coordinate.longitude
-        DefaultsManager.onboardingCompleted = true
-        DefaultsManager.distanceFilter = 100
-
-        if let context = managedObjectContext {
-            AWApiHelper.updateRegions(viewContext: context) {
-                // nothing needed to callback since this screeen is going away
-            }
-        }
-
-        performSegue(withIdentifier: Segue.onboardingCompleted.rawValue, sender: nil)
+        saveLocationAndSegue(location: location.coordinate)
     }
 }

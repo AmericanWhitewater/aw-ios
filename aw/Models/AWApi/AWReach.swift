@@ -72,22 +72,64 @@ struct AWReachInfo: Codable {
     }
 }
 
+struct AWReachGauge: Codable {
+    let gaugeID: Int
+    let gaugeReading: String?
+    let rangeComment: String?
+
+    enum CodingKeys: String, CodingKey {
+        case gaugeID = "gauge_id"
+        case gaugeReading = "gauge_reading"
+        case rangeComment = "range_comment"
+    }
+}
+
+struct AWRapid: Codable {
+    let name: String?
+    let description: String?
+    let rapidid: Int
+    let difficulty: String?
+    let rlat: String?
+    let rlon: String?
+}
+
 struct AWReachMain: Codable {
     let info: AWReachInfo
 }
 
-struct AWReachDetailSubResponse: Codable {
-    let main: AWReachMain
-
-    enum CodingKeys: String, CodingKey {
-        case main = "CRiverMainGadgetJSON_main"
-    }
-}
-
 struct AWReachDetailResponse: Codable {
-    let view: AWReachDetailSubResponse
+    let view: Sub
 
     enum CodingKeys: String, CodingKey {
         case view = "CContainerViewJSON_view"
+    }
+}
+
+extension AWReachDetailResponse {
+    struct Sub: Codable {
+        let main: Main
+        let rapids: RapidsView
+
+        enum CodingKeys: String, CodingKey {
+            case main = "CRiverMainGadgetJSON_main"
+            case rapids = "CRiverRapidsGadgetJSON_view-rapids"
+        }
+    }
+}
+
+extension AWReachDetailResponse.Sub {
+    struct RapidsView: Codable {
+        let rapids: [AWRapid]
+    }
+    struct Main: Codable {
+        let info: AWReachInfo
+        let gauges: [AWReachGauge]
+        //let guagesummary: GuageSummary
+    }
+}
+
+extension AWReachDetailResponse.Sub.Main {
+    struct GuageSummary: Codable {
+        let gauges: [String: AWReachGauge]
     }
 }

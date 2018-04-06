@@ -18,7 +18,7 @@ let riverURL = baseURL + "River/search/.json"
 struct AWApiHelper {
     typealias ReachCallback = ([AWReach]?) -> Void
     typealias UpdateCallback = () -> Void
-    typealias ReachDetailCallback = (AWReachMain) -> Void
+    typealias ReachDetailCallback = (AWReachDetailResponse.Sub.Main) -> Void
 
     static func fetchReachesByRegion(region: String, callback: @escaping ReachCallback) {
         let urlString = riverURL + "?state=\(region)"
@@ -165,9 +165,21 @@ struct AWApiHelper {
         let task = URLSession.shared.dataTask(with: url) { dataOptional, response, error in
             let decoder = JSONDecoder()
 
-            guard let data = dataOptional,
-                let detail = try? decoder.decode(AWReachDetailResponse.self, from: data) else {
-                    print("Unable to decode \(reachID)")
+            guard let data = dataOptional else {
+                print("Can't unwrap data optional from API")
+                return
+
+            }
+            do {
+                let detail = try decoder.decode(AWReachDetailResponse.self, from: data)
+                print(detail.view)
+                callback(detail.view.main)
+            } catch {
+                print("Unable to decode \(reachID): \(error)")
+            }
+
+            /*    let detail = try? decoder.decode(AWReachDetailResponse.self, from: data) else {
+                    print("Unable to decode \(reachID): \(error)")
                     if let data = dataOptional, let json = try? JSONSerialization.jsonObject(with: data, options: []) {
                         print("info:")
                         print(json)
@@ -176,8 +188,8 @@ struct AWApiHelper {
                     }
                     return
 
-            }
-            callback(detail.view.main)
+            }*/
+            //callback(detail.view.main)
         }
         task.resume()
     }
