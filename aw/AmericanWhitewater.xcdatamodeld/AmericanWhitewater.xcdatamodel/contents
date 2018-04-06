@@ -48,7 +48,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Reach" positionX="-54" positionY="-9" width="128" height="480"/>
         <element name="Article" positionX="-54" positionY="144" width="128" height="180"/>
+        <element name="Reach" positionX="-54" positionY="-9" width="128" height="480"/>
     </elements>
 </model>
