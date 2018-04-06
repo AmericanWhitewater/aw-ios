@@ -86,7 +86,7 @@ class RunDetailTableViewController: UITableViewController {
             }
             return 0
         case IndexPath(row: 1, section: 1): // Description
-            return expandDescription ? 40 : 168
+            return expandDescription ? UITableViewAutomaticDimension : 168
         case IndexPath(row: 0, section: 2):
             return 77
         default:
