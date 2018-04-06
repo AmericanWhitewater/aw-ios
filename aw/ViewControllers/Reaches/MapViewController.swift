@@ -17,6 +17,10 @@ class MapViewController: UIViewController, MOCViewControllerType {
 
     var fetchedResultsController: NSFetchedResultsController<Reach>?
     var predicates: [NSPredicate] = []
+    var difficulties: [Int]?
+    var regions: [String]?
+    var distance: Float?
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +30,11 @@ class MapViewController: UIViewController, MOCViewControllerType {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //updateFetchPredicates()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         updateFetchPredicates()
     }
 
@@ -48,8 +57,6 @@ extension MapViewController {
 
         fetchedResultsController = initializeFetchedResultController()
         fetchedResultsController?.delegate = self
-
-        updateFetchPredicates()
     }
 
     @objc func reachButtonTapped(sender: UIButton!) {
@@ -97,14 +104,22 @@ extension MapViewController {
     }
 
     func updateFetchPredicates() {
+        let difficulties = DefaultsManager.classFilter
+        let regions = DefaultsManager.regionsFilter
+        let distance = DefaultsManager.distanceFilter
+
+        guard difficulties != self.difficulties || regions != self.regions || distance != self.distance else { return }
+
+        self.difficulties = difficulties
+        self.regions = regions
+        self.distance = distance
+
         var combinedPredicates = predicates
 
-        let difficulties = DefaultsManager.classFilter
         if difficulties.count > 0 {
             combinedPredicates.append(difficultiesPredicate())
         }
 
-        let regions = DefaultsManager.regionsFilter
         if regions.count > 0 {
             combinedPredicates.append(regionsPredicate())
         }
@@ -131,6 +146,9 @@ extension MapViewController {
         // add the reaches in core data
         if let reaches = fetchedResultsController?.fetchedObjects {
             mapView.addAnnotations(reaches.map { $0.annotation })
+//            for reach in reaches {
+//                mapView.addAnnotation(reach.annotation)
+//            }
         }
     }
 }
