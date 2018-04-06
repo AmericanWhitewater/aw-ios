@@ -283,11 +283,12 @@ struct AWApiHelper {
                 let reaches = try context.fetch(request)
 
                 for reach in reaches {
-                    let coordinate = reach.coordinate
-                    let reachLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-                    let distance = reachLocation.distance(from: location)
-                    reach.distance = distance / 1609
+                    reach.distance = CLLocation(
+                        latitude: reach.coordinate.latitude,
+                        longitude: reach.coordinate.longitude
+                        ).distance(from: location) / 1609
                 }
+
                 do {
                     try context.save()
                     print("Saved distance updates in background context")
