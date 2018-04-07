@@ -36,4 +36,9 @@ extension Article {
         guard let abstractPhoto = abstractPhoto, let articleID = articleID  else { return nil }
         return "https://www.americanwhitewater.org/resources/images/abstract/\(articleID)-\(abstractPhoto).jpg"
     }
+
+    var url: URL? {
+        guard let articleID = articleID else { return nil }
+        return URL(string: "https://www.americanwhitewater.org/content/Article/view/articleid/\( articleID )/")
+    }
 }

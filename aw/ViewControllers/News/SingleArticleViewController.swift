@@ -29,6 +29,26 @@ class SingleArticleViewController: UIViewController {
 extension SingleArticleViewController {
     func initialize() {
         updateContent()
+
+        let shareIcon = UIBarButtonItem(
+            image: UIImage(named: "share"),
+            style: .plain,
+            target: self,
+            action: #selector(shareButtonTapped))
+
+        self.navigationItem.rightBarButtonItem = shareIcon
+    }
+
+    @objc func shareButtonTapped(_ sender: Any) {
+        guard let article = article,
+            let title = article.title,
+            let url = article.url else { return }
+        let activityController = UIActivityViewController(activityItems: [title, url], applicationActivities: nil)
+
+        if let sender = sender as? UIView {
+            activityController.popoverPresentationController?.sourceView = sender
+        }
+        present(activityController, animated: true, completion: nil)
     }
 
     func updateContent() {
