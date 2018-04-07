@@ -47,6 +47,9 @@ class FavoriteListTableViewController: RunListTableViewController {
                 header?.update()
             }
         }
+    }
 
+    override func searchText() -> String {
+        return "Search favorites"
     }
 }

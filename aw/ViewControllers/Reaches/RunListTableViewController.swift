@@ -80,6 +80,10 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
             }
         }
     }
+
+    func searchText() -> String {
+        return "Search runs"
+    }
 }
 
 // MARK: - RunListTableViewExtension
@@ -87,8 +91,6 @@ extension RunListTableViewController {
     func initialize() {
         tableView.delegate = self
         tableView.dataSource = self
-
-        
 
         tableView.register(UINib(
                 nibName: "RunHeaderTableViewCell",
@@ -105,21 +107,12 @@ extension RunListTableViewController {
 
     func setupSearchControl() {
         searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search runs"
-        searchController.searchBar.tintColor = .white
+        searchController.searchBar.placeholder = searchText()
         searchController.hidesNavigationBarDuringPresentation = false
-        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-            if let backgroundView = textField.subviews.first {
-                // set background color
-                backgroundView.backgroundColor = .white
 
-                // round corners
-                backgroundView.layer.cornerRadius = 10
-                backgroundView.clipsToBounds = true
-            }
-        }
-        navigationItem.searchController = searchController
+        navigationItem.titleView = searchController.searchBar
     }
 
     func dismissSearch() {
@@ -274,5 +267,13 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerCell") as? RunHeaderTableViewCell
         header?.favoriteTable = favorite
         return header
+    }
+}
+
+extension RunListTableViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchController.searchBar.text = ""
+        searchController.searchBar.showsCancelButton = false
+        updateFetchPredicates()
     }
 }
