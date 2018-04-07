@@ -87,6 +87,16 @@ class DefaultsManager {
         }
     }
 
+    private static let favoritesUpdatedKey = "favoritesUpdatedKey"
+    static var favoritesLastUpdated: Date? {
+        get {
+            return UserDefaults.standard.object(forKey: favoritesUpdatedKey) as? Date
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: favoritesUpdatedKey)
+        }
+    }
+
     private static let articlesUpdatedKey = "articlesUpdatedKey"
     static var articlesLastUpdated: Date? {
         get {

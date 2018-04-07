@@ -11,13 +11,22 @@ import UIKit
 class RunHeaderTableViewCell: UITableViewHeaderFooterView {
     @IBOutlet weak var updateTimeLabel: UILabel!
 
+    var favoriteTable: Bool = false {
+        didSet {
+            update()
+        }
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         update()
     }
 
     func update() {
-        if let date = DefaultsManager.lastUpdated {
+        if var date = DefaultsManager.lastUpdated {
+            if favoriteTable, let favoriteDate = DefaultsManager.favoritesLastUpdated {
+                date = favoriteDate > date ? favoriteDate : date
+            }
             let dateFormat = DateFormatter()
             dateFormat.dateStyle = .medium
             dateFormat.doesRelativeDateFormatting = true
@@ -25,7 +34,7 @@ class RunHeaderTableViewCell: UITableViewHeaderFooterView {
             let timeFormat = DateFormatter()
             timeFormat.dateFormat = "h:mm a"
 
-            updateTimeLabel.text = "Last Update \(dateFormat.string(from: date)) at \(timeFormat.string(from: date))"
+            updateTimeLabel.text = "\( favoriteTable ? "Favorites " : "" )Last Updated \(dateFormat.string(from: date)) at \(timeFormat.string(from: date))"
         } else {
             updateTimeLabel.text = "Update in progress"
         }

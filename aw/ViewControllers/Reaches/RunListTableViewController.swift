@@ -17,6 +17,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     var fetchedResultsController: NSFetchedResultsController<Reach>?
 
     var predicates: [NSPredicate] = []
+    var favorite: Bool = false
 
     let searchController = UISearchController(searchResultsController: nil)
 
@@ -62,6 +63,22 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         }
 
         return "No runs found. Have you checked which filters are applied?"
+    }
+
+    @objc func refreshReaches(sender: UIRefreshControl) {
+        let attributedTitle = sender.attributedTitle
+
+        let refreshingTitle = NSLocalizedString("Refreshing runs from AW", comment: "Refreshing Runs from AW")
+        sender.attributedTitle = NSAttributedString(string: refreshingTitle)
+
+        if let context = managedObjectContext {
+            AWApiHelper.updateRegions(viewContext: context) {
+                sender.endRefreshing()
+                sender.attributedTitle = attributedTitle
+                let header = self.tableView.headerView(forSection: 0) as? RunHeaderTableViewCell
+                header?.update()
+            }
+        }
     }
 }
 
@@ -115,22 +132,6 @@ extension RunListTableViewController {
         refreshControl.attributedTitle = NSAttributedString(string: title)
         refreshControl.addTarget(self, action: #selector(refreshReaches(sender:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
-    }
-
-    @objc private func refreshReaches(sender: UIRefreshControl) {
-        let attributedTitle = sender.attributedTitle
-
-        let refreshingTitle = NSLocalizedString("Refreshing runs from AW", comment: "Refreshing Runs from AW")
-        sender.attributedTitle = NSAttributedString(string: refreshingTitle)
-
-        if let context = managedObjectContext {
-            AWApiHelper.updateRegions(viewContext: context) {
-                sender.endRefreshing()
-                sender.attributedTitle = attributedTitle
-                let header = self.tableView.headerView(forSection: 0) as? RunHeaderTableViewCell
-                header?.update()
-            }
-        }
     }
 
     func updateFetchPredicates() {
@@ -271,7 +272,7 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerCell") as? RunHeaderTableViewCell
-
+        header?.favoriteTable = favorite
         return header
     }
 }

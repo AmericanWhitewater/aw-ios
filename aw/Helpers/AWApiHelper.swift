@@ -36,6 +36,22 @@ struct AWApiHelper {
         task.resume()
     }
 
+    static func fetchReachesByIds(reachIds: [String], callback: @escaping ReachCallback) {
+        let urlString = baseURL + "River/list/list/\( reachIds.joined(separator: ":") )/.json"
+
+        guard let url = URL(string: urlString) else { return }
+
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            print("Data retrieved from AW API for \( reachIds ), decoding reaches")
+
+            let decoder = JSONDecoder()
+            guard let data = data, let reaches = try? decoder.decode([AWReach].self, from: data) else { return }
+
+            callback(reaches)
+        }
+        task.resume()
+    }
+
     static func createOrUpdateReaches(newReaches: [AWReach], context: NSManagedObjectContext) {
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
@@ -76,6 +92,7 @@ struct AWApiHelper {
 
         if let state = newReach.state {
             region = Region.apiDict[state]
+            reach.state = region.title
         }
 
         reach.section = newReach.section
@@ -89,7 +106,7 @@ struct AWApiHelper {
         reach.unit = newReach.unit
         reach.takeOutLat = newReach.takeOutLat
         reach.takeOutLon = newReach.takeOutLon
-        reach.state = region.title
+
         reach.delta = newReach.delta
 
         if let distance = newReach.distanceFrom(
@@ -154,6 +171,46 @@ struct AWApiHelper {
                 }
             }
             DefaultsManager.lastUpdated = Date()
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            callback()
+        }
+    }
+
+    static func updateReaches(reachIds: [String], viewContext: NSManagedObjectContext, callback: @escaping UpdateCallback) {
+        let dispatchGroup = DispatchGroup()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        dispatchGroup.enter()
+        fetchReachesByIds(reachIds: reachIds) { (reaches) in
+            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+            context.parent = viewContext
+
+            context.perform {
+                print("AW reaches \(reachIds) decoded")
+                if let reaches = reaches {
+                    self.createOrUpdateReaches(newReaches: reaches, context: context)
+                }
+                do {
+                    try context.save()
+                } catch {
+                    let error = error as NSError
+                    print("Unable to save background context \(error) \(error.userInfo)")
+                }
+                dispatchGroup.leave()
+            }
+        }
+        dispatchGroup.notify(queue: .main) {
+            print("Update reaches \(reachIds) complete")
+            viewContext.perform {
+                viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                do {
+                    try viewContext.save()
+                    print("saved view context")
+                } catch {
+                    let error = error as NSError
+                    print("Unable to save view context \(error) \(error.userInfo)")
+                }
+            }
+            DefaultsManager.favoritesLastUpdated = Date()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             callback()
         }
