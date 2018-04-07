@@ -36,11 +36,15 @@ class RunDetailTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let reach = reach,
-            let moc = managedObjectContext,
+            let context = managedObjectContext,
             reach.detailUpdated == nil {
+            drawView()
             print("Updating reach detail")
-            AWApiHelper.updateReachDetail(reachID: String(reach.id), viewContext: moc) {
+            AWApiHelper.updateReachDetail(reachID: String(reach.id), viewContext: context) {
                 print("Updated reach details")
+                self.drawView()
+            }
+            AWApiHelper.updateReaches(reachIds: [String(reach.id)], viewContext: context) {
                 self.drawView()
             }
         } else {
@@ -121,17 +125,20 @@ extension RunDetailTableViewController {
     }
 
     @objc func refreshReach(sender: UIRefreshControl) {
+        guard let reach = reach, let context = managedObjectContext else { return }
+
         let attributedTitle = sender.attributedTitle
         let refreshingTitle = NSLocalizedString("Refreshing run details from AW",
             comment: "Refreshing run details from AW")
         sender.attributedTitle = NSAttributedString(string: refreshingTitle)
 
-        if let reach = reach, let context = managedObjectContext {
-            AWApiHelper.updateReachDetail(reachID: String(reach.id), viewContext: context) {
-                sender.endRefreshing()
-                sender.attributedTitle = attributedTitle
-                self.drawView()
-            }
+        AWApiHelper.updateReachDetail(reachID: String(reach.id), viewContext: context) {
+            sender.endRefreshing()
+            sender.attributedTitle = attributedTitle
+            self.drawView()
+        }
+        AWApiHelper.updateReaches(reachIds: [String(reach.id)], viewContext: context) {
+            self.drawView()
         }
     }
 

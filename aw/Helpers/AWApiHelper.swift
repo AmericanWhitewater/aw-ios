@@ -210,7 +210,6 @@ struct AWApiHelper {
                     print("Unable to save view context \(error) \(error.userInfo)")
                 }
             }
-            DefaultsManager.favoritesLastUpdated = Date()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             callback()
         }
