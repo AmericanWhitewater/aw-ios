@@ -65,6 +65,18 @@ extension Reach {
             return nil
         }
     }
+
+    var runnable: String {
+        if let rcString = rc {
+            return Runnable.fromRc(rcString: rcString)
+        } else {
+            return ""
+        }
+    }
+
+    var url: URL? {
+        return URL(string: "https://www.americanwhitewater.org/content/River/detail/id/\( id )/")
+    }
 }
 
 // MARK: - MKAnnotation

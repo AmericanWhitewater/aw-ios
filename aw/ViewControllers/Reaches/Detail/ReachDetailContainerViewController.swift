@@ -27,7 +27,7 @@ class ReachDetailContainerViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupFavoriteIcon()
+        setupRightItems()
     }
 }
 
@@ -51,12 +51,20 @@ extension ReachDetailContainerViewController {
         }
     }
 
-    func setupFavoriteIcon() {
+    func setupRightItems() {
         guard let reach = reach else { return }
         let favoriteButton = UIBarButtonItem(
             image: reach.favorite ? UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite"),
-            style: .plain, target: self, action: #selector(tapFavoriteIcon))
-        self.navigationItem.rightBarButtonItem = favoriteButton
+            style: .plain,
+            target: self,
+            action: #selector(tapFavoriteIcon))
+        let shareButton = UIBarButtonItem(
+            image: UIImage(named: "share"),
+            style: .plain,
+            target: self,
+            action: #selector(tapShareIcon))
+
+        self.navigationItem.rightBarButtonItems = [shareButton, favoriteButton]
     }
 
     func setupSegmentedControl() {
@@ -90,8 +98,33 @@ extension ReachDetailContainerViewController {
 
         context.persist {
             reach.favorite = !reach.favorite
-            self.setupFavoriteIcon()
+            self.setupRightItems()
         }
+    }
+
+    @objc func tapShareIcon(_ sender: Any) {
+        share(sender)
+    }
+
+    func share(_ sender: Any?) {
+        guard let reach = reach,
+            let section = reach.section,
+            let name = reach.name,
+            let url = reach.url else { return }
+
+        let title: String
+        if reach.runnable.count > 0 {
+            title = "\( section) of \( name ) is \( reach.runnable )"
+        } else {
+            title = "\( section ) of \( name )"
+        }
+        let activityController = UIActivityViewController(activityItems: [title, url], applicationActivities: nil)
+        if let sender = sender as? UIView {
+            activityController.popoverPresentationController?.sourceView = sender
+        }
+
+
+        present(activityController, animated: true, completion: nil)
     }
 }
 

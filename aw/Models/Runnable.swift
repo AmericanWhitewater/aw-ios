@@ -8,43 +8,6 @@
 
 import Foundation
 
-/*
- "11036"    "" - unknown
-
- "196"    "H0" - "Above Recommended" - "Too high"
- "1373"    "H1"
- "3461"    "H2"
- "2348"    "H3"
- "299"    "H4"
- "188"    "H5"
- "1116"    "H6"
- "2391"    "H7"
- "5244"    "H8"
- "3807"    "H9"
-
- "61"    "L0" - "Below Recommended" - "Too low"
- "1256"    "L1"
- "10185"    "L2"
- "3063"    "L3"
- "1403"    "L4"
- "3954"    "L5"
- "6650"    "L6"
- "1157"    "L7"
- "3468"    "L8"
- "1703"    "L9"
-
- "11037"    "R0" - "Lower Runnable" - "running"
- "697"    "R1"
- "3801"    "R2"
- "3865"    "R3" - "Runnable"
- "2433"    "R4"
- "3754"    "R5"
- "2417"    "R6"
- "2111"    "R7" - "Upper Runnable"
- "91"    "R8"
- "3436"    "R9"
- */
-
 struct Runnable {
     static func fromRc(rcString: String) -> String {
         switch rcString {

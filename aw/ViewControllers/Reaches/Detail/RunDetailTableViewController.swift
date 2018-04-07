@@ -194,14 +194,32 @@ extension RunDetailTableViewController {
                 imageView.image = UIImage(data: data)
             }
         }
-        if let rcString = reach.rc {
-            runnabilityLabel.text = Runnable.fromRc(rcString: rcString)
-            runnabilityLabel.textColor = reach.color
-        } else {
-            runnabilityLabel.text = ""
-        }
+        runnabilityLabel.text = reach.runnable
+        runnabilityLabel.textColor = reach.color
+
         self.tableView.beginUpdates()
         self.tableView.endUpdates()
+    }
+
+    func share(_ sender: UIView?) {
+        guard let reach = reach,
+            let section = reach.section,
+            let name = reach.name,
+            let url = reach.url else { return }
+
+        let title: String
+        if reach.runnable.count > 0 {
+            title = "\( section) of \( name ) is \( reach.runnable )"
+        } else {
+            title = "\( section ) of \( name )"
+        }
+        let activityController = UIActivityViewController(activityItems: [title, url], applicationActivities: nil)
+        if let sender = sender {
+            activityController.popoverPresentationController?.sourceView = sender
+        }
+
+
+        present(activityController, animated: true, completion: nil)
     }
 }
 
