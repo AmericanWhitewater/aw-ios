@@ -74,10 +74,16 @@ class RunDetailTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath == IndexPath(row: 1, section: 1) {
+        switch indexPath {
+        case IndexPath(row: 1, section: 1):
             expandDescription = !expandDescription
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
+        case IndexPath(row: 2, section: 3):
+            let cell = tableView.cellForRow(at: indexPath)
+            share(cell)
+        default:
+            break
         }
     }
 
@@ -201,7 +207,7 @@ extension RunDetailTableViewController {
         self.tableView.endUpdates()
     }
 
-    func share(_ sender: UIView?) {
+    func share(_ sender: Any?) {
         guard let reach = reach,
             let section = reach.section,
             let name = reach.name,
@@ -214,10 +220,9 @@ extension RunDetailTableViewController {
             title = "\( section ) of \( name )"
         }
         let activityController = UIActivityViewController(activityItems: [title, url], applicationActivities: nil)
-        if let sender = sender {
+        if let sender = sender as? UIView {
             activityController.popoverPresentationController?.sourceView = sender
         }
-
 
         present(activityController, animated: true, completion: nil)
     }
