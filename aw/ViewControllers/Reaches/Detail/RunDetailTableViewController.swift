@@ -79,6 +79,9 @@ class RunDetailTableViewController: UITableViewController {
             expandDescription = !expandDescription
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
+        case IndexPath(row: 1, section: 3):
+            guard let reach = reach, let url = reach.url else { return }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         case IndexPath(row: 2, section: 3):
             let cell = tableView.cellForRow(at: indexPath)
             share(cell)
