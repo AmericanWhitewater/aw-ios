@@ -106,7 +106,7 @@ struct AWApiHelper {
         reach.unit = newReach.unit
         reach.takeOutLat = newReach.takeOutLat
         reach.takeOutLon = newReach.takeOutLon
-
+        reach.rc = newReach.rc
         reach.delta = newReach.delta
 
         if let distance = newReach.distanceFrom(

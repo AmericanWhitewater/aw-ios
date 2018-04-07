@@ -34,6 +34,7 @@
         <attribute name="photoId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="putInLat" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="putInLon" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="section" attributeType="String" syncable="YES"/>
         <attribute name="shuttleDetails" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
@@ -49,6 +50,6 @@
     </entity>
     <elements>
         <element name="Article" positionX="-54" positionY="144" width="128" height="180"/>
-        <element name="Reach" positionX="-54" positionY="-9" width="128" height="480"/>
+        <element name="Reach" positionX="-54" positionY="-9" width="128" height="495"/>
     </elements>
 </model>

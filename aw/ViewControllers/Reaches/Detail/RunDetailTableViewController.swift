@@ -20,6 +20,7 @@ class RunDetailTableViewController: UITableViewController {
     @IBOutlet weak var detailUpdated: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var runnabilityLabel: UILabel!
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -193,15 +194,23 @@ extension RunDetailTableViewController {
                 imageView.image = UIImage(data: data)
             }
         }
+        if let rcString = reach.rc {
+            runnabilityLabel.text = Runnable.fromRc(rcString: rcString)
+            runnabilityLabel.textColor = reach.color
+        } else {
+            runnabilityLabel.text = ""
+        }
         self.tableView.beginUpdates()
         self.tableView.endUpdates()
     }
 }
 
+// MARK: - RunDetailViewControllerType
 extension RunDetailTableViewController: RunDetailViewControllerType {
 
 }
 
+// MARK: - MOCViewControllerType
 extension RunDetailTableViewController: MOCViewControllerType {
 
 }

@@ -67,6 +67,7 @@ extension Reach {
     }
 }
 
+// MARK: - MKAnnotation
 extension Reach: MKAnnotation {
     public var title: String? {
         if let difficulty = difficulty, let name = name {

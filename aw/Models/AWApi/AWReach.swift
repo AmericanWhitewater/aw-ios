@@ -25,10 +25,12 @@ struct AWReach: Codable {
     let takeOutLon: String?
     let state: String?
     let delta: String?
+    //swiftlint:disable:next identifier_name
+    let rc: String?
 
     enum CodingKeys: String, CodingKey {
         //swiftlint:disable:next identifier_name
-        case id, name, section, unit, state, delta
+        case id, name, section, unit, state, delta, rc
         case difficulty = "class"
         case condition = "cond"
         case putInLat = "plat"
