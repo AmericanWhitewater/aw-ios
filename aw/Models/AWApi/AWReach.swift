@@ -1,11 +1,3 @@
-//
-//  AWApiStructures.swift
-//  aw
-//
-//  Created by Alex Kerney on 4/1/18.
-//  Copyright © 2018 Alex Kerney. All rights reserved.
-//
-
 import MapKit
 import Foundation
 import UIKit
@@ -35,7 +27,7 @@ struct AWReach: Codable {
         case condition = "cond"
         case putInLat = "plat"
         case putInLon = "plon"
-        case lastGageReading = "last_gauge_reading" // "reading_formatted"
+        case lastGageReading = "last_gauge_reading"
         case takeOutLat = "tlat"
         case takeOutLon = "tlon"
     }
@@ -54,15 +46,15 @@ struct AWReach: Codable {
 
 struct AWReachInfo: Codable {
     //swiftlint:disable:next identifier_name
-    let id: Int //
-    let abstract: String? //
-    let avgGradient: Int16? //
-    let photoId: Int32? //
-    let length: String? //
-    let maxGradient: Int16? //
-    let description: String? //
-    let shuttleDetails: String? //
-    let zipcode: String? //
+    let id: Int
+    let abstract: String?
+    let avgGradient: Int16?
+    let photoId: Int32?
+    let length: String?
+    let maxGradient: Int16?
+    let description: String?
+    let shuttleDetails: String?
+    let zipcode: String?
 
     enum CodingKeys: String, CodingKey {
         //swiftlint:disable:next identifier_name
@@ -74,14 +66,14 @@ struct AWReachInfo: Codable {
     }
 }
 
-struct AWReachGauge: Codable {
-    let gaugeID: Int
-    let gaugeReading: String?
+struct AWReachGage: Codable {
+    let gageID: Int
+    let gageReading: String?
     let rangeComment: String?
 
     enum CodingKeys: String, CodingKey {
-        case gaugeID = "gauge_id"
-        case gaugeReading = "gauge_reading"
+        case gageID = "gauge_id"
+        case gageReading = "gauge_reading"
         case rangeComment = "range_comment"
     }
 }
@@ -123,15 +115,26 @@ extension AWReachDetailResponse.Sub {
     struct RapidsView: Codable {
         let rapids: [AWRapid]
     }
+
     struct Main: Codable {
         let info: AWReachInfo
-        let gauges: [AWReachGauge]
-        //let guagesummary: GuageSummary
+        let gages: [AWReachGage]
+        //let gagesummary: GageSummary
+
+        enum CodingKeys: String, CodingKey {
+            case info
+            case gages = "gauges"
+            // case gageSummary = "guagesummary"
+        }
     }
 }
 
 extension AWReachDetailResponse.Sub.Main {
-    struct GuageSummary: Codable {
-        let gauges: [String: AWReachGauge]
+    struct GageSummary: Codable {
+        let gages: [String: AWReachGage]
+
+        enum CodingKeys: String, CodingKey {
+            case gages = "gauges"
+        }
     }
 }

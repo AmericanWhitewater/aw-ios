@@ -1,22 +1,14 @@
-//
-//  Reach.swift
-//  aw
-//
-//  Created by Alex Kerney on 3/24/18.
-//  Copyright © 2018 Alex Kerney. All rights reserved.
-//
-
 import Foundation
 import MapKit
 
 extension Reach {
 
     var readingFormatted: String {
-        guard let lastGuageReading = lastGageReading, let unit = unit else {
+        guard let lastGageReading = lastGageReading, let unit = unit else {
             //print(self.lastGageReading, self.unit)
             return "n/a"
         }
-        return "\(lastGuageReading) \(unit)"
+        return "\(lastGageReading) \(unit)"
     }
 
     var color: UIColor {
