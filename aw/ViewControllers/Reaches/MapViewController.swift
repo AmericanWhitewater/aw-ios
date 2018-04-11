@@ -133,9 +133,6 @@ extension MapViewController {
         // add the reaches in core data
         if let reaches = fetchedResultsController?.fetchedObjects {
             mapView.addAnnotations(reaches)
-//            for reach in reaches {
-//                mapView.addAnnotation(reach.annotation)
-//            }
         }
     }
 }

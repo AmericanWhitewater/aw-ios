@@ -17,6 +17,16 @@ class ReachDetailMapViewController: UIViewController {
         super.viewWillAppear(animated)
         setupMap()
     }
+
+    @objc func showDirections(sender: UIButton) {
+        guard let annotation = mapView.selectedAnnotations.first as? RunAnnotation,
+            let reach = reach
+            else { return }
+
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: annotation.coordinate))
+        mapItem.name = "\(reach.name ?? "") \(annotation.title ?? "")"
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+    }
 }
 
 // MARK: - Extension
@@ -33,7 +43,12 @@ extension ReachDetailMapViewController {
                 let latitude = Double(lat),
                 let lon = reach.putInLon,
                 let longitude = Double(lon) {
-                let annotation = RunAnnotation(latitude: latitude, longitude: longitude, title: "Put In")
+                let annotation = RunAnnotation(
+                    latitude: latitude,
+                    longitude: longitude,
+                    title: "Put In",
+                    subtitle: reach.sectionCleanedHTML,
+                    type: .putIn)
                 mapView.addAnnotation(annotation)
             }
 
@@ -41,7 +56,12 @@ extension ReachDetailMapViewController {
                 let latitude = Double(lat),
                 let lon = reach.takeOutLon,
                 let longitude = Double(lon) {
-                let annotation = RunAnnotation(latitude: latitude, longitude: longitude, title: "Take Out")
+                let annotation = RunAnnotation(
+                    latitude: latitude,
+                    longitude: longitude,
+                    title: "Take Out",
+                    subtitle: reach.sectionCleanedHTML,
+                    type: .takeOut)
                 mapView.addAnnotation(annotation)
             }
             mapView.showAnnotations(mapView.annotations, animated: true)
@@ -60,5 +80,26 @@ extension ReachDetailMapViewController: RunDetailViewControllerType {
 
 // MARK: - MapViewDelegate
 extension ReachDetailMapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let point = annotation as? RunAnnotation {
+            var view = mapView.dequeueReusableAnnotationView(withIdentifier: "point")
+            if view == nil {
+                view = MKAnnotationView(annotation: nil, reuseIdentifier: "point")
+            }
+            view?.canShowCallout = true
+            view?.annotation = point
+            if let icon = point.icon {
+                view?.image = icon
+            }
+
+            let button = UIButton(type: .detailDisclosure)
+            button.addTarget(self, action: #selector(showDirections), for: .touchUpInside)
+            view?.rightCalloutAccessoryView = button
+
+            return view
+        } else {
+            return nil
+        }
+    }
 
 }
