@@ -53,11 +53,11 @@ class RunDetailTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0, 2:
-            return 1
-        case 1:
+        case 0, 2: // Run header section with name, section, flows, and section with difficulty, length, and gradient
+            return 1 // has one row
+        case 1: // description and image section is made up of two rows
             return 2
-        case 3:
+        case 3: // gage info, web link, and share link section has three rows
             return 3
         default:
             return 0
@@ -69,8 +69,7 @@ class RunDetailTableViewController: UITableViewController {
         switch indexPath {
         case IndexPath(row: 1, section: 1):
             expandDescription = !expandDescription
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
+            self.tableView.reloadRows(at: [indexPath], with: .none)
         case IndexPath(row: 1, section: 3):
             guard let reach = reach, let url = reach.url else { return }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -198,8 +197,7 @@ extension RunDetailTableViewController {
         runnabilityLabel.text = reach.runnable
         runnabilityLabel.textColor = reach.color
 
-        self.tableView.beginUpdates()
-        self.tableView.endUpdates()
+        self.tableView.reloadData()
     }
 
     func share(_ sender: Any?) {

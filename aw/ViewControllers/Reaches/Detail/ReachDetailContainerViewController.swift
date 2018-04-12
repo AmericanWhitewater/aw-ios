@@ -19,7 +19,7 @@ class ReachDetailContainerViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupRightItems()
+        setupRightNavBarButtons()
     }
 }
 
@@ -43,7 +43,7 @@ extension ReachDetailContainerViewController {
         }
     }
 
-    func setupRightItems() {
+    func setupRightNavBarButtons() {
         guard let reach = reach else { return }
         let favoriteButton = UIBarButtonItem(
             image: reach.favorite ? UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite"),
@@ -90,7 +90,7 @@ extension ReachDetailContainerViewController {
 
         context.persist {
             reach.favorite = !reach.favorite
-            self.setupRightItems()
+            self.setupRightNavBarButtons()
         }
     }
 
