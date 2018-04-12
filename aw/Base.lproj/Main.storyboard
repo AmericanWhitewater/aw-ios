@@ -582,10 +582,10 @@
             </objects>
             <point key="canvasLocation" x="2868" y="1825"/>
         </scene>
-        <!--Onboard1-->
+        <!--Splash-->
         <scene sceneID="yWA-yb-TNG">
             <objects>
-                <viewController title="Onboard1" id="yab-LZ-egI" customClass="Onboard1ViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Splash" id="yab-LZ-egI" customClass="SplashViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vHq-N0-Gqq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -614,10 +614,10 @@
             </objects>
             <point key="canvasLocation" x="999" y="-1093"/>
         </scene>
-        <!--Onboard2-->
+        <!--Onboard Location-->
         <scene sceneID="9i3-kQ-lZu">
             <objects>
-                <viewController title="Onboard2" id="LNl-Ac-cP5" customClass="Onboard2ViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Onboard Location" id="LNl-Ac-cP5" customClass="OnboardLocationViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XGd-dn-ldf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

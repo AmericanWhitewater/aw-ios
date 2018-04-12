@@ -31,7 +31,7 @@
 		385E59C92063047B00A68EC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 385E59C82063047B00A68EC9 /* Assets.xcassets */; };
 		385E59CC2063047B00A68EC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 385E59CA2063047B00A68EC9 /* LaunchScreen.storyboard */; };
 		385E59D52063073900A68EC9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 385E59D42063073900A68EC9 /* MapKit.framework */; };
-		3864857D206BC355009B360F /* Onboard2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3864857C206BC355009B360F /* Onboard2ViewController.swift */; };
+		3864857D206BC355009B360F /* OnboardLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3864857C206BC355009B360F /* OnboardLocationViewController.swift */; };
 		3898B4F52070586000B49B68 /* RunHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3898B4F32070586000B49B68 /* RunHeaderTableViewCell.swift */; };
 		3898B4F62070586000B49B68 /* RunHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3898B4F42070586000B49B68 /* RunHeaderTableViewCell.xib */; };
 		38A6C8D92066759A00B5BA29 /* RunListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8D82066759A00B5BA29 /* RunListTableViewController.swift */; };
@@ -42,7 +42,7 @@
 		38A6C8ED2066E6EC00B5BA29 /* AmericanWhitewater.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8EB2066E6EC00B5BA29 /* AmericanWhitewater.xcdatamodeld */; };
 		38A6C8EF2067074700B5BA29 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8EE2067074700B5BA29 /* Reach.swift */; };
 		38A6C8F120670AEF00B5BA29 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8F020670AEF00B5BA29 /* MapViewController.swift */; };
-		38A6C8F42067189300B5BA29 /* Onboard1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8F32067189300B5BA29 /* Onboard1ViewController.swift */; };
+		38A6C8F42067189300B5BA29 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8F32067189300B5BA29 /* SplashViewController.swift */; };
 		38A98F5E2067CAF8009853E1 /* FavoriteListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F5D2067CAF8009853E1 /* FavoriteListTableViewController.swift */; };
 		38A98F602067E32D009853E1 /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F5F2067E32D009853E1 /* DefaultsManager.swift */; };
 		38A98F622067E6E7009853E1 /* AboutAWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F612067E6E7009853E1 /* AboutAWViewController.swift */; };
@@ -92,7 +92,7 @@
 		385E59CB2063047B00A68EC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		385E59CD2063047B00A68EC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		385E59D42063073900A68EC9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		3864857C206BC355009B360F /* Onboard2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboard2ViewController.swift; sourceTree = "<group>"; };
+		3864857C206BC355009B360F /* OnboardLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardLocationViewController.swift; sourceTree = "<group>"; };
 		3898B4F32070586000B49B68 /* RunHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		3898B4F42070586000B49B68 /* RunHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RunHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		38A6C8D82066759A00B5BA29 /* RunListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunListTableViewController.swift; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 		38A6C8EC2066E6EC00B5BA29 /* AmericanWhitewater.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AmericanWhitewater.xcdatamodel; sourceTree = "<group>"; };
 		38A6C8EE2067074700B5BA29 /* Reach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
 		38A6C8F020670AEF00B5BA29 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		38A6C8F32067189300B5BA29 /* Onboard1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboard1ViewController.swift; sourceTree = "<group>"; };
+		38A6C8F32067189300B5BA29 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		38A98F5D2067CAF8009853E1 /* FavoriteListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListTableViewController.swift; sourceTree = "<group>"; };
 		38A98F5F2067E32D009853E1 /* DefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsManager.swift; sourceTree = "<group>"; };
 		38A98F612067E6E7009853E1 /* AboutAWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAWViewController.swift; sourceTree = "<group>"; };
@@ -241,8 +241,8 @@
 		38A6C8F22067187900B5BA29 /* Onboard */ = {
 			isa = PBXGroup;
 			children = (
-				38A6C8F32067189300B5BA29 /* Onboard1ViewController.swift */,
-				3864857C206BC355009B360F /* Onboard2ViewController.swift */,
+				38A6C8F32067189300B5BA29 /* SplashViewController.swift */,
+				3864857C206BC355009B360F /* OnboardLocationViewController.swift */,
 			);
 			path = Onboard;
 			sourceTree = "<group>";
@@ -476,8 +476,8 @@
 				38A6C8DB206677EC00B5BA29 /* RunListTableViewCell.swift in Sources */,
 				38A98F7B2067ED4D009853E1 /* AboutAWFundingViewController.swift in Sources */,
 				38A6C8E82066882300B5BA29 /* NSPersistentContainer.swift in Sources */,
-				3864857D206BC355009B360F /* Onboard2ViewController.swift in Sources */,
-				38A6C8F42067189300B5BA29 /* Onboard1ViewController.swift in Sources */,
+				3864857D206BC355009B360F /* OnboardLocationViewController.swift in Sources */,
+				38A6C8F42067189300B5BA29 /* SplashViewController.swift in Sources */,
 				38EBD1CE2070785600D7B1C1 /* NewsTableViewController.swift in Sources */,
 				381ED39B206FBA3B00B03F13 /* ReachDetailContainerViewController.swift in Sources */,
 				381ED3A2206FC7AB00B03F13 /* RunAnnotation.swift in Sources */,

@@ -2,7 +2,7 @@ import CoreData
 import CoreLocation
 import UIKit
 
-class Onboard2ViewController: UIViewController, MOCViewControllerType {
+class OnboardLocationViewController: UIViewController, MOCViewControllerType {
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var buttonText: UILabel!
     @IBOutlet weak var zipcodeField: UITextField!
@@ -53,7 +53,7 @@ class Onboard2ViewController: UIViewController, MOCViewControllerType {
 }
 
 // MARK: - Extension
-extension Onboard2ViewController {
+extension OnboardLocationViewController {
     func initialize() {
         locationManager.delegate = self
         
@@ -155,7 +155,7 @@ extension Onboard2ViewController {
 }
 
 // MARK: - CLLocationManagerDelegate
-extension Onboard2ViewController: CLLocationManagerDelegate {
+extension OnboardLocationViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
             // allow location updates

@@ -1,7 +1,7 @@
 import CoreData
 import UIKit
 
-class Onboard1ViewController: UIViewController, MOCViewControllerType {
+class SplashViewController: UIViewController, MOCViewControllerType {
 
     var managedObjectContext: NSManagedObjectContext?
 
