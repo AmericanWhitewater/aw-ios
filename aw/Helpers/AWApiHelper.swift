@@ -100,6 +100,8 @@ struct AWApiHelper {
         reach.takeOutLon = newReach.takeOutLon
         reach.rc = newReach.rc
         reach.delta = newReach.delta
+        reach.gageId = Int32(newReach.gageId ?? 0)
+        reach.gageMetric = Int16(newReach.gageMetric ?? 0)
 
         if let distance = newReach.distanceFrom(
             location: CLLocation(
