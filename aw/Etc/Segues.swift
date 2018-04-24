@@ -9,4 +9,5 @@ enum Segue: String {
     case articleDetail
     case gageDetail
     case reachDetailEmbed, reachMapEmbed
+    case gageToRunDetail
 }

@@ -27,6 +27,7 @@ class ReachDetailContainerViewController: UIViewController {
         case Segue.gageDetail.rawValue:
             guard let gageVC = segue.destination as? GageViewController else { return }
             gageVC.sourceReach = reach
+            injectContextAndContainerToChildVC(segue: segue)
         case Segue.reachDetailEmbed.rawValue, Segue.reachMapEmbed.rawValue:
             break
         default:
