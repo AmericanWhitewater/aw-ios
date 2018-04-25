@@ -21,6 +21,10 @@ class MoreTableViewController: UITableViewController {
         case IndexPath(row: 2, section: 0): // Rate this App
             break
         case IndexPath(row: 3, section: 0): // Feedback
+            if let url = URL(string: "mailto://greg@americanwhitewater.org") {
+                UIApplication.shared.open(url)
+            }
+            
             break
         case IndexPath(row: 4, section: 0): // Donate
             UIApplication.shared.open(
