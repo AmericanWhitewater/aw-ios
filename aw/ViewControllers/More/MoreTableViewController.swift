@@ -20,22 +20,13 @@ class MoreTableViewController: UITableViewController {
         switch indexPath {
         case IndexPath(row: 2, section: 0): // Rate this App
             let appID = "" //TODO
-            let urlStr = "itms-apps://itunes.apple.com/app/viewContentsUserReviews?id=\(appID)" // Open App Review Tab
             
-            
-            if let url = URL(string: urlStr), UIApplication.shared.canOpenURL(url) {
-                if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                } else {
-                    UIApplication.shared.openURL(url)
-                }
-            }
+            // Open App Review Tab
+            openUrl(url: "itms-apps://itunes.apple.com/app/viewContentsUserReviews?id=\(appID)")
             
             break
         case IndexPath(row: 3, section: 0): // Feedback
-            if let url = URL(string: "mailto://greg@americanwhitewater.org") {
-                UIApplication.shared.open(url)
-            }
+            openUrl(url: "mailto://greg@americanwhitewater.org")
             
             break
         case IndexPath(row: 4, section: 0): // Donate
@@ -48,6 +39,16 @@ class MoreTableViewController: UITableViewController {
             }
         default:
             break
+        }
+    }
+    
+    func openUrl(url: String) {
+        if let url = URL(string: url), UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
         }
     }
 }
