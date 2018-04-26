@@ -25,6 +25,8 @@ class GageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        drawLoading()
+
         tableView.delegate = self
         tableView.dataSource = self
 
@@ -65,6 +67,13 @@ class GageViewController: UIViewController {
 }
 
 extension GageViewController {
+    func drawLoading() {
+        nameLabel.text = "Loading gage details"
+        readingLabel.text = ""
+        unitsLabel.text = ""
+        updateTimeLabel.text = ""
+    }
+
     func draw() {
         guard let gageDetail = gageDetail,
             let reach = sourceReach,
