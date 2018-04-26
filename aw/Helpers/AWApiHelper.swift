@@ -11,6 +11,7 @@ struct AWApiHelper {
     typealias ReachCallback = ([AWReach]?) -> Void
     typealias UpdateCallback = () -> Void
     typealias ReachDetailCallback = (AWReachDetailResponse.Sub.Main) -> Void
+    typealias GageDetailCallback = (AWGageResponse) -> Void
 
     static func fetchReachesByRegion(region: String, callback: @escaping ReachCallback) {
         let urlString = riverURL + "?state=\(region)"
@@ -100,6 +101,8 @@ struct AWApiHelper {
         reach.takeOutLon = newReach.takeOutLon
         reach.rc = newReach.rc
         reach.delta = newReach.delta
+        reach.gageId = Int32(newReach.gageId ?? 0)
+        reach.gageMetric = Int16(newReach.gageMetric ?? 0)
 
         if let distance = newReach.distanceFrom(
             location: CLLocation(
@@ -225,19 +228,28 @@ struct AWApiHelper {
             } catch {
                 print("Unable to decode \(reachID): \(error)")
             }
+        }
+        task.resume()
+    }
 
-            /*    let detail = try? decoder.decode(AWReachDetailResponse.self, from: data) else {
-                    print("Unable to decode \(reachID): \(error)")
-                    if let data = dataOptional, let json = try? JSONSerialization.jsonObject(with: data, options: []) {
-                        print("info:")
-                        print(json)
-                    } else {
-                        print("JSONSerilization can't unwrap it")
-                    }
-                    return
+    static func fetchGageDetail(gageId: Int, callback: @escaping GageDetailCallback) {
+        guard gageId != 0,
+            let url = URL(string: "https://www.americanwhitewater.org/content/Gauge2/detail/id/\(gageId)/.json")
+            else { return }
 
-            }*/
-            //callback(detail.view.main)
+        let task = URLSession.shared.dataTask(with: url) { dataOptional, response, error in
+            let decoder = JSONDecoder()
+
+            guard let data = dataOptional else {
+                print("Can't unwrap data from API for \(gageId)")
+                return
+            }
+            do {
+                let gageDetail = try decoder.decode(AWGageResponse.self, from: data)
+                callback(gageDetail)
+            } catch {
+                print("Unable to decode \(gageId): \(error)")
+            }
         }
         task.resume()
     }

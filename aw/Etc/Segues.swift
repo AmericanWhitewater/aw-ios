@@ -7,4 +7,7 @@ enum Segue: String {
     case alreadyOnboarded
     case onboardingCompleted
     case articleDetail
+    case gageDetail
+    case reachDetailEmbed, reachMapEmbed
+    case gageToRunDetail
 }

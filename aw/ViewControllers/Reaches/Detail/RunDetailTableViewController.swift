@@ -46,6 +46,13 @@ class RunDetailTableViewController: UITableViewController {
         }
     }
 
+    @IBAction func gageButton(_ sender: Any) {
+        guard let reach = reach, reach.gageId != 0 else {
+            return
+        }
+        self.parent?.performSegue(withIdentifier: Segue.gageDetail.rawValue, sender: self)
+    }
+
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
@@ -70,6 +77,11 @@ class RunDetailTableViewController: UITableViewController {
         case IndexPath(row: 1, section: 1):
             expandDescription = !expandDescription
             self.tableView.reloadRows(at: [indexPath], with: .none)
+        case IndexPath(row: 0, section: 3):
+            guard let reach = reach, reach.gageId != 0 else {
+                return
+            }
+            self.parent?.performSegue(withIdentifier: Segue.gageDetail.rawValue, sender: self)
         case IndexPath(row: 1, section: 3):
             guard let reach = reach, let url = reach.url else { return }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)

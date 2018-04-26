@@ -21,6 +21,19 @@ class ReachDetailContainerViewController: UIViewController {
         super.viewWillAppear(animated)
         setupRightNavBarButtons()
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case Segue.gageDetail.rawValue:
+            guard let gageVC = segue.destination as? GageViewController else { return }
+            gageVC.sourceReach = reach
+            injectContextAndContainerToChildVC(segue: segue)
+        case Segue.reachDetailEmbed.rawValue, Segue.reachMapEmbed.rawValue:
+            break
+        default:
+            print("Unknown segue!")
+        }
+    }
 }
 
 extension ReachDetailContainerViewController {

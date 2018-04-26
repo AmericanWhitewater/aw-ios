@@ -19,6 +19,8 @@ struct AWReach: Codable {
     let delta: String?
     //swiftlint:disable:next identifier_name
     let rc: String?
+    let gageId: Int?
+    let gageMetric: Int?
 
     enum CodingKeys: String, CodingKey {
         //swiftlint:disable:next identifier_name
@@ -30,6 +32,8 @@ struct AWReach: Codable {
         case lastGageReading = "last_gauge_reading"
         case takeOutLat = "tlat"
         case takeOutLon = "tlon"
+        case gageId = "gauge_id"
+        case gageMetric = "gauge_metric"
     }
 
     func distanceFrom(location: CLLocation) -> Double? {
