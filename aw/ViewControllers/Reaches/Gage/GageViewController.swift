@@ -78,12 +78,13 @@ extension GageViewController {
         guard let gageDetail = gageDetail,
             let reach = sourceReach,
             let condition = gageDetail.conditions.filter({ $0.series == reach.gageMetric }).first,
+            let reading = Double(condition.reading),
             let updateTime = updateTime
             else { return }
 
         let metric = gageDetail.metrics[Int(reach.gageMetric)]
         nameLabel.text = gageDetail.gage.name
-        readingLabel.text = condition.reading
+        readingLabel.text = String(format: reading == floor(reading) ? "%.0f" : "%.2f", reading)
         unitsLabel.text = metric?.unit
 
         let dateFormat = DateFormatter()
@@ -93,11 +94,7 @@ extension GageViewController {
         let timeFormat = DateFormatter()
         timeFormat.dateFormat = "h:mm a"
 
-        //updateTimeLabel.text = "\( favoriteTable ? "Favorites " : "" )Last Updated \(dateFormat.string(from: date)) at \(timeFormat.string(from: date))"
-
         updateTimeLabel.text = "\(dateFormat.string(from: updateTime)) \(timeFormat.string(from: updateTime))"
-
-        print(gageDetail.riverInfo.map { $0.id })
     }
 
     func initializeFetchedResultController() -> NSFetchedResultsController<Reach>? {

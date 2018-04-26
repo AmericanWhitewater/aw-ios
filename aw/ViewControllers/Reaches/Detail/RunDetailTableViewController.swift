@@ -46,6 +46,13 @@ class RunDetailTableViewController: UITableViewController {
         }
     }
 
+    @IBAction func gageButton(_ sender: Any) {
+        guard let reach = reach, reach.gageId != 0 else {
+            return
+        }
+        self.parent?.performSegue(withIdentifier: Segue.gageDetail.rawValue, sender: self)
+    }
+
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
