@@ -7,6 +7,7 @@ class GageViewController: UIViewController {
     @IBOutlet weak var unitsLabel: UILabel!
     @IBOutlet weak var graphImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var updateTimeLabel: UILabel!
 
     var managedObjectContext: NSManagedObjectContext?
     var fetchedResultsController: NSFetchedResultsController<Reach>?
@@ -19,6 +20,7 @@ class GageViewController: UIViewController {
             updateFetchPredicates()
         }
     }
+    var updateTime: Date?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +40,7 @@ class GageViewController: UIViewController {
             else { return }
         AWApiHelper.fetchGageDetail(gageId: Int(reach.gageId)) { gageResponse in
             DispatchQueue.main.async {
+                self.updateTime = Date()
                 self.gageDetail = gageResponse
             }
         }
@@ -65,13 +68,25 @@ extension GageViewController {
     func draw() {
         guard let gageDetail = gageDetail,
             let reach = sourceReach,
-            let condition = gageDetail.conditions.filter({ $0.series == reach.gageMetric }).first
+            let condition = gageDetail.conditions.filter({ $0.series == reach.gageMetric }).first,
+            let updateTime = updateTime
             else { return }
 
         let metric = gageDetail.metrics[Int(reach.gageMetric)]
         nameLabel.text = gageDetail.gage.name
         readingLabel.text = condition.reading
         unitsLabel.text = metric?.unit
+
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .medium
+        dateFormat.doesRelativeDateFormatting = true
+
+        let timeFormat = DateFormatter()
+        timeFormat.dateFormat = "h:mm a"
+
+        //updateTimeLabel.text = "\( favoriteTable ? "Favorites " : "" )Last Updated \(dateFormat.string(from: date)) at \(timeFormat.string(from: date))"
+
+        updateTimeLabel.text = "\(dateFormat.string(from: updateTime)) \(timeFormat.string(from: updateTime))"
 
         print(gageDetail.riverInfo.map { $0.id })
     }
