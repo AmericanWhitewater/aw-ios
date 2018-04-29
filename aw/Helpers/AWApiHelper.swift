@@ -2,7 +2,6 @@ import CoreData
 import Foundation
 import MapKit
 import UIKit
-import os.log
 
 let baseURL = "https://www.americanwhitewater.org/content/"
 

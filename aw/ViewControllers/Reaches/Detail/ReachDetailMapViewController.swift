@@ -38,6 +38,10 @@ extension ReachDetailMapViewController {
 
     func setupMap() {
         mapView.showsUserLocation = true
+        setupAnnotations()
+    }
+
+    func setupAnnotations() {
         if let reach = reach {
             if let lat = reach.putInLat,
                 let latitude = Double(lat),
@@ -79,6 +83,11 @@ extension ReachDetailMapViewController {
             }
             mapView.showAnnotations(mapView.annotations, animated: true)
         }
+    }
+
+    func reloadAnnotations() {
+        mapView.removeAnnotations(mapView.annotations)
+        setupAnnotations()
     }
 }
 
