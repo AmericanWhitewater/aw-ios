@@ -33,8 +33,13 @@ class RunDetailTableViewController: UITableViewController {
             reach.detailUpdated == nil {
             drawView()
             print("Updating reach detail")
+            tableView.refreshControl?.beginRefreshing()
+            let refreshText = tableView.refreshControl?.attributedTitle
+            tableView.refreshControl?.attributedTitle = NSAttributedString(string: "Loading run details")
             AWApiHelper.updateReachDetail(reachID: String(reach.id), viewContext: context) {
                 print("Updated reach details")
+                self.tableView.refreshControl?.endRefreshing()
+                self.tableView.refreshControl?.attributedTitle = refreshText
                 self.drawView()
                 if let parentVC = self.parent {
                     for vc in parentVC.childViewControllers {
