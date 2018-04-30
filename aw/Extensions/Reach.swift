@@ -39,7 +39,12 @@ extension Reach {
     }
 
     var updatedString: String? {
-        guard let date = detailUpdated else { return nil }
+        guard let date = gageUpdated else {
+            if detailUpdated != nil {
+                return "No flow information"
+            }
+            return nil
+        }
         let dateFormat = DateFormatter()
         dateFormat.dateStyle = .medium
         dateFormat.doesRelativeDateFormatting = true

@@ -36,6 +36,7 @@
         <attribute name="favorite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="gageId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="gageMetric" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="gageUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lastGageReading" attributeType="String" syncable="YES"/>
         <attribute name="length" optional="YES" attributeType="String" syncable="YES"/>
@@ -62,7 +63,7 @@
     </entity>
     <elements>
         <element name="Article" positionX="-72" positionY="-9" width="128" height="180"/>
-        <element name="Reach" positionX="-299" positionY="-9" width="128" height="540"/>
+        <element name="Reach" positionX="-299" positionY="-9" width="128" height="553"/>
         <element name="Rapid" positionX="-72" positionY="396" width="128" height="148"/>
     </elements>
 </model>

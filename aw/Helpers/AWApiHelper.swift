@@ -104,6 +104,10 @@ struct AWApiHelper {
         reach.gageId = Int32(newReach.gageId ?? 0)
         reach.gageMetric = Int16(newReach.gageMetric ?? 0)
 
+        if let updatedSecondsString = newReach.lastGageUpdated, let updatedSecondsAgo = Int(updatedSecondsString) {
+            reach.gageUpdated = Date().addingTimeInterval(TimeInterval(-updatedSecondsAgo))
+        }
+
         if let distance = newReach.distanceFrom(
             location: CLLocation(
                 latitude: DefaultsManager.latitude,
