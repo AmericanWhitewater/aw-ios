@@ -38,6 +38,10 @@ extension ReachDetailMapViewController {
 
     func setupMap() {
         mapView.showsUserLocation = true
+        setupAnnotations()
+    }
+
+    func setupAnnotations() {
         if let reach = reach {
             if let lat = reach.putInLat,
                 let latitude = Double(lat),
@@ -64,8 +68,26 @@ extension ReachDetailMapViewController {
                     type: .takeOut)
                 mapView.addAnnotation(annotation)
             }
+            if let rapids = reach.rapids {
+                for rapid in rapids {
+                    if let rapid = rapid as? Rapid, rapid.lat != 0, rapid.lon != 0 {
+                        let annotation = RunAnnotation(
+                            latitude: rapid.lat,
+                            longitude: rapid.lon,
+                            title: "\(rapid.name ?? "") \(rapid.difficulty ?? "")",
+                            subtitle: nil,
+                            type: .rapid)
+                        mapView.addAnnotation(annotation)
+                    }
+                }
+            }
             mapView.showAnnotations(mapView.annotations, animated: true)
         }
+    }
+
+    func reloadAnnotations() {
+        mapView.removeAnnotations(mapView.annotations)
+        setupAnnotations()
     }
 }
 
@@ -92,9 +114,11 @@ extension ReachDetailMapViewController: MKMapViewDelegate {
                 view?.image = icon
             }
 
-            let button = UIButton(type: .detailDisclosure)
-            button.addTarget(self, action: #selector(showDirections), for: .touchUpInside)
-            view?.rightCalloutAccessoryView = button
+            if point.type == .putIn || point.type == .takeOut {
+                let button = UIButton(type: .detailDisclosure)
+                button.addTarget(self, action: #selector(showDirections), for: .touchUpInside)
+                view?.rightCalloutAccessoryView = button
+            }
 
             return view
         } else {

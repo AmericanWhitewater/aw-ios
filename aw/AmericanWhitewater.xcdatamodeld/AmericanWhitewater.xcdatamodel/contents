@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E199" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E202" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Article" representedClassName="Article" syncable="YES" codeGenerationType="class">
         <attribute name="abstract" attributeType="String" syncable="YES"/>
         <attribute name="abstractPhoto" optional="YES" attributeType="String" syncable="YES"/>
@@ -10,6 +10,15 @@
         <attribute name="contentsPhoto" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="posted" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Rapid" representedClassName="Rapid" syncable="YES" codeGenerationType="class">
+        <attribute name="difficulty" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lon" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rapidDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="reach" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Reach" inverseName="rapids" inverseEntity="Reach" syncable="YES"/>
     </entity>
     <entity name="Reach" representedClassName="Reach" syncable="YES" codeGenerationType="class">
         <attribute name="abstract" optional="YES" attributeType="String" syncable="YES"/>
@@ -44,6 +53,7 @@
         <attribute name="takeOutLon" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zipcode" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="rapids" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Rapid" inverseName="reach" inverseEntity="Rapid" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -51,7 +61,8 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Article" positionX="-54" positionY="144" width="128" height="180"/>
-        <element name="Reach" positionX="-54" positionY="-9" width="128" height="525"/>
+        <element name="Article" positionX="-72" positionY="-9" width="128" height="180"/>
+        <element name="Reach" positionX="-299" positionY="-9" width="128" height="540"/>
+        <element name="Rapid" positionX="-72" positionY="396" width="128" height="148"/>
     </elements>
 </model>

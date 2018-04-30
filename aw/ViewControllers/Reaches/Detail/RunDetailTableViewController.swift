@@ -36,6 +36,13 @@ class RunDetailTableViewController: UITableViewController {
             AWApiHelper.updateReachDetail(reachID: String(reach.id), viewContext: context) {
                 print("Updated reach details")
                 self.drawView()
+                if let parentVC = self.parent {
+                    for vc in parentVC.childViewControllers {
+                        if let mapVC = vc as? ReachDetailMapViewController {
+                            mapVC.reloadAnnotations()
+                        }
+                    }
+                }
             }
             AWApiHelper.updateReaches(reachIds: [String(reach.id)], viewContext: context) {
                 self.drawView()

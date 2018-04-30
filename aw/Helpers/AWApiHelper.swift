@@ -10,7 +10,7 @@ let riverURL = baseURL + "River/search/.json"
 struct AWApiHelper {
     typealias ReachCallback = ([AWReach]?) -> Void
     typealias UpdateCallback = () -> Void
-    typealias ReachDetailCallback = (AWReachDetailResponse.Sub.Main) -> Void
+    typealias ReachDetailCallback = (AWReachDetailResponse.Sub) -> Void
     typealias GageDetailCallback = (AWGageResponse) -> Void
 
     static func fetchReachesByRegion(region: String, callback: @escaping ReachCallback) {
@@ -223,8 +223,8 @@ struct AWApiHelper {
             }
             do {
                 let detail = try decoder.decode(AWReachDetailResponse.self, from: data)
-                print(detail.view)
-                callback(detail.view.main)
+                //print(detail.view)
+                callback(detail.view)
             } catch {
                 print("Unable to decode \(reachID): \(error)")
             }
@@ -254,7 +254,32 @@ struct AWApiHelper {
         task.resume()
     }
 
-    fileprivate static func updateDetail(reachID: String, info: AWReachInfo, context: NSManagedObjectContext) {
+    private static func createOrUpdateRapid(awRapid: AWRapid, reach: Reach, context: NSManagedObjectContext) {
+        let predicate = NSPredicate(format: "id == %i", awRapid.rapidid)
+        let request: NSFetchRequest<Rapid> = Rapid.fetchRequest()
+        request.predicate = predicate
+
+        let rapid: Rapid
+
+        if let result = try? context.fetch(request), result.count > 0, let first = result.first {
+            rapid = first
+        } else {
+            rapid = Rapid(context: context)
+            rapid.id = Int32(awRapid.rapidid)
+        }
+
+        if let lat = awRapid.rlat, let lon = awRapid.rlon, let latitude = Double(lat), let longitude = Double(lon) {
+            rapid.lat = latitude
+            rapid.lon = longitude
+        }
+        rapid.rapidDescription = awRapid.description
+        rapid.name = awRapid.name
+        rapid.difficulty = awRapid.difficulty
+
+        rapid.reach = reach
+    }
+
+    fileprivate static func updateDetail(reachID: String, info: AWReachInfo, rapids: [AWRapid], context: NSManagedObjectContext) {
         let request: NSFetchRequest<Reach> = Reach.fetchRequest()
         request.predicate = NSPredicate(format: "id = %@", reachID)
 
@@ -276,6 +301,10 @@ struct AWApiHelper {
                 reach.shuttleDetails = info.shuttleDetails
                 reach.zipcode = info.zipcode
                 reach.detailUpdated = Date()
+                for rapid in rapids {
+                    print(rapid)
+                    createOrUpdateRapid(awRapid: rapid, reach: reach, context: context)
+                }
                 do {
                     try context.save()
                     print("Reach detail background context saved")
@@ -304,10 +333,14 @@ struct AWApiHelper {
             let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
             context.parent = viewContext
 
-            let info = awReachDetail.info
+            let info = awReachDetail.main.info
+            let rapids = awReachDetail.rapids.rapids
 
             context.perform {
-                updateDetail(reachID: reachID, info: info, context: context)
+                updateDetail(reachID: reachID,
+                             info: info,
+                             rapids: rapids,
+                             context: context)
                 dispatchGroup.leave()
             }
         }
