@@ -19,11 +19,6 @@ class FavoriteListTableViewController: RunListTableViewController {
     }
 
     override func refreshReaches(sender: UIRefreshControl) {
-        let attributedTitle = sender.attributedTitle
-
-        let refreshingTitle = NSLocalizedString("Refreshing favorites from AW", comment: "Refreshing favorites from AW")
-        sender.attributedTitle = NSAttributedString(string: refreshingTitle)
-
         guard let fetchedResultsController = fetchedResultsController,
             let reaches = fetchedResultsController.fetchedObjects
             else { return }
@@ -33,7 +28,6 @@ class FavoriteListTableViewController: RunListTableViewController {
         if let context = managedObjectContext {
             AWApiHelper.updateReaches(reachIds: reachesIds, viewContext: context) {
                 sender.endRefreshing()
-                sender.attributedTitle = attributedTitle
                 DefaultsManager.favoritesLastUpdated = Date()
                 let header = self.tableView.headerView(forSection: 0) as? RunHeaderTableViewCell
                 header?.update()
