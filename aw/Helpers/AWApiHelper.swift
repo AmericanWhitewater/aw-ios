@@ -104,8 +104,13 @@ struct AWApiHelper {
         reach.gageId = Int32(newReach.gageId ?? 0)
         reach.gageMetric = Int16(newReach.gageMetric ?? 0)
 
-        if let updatedSecondsString = newReach.lastGageUpdated, let updatedSecondsAgo = Int(updatedSecondsString) {
-            reach.gageUpdated = Date().addingTimeInterval(TimeInterval(-updatedSecondsAgo))
+        // API returns seconds before present as a string
+        // that needs to be changed to a date
+        if let updatedSecondsString = newReach.lastGageUpdated,
+            let updatedSecondsAgo = Int(updatedSecondsString) {
+
+            reach.gageUpdated = Date().addingTimeInterval(
+                TimeInterval(-updatedSecondsAgo))
         }
 
         if let distance = newReach.distanceFrom(
