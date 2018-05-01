@@ -58,15 +58,9 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     }
 
     @objc func refreshReaches(sender: UIRefreshControl) {
-        let attributedTitle = sender.attributedTitle
-
-        let refreshingTitle = NSLocalizedString("Refreshing runs from AW", comment: "Refreshing Runs from AW")
-        sender.attributedTitle = NSAttributedString(string: refreshingTitle)
-
         if let context = managedObjectContext {
             AWApiHelper.updateRegions(viewContext: context) {
                 sender.endRefreshing()
-                sender.attributedTitle = attributedTitle
                 let header = self.tableView.headerView(forSection: 0) as? RunHeaderTableViewCell
                 header?.update()
             }
@@ -113,8 +107,6 @@ extension RunListTableViewController {
 
     func setupRefreshControl() {
         let refreshControl = UIRefreshControl()
-        let title = NSLocalizedString("Pull to Refresh", comment: "Pull to refresh")
-        refreshControl.attributedTitle = NSAttributedString(string: title)
         refreshControl.addTarget(self, action: #selector(refreshReaches(sender:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }

@@ -34,12 +34,9 @@ class RunDetailTableViewController: UITableViewController {
             drawView()
             print("Updating reach detail")
             tableView.refreshControl?.beginRefreshing()
-            let refreshText = tableView.refreshControl?.attributedTitle
-            tableView.refreshControl?.attributedTitle = NSAttributedString(string: "Loading run details")
             AWApiHelper.updateReachDetail(reachID: String(reach.id), viewContext: context) {
                 print("Updated reach details")
                 self.tableView.refreshControl?.endRefreshing()
-                self.tableView.refreshControl?.attributedTitle = refreshText
                 self.drawView()
                 if let parentVC = self.parent {
                     for vc in parentVC.childViewControllers {
@@ -134,8 +131,6 @@ extension RunDetailTableViewController {
 
     func setupRefreshControl() {
         let refreshControl = UIRefreshControl()
-        let title = NSLocalizedString("Pull to Refresh", comment: "Pull to Refresh")
-        refreshControl.attributedTitle = NSAttributedString(string: title)
         refreshControl.addTarget(self, action: #selector(refreshReach(sender:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }
@@ -152,14 +147,8 @@ extension RunDetailTableViewController {
     @objc func refreshReach(sender: UIRefreshControl) {
         guard let reach = reach, let context = managedObjectContext else { return }
 
-        let attributedTitle = sender.attributedTitle
-        let refreshingTitle = NSLocalizedString("Refreshing run details from AW",
-            comment: "Refreshing run details from AW")
-        sender.attributedTitle = NSAttributedString(string: refreshingTitle)
-
         AWApiHelper.updateReachDetail(reachID: String(reach.id), viewContext: context) {
             sender.endRefreshing()
-            sender.attributedTitle = attributedTitle
             self.drawView()
         }
         AWApiHelper.updateReaches(reachIds: [String(reach.id)], viewContext: context) {
