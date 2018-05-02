@@ -8,6 +8,8 @@
 
 import CoreData
 import UIKit
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
  print(persistentContainer.persistentStoreCoordinator.persistentStores.first?.url as Any)
 
+        Fabric.with([Crashlytics.self])
+        
         globalStyles()
 
         if var initialVC = window?.rootViewController as? MOCViewControllerType {
