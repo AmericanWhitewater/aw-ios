@@ -3,9 +3,9 @@ import UIKit
 
 class RunListTableViewController: UIViewController, MOCViewControllerType {
     @IBOutlet var tableView: UITableView!
-    @IBOutlet weak var toggleView: UIView!
-    @IBOutlet weak var runnableToggle: NSLayoutConstraint!
-    
+    @IBOutlet weak var toggleView: UIView?
+    @IBOutlet weak var runnableToggle: UISwitch?
+
     var managedObjectContext: NSManagedObjectContext?
 
     var fetchedResultsController: NSFetchedResultsController<Reach>?
@@ -69,14 +69,19 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         }
     }
     @IBAction func runnableToggled(_ sender: Any) {
+        guard let runnableToggle = runnableToggle else { return }
+        DefaultsManager.runnableFilter = runnableToggle.isOn
+        updateFetchPredicates()
     }
-    
+
     func searchText() -> String {
         return "Search runs"
     }
 
     func filterPredicates() -> [NSPredicate?] {
-        return [searchPredicate(), difficultiesPredicate(), regionsPredicate(), distancePredicate()]
+        return [searchPredicate(), difficultiesPredicate(),
+                regionsPredicate(), distancePredicate(),
+                runnablePredicate()]
     }
 }
 
@@ -101,8 +106,12 @@ extension RunListTableViewController {
     }
 
     func setupRunnableToggle() {
+        guard let toggleView = toggleView,
+            let runnableToggle = runnableToggle
+            else { return }
         toggleView.layer.masksToBounds = true
         toggleView.layer.cornerRadius = toggleView.frame.size.height / 2
+        runnableToggle.isOn = DefaultsManager.runnableFilter
     }
 
     func setupSearchControl() {
@@ -132,6 +141,13 @@ extension RunListTableViewController {
         let searchSection = NSPredicate(format: "section contains[c] %@", searchText)
 
         return NSCompoundPredicate(orPredicateWithSubpredicates: [searchName, searchSection])
+    }
+
+    func runnablePredicate() -> NSPredicate? {
+        if DefaultsManager.runnableFilter {
+            return NSPredicate(format: "condition == %@", "med")
+        }
+        return nil
     }
 
     func updateFetchPredicates() {
@@ -216,7 +232,10 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
             tableView.separatorStyle = .singleLine
             tableView.backgroundView = nil
         } else {
-            let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            let noDataLabel: UILabel = UILabel(
+                frame: CGRect(x: 0, y: 0,
+                              width: tableView.bounds.size.width,
+                              height: tableView.bounds.size.height))
             noDataLabel.text = noDataString()
             noDataLabel.textColor = UIColor.black
             noDataLabel.textAlignment = .center

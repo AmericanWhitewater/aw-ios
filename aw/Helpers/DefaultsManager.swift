@@ -69,6 +69,16 @@ class DefaultsManager {
         }
     }
 
+    private static let runnableFilterKey = "runnableFilterKey"
+    static var runnableFilter: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: runnableFilterKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: runnableFilterKey)
+        }
+    }
+
     private static let updatedKey = "updatedKey"
     static var lastUpdated: Date? {
         get {
