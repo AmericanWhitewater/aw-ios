@@ -34,7 +34,6 @@
 		385E59CC2063047B00A68EC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 385E59CA2063047B00A68EC9 /* LaunchScreen.storyboard */; };
 		385E59D52063073900A68EC9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 385E59D42063073900A68EC9 /* MapKit.framework */; };
 		3864857D206BC355009B360F /* OnboardLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3864857C206BC355009B360F /* OnboardLocationViewController.swift */; };
-		38805498209AAA0D00EBF358 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38805497209AAA0D00EBF358 /* UIView.swift */; };
 		3898B4F52070586000B49B68 /* RunHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3898B4F32070586000B49B68 /* RunHeaderTableViewCell.swift */; };
 		3898B4F62070586000B49B68 /* RunHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3898B4F42070586000B49B68 /* RunHeaderTableViewCell.xib */; };
 		38A6C8D92066759A00B5BA29 /* RunListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8D82066759A00B5BA29 /* RunListTableViewController.swift */; };
@@ -98,7 +97,6 @@
 		385E59CD2063047B00A68EC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		385E59D42063073900A68EC9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3864857C206BC355009B360F /* OnboardLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardLocationViewController.swift; sourceTree = "<group>"; };
-		38805497209AAA0D00EBF358 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		3898B4F32070586000B49B68 /* RunHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		3898B4F42070586000B49B68 /* RunHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RunHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		38A6C8D82066759A00B5BA29 /* RunListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunListTableViewController.swift; sourceTree = "<group>"; };
@@ -249,7 +247,6 @@
 				38A6C8EE2067074700B5BA29 /* Reach.swift */,
 				3836C48D20708E7900490999 /* Article.swift */,
 				3836C4932071031400490999 /* AWButton.swift */,
-				38805497209AAA0D00EBF358 /* UIView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -453,7 +450,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38805498209AAA0D00EBF358 /* UIView.swift in Sources */,
 				381ED39F206FC15700B03F13 /* ReachDetailMapViewController.swift in Sources */,
 				3843F88E2087CC67009BC211 /* AWGage.swift in Sources */,
 				3898B4F52070586000B49B68 /* RunHeaderTableViewCell.swift in Sources */,
