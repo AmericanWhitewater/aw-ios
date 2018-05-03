@@ -93,6 +93,24 @@ extension RunListTableViewController {
 
         setupSearchControl()
         setupRefreshControl()
+        setupRunnableToggle()
+    }
+
+    func setupRunnableToggle() {
+        guard let navView = self.navigationController?.view,
+            let tabHeight = self.tabBarController?.tabBar.frame.size.height
+            else { return }
+        let toggleView = UIView()
+        let height: CGFloat = 45
+        toggleView.backgroundColor = UIColor(named: "blue_oval")
+        navView.addSubview(toggleView)
+
+        toggleView.anchor(top: nil, left: navView.leftAnchor,
+                          bottom: navView.bottomAnchor, right: navView.rightAnchor,
+                          paddingTop: 0, paddingLeft: 16, paddingBottom: 10 + tabHeight, paddingRight: 16,
+                          width: 0, height: height, enableInsets: true)
+        toggleView.layer.masksToBounds = true
+        toggleView.layer.cornerRadius = height / 2
     }
 
     func setupSearchControl() {
