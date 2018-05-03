@@ -31,7 +31,6 @@
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VZ1-kB-SJx">
                                             <rect key="frame" x="0.0" y="0.0" width="8" height="100"/>
-                                            <color key="backgroundColor" name="status_grey"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="8" id="T9a-Tq-VoR"/>
                                             </constraints>
@@ -1625,9 +1624,6 @@ plan for your next run!</string>
         </namedColor>
         <namedColor name="font_blue">
             <color red="0.17254901960784313" green="0.49019607843137253" blue="0.76078431372549016" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="font_light_grey">
-            <color red="0.36862745098039218" green="0.36862745098039218" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="font_light_grey">
             <color red="0.36862745098039218" green="0.36862745098039218" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
