@@ -70,6 +70,10 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     func searchText() -> String {
         return "Search runs"
     }
+
+    func filterPredicates() -> [NSPredicate?] {
+        return [searchPredicate(), difficultiesPredicate(), regionsPredicate(), distancePredicate()]
+    }
 }
 
 // MARK: - RunListTableViewExtension
@@ -111,32 +115,19 @@ extension RunListTableViewController {
         tableView.refreshControl = refreshControl
     }
 
+    func searchPredicate() -> NSPredicate? {
+        guard let searchText = searchController.searchBar.text,
+            searchText.count > 0 else { return nil }
+        let searchName = NSPredicate(format: "name contains[c] %@", searchText)
+        let searchSection = NSPredicate(format: "section contains[c] %@", searchText)
+
+        return NSCompoundPredicate(orPredicateWithSubpredicates: [searchName, searchSection])
+    }
+
     func updateFetchPredicates() {
-        var combinedPredicates = predicates
-
-        if let searchText = searchController.searchBar.text {
-            if searchText.count > 0 {
-                let searchName = NSPredicate(format: "name contains[c] %@", searchText)
-                let searchSection = NSPredicate(format: "section contains[c] %@", searchText)
-
-                let searchPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [searchName, searchSection])
-
-                combinedPredicates.append(searchPredicate)
-            }
-        }
-
-        let difficulties = DefaultsManager.classFilter
-        if difficulties.count > 0 {
-            combinedPredicates.append(difficultiesPredicate())
-        }
-
-        let regions = DefaultsManager.regionsFilter
-        if regions.count > 0 {
-            combinedPredicates.append(regionsPredicate())
-        }
+        let combinedPredicates: [NSPredicate] = filterPredicates().compactMap { $0 } + predicates
 
         if DefaultsManager.distanceFilter > 0 {
-            combinedPredicates.append(distancePredicate())
             self.fetchedResultsController?.fetchRequest.sortDescriptors = [
                 NSSortDescriptor(key: "distance", ascending: true),
                 NSSortDescriptor(key: "name", ascending: true)]
