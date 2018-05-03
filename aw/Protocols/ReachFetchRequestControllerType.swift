@@ -20,22 +20,29 @@ extension ReachFetchRequestControllerType {
                                           cacheName: nil)
     }
 
-    func difficultiesPredicate() -> NSCompoundPredicate {
+    func difficultiesPredicate() -> NSCompoundPredicate? {
         var classPredicates: [NSPredicate] = []
 
         for difficulty in DefaultsManager.classFilter {
             classPredicates.append(NSPredicate(format: "difficulty\(difficulty) == TRUE"))
         }
+        if classPredicates.count == 0 {
+            return nil
+        }
         return NSCompoundPredicate(orPredicateWithSubpredicates: classPredicates)
     }
 
-    func regionsPredicate() -> NSPredicate {
+    func regionsPredicate() -> NSPredicate? {
         let regions = DefaultsManager.regionsFilter
+        if regions.count == 0 {
+            return nil
+        }
         return NSPredicate(format: "state IN %@", regions)
     }
 
-    func distancePredicate() -> NSPredicate {
+    func distancePredicate() -> NSPredicate? {
         let distance = DefaultsManager.distanceFilter
+        if distance == 0 { return nil }
         let predicates: [NSPredicate] = [
             NSPredicate(format: "distance <= %lf", distance),
             NSPredicate(format: "distance != 0")] // hide invalid distances

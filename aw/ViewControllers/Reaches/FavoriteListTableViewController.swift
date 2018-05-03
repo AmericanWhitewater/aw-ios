@@ -38,4 +38,8 @@ class FavoriteListTableViewController: RunListTableViewController {
     override func searchText() -> String {
         return "Search favorites"
     }
+
+    override func filterPredicates() -> [NSPredicate?] {
+        return [searchPredicate()]
+    }
 }

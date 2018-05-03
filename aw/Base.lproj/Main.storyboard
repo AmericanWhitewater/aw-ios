@@ -829,10 +829,10 @@ plan for your next run!</string>
             </objects>
             <point key="canvasLocation" x="2868.8000000000002" y="903.14842578710648"/>
         </scene>
-        <!--Run List-->
+        <!--Favorites List-->
         <scene sceneID="Vg6-4h-UC1">
             <objects>
-                <tableViewController title="Run List" id="lCv-VW-E28" customClass="FavoriteListTableViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Favorites List" id="lCv-VW-E28" customClass="FavoriteListTableViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="36" sectionFooterHeight="28" id="np3-ty-ckn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -922,11 +922,6 @@ plan for your next run!</string>
                     </tableView>
                     <navigationItem key="navigationItem" title="American Whitewater" id="7hV-8Z-Upi">
                         <barButtonItem key="backBarButtonItem" title="Favorites" id="EDM-s5-t4Z"/>
-                        <barButtonItem key="rightBarButtonItem" title="Filters" image="filter" id="cvP-0M-mNb">
-                            <connections>
-                                <segue destination="YFK-7r-CMH" kind="presentation" identifier="showFiltersFavorites" id="BCF-g5-YXb"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="np3-ty-ckn" id="xzi-Id-Ejr"/>
@@ -1649,6 +1644,6 @@ plan for your next run!</string>
     <inferredMetricsTieBreakers>
         <segue reference="BDm-bc-Bvj"/>
         <segue reference="HLz-3E-X9y"/>
-        <segue reference="v1j-tX-Cxp"/>
+        <segue reference="HZW-Im-KWw"/>
     </inferredMetricsTieBreakers>
 </document>
