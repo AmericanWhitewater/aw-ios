@@ -101,7 +101,8 @@ extension MapViewController {
         self.regions = regions
         self.distance = distance
 
-        var combinedPredicates = predicates + [difficultiesPredicate(), regionsPredicate(), distancePredicate()].compactMap { $0 }
+        let combinedPredicates = predicates + [
+            difficultiesPredicate(), regionsPredicate(), distancePredicate()].compactMap { $0 }
 
         self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(
             andPredicateWithSubpredicates: combinedPredicates)
