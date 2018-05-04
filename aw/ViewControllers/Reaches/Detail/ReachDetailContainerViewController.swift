@@ -36,6 +36,7 @@ class ReachDetailContainerViewController: UIViewController {
     }
 }
 
+// MARK: - Extension
 extension ReachDetailContainerViewController {
     func initialize() {
         initializeChildVCs()
@@ -46,7 +47,6 @@ extension ReachDetailContainerViewController {
 
     func initializeChildVCs() {
         for childVC in childViewControllers {
-            print("childVC")
             if var childVC = childVC as? RunDetailViewControllerType {
                 childVC.reach = reach
             }

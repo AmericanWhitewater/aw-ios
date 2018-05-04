@@ -34,6 +34,19 @@ extension ReachDetailMapViewController {
     func initialize() {
         mapView.mapType = .hybrid
         mapView.delegate = self
+
+        let keyView = UIView()
+        keyView.backgroundColor = UIColor.white
+        keyView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(keyView)
+        NSLayoutConstraint.activate([
+            keyView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            keyView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            keyView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
+            keyView.heightAnchor.constraint(equalToConstant: 45)
+            ])
+        keyView.layer.cornerRadius = 45 / 2
+        keyView.layer.masksToBounds = true
     }
 
     func setupMap() {
