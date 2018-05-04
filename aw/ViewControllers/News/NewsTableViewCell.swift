@@ -25,7 +25,7 @@ class NewsTableViewCell: UITableViewCell {
             articleTitleLabel.apply(style: .Headline1)
 
             articleAbstractLabel.text = article.abstractCleanedHTML
-            articleTitleLabel.apply(style: .Text1)
+            articleAbstractLabel.apply(style: .Text1)
 
             authorDateLabel.text = article.byline
             authorDateLabel.apply(style: .Text2)
