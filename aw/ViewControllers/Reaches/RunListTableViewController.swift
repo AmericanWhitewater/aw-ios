@@ -12,6 +12,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
 
     var predicates: [NSPredicate] = []
     var favorite: Bool = false
+    let cellId = "runCell"
 
     let searchController = UISearchController(searchResultsController: nil)
 
@@ -48,6 +49,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
             print("Unknown segue!")
         }
     }
+
     func noDataString() -> String {
         if DefaultsManager.distanceFilter != 0 && DefaultsManager.regionsFilter.count != 0 {
             return "No runs found with current filters. Is the distance filter hiding the selected regions?"
@@ -83,6 +85,10 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
                 regionsPredicate(), distancePredicate(),
                 runnablePredicate()]
     }
+
+    func segueDetail() {
+        performSegue(withIdentifier: Segue.runDetail.rawValue, sender: self)
+    }
 }
 
 // MARK: - RunListTableViewExtension
@@ -90,6 +96,7 @@ extension RunListTableViewController {
     func initialize() {
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(RunListTableViewCell.self, forCellReuseIdentifier: cellId)
 
         tableView.register(UINib(
                 nibName: "RunHeaderTableViewCell",
@@ -251,7 +258,7 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "runCell",
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
                                                        for: indexPath) as? RunListTableViewCell
             else {
             fatalError("Failed to deque cell as RunListTableViewCell")
@@ -272,6 +279,11 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerCell") as? RunHeaderTableViewCell
         header?.favoriteTable = favorite
         return header
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        segueDetail()
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

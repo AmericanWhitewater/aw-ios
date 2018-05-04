@@ -42,4 +42,8 @@ class FavoriteListTableViewController: RunListTableViewController {
     override func filterPredicates() -> [NSPredicate?] {
         return [searchPredicate()]
     }
+
+    override func segueDetail() {
+        performSegue(withIdentifier: Segue.runDetailFavorites.rawValue, sender: self)
+    }
 }
