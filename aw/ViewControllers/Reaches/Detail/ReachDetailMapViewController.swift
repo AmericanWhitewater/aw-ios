@@ -35,55 +35,16 @@ extension ReachDetailMapViewController {
         mapView.mapType = .hybrid
         mapView.delegate = self
 
-        let keyView = UIView()
-        keyView.backgroundColor = UIColor.white
-        keyView.translatesAutoresizingMaskIntoConstraints = false
+        let keyView = MapKeyView(pointTypes: [
+                        (UIImage(named: "runnablePin"), "Put-in"),
+                        (UIImage(named: "frozenPin"), "Take-out"),
+                        (UIImage(named: "lowPin"), "Rapid")])
+
         view.addSubview(keyView)
         NSLayoutConstraint.activate([
             keyView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             keyView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
             keyView.heightAnchor.constraint(equalToConstant: 45)
-            ])
-        keyView.layer.cornerRadius = 45 / 2
-        keyView.layer.masksToBounds = true
-
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 8
-
-        let pointTypes: [(UIImage?, String)] = [
-            (UIImage(named: "runnablePin"), "Put-in"),
-            (UIImage(named: "frozenPin"), "Take-out"),
-            (UIImage(named: "lowPin"), "Rapid")]
-
-        for (image, name) in pointTypes {
-            let pointStack = UIStackView()
-            pointStack.spacing = 4
-            pointStack.distribution = .fill
-            pointStack.alignment = .fill
-            pointStack.translatesAutoresizingMaskIntoConstraints = false
-            pointStack.axis = .horizontal
-            if let image = image {
-                let imageView = UIImageView(image: image)
-                pointStack.addArrangedSubview(imageView)
-            }
-            let lbl = UILabel()
-            lbl.text = name
-            lbl.font = UIFont.systemFont(ofSize: 12)
-            pointStack.addArrangedSubview(lbl)
-
-            stackView.addArrangedSubview(pointStack)
-        }
-
-        keyView.addSubview(stackView)
-        NSLayoutConstraint.activate([
-            stackView.leftAnchor.constraint(equalTo: keyView.leftAnchor, constant: 16),
-            stackView.rightAnchor.constraint(equalTo: keyView.rightAnchor, constant: -16),
-            stackView.centerYAnchor.constraint(equalTo: keyView.centerYAnchor),
-            stackView.heightAnchor.constraint(equalToConstant: 23)
             ])
     }
 
