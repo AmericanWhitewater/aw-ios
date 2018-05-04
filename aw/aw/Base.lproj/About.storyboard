@@ -313,9 +313,9 @@
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qIW-6K-AS2">
                                                 <rect key="frame" x="16" y="124" width="343" height="385.5"/>
-                                                <mutableString key="text">Founded in 1954, American Whitewater is a national non-profit organization (Non-profit # 23-7083760) with a mission “to conserve and restore America's whitewater resources and to enhance opportunities to enjoy them safely.” American Whitewater is a membership organization representing a broad diversity of individual whitewater enthusiasts, river conservationists, and more than 100 local paddling club affiliates across America.
+                                                <string key="text">Founded in 1954, American Whitewater is a national non-profit organization (Non-profit # 23-7083760) with a mission “to conserve and restore America's whitewater resources and to enhance opportunities to enjoy them safely.” American Whitewater is a membership organization representing a broad diversity of individual whitewater enthusiasts, river conservationists, and more than 100 local paddling club affiliates across America.
 
-The organization is the primary advocate for the preservation and protection of whitewater rivers throughout the United States, and connects the interests of human-powered recreational river users with ecological and science-based data to achieve the goals within its mission.</mutableString>
+The organization is the primary advocate for the preservation and protection of whitewater rivers throughout the United States, and connects the interests of human-powered recreational river users with ecological and science-based data to achieve the goals within its mission.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" name="font_grey"/>
                                                 <nil key="highlightedColor"/>
@@ -353,6 +353,9 @@ The organization is the primary advocate for the preservation and protection of 
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="c8u-YX-1RF"/>
                     </view>
+                    <connections>
+                        <outlet property="bodyLabel" destination="qIW-6K-AS2" id="XFJ-6H-moK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qqA-RK-n0V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -415,10 +418,10 @@ The organization is the primary advocate for the preservation and protection of 
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNC-4I-G3k">
                                                 <rect key="frame" x="16" y="124" width="343" height="446.5"/>
-                                                <mutableString key="text">American Whitewater works to protect and restore rivers, maintains a national inventory of whitewater rivers, monitors potential threats to whitewater river resources, publishes information on river conservation, works with government agencies to protect the ability of the public to have a voice in the management of rivers, advocates for legislation protecting our rivers and their aquatic resources, and provides technical advice to local groups regarding river conservation and management.
+                                                <string key="text">American Whitewater works to protect and restore rivers, maintains a national inventory of whitewater rivers, monitors potential threats to whitewater river resources, publishes information on river conservation, works with government agencies to protect the ability of the public to have a voice in the management of rivers, advocates for legislation protecting our rivers and their aquatic resources, and provides technical advice to local groups regarding river conservation and management.
 
 American Whitewater is working full-time to assure protection of whitewater rivers and the ability of the public to enjoy clean, free-flowing rivers. This includes our access program that focuses on protecting navigability on our nation's waterways and acquisition of lands that provide public access to rivers.
-</mutableString>
+</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" name="font_grey"/>
                                                 <nil key="highlightedColor"/>
@@ -463,6 +466,9 @@ American Whitewater is working full-time to assure protection of whitewater rive
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xpp-Sj-cui"/>
                     </view>
+                    <connections>
+                        <outlet property="bodyLabel" destination="bNC-4I-G3k" id="Nk2-sF-j5N"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hLY-au-gof" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -540,10 +546,10 @@ American Whitewater is working full-time to assure protection of whitewater rive
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xeh-9n-p8Z">
                                                 <rect key="frame" x="16" y="162" width="343" height="446.5"/>
-                                                <mutableString key="text">American Whitewater works to protect and restore rivers, maintains a national inventory of whitewater rivers, monitors potential threats to whitewater river resources, publishes information on river conservation, works with government agencies to protect the ability of the public to have a voice in the management of rivers, advocates for legislation protecting our rivers and their aquatic resources, and provides technical advice to local groups regarding river conservation and management.
+                                                <string key="text">American Whitewater works to protect and restore rivers, maintains a national inventory of whitewater rivers, monitors potential threats to whitewater river resources, publishes information on river conservation, works with government agencies to protect the ability of the public to have a voice in the management of rivers, advocates for legislation protecting our rivers and their aquatic resources, and provides technical advice to local groups regarding river conservation and management.
 
 American Whitewater is working full-time to assure protection of whitewater rivers and the ability of the public to enjoy clean, free-flowing rivers. This includes our access program that focuses on protecting navigability on our nation's waterways and acquisition of lands that provide public access to rivers.
-</mutableString>
+</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" name="font_grey"/>
                                                 <nil key="highlightedColor"/>
@@ -605,6 +611,9 @@ American Whitewater is working full-time to assure protection of whitewater rive
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Y5O-P3-kEx"/>
                     </view>
+                    <connections>
+                        <outlet property="bodyLabel" destination="xeh-9n-p8Z" id="heQ-0z-zJy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iSs-0u-IZY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -627,23 +636,11 @@ American Whitewater is working full-time to assure protection of whitewater rive
         <namedColor name="blue_oval">
             <color red="0.0039215686274509803" green="0.66666666666666663" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="blue_oval">
-            <color red="0.0039215686269999999" green="0.66666666669999997" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="font_grey">
             <color red="0.27058823529411763" green="0.35294117647058826" blue="0.39215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="primary">
             <color red="0.0" green="0.48627450980392156" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="white">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="white">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="white">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
