@@ -44,6 +44,18 @@ extension MapViewController {
 
         fetchedResultsController = initializeFetchedResultController()
         fetchedResultsController?.delegate = self
+
+        let keyView = MapKeyView(pointTypes: [
+            (UIImage(named: "runnablePin"), "Runnable"),
+            (UIImage(named: "lowPin"), "Low"),
+            (UIImage(named: "highPin"), "High"),
+            (UIImage(named: "noinfoPin"), "No info")
+            ])
+        view.addSubview(keyView)
+        NSLayoutConstraint.activate([
+            keyView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            keyView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
+            keyView.heightAnchor.constraint(equalToConstant: 45)])
     }
 
     @objc func reachButtonTapped(sender: UIButton!) {
