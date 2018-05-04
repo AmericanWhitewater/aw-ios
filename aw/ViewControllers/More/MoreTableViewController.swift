@@ -19,8 +19,15 @@ class MoreTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath {
         case IndexPath(row: 2, section: 0): // Rate this App
+            let appID = "" //TODO
+            
+            // Open App Review Tab
+            openUrl(url: "itms-apps://itunes.apple.com/app/viewContentsUserReviews?id=\(appID)")
+            
             break
         case IndexPath(row: 3, section: 0): // Feedback
+            openUrl(url: "mailto://greg@americanwhitewater.org")
+            
             break
         case IndexPath(row: 4, section: 0): // Donate
             UIApplication.shared.open(
@@ -32,6 +39,16 @@ class MoreTableViewController: UITableViewController {
             }
         default:
             break
+        }
+    }
+    
+    func openUrl(url: String) {
+        if let url = URL(string: url), UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
         }
     }
 }

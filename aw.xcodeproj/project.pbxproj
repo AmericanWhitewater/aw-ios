@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F78EF49209920C600193DCB /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F78EF47209920C600193DCB /* Fabric.framework */; };
+		2F78EF4A209920C600193DCB /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F78EF48209920C600193DCB /* Crashlytics.framework */; };
+		3807299B209CB7C800C61223 /* MapKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807299A209CB7C800C61223 /* MapKeyView.swift */; };
 		38150B262067F75800CBE8D8 /* Regions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38150B252067F75800CBE8D8 /* Regions.swift */; };
 		381ED393206F012400B03F13 /* ReachFetchRequestControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED392206F012400B03F13 /* ReachFetchRequestControllerType.swift */; };
 		381ED39B206FBA3B00B03F13 /* ReachDetailContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED39A206FBA3B00B03F13 /* ReachDetailContainerViewController.swift */; };
@@ -68,6 +71,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F78EF47209920C600193DCB /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		2F78EF48209920C600193DCB /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		3807299A209CB7C800C61223 /* MapKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKeyView.swift; sourceTree = "<group>"; };
 		38150B252067F75800CBE8D8 /* Regions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regions.swift; sourceTree = "<group>"; };
 		381ED392206F012400B03F13 /* ReachFetchRequestControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFetchRequestControllerType.swift; sourceTree = "<group>"; };
 		381ED39A206FBA3B00B03F13 /* ReachDetailContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachDetailContainerViewController.swift; sourceTree = "<group>"; };
@@ -136,12 +142,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				385E59D52063073900A68EC9 /* MapKit.framework in Frameworks */,
+				2F78EF4A209920C600193DCB /* Crashlytics.framework in Frameworks */,
+				2F78EF49209920C600193DCB /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		38072999209CB7A200C61223 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3807299A209CB7C800C61223 /* MapKeyView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		381ED3A0206FC16200B03F13 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +190,8 @@
 		385E59B52063047B00A68EC9 = {
 			isa = PBXGroup;
 			children = (
+				2F78EF48209920C600193DCB /* Crashlytics.framework */,
+				2F78EF47209920C600193DCB /* Fabric.framework */,
 				385E59C02063047B00A68EC9 /* aw */,
 				385E59BF2063047B00A68EC9 /* Products */,
 				385E59D32063073900A68EC9 /* Frameworks */,
@@ -196,6 +214,7 @@
 				38A6C8E0206687C700B5BA29 /* Protocols */,
 				38A6C8DC206685AE00B5BA29 /* Models */,
 				38C421552065C9940044D717 /* ViewControllers */,
+				38072999209CB7A200C61223 /* Views */,
 				38C421522065C7C10044D717 /* Helpers */,
 				385E59C12063047B00A68EC9 /* AppDelegate.swift */,
 				385E59C52063047B00A68EC9 /* Main.storyboard */,
@@ -363,6 +382,7 @@
 				385E59BB2063047B00A68EC9 /* Frameworks */,
 				385E59BC2063047B00A68EC9 /* Resources */,
 				3864857E206C3412009B360F /* Swiftlint */,
+				2F78EF4B209920F600193DCB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -429,9 +449,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3864857E206C3412009B360F /* Swiftlint */ = {
+		2F78EF4B209920F600193DCB /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PROJECT_DIR}/Fabric.framework/run\" b67e4513fcf72d81b5607976a8613ad0240f3105 5d7e4288f0737654ce9fcc143ec957e2377bda83031275b990bf0dee07be9439";
+		};
+		3864857E206C3412009B360F /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -439,7 +472,7 @@
 			name = Swiftlint;
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
@@ -463,6 +496,7 @@
 				38B3CD1620672F310016630F /* Segues.swift in Sources */,
 				3836C4942071031400490999 /* AWButton.swift in Sources */,
 				3836C48C20708B5400490999 /* NewsTableViewCell.swift in Sources */,
+				3807299B209CB7C800C61223 /* MapKeyView.swift in Sources */,
 				3836C4922071007F00490999 /* NewsDonateTableViewCell.swift in Sources */,
 				38A6C8EA2066884800B5BA29 /* NSManagedObjectContext.swift in Sources */,
 				38BE74A6206827A200DE555D /* DifficultyHelper.swift in Sources */,
@@ -650,10 +684,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MFRS2M4RE6;
+				DEVELOPMENT_TEAM = Z2H33QQ8P7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = aw/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alexkerney.aw;
+				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -665,10 +703,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MFRS2M4RE6;
+				DEVELOPMENT_TEAM = Z2H33QQ8P7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = aw/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alexkerney.aw;
+				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

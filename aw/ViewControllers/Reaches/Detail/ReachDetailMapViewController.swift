@@ -34,6 +34,18 @@ extension ReachDetailMapViewController {
     func initialize() {
         mapView.mapType = .hybrid
         mapView.delegate = self
+
+        let keyView = MapKeyView(pointTypes: [
+                        (UIImage(named: "runnablePin"), "Put-in"),
+                        (UIImage(named: "frozenPin"), "Take-out"),
+                        (UIImage(named: "lowPin"), "Rapid")])
+
+        view.addSubview(keyView)
+        NSLayoutConstraint.activate([
+            keyView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            keyView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
+            keyView.heightAnchor.constraint(equalToConstant: 45)
+            ])
     }
 
     func setupMap() {
