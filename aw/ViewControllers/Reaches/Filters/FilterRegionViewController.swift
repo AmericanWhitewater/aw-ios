@@ -23,6 +23,7 @@ extension FilterRegionViewController {
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
+        searchBar.returnKeyType = .done
 
         selectedRegions = DefaultsManager.regionsFilter
 
