@@ -31,6 +31,7 @@ class MapKeyView: UIView {
 
             if let image = image {
                 let imageView = UIImageView(image: image)
+                imageView.contentMode = .scaleAspectFit
                 pointStack.addArrangedSubview(imageView)
             }
             let lbl = UILabel()
