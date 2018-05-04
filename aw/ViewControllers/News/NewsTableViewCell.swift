@@ -22,16 +22,13 @@ class NewsTableViewCell: UITableViewCell {
     func update() {
         if let article = article {
             articleTitleLabel.text = article.title
-            articleTitleLabel.font = FontStyles.headline1.font
-            articleTitleLabel.textColor = FontStyles.headline1.color
+            articleTitleLabel.apply(style: .Headline1)
 
             articleAbstractLabel.text = article.abstractCleanedHTML
-            articleAbstractLabel.font = FontStyles.text1.font
-            articleAbstractLabel.textColor = FontStyles.text1.color
+            articleTitleLabel.apply(style: .Text1)
 
             authorDateLabel.text = article.byline
-            authorDateLabel.font = FontStyles.text2.font
-            authorDateLabel.textColor = FontStyles.text2.color
+            authorDateLabel.apply(style: .Text2)
             
             if let photoURL = article.abstractPhotoURL,
                 let url = URL(string: photoURL),

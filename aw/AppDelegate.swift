@@ -81,6 +81,6 @@ extension AppDelegate {
 
         UITabBar.appearance().tintColor = UIColor(named: "primary")
 
-        UILabel.appearance().font = FontStyles.label1.font
+        UILabel.appearance().font = FontStyle.Label1.font()
     }
 }

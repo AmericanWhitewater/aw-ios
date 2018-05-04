@@ -15,8 +15,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
     private let riverName: UILabel = {
         let lbl = UILabel()
-        lbl.font = FontStyles.headline1.font
-        lbl.textColor = FontStyles.headline1.color
+        lbl.apply(style: .Headline1)
         lbl.numberOfLines = 0
         lbl.lineBreakMode = .byWordWrapping
         lbl.translatesAutoresizingMaskIntoConstraints = false
@@ -25,8 +24,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
     private let sectionLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = FontStyles.text1.font
-        lbl.textColor = FontStyles.text1.color
+        lbl.apply(style: .Text1)
         lbl.numberOfLines = 0
         lbl.lineBreakMode = .byWordWrapping
         lbl.translatesAutoresizingMaskIntoConstraints = false
@@ -35,7 +33,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
     private let difficultyLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = FontStyles.label1.font
+        lbl.apply(style: .Label1)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -47,8 +45,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
     private let distanceLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = FontStyles.text1.font
-        lbl.textColor = FontStyles.text1.color
+        lbl.apply(style: .Text1)
         lbl.textAlignment = .right
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
