@@ -17,6 +17,14 @@ class TabViewController: UITabBarController, MOCViewControllerType {
                 destinationVC.managedObjectContext = managedObjectContext
             }
         }
+
+        if let context = managedObjectContext {
+            let request = NSFetchRequest<Reach>(entityName: "Reach")
+            request.predicate = NSPredicate(format: "favorite = TRUE" )
+            if let count = try? context.count(for: request), count > 0 {
+                self.selectedIndex = 2
+            }
+        }
     }
 }
 
