@@ -57,6 +57,10 @@ extension FilterRegionViewController: UISearchBarDelegate {
         }
         self.tableView.reloadData()
     }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
