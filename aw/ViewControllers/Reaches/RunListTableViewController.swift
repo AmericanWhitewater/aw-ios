@@ -124,6 +124,7 @@ extension RunListTableViewController {
     func setupSearchControl() {
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
+        searchController.searchBar.returnKeyType = .done
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = searchText()
         searchController.hidesNavigationBarDuringPresentation = false

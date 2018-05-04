@@ -23,6 +23,7 @@ extension FilterRegionViewController {
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
+        searchBar.returnKeyType = .done
 
         selectedRegions = DefaultsManager.regionsFilter
 
@@ -56,6 +57,10 @@ extension FilterRegionViewController: UISearchBarDelegate {
             }
         }
         self.tableView.reloadData()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
 
