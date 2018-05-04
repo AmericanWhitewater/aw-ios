@@ -14,34 +14,28 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
     private let riverName: UILabel = {
         let lbl = UILabel()
-        lbl.text = "name"
+        lbl.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         lbl.textColor = .black
         lbl.numberOfLines = 0
         lbl.lineBreakMode = .byWordWrapping
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.setContentHuggingPriority(UILayoutPriority(rawValue: 250), for: .vertical)
-        lbl.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .vertical)
         return lbl
     }()
 
     private let sectionLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "section"
+        lbl.font = UIFont.systemFont(ofSize: 15)
         lbl.textColor = UIColor(named: "font_grey")
         lbl.numberOfLines = 0
         lbl.lineBreakMode = .byWordWrapping
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.setContentHuggingPriority(UILayoutPriority(rawValue: 250), for: .vertical)
-        lbl.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .vertical)
         return lbl
     }()
 
     private let difficultyLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "difficulty"
+        lbl.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.setContentHuggingPriority(UILayoutPriority(rawValue: 250), for: .vertical)
-        lbl.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .vertical)
         return lbl
     }()
 
@@ -52,18 +46,12 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
     private let distanceLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "distance"
         lbl.font = UIFont.systemFont(ofSize: 15)
         lbl.textAlignment = .right
         lbl.textColor = UIColor(named: "font_grey")
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -74,7 +62,6 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
                                   paddingTop: 0, paddingLeft: 0,
                                   paddingBottom: -1, paddingRight: 0,
                                   width: 8, height: 0, enableInsets: false)
-        conditionColorView.setContentHuggingPriority(UILayoutPriority(rawValue: 250), for: .vertical)
 
         let rightStack = UIStackView(arrangedSubviews: [distanceLabel, favoriteButton])
         rightStack.axis = .vertical
@@ -82,7 +69,6 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
         rightStack.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
         rightStack.distribution = .equalSpacing
         rightStack.alignment = .trailing
-        rightStack.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .vertical)
 
         let leftSubStack = UIStackView(arrangedSubviews: [riverName, sectionLabel])
         leftSubStack.axis = .vertical
