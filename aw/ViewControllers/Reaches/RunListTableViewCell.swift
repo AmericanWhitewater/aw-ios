@@ -9,6 +9,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
     private let conditionColorView: UIView = {
         let colorView = UIView()
+        colorView.translatesAutoresizingMaskIntoConstraints = false
         return colorView
     }()
 
@@ -57,11 +58,13 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.accessoryType = .disclosureIndicator
         contentView.addSubview(conditionColorView)
-        conditionColorView.anchor(top: contentView.topAnchor, left: contentView.leftAnchor,
-                                  bottom: contentView.bottomAnchor, right: nil,
-                                  paddingTop: 0, paddingLeft: 0,
-                                  paddingBottom: -1, paddingRight: 0,
-                                  width: 8, height: 0, enableInsets: false)
+
+        NSLayoutConstraint.activate([
+            conditionColorView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
+            conditionColorView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            conditionColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 1),
+            conditionColorView.widthAnchor.constraint(equalToConstant: 8)
+            ])
 
         let rightStack = UIStackView(arrangedSubviews: [distanceLabel, favoriteButton])
         rightStack.axis = .vertical
@@ -124,7 +127,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
             sectionLabel.text = reach.sectionCleanedHTML
             difficultyLabel.text = "Level: \(reach.readingFormatted) Class: \(reach.difficulty ?? "Unknown")"
             difficultyLabel.textColor = reach.color
-            distanceLabel.text = reach.distanceFormatted
+            distanceLabel.text = reach.lengthFormatted
 
             let favoriteIcon = reach.favorite ?
                 UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite")

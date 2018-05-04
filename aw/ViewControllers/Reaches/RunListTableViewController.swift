@@ -279,9 +279,6 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
         header?.favoriteTable = favorite
         return header
     }
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         segueDetail()

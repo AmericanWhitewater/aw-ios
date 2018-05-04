@@ -63,7 +63,6 @@
 		38BE74A420681B9D00DE555D /* FilterViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */; };
 		38BE74A6206827A200DE555D /* DifficultyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A5206827A200DE555D /* DifficultyHelper.swift */; };
 		38BE74A8206839F200DE555D /* FilterManagerViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A7206839F200DE555D /* FilterManagerViewControllerType.swift */; };
-		38C2151A209BEE2D00A1BE13 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C21519209BEE2D00A1BE13 /* UIView.swift */; };
 		38C421542065C7DE0044D717 /* AWApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C421532065C7DE0044D717 /* AWApiHelper.swift */; };
 		38EBD1CE2070785600D7B1C1 /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EBD1CD2070785600D7B1C1 /* NewsTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -127,7 +126,6 @@
 		38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewControllerType.swift; sourceTree = "<group>"; };
 		38BE74A5206827A200DE555D /* DifficultyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyHelper.swift; sourceTree = "<group>"; };
 		38BE74A7206839F200DE555D /* FilterManagerViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterManagerViewControllerType.swift; sourceTree = "<group>"; };
-		38C21519209BEE2D00A1BE13 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		38C421532065C7DE0044D717 /* AWApiHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiHelper.swift; sourceTree = "<group>"; };
 		38EBD1CD2070785600D7B1C1 /* NewsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -249,7 +247,6 @@
 				38A6C8EE2067074700B5BA29 /* Reach.swift */,
 				3836C48D20708E7900490999 /* Article.swift */,
 				3836C4932071031400490999 /* AWButton.swift */,
-				38C21519209BEE2D00A1BE13 /* UIView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -453,7 +450,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38C2151A209BEE2D00A1BE13 /* UIView.swift in Sources */,
 				381ED39F206FC15700B03F13 /* ReachDetailMapViewController.swift in Sources */,
 				3843F88E2087CC67009BC211 /* AWGage.swift in Sources */,
 				3898B4F52070586000B49B68 /* RunHeaderTableViewCell.swift in Sources */,
