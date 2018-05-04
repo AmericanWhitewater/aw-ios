@@ -49,6 +49,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
             print("Unknown segue!")
         }
     }
+
     func noDataString() -> String {
         if DefaultsManager.distanceFilter != 0 && DefaultsManager.regionsFilter.count != 0 {
             return "No runs found with current filters. Is the distance filter hiding the selected regions?"
@@ -83,6 +84,10 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         return [searchPredicate(), difficultiesPredicate(),
                 regionsPredicate(), distancePredicate(),
                 runnablePredicate()]
+    }
+
+    func segueDetail() {
+        performSegue(withIdentifier: Segue.runDetail.rawValue, sender: self)
     }
 }
 
@@ -276,6 +281,11 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
     }
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        segueDetail()
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
