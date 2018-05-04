@@ -15,7 +15,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
     private let riverName: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        lbl.font = FontStyles.headline1.font
         lbl.textColor = .black
         lbl.numberOfLines = 0
         lbl.lineBreakMode = .byWordWrapping
