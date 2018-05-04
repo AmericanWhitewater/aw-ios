@@ -125,6 +125,7 @@ extension RunDetailTableViewController {
     func initialize() {
         tableView.contentInset = UIEdgeInsets(top: -36, left: 0, bottom: 0, right: 0) //UIEdgeInsetsMake(-36, 0, 0, 0)
 
+        styleLabels()
         drawView()
         setupRefreshControl()
     }
@@ -154,6 +155,22 @@ extension RunDetailTableViewController {
         AWApiHelper.updateReaches(reachIds: [String(reach.id)], viewContext: context) {
             self.drawView()
         }
+    }
+
+    func styleLabels() {
+        nameLabel.apply(style: .Headline1)
+        sectionLabel.apply(style: .Text1)
+        difficultyLabel.apply(style: .Headline1)
+        lengthLabel.apply(style: .Headline1)
+        gradientLabel.apply(style: .Headline1)
+        readingLabel.apply(style: .Number2)
+        unitsLabel.apply(style: .Text1)
+        detailUpdated.apply(style: .Text2)
+        descriptionLabel.apply(style: .Text1)
+        runnabilityLabel.apply(style: .Text1)
+        runnabilityLabel.numberOfLines = 0
+        runnabilityLabel.textAlignment = .right
+        runnabilityLabel.lineBreakMode = .byWordWrapping
     }
 
     func drawView() {

@@ -28,6 +28,7 @@ extension FilterRegionViewController {
         selectedRegions = DefaultsManager.regionsFilter
 
         setRegionsLabel()
+        selectedRegionsLabel.apply(style: .Headline1)
     }
 
     func setRegionsLabel() {
