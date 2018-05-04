@@ -21,31 +21,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="36" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KvD-IO-b3b">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="36" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KvD-IO-b3b">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="runCell" id="2xN-qK-vRv" customClass="RunListTableViewCell" customModule="aw" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="36" width="375" height="100"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="runCellOld" id="2xN-qK-vRv" customClass="RunListTableViewCell" customModule="aw" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="36" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2xN-qK-vRv" id="Fl6-II-Qzp">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jPt-YH-PRN">
-                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="100"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="44"/>
                                                     <color key="backgroundColor" name="status_grey"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="8" id="v5S-jt-1Lf"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RiverName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XQN-1F-cl9">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="RiverName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XQN-1F-cl9">
                                                     <rect key="frame" x="16" y="11" width="87.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Section" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xep-FA-7p5">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" ambiguous="YES" text="Section" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xep-FA-7p5">
                                                     <rect key="frame" x="16" y="34" width="266" height="37.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="266" id="3Xq-0G-2iU"/>
@@ -54,22 +54,19 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Difficulty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wt2-bE-NKJ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Difficulty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wt2-bE-NKJ">
                                                     <rect key="frame" x="16" y="73.5" width="65.5" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDc-3f-lwo">
-                                                    <rect key="frame" x="304" y="58.5" width="22" height="22"/>
+                                                    <rect key="frame" x="304" y="2.5" width="22" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="22" id="i33-hG-VV7"/>
                                                         <constraint firstAttribute="height" constant="22" id="zaI-OL-uRP"/>
                                                     </constraints>
                                                     <state key="normal" title="Button" image="icon_favorite"/>
-                                                    <connections>
-                                                        <action selector="favoriteButtonTapped:" destination="2xN-qK-vRv" eventType="touchUpInside" id="bH2-jK-5zz"/>
-                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RmW-ZZ-Ba0">
                                                     <rect key="frame" x="282" y="11" width="60" height="18"/>
@@ -96,12 +93,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="conditionColorView" destination="jPt-YH-PRN" id="An3-LP-L0x"/>
-                                            <outlet property="difficultyLabel" destination="Wt2-bE-NKJ" id="jk1-kZ-egn"/>
-                                            <outlet property="distanceLabel" destination="RmW-ZZ-Ba0" id="htg-rp-mpc"/>
-                                            <outlet property="favoriteButton" destination="WDc-3f-lwo" id="jeb-GP-Usw"/>
-                                            <outlet property="riverName" destination="XQN-1F-cl9" id="qJw-vi-MWp"/>
-                                            <outlet property="sectionLabel" destination="xep-FA-7p5" id="l0Q-Ns-Sti"/>
                                             <segue destination="lOP-Q4-YiZ" kind="show" identifier="runDetail" id="YkS-Jf-Fvi"/>
                                         </connections>
                                     </tableViewCell>
@@ -876,16 +867,16 @@ plan for your next run!</string>
         <scene sceneID="Vg6-4h-UC1">
             <objects>
                 <tableViewController title="Favorites List" id="lCv-VW-E28" customClass="FavoriteListTableViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="36" sectionFooterHeight="28" id="np3-ty-ckn">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="36" sectionFooterHeight="28" id="np3-ty-ckn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="runCell" id="QTx-HH-Vqi" customClass="RunListTableViewCell" customModule="aw" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="36" width="375" height="100"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="runCellOld" id="QTx-HH-Vqi" customClass="RunListTableViewCell" customModule="aw" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="36" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QTx-HH-Vqi" id="byw-9i-Zrd">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="99.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Klh-o3-ouo">
@@ -923,9 +914,6 @@ plan for your next run!</string>
                                                 <constraint firstAttribute="width" constant="22" id="MTj-f1-4Df"/>
                                             </constraints>
                                             <state key="normal" title="Button" image="icon_favorite"/>
-                                            <connections>
-                                                <action selector="favoriteButtonTapped:" destination="QTx-HH-Vqi" eventType="touchUpInside" id="wQl-fC-hLX"/>
-                                            </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qyM-C9-7rQ">
                                             <rect key="frame" x="265" y="11" width="60" height="18"/>
@@ -952,12 +940,6 @@ plan for your next run!</string>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="conditionColorView" destination="Klh-o3-ouo" id="EEm-pr-Vmo"/>
-                                    <outlet property="difficultyLabel" destination="lyo-3x-0EU" id="f26-4p-6k4"/>
-                                    <outlet property="distanceLabel" destination="qyM-C9-7rQ" id="0Hb-nJ-yjU"/>
-                                    <outlet property="favoriteButton" destination="jbg-rp-uO3" id="i1T-tk-CcF"/>
-                                    <outlet property="riverName" destination="tkN-ig-IW4" id="ogn-ZW-V7J"/>
-                                    <outlet property="sectionLabel" destination="e52-p4-o3I" id="L5t-kz-izg"/>
                                     <segue destination="lOP-Q4-YiZ" kind="show" identifier="runDetailFavorites" id="HZW-Im-KWw"/>
                                 </connections>
                             </tableViewCell>
@@ -1527,7 +1509,7 @@ plan for your next run!</string>
                                 <rect key="frame" x="0.0" y="373.5" width="375" height="244.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="runCell" rowHeight="112" id="lEW-cI-feR" customClass="RunListTableViewCell" customModule="aw" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="runCellOld" rowHeight="112" id="lEW-cI-feR" customClass="RunListTableViewCell" customModule="aw" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="112"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lEW-cI-feR" id="ZGg-89-Sen">
@@ -1548,7 +1530,7 @@ plan for your next run!</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Section" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Asc-KW-X1u">
-                                                    <rect key="frame" x="16" y="33.5" width="87.5" height="50"/>
+                                                    <rect key="frame" x="16" y="33.5" width="87.5" height="44"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1568,22 +1550,19 @@ plan for your next run!</string>
                                                             <color key="textColor" name="font_light_grey"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LDU-6R-sOh">
+                                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="240" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LDU-6R-sOh">
                                                             <rect key="frame" x="200.5" y="48" width="22" height="47.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="22" id="AF4-BF-N4I"/>
                                                                 <constraint firstAttribute="width" secondItem="LDU-6R-sOh" secondAttribute="height" multiplier="22:47" id="aKJ-zc-r5q"/>
                                                             </constraints>
                                                             <state key="normal" title="Button" image="icon_favorite"/>
-                                                            <connections>
-                                                                <action selector="favoriteButtonTapped:" destination="lEW-cI-feR" eventType="touchUpInside" id="TMT-wq-SBf"/>
-                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="W2R-Cz-l4T" firstAttribute="top" secondItem="Asc-KW-X1u" secondAttribute="bottom" constant="2" id="Bmz-3T-mg4"/>
+                                                <constraint firstItem="W2R-Cz-l4T" firstAttribute="top" secondItem="Asc-KW-X1u" secondAttribute="bottom" constant="8" id="Bmz-3T-mg4"/>
                                                 <constraint firstItem="JAy-i8-lLK" firstAttribute="leading" secondItem="2pC-K0-GeU" secondAttribute="trailing" constant="8" id="CYj-J6-jGF"/>
                                                 <constraint firstItem="JAy-i8-lLK" firstAttribute="top" secondItem="ZGg-89-Sen" secondAttribute="top" constant="11" id="LHf-s2-uO3"/>
                                                 <constraint firstItem="2pC-K0-GeU" firstAttribute="leading" secondItem="ZGg-89-Sen" secondAttribute="leading" id="NRG-jh-l3x"/>
@@ -1601,14 +1580,6 @@ plan for your next run!</string>
                                                 <constraint firstItem="W2R-Cz-l4T" firstAttribute="leading" secondItem="2pC-K0-GeU" secondAttribute="trailing" constant="8" id="v8t-eP-WBu"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="conditionColorView" destination="2pC-K0-GeU" id="WBn-zM-eaY"/>
-                                            <outlet property="difficultyLabel" destination="W2R-Cz-l4T" id="kv7-2O-Bml"/>
-                                            <outlet property="distanceLabel" destination="ggG-bm-fEV" id="h8G-Ym-RY0"/>
-                                            <outlet property="favoriteButton" destination="LDU-6R-sOh" id="rKn-hF-dbT"/>
-                                            <outlet property="riverName" destination="JAy-i8-lLK" id="OVY-E4-yjT"/>
-                                            <outlet property="sectionLabel" destination="Asc-KW-X1u" id="SAs-Hc-ngg"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -1690,6 +1661,6 @@ plan for your next run!</string>
     <inferredMetricsTieBreakers>
         <segue reference="vCc-Lg-GX5"/>
         <segue reference="HLz-3E-X9y"/>
-        <segue reference="YkS-Jf-Fvi"/>
+        <segue reference="HZW-Im-KWw"/>
     </inferredMetricsTieBreakers>
 </document>

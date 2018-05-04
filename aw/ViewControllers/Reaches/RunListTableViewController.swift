@@ -12,6 +12,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
 
     var predicates: [NSPredicate] = []
     var favorite: Bool = false
+    let cellId = "runCell"
 
     let searchController = UISearchController(searchResultsController: nil)
 
@@ -90,6 +91,7 @@ extension RunListTableViewController {
     func initialize() {
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(RunListTableViewCell.self, forCellReuseIdentifier: cellId)
 
         tableView.register(UINib(
                 nibName: "RunHeaderTableViewCell",
@@ -250,7 +252,7 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "runCell",
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
                                                        for: indexPath) as? RunListTableViewCell
             else {
             fatalError("Failed to deque cell as RunListTableViewCell")
@@ -271,6 +273,9 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerCell") as? RunHeaderTableViewCell
         header?.favoriteTable = favorite
         return header
+    }
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
 }
 
