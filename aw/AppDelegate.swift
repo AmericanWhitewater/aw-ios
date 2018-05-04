@@ -77,6 +77,7 @@ extension AppDelegate {
         UINavigationBar.appearance().tintColor = UIColor(named: "white")
         UINavigationBar.appearance().titleTextAttributes = [
             NSAttributedStringKey.foregroundColor: UIColor(named: "white")]
+        UISearchBar.appearance().tintColor = UIColor.black
 
         UITabBar.appearance().tintColor = UIColor(named: "primary")
     }
