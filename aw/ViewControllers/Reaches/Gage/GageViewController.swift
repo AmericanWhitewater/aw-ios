@@ -21,6 +21,7 @@ class GageViewController: UIViewController {
         }
     }
     var updateTime: Date?
+    let cellId = "runCell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,7 @@ class GageViewController: UIViewController {
 
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(RunListTableViewCell.self, forCellReuseIdentifier: cellId)
 
         fetchedResultsController?.delegate = self
         fetchedResultsController = initializeFetchedResultController()
@@ -136,7 +138,7 @@ extension GageViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: "runCell",
+            withIdentifier: cellId,
             for: indexPath) as? RunListTableViewCell
             else {
                 fatalError("Failed to deque cell as RunListTableViewCell")

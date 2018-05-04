@@ -38,6 +38,11 @@ extension Reach {
         return distance != 0 ? "\(Int(distance)) mi" : ""
     }
 
+    var lengthFormatted: String? {
+        guard let length = length else { return nil }
+        return length != "" ? "\(length) mi" : ""
+    }
+
     var updatedString: String? {
         guard let date = gageUpdated else {
             if detailUpdated != nil {
