@@ -2,7 +2,6 @@ import CoreData
 import UIKit
 
 class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
-//    @IBOutlet weak var favoriteButton: UIButton!
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -46,6 +45,11 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
         return lbl
     }()
 
+    private let favoriteButton: UIButton = {
+        let button = UIButton()
+        return button
+    }()
+
     private let distanceLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "distance"
@@ -72,12 +76,12 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
                                   width: 8, height: 0, enableInsets: false)
         conditionColorView.setContentHuggingPriority(UILayoutPriority(rawValue: 250), for: .vertical)
 
-        let rightStack = UIStackView(arrangedSubviews: [distanceLabel])
+        let rightStack = UIStackView(arrangedSubviews: [distanceLabel, favoriteButton])
         rightStack.axis = .vertical
         rightStack.translatesAutoresizingMaskIntoConstraints = false
         rightStack.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
-        rightStack.distribution = .fill
-        rightStack.alignment = .fill
+        rightStack.distribution = .equalSpacing
+        rightStack.alignment = .trailing
         rightStack.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .vertical)
 
         let leftSubStack = UIStackView(arrangedSubviews: [riverName, sectionLabel])
@@ -101,7 +105,9 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
         horizontalStack.alignment = .fill
         contentView.addSubview(horizontalStack)
         horizontalStack.translatesAutoresizingMaskIntoConstraints = false
-        
+
+        favoriteButton.addTarget(self, action: #selector(favoriteButtonTapped(_:)), for: .touchUpInside)
+
         NSLayoutConstraint.activate([
             horizontalStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             horizontalStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
@@ -136,7 +142,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
             let favoriteIcon = reach.favorite ?
                 UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite")
-//            favoriteButton.setImage(favoriteIcon, for: .normal)
+            favoriteButton.setImage(favoriteIcon, for: .normal)
 
         }
     }
@@ -146,7 +152,5 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
             guard let reach = self.reach else { return }
             reach.favorite = !reach.favorite
         }
-
-        //favoriteButton.setImage(UIImage(named: "icon_favorite_selected"), for: .normal)
     }
 }
