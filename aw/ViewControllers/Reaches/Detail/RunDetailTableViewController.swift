@@ -115,6 +115,11 @@ class RunDetailTableViewController: UITableViewController {
             return expandDescription ? UITableViewAutomaticDimension : 168
         case IndexPath(row: 0, section: 2):
             return 77
+        case IndexPath(row: 0, section: 3): // Gage info
+            if reach?.gageId != 0 {
+                return 44
+            }
+            return 0
         default:
             return 44
         }
