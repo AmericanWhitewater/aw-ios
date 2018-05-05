@@ -15,8 +15,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
     private let riverName: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        lbl.textColor = .black
+        lbl.apply(style: .Headline1)
         lbl.numberOfLines = 0
         lbl.lineBreakMode = .byWordWrapping
         lbl.translatesAutoresizingMaskIntoConstraints = false
@@ -25,8 +24,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
     private let sectionLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont.systemFont(ofSize: 15)
-        lbl.textColor = UIColor(named: "font_grey")
+        lbl.apply(style: .Text1)
         lbl.numberOfLines = 0
         lbl.lineBreakMode = .byWordWrapping
         lbl.translatesAutoresizingMaskIntoConstraints = false
@@ -35,7 +33,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
     private let difficultyLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        lbl.apply(style: .Label1)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -47,9 +45,8 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
     private let distanceLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont.systemFont(ofSize: 15)
+        lbl.apply(style: .Text1)
         lbl.textAlignment = .right
-        lbl.textColor = UIColor(named: "font_grey")
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()

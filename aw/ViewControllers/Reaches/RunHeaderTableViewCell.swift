@@ -11,6 +11,7 @@ class RunHeaderTableViewCell: UITableViewHeaderFooterView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        updateTimeLabel.apply(style: .Text2)
         update()
     }
 

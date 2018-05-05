@@ -80,5 +80,7 @@ extension AppDelegate {
         UISearchBar.appearance().tintColor = UIColor.black
 
         UITabBar.appearance().tintColor = UIColor(named: "primary")
+
+        UILabel.appearance().font = FontStyle.Label1.font()
     }
 }

@@ -86,7 +86,9 @@ extension GageViewController {
 
         let metric = gageDetail.metrics[Int(reach.gageMetric)]
         nameLabel.text = gageDetail.gage.name
+        nameLabel.apply(style: .Headline1)
         readingLabel.text = String(format: reading == floor(reading) ? "%.0f" : "%.2f", reading)
+        readingLabel.apply(style: .Number2)
         unitsLabel.text = metric?.unit
 
         let dateFormat = DateFormatter()
@@ -97,6 +99,7 @@ extension GageViewController {
         timeFormat.dateFormat = "h:mm a"
 
         updateTimeLabel.text = "\(dateFormat.string(from: updateTime)) \(timeFormat.string(from: updateTime))"
+        updateTimeLabel.apply(style: .Text2)
     }
 
     func initializeFetchedResultController() -> NSFetchedResultsController<Reach>? {

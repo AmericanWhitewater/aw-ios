@@ -10,6 +10,10 @@
 		2F78EF49209920C600193DCB /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F78EF47209920C600193DCB /* Fabric.framework */; };
 		2F78EF4A209920C600193DCB /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F78EF48209920C600193DCB /* Crashlytics.framework */; };
 		3807299B209CB7C800C61223 /* MapKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807299A209CB7C800C61223 /* MapKeyView.swift */; };
+		3807299D209CD06500C61223 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807299C209CD06500C61223 /* Fonts.swift */; };
+		380729A1209CD0F300C61223 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3807299F209CD0F300C61223 /* OpenSans-SemiBold.ttf */; };
+		380729A2209CD0F300C61223 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 380729A0209CD0F300C61223 /* OpenSans-Regular.ttf */; };
+		380729A4209CDD6700C61223 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380729A3209CDD6700C61223 /* UILabel.swift */; };
 		38150B262067F75800CBE8D8 /* Regions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38150B252067F75800CBE8D8 /* Regions.swift */; };
 		381ED393206F012400B03F13 /* ReachFetchRequestControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED392206F012400B03F13 /* ReachFetchRequestControllerType.swift */; };
 		381ED39B206FBA3B00B03F13 /* ReachDetailContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED39A206FBA3B00B03F13 /* ReachDetailContainerViewController.swift */; };
@@ -74,6 +78,10 @@
 		2F78EF47209920C600193DCB /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		2F78EF48209920C600193DCB /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		3807299A209CB7C800C61223 /* MapKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKeyView.swift; sourceTree = "<group>"; };
+		3807299C209CD06500C61223 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		3807299F209CD0F300C61223 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		380729A0209CD0F300C61223 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		380729A3209CDD6700C61223 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		38150B252067F75800CBE8D8 /* Regions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regions.swift; sourceTree = "<group>"; };
 		381ED392206F012400B03F13 /* ReachFetchRequestControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFetchRequestControllerType.swift; sourceTree = "<group>"; };
 		381ED39A206FBA3B00B03F13 /* ReachDetailContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachDetailContainerViewController.swift; sourceTree = "<group>"; };
@@ -156,6 +164,15 @@
 				3807299A209CB7C800C61223 /* MapKeyView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		3807299E209CD0D700C61223 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				380729A0209CD0F300C61223 /* OpenSans-Regular.ttf */,
+				3807299F209CD0F300C61223 /* OpenSans-SemiBold.ttf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 		381ED3A0206FC16200B03F13 /* Detail */ = {
@@ -266,6 +283,7 @@
 				38A6C8EE2067074700B5BA29 /* Reach.swift */,
 				3836C48D20708E7900490999 /* Article.swift */,
 				3836C4932071031400490999 /* AWButton.swift */,
+				380729A3209CDD6700C61223 /* UILabel.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -306,7 +324,9 @@
 		38B3CD1420672F1D0016630F /* Etc */ = {
 			isa = PBXGroup;
 			children = (
+				3807299E209CD0D700C61223 /* fonts */,
 				38B3CD1520672F310016630F /* Segues.swift */,
+				3807299C209CD06500C61223 /* Fonts.swift */,
 			);
 			path = Etc;
 			sourceTree = "<group>";
@@ -439,9 +459,11 @@
 			files = (
 				385E59CC2063047B00A68EC9 /* LaunchScreen.storyboard in Resources */,
 				3858D23120689313004A39C6 /* About.storyboard in Resources */,
+				380729A1209CD0F300C61223 /* OpenSans-SemiBold.ttf in Resources */,
 				3898B4F62070586000B49B68 /* RunHeaderTableViewCell.xib in Resources */,
 				385E59C92063047B00A68EC9 /* Assets.xcassets in Resources */,
 				3858D23320689345004A39C6 /* News.storyboard in Resources */,
+				380729A2209CD0F300C61223 /* OpenSans-Regular.ttf in Resources */,
 				385E59C72063047B00A68EC9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -487,6 +509,7 @@
 				3843F88E2087CC67009BC211 /* AWGage.swift in Sources */,
 				3898B4F52070586000B49B68 /* RunHeaderTableViewCell.swift in Sources */,
 				38A98F822067EFA3009853E1 /* FilterRegionViewController.swift in Sources */,
+				380729A4209CDD6700C61223 /* UILabel.swift in Sources */,
 				38A98F7F2067EF90009853E1 /* FilterViewController.swift in Sources */,
 				38A98F882067EFC0009853E1 /* FilterDistanceViewController.swift in Sources */,
 				3836C4902070941600490999 /* SingleArticleViewController.swift in Sources */,
@@ -508,6 +531,7 @@
 				38150B262067F75800CBE8D8 /* Regions.swift in Sources */,
 				3836C4962071077200490999 /* AWReach.swift in Sources */,
 				38A98F772067ED3F009853E1 /* AboutAWStewardshipViewController.swift in Sources */,
+				3807299D209CD06500C61223 /* Fonts.swift in Sources */,
 				3836C49D207109A100490999 /* AWArticle.swift in Sources */,
 				38BE74A8206839F200DE555D /* FilterManagerViewControllerType.swift in Sources */,
 				38A98F602067E32D009853E1 /* DefaultsManager.swift in Sources */,

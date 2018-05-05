@@ -22,8 +22,14 @@ class NewsTableViewCell: UITableViewCell {
     func update() {
         if let article = article {
             articleTitleLabel.text = article.title
+            articleTitleLabel.apply(style: .Headline1)
+
             articleAbstractLabel.text = article.abstractCleanedHTML
+            articleAbstractLabel.apply(style: .Text1)
+
             authorDateLabel.text = article.byline
+            authorDateLabel.apply(style: .Text2)
+            
             if let photoURL = article.abstractPhotoURL,
                 let url = URL(string: photoURL),
                 let data = try? Data(contentsOf: url) {

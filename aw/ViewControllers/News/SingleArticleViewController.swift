@@ -29,6 +29,9 @@ extension SingleArticleViewController {
             action: #selector(shareButtonTapped))
 
         self.navigationItem.rightBarButtonItem = shareIcon
+
+        titleLabel.apply(style: FontStyle.Headline1)
+        bylineLabel.apply(style: FontStyle.Text2)
     }
 
     @objc func shareButtonTapped(_ sender: Any) {
