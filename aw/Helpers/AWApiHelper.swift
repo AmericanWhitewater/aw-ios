@@ -88,7 +88,14 @@ struct AWApiHelper {
             reach.state = region.title
         }
 
-        reach.section = newReach.section
+        if let altName = newReach.altName, !altName.isEmpty {
+            reach.section = altName
+        } else {
+            reach.section = newReach.section
+        }
+
+        //reach.section = newReach.section
+        //reach.section = newReach.altName != "" ? newReach.altName : newReach.section
         reach.putInLat = newReach.putInLat
         reach.putInLon = newReach.putInLon
         reach.name = newReach.name
