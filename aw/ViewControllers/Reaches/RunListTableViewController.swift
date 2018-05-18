@@ -119,6 +119,8 @@ extension RunListTableViewController {
         toggleView.layer.masksToBounds = true
         toggleView.layer.cornerRadius = toggleView.frame.size.height / 2
         runnableToggle.isOn = DefaultsManager.runnableFilter
+        runnableToggle.backgroundColor = UIColor.white
+        runnableToggle.layer.cornerRadius = 16
     }
 
     func setupSearchControl() {
