@@ -7,17 +7,6 @@ class FavoriteListTableViewController: RunListTableViewController {
         favorite = true
     }
 
-    override func noDataString() -> String {
-        if DefaultsManager.distanceFilter != 0 && DefaultsManager.regionsFilter.count != 0 {
-            return "No favorite runs found with current filters. Is the distance filter hiding the selected regions?"
-        }
-        if DefaultsManager.distanceFilter != 0 {
-            return "No favorite runs found with current filters. You might want to try searching a larger area?"
-        }
-
-        return "No favorite runs found. Have you starred any runs and checked which filters are applied?"
-    }
-
     override func refreshReaches(sender: UIRefreshControl) {
         guard let fetchedResultsController = fetchedResultsController,
             let reaches = fetchedResultsController.fetchedObjects

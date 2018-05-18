@@ -6,7 +6,8 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     @IBOutlet weak var toggleView: UIView?
     @IBOutlet weak var runnableToggle: UISwitch?
     @IBOutlet weak var updateTimeLabel: UILabel!
-
+    @IBOutlet weak var updateTimeView: UIView!
+    
     var managedObjectContext: NSManagedObjectContext?
 
     var fetchedResultsController: NSFetchedResultsController<Reach>?
@@ -48,20 +49,6 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         default:
             print("Unknown segue!")
         }
-    }
-
-    func noDataString() -> String {
-        if !DefaultsManager.onboardingCompleted {
-            return "Still loading runs. Give it a moment."
-        }
-        if DefaultsManager.distanceFilter != 0 && DefaultsManager.regionsFilter.count != 0 {
-            return "No runs found with current filters. Is the distance filter hiding the selected regions?"
-        }
-        if DefaultsManager.distanceFilter != 0 {
-            return "No runs found with current filters. You might want to try searching a larger area?"
-        }
-
-        return "No runs found. Have you checked which filters are applied?"
     }
 
     @objc func refreshReaches(sender: UIRefreshControl) {
@@ -211,6 +198,20 @@ extension RunListTableViewController {
             updateTimeLabel.text = "Update in progress"
         }
     }
+
+    func noDataString() -> String {
+        if !DefaultsManager.onboardingCompleted {
+            return "Runs loading. \nExploration can commence in a moment."
+        }
+        if DefaultsManager.distanceFilter != 0 && DefaultsManager.regionsFilter.count != 0 {
+            return "No runs found with current filters. Is the distance filter hiding the selected regions?"
+        }
+        if DefaultsManager.distanceFilter != 0 {
+            return "No runs found with current filters. You might want to try searching a larger area?"
+        }
+
+        return "No runs found. Have you checked which filters are applied?"
+    }
 }
 
 // MARK: - ReachFetchRequestControllerType
@@ -270,18 +271,56 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
         if rows != 0 {
             tableView.separatorStyle = .singleLine
             tableView.backgroundView = nil
+            updateTimeLabel.isHidden = false
+            updateTimeView.backgroundColor = UIColor(named: "grey_divider")
         } else {
-            let noDataLabel: UILabel = UILabel(
-                frame: CGRect(x: 0, y: 0,
-                              width: tableView.bounds.size.width,
-                              height: tableView.bounds.size.height))
-            noDataLabel.text = noDataString()
-            noDataLabel.textColor = UIColor.black
-            noDataLabel.textAlignment = .center
-            noDataLabel.lineBreakMode = .byWordWrapping
-            noDataLabel.numberOfLines = 0
-            tableView.backgroundView = noDataLabel
+            if !favorite {
+                let noDataLabel: UILabel = UILabel(
+                    frame: CGRect(x: 0, y: 0,
+                                  width: tableView.bounds.size.width,
+                                  height: tableView.bounds.size.height))
+                noDataLabel.text = noDataString()
+                noDataLabel.apply(style: .Text3)
+                noDataLabel.textAlignment = .center
+                noDataLabel.lineBreakMode = .byWordWrapping
+                noDataLabel.numberOfLines = 0
+                tableView.backgroundView = noDataLabel
+            } else {
+                let noDataView = UIView()
+
+                let image = UIImageView(image: UIImage(named: "fill1"))
+                image.contentMode = .scaleAspectFit
+                let title = UILabel()
+                title.apply(style: .Number1)
+                title.text = "No favorite runs, yet."
+
+                let subtitle = UILabel()
+                subtitle.apply(style: .Text3)
+                subtitle.text = "You haven’t favorited any run, yet! Start to search and favorite a run to get updated info!"
+                subtitle.lineBreakMode = .byWordWrapping
+                subtitle.numberOfLines = 0
+                subtitle.textAlignment = .center
+
+                let stack = UIStackView(arrangedSubviews: [image, title, subtitle])
+                stack.axis = .vertical
+                stack.alignment = .center
+                stack.translatesAutoresizingMaskIntoConstraints = false
+                noDataView.addSubview(stack)
+
+                NSLayoutConstraint.activate([
+                    stack.leftAnchor.constraint(equalTo: noDataView.leftAnchor, constant: 20),
+                    stack.rightAnchor.constraint(equalTo: noDataView.rightAnchor, constant: -20),
+                    stack.centerYAnchor.constraint(equalTo: noDataView.centerYAnchor, constant: 0),
+                    stack.heightAnchor.constraint(equalToConstant: 230),
+                    image.heightAnchor.constraint(equalToConstant: 65)
+                    ])
+
+                tableView.backgroundView = noDataView
+            }
+
             tableView.separatorStyle = .none
+            updateTimeLabel.isHidden = true
+            updateTimeView.backgroundColor = UIColor.white
         }
 
         return rows
