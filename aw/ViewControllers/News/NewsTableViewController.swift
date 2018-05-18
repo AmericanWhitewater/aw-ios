@@ -123,8 +123,6 @@ extension NewsTableViewController {
 
     func setupRefreshControl() {
         let refreshControl = UIRefreshControl()
-        let title = NSLocalizedString("Pull to Refresh", comment: "Pull to Refresh")
-        refreshControl.attributedTitle = NSAttributedString(string: title)
         refreshControl.addTarget(self, action: #selector(refreshArticles), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }
