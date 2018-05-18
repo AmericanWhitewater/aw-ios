@@ -51,10 +51,8 @@ extension SingleArticleViewController {
             titleLabel.text = article.title
             bylineLabel.text = article.byline
 
-            if let imageURL = article.abstractPhotoURL,
-                let url = URL(string: imageURL),
-                let data = try? Data(contentsOf: url) {
-                articleImage.image = UIImage(data: data)
+            if let imageURL = article.abstractPhotoURL {
+                articleImage.loadFromUrlAsync(urlString: imageURL)
             }
 
             if let html = article.contents {
