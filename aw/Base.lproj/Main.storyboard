@@ -21,8 +21,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gFy-a9-hIJ">
+                                <rect key="frame" x="0.0" y="64" width="375" height="36"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mIr-IR-Isi">
+                                        <rect key="frame" x="166" y="7" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="grey_divider"/>
+                                <constraints>
+                                    <constraint firstItem="mIr-IR-Isi" firstAttribute="centerY" secondItem="gFy-a9-hIJ" secondAttribute="centerY" id="Ckx-IG-dln"/>
+                                    <constraint firstItem="mIr-IR-Isi" firstAttribute="centerX" secondItem="gFy-a9-hIJ" secondAttribute="centerX" id="RAp-mG-oiO"/>
+                                    <constraint firstAttribute="height" constant="36" id="TMD-Re-fDK"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="36" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KvD-IO-b3b">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="100" width="375" height="567"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nT2-Ot-yag">
@@ -53,13 +70,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Ebb-VE-vnA" firstAttribute="trailing" secondItem="gFy-a9-hIJ" secondAttribute="trailing" id="22f-Hm-fe9"/>
                             <constraint firstItem="Ebb-VE-vnA" firstAttribute="trailing" secondItem="nT2-Ot-yag" secondAttribute="trailing" constant="16" id="3v0-1b-YtH"/>
                             <constraint firstItem="nT2-Ot-yag" firstAttribute="leading" secondItem="Ebb-VE-vnA" secondAttribute="leading" constant="16" id="5Ws-g1-7zx"/>
                             <constraint firstItem="Ebb-VE-vnA" firstAttribute="trailing" secondItem="KvD-IO-b3b" secondAttribute="trailing" id="AOZ-oV-EjD"/>
+                            <constraint firstItem="gFy-a9-hIJ" firstAttribute="leading" secondItem="Ebb-VE-vnA" secondAttribute="leading" id="Acr-RI-0Ru"/>
                             <constraint firstItem="Ebb-VE-vnA" firstAttribute="bottom" secondItem="nT2-Ot-yag" secondAttribute="bottom" constant="10" id="GAU-Q8-I0s"/>
                             <constraint firstItem="KvD-IO-b3b" firstAttribute="leading" secondItem="Jks-hI-pjh" secondAttribute="leading" id="I9D-cp-TyZ"/>
-                            <constraint firstAttribute="bottom" secondItem="KvD-IO-b3b" secondAttribute="bottom" id="Qqq-ua-7J1"/>
-                            <constraint firstItem="KvD-IO-b3b" firstAttribute="top" secondItem="Jks-hI-pjh" secondAttribute="top" id="bt8-QY-INi"/>
+                            <constraint firstItem="Ebb-VE-vnA" firstAttribute="bottom" secondItem="KvD-IO-b3b" secondAttribute="bottom" constant="-49" id="Qqq-ua-7J1"/>
+                            <constraint firstItem="KvD-IO-b3b" firstAttribute="top" secondItem="gFy-a9-hIJ" secondAttribute="bottom" id="UAM-nt-pKT"/>
+                            <constraint firstItem="gFy-a9-hIJ" firstAttribute="top" secondItem="Ebb-VE-vnA" secondAttribute="top" id="cs9-3R-wFO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ebb-VE-vnA"/>
                     </view>
@@ -74,6 +94,7 @@
                         <outlet property="runnableToggle" destination="pKP-07-WHl" id="SOd-8c-Hn6"/>
                         <outlet property="tableView" destination="KvD-IO-b3b" id="8wt-yS-nDl"/>
                         <outlet property="toggleView" destination="nT2-Ot-yag" id="SHn-dT-SNO"/>
+                        <outlet property="updateTimeLabel" destination="mIr-IR-Isi" id="nQB-KY-Axm"/>
                         <segue destination="lOP-Q4-YiZ" kind="show" identifier="runDetail" id="kal-PE-jUf"/>
                     </connections>
                 </viewController>
@@ -662,7 +683,7 @@ plan for your next run!</string>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="lCv-VW-E28" kind="relationship" relationship="rootViewController" id="KXU-7k-kaZ"/>
+                        <segue destination="KYr-PF-7Xv" kind="relationship" relationship="rootViewController" id="WEf-0k-dy1"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ni3-Lu-mf5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -688,24 +709,56 @@ plan for your next run!</string>
             </objects>
             <point key="canvasLocation" x="2868.8000000000002" y="903.14842578710648"/>
         </scene>
-        <!--Favorites List-->
-        <scene sceneID="Vg6-4h-UC1">
+        <!--Favorite List Table View Controller-->
+        <scene sceneID="ziV-Zr-awW">
             <objects>
-                <tableViewController title="Favorites List" id="lCv-VW-E28" customClass="FavoriteListTableViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="36" sectionFooterHeight="28" id="np3-ty-ckn">
+                <viewController id="KYr-PF-7Xv" customClass="FavoriteListTableViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YWp-7h-cVh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gmY-XI-hxh">
+                                <rect key="frame" x="0.0" y="64" width="375" height="36"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S9h-zB-2tj">
+                                        <rect key="frame" x="166" y="7" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="grey_divider"/>
+                                <constraints>
+                                    <constraint firstItem="S9h-zB-2tj" firstAttribute="centerX" secondItem="gmY-XI-hxh" secondAttribute="centerX" id="5Ga-xX-HHU"/>
+                                    <constraint firstAttribute="height" constant="36" id="6Gp-IG-cBU"/>
+                                    <constraint firstItem="S9h-zB-2tj" firstAttribute="centerY" secondItem="gmY-XI-hxh" secondAttribute="centerY" id="bn7-91-AHy"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9py-7s-WQq">
+                                <rect key="frame" x="0.0" y="100" width="375" height="518"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="American Whitewater" id="7hV-8Z-Upi">
-                        <barButtonItem key="backBarButtonItem" title="Favorites" id="EDM-s5-t4Z"/>
-                    </navigationItem>
+                        <constraints>
+                            <constraint firstItem="gmY-XI-hxh" firstAttribute="top" secondItem="zyh-B0-1Kq" secondAttribute="top" id="KIR-Ex-rbI"/>
+                            <constraint firstItem="zyh-B0-1Kq" firstAttribute="bottom" secondItem="9py-7s-WQq" secondAttribute="bottom" id="P8y-UT-U4L"/>
+                            <constraint firstItem="9py-7s-WQq" firstAttribute="leading" secondItem="zyh-B0-1Kq" secondAttribute="leading" id="Q2a-u5-L5z"/>
+                            <constraint firstItem="9py-7s-WQq" firstAttribute="top" secondItem="gmY-XI-hxh" secondAttribute="bottom" id="g0f-Ej-X6t"/>
+                            <constraint firstItem="zyh-B0-1Kq" firstAttribute="trailing" secondItem="gmY-XI-hxh" secondAttribute="trailing" id="liv-Nl-hGd"/>
+                            <constraint firstItem="zyh-B0-1Kq" firstAttribute="trailing" secondItem="9py-7s-WQq" secondAttribute="trailing" id="moh-aL-uaN"/>
+                            <constraint firstItem="gmY-XI-hxh" firstAttribute="leading" secondItem="zyh-B0-1Kq" secondAttribute="leading" id="sNb-hi-3Ht"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zyh-B0-1Kq"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ak8-pm-OcM"/>
                     <connections>
-                        <outlet property="tableView" destination="np3-ty-ckn" id="xzi-Id-Ejr"/>
-                        <segue destination="lOP-Q4-YiZ" kind="show" identifier="runDetailFavorites" id="ZFO-Uv-4yD"/>
+                        <outlet property="tableView" destination="9py-7s-WQq" id="0ph-8b-s6G"/>
+                        <outlet property="updateTimeLabel" destination="S9h-zB-2tj" id="uaH-x4-Qsd"/>
+                        <segue destination="lOP-Q4-YiZ" kind="show" identifier="runDetailFavorites" id="n1I-mv-LT1"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0n1-8C-Bz5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T7X-XK-xtp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1510" y="1825"/>
         </scene>
@@ -1294,7 +1347,7 @@ plan for your next run!</string>
         </scene>
     </scenes>
     <resources>
-        <image name="filter" width="22" height="16"/>
+        <image name="filter" width="23" height="18"/>
         <image name="icon_favorites" width="30" height="20"/>
         <image name="icon_favorites_selected" width="30" height="22"/>
         <image name="icon_map" width="26" height="23"/>
@@ -1319,6 +1372,9 @@ plan for your next run!</string>
         <namedColor name="grey_divider">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="grey_divider">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="primary">
             <color red="0.0" green="0.48627450979999998" blue="0.70196078429999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -1327,8 +1383,8 @@ plan for your next run!</string>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="35b-Ee-eOR"/>
+        <segue reference="vCc-Lg-GX5"/>
         <segue reference="HLz-3E-X9y"/>
-        <segue reference="ZFO-Uv-4yD"/>
+        <segue reference="n1I-mv-LT1"/>
     </inferredMetricsTieBreakers>
 </document>
