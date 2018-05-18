@@ -225,9 +225,7 @@ extension RunDetailTableViewController {
             descriptionLabel.text = "Updating run details"
         }
         if let photoUrl = reach.photoUrl {
-            if let url = URL(string: photoUrl), let data = try? Data(contentsOf: url) {
-                imageView.image = UIImage(data: data)
-            }
+            imageView.loadFromUrlAsync(urlString: photoUrl)
         }
         runnabilityLabel.text = reach.runnable
         runnabilityLabel.textColor = reach.color
