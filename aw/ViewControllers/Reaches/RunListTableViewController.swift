@@ -125,6 +125,7 @@ extension RunListTableViewController {
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.searchBar.returnKeyType = .done
+        searchController.searchBar.tintColor = UIColor.white
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = searchText()
         searchController.hidesNavigationBarDuringPresentation = false
