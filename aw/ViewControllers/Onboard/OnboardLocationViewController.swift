@@ -68,14 +68,7 @@ extension OnboardLocationViewController {
     func saveLocationAndSegue(location: CLLocationCoordinate2D) {
         DefaultsManager.latitude = location.latitude
         DefaultsManager.longitude = location.longitude
-        DefaultsManager.onboardingCompleted = true
         DefaultsManager.distanceFilter = 100
-
-        if let context = managedObjectContext {
-            AWApiHelper.updateRegions(viewContext: context) {
-                // nothing needed to callback since this screeen is going away
-            }
-        }
 
         performSegue(withIdentifier: Segue.onboardingCompleted.rawValue, sender: nil)
     }

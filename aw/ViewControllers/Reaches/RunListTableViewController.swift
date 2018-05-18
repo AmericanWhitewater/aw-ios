@@ -96,6 +96,17 @@ extension RunListTableViewController {
         setupSearchControl()
         setupRefreshControl()
         setupRunnableToggle()
+
+        if !DefaultsManager.onboardingCompleted {
+            tableView.refreshControl?.beginRefreshing()
+            if let context = managedObjectContext {
+                AWApiHelper.updateRegions(viewContext: context) {
+                    DefaultsManager.onboardingCompleted = true
+                    self.updateTime()
+                    self.tableView.refreshControl?.endRefreshing()
+                }
+            }
+        }
     }
 
     func setupRunnableToggle() {
@@ -189,6 +200,9 @@ extension RunListTableViewController {
     }
 
     func noDataString() -> String {
+        if !DefaultsManager.onboardingCompleted {
+            return "Runs loading. \nExploration can commence in a moment."
+        }
         if DefaultsManager.distanceFilter != 0 && DefaultsManager.regionsFilter.count != 0 {
             return "No runs found with current filters. Is the distance filter hiding the selected regions?"
         }
