@@ -30,14 +30,9 @@ class NewsTableViewCell: UITableViewCell {
             authorDateLabel.text = article.byline
             authorDateLabel.apply(style: .Text2)
             
-            if let photoURL = article.abstractPhotoURL,
-                let url = URL(string: photoURL) {
-                DispatchQueue.global().async {
-                    let data = try? Data(contentsOf: url)
-                    DispatchQueue.main.async {
-                        self.abstractImage?.image = UIImage(data: data!)
-                    }
-                }
+            if let photoURL = article.abstractPhotoURL {
+                self.abstractImage?.image = nil
+                self.abstractImage?.loadFromUrlAsync(urlString: photoURL)
             }
         }
     }
