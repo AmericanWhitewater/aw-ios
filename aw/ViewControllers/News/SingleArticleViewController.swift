@@ -57,13 +57,8 @@ extension SingleArticleViewController {
                 articleImage.image = UIImage(data: data)
             }
 
-            if let content = article.contents,
-                let data = content.data(using: .utf8),
-            let html = try? NSMutableAttributedString(
-                data: data,
-                options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
-                documentAttributes: nil) {
-                bodyLabel.attributedText = html
+            if let html = article.contents {
+                bodyLabel.attributedText = html.htmlToAttributedString
             }
         }
     }
