@@ -29,8 +29,7 @@ class FavoriteListTableViewController: RunListTableViewController {
             AWApiHelper.updateReaches(reachIds: reachesIds, viewContext: context) {
                 sender.endRefreshing()
                 DefaultsManager.favoritesLastUpdated = Date()
-                let header = self.tableView.headerView(forSection: 0) as? RunHeaderTableViewCell
-                header?.update()
+                self.updateTime()
             }
         }
     }

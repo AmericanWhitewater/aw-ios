@@ -5,6 +5,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var toggleView: UIView?
     @IBOutlet weak var runnableToggle: UISwitch?
+    @IBOutlet weak var updateTimeLabel: UILabel!
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -25,8 +26,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateFetchPredicates()
-        let header = self.tableView.headerView(forSection: 0) as? RunHeaderTableViewCell
-        header?.update()
+        updateTime()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -65,8 +65,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         if let context = managedObjectContext {
             AWApiHelper.updateRegions(viewContext: context) {
                 sender.endRefreshing()
-                let header = self.tableView.headerView(forSection: 0) as? RunHeaderTableViewCell
-                header?.update()
+                self.updateTime()
             }
         }
     }
@@ -98,14 +97,11 @@ extension RunListTableViewController {
         tableView.dataSource = self
         tableView.register(RunListTableViewCell.self, forCellReuseIdentifier: cellId)
 
-        tableView.register(UINib(
-                nibName: "RunHeaderTableViewCell",
-                bundle: nil),
-           forHeaderFooterViewReuseIdentifier: "headerCell")
-
         fetchedResultsController = initializeFetchedResultController()
         fetchedResultsController?.delegate = self
         updateFetchPredicates()
+
+        updateTimeLabel.apply(style: .Text2)
 
         setupSearchControl()
         setupRefreshControl()
@@ -182,6 +178,24 @@ extension RunListTableViewController {
             print("fetch request failed")
         }
         self.tableView.reloadData()
+    }
+
+    func updateTime() {
+        if var date = DefaultsManager.lastUpdated {
+            if favorite, let favoriteDate = DefaultsManager.favoritesLastUpdated {
+                date = favoriteDate >  date ? favoriteDate : date
+            }
+            let dateFormat = DateFormatter()
+            dateFormat.dateStyle = .medium
+            dateFormat.doesRelativeDateFormatting = true
+
+            let timeFormat = DateFormatter()
+            timeFormat.dateFormat = "h:mm a"
+
+            updateTimeLabel.text = "\( favorite ? "Favorites " : "" )Last Updated \(dateFormat.string(from: date)) at \(timeFormat.string(from: date))"
+        } else {
+            updateTimeLabel.text = "Update in progress"
+        }
     }
 }
 
@@ -276,12 +290,6 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
         cell.managedObjectContext = managedObjectContext
 
         return cell
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerCell") as? RunHeaderTableViewCell
-        header?.favoriteTable = favorite
-        return header
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
