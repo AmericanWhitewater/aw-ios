@@ -107,7 +107,15 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
+        let conditionColor = conditionColorView.backgroundColor
         super.setSelected(selected, animated: animated)
+        conditionColorView.backgroundColor = conditionColor
+    }
+
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        let conditionColor = conditionColorView.backgroundColor
+        super.setHighlighted(highlighted, animated: animated)
+        conditionColorView.backgroundColor = conditionColor
     }
 
     func setup(reach: Reach) {
