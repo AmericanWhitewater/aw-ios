@@ -95,6 +95,7 @@
                         <outlet property="tableView" destination="KvD-IO-b3b" id="8wt-yS-nDl"/>
                         <outlet property="toggleView" destination="nT2-Ot-yag" id="SHn-dT-SNO"/>
                         <outlet property="updateTimeLabel" destination="mIr-IR-Isi" id="nQB-KY-Axm"/>
+                        <outlet property="updateTimeView" destination="gFy-a9-hIJ" id="huh-5g-9co"/>
                         <segue destination="lOP-Q4-YiZ" kind="show" identifier="runDetail" id="kal-PE-jUf"/>
                     </connections>
                 </viewController>
@@ -755,6 +756,7 @@ plan for your next run!</string>
                     <connections>
                         <outlet property="tableView" destination="9py-7s-WQq" id="0ph-8b-s6G"/>
                         <outlet property="updateTimeLabel" destination="S9h-zB-2tj" id="uaH-x4-Qsd"/>
+                        <outlet property="updateTimeView" destination="gmY-XI-hxh" id="thb-pv-C7c"/>
                         <segue destination="lOP-Q4-YiZ" kind="show" identifier="runDetailFavorites" id="n1I-mv-LT1"/>
                     </connections>
                 </viewController>
@@ -1385,6 +1387,6 @@ plan for your next run!</string>
     <inferredMetricsTieBreakers>
         <segue reference="vCc-Lg-GX5"/>
         <segue reference="HLz-3E-X9y"/>
-        <segue reference="n1I-mv-LT1"/>
+        <segue reference="kal-PE-jUf"/>
     </inferredMetricsTieBreakers>
 </document>
