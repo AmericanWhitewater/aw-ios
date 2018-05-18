@@ -31,11 +31,15 @@ class NewsTableViewCell: UITableViewCell {
             authorDateLabel.apply(style: .Text2)
             
             if let photoURL = article.abstractPhotoURL,
-                let url = URL(string: photoURL),
-                let data = try? Data(contentsOf: url) {
-                abstractImage?.image = UIImage(data: data)
+                let url = URL(string: photoURL) {
+                DispatchQueue.global().async {
+                    let data = try? Data(contentsOf: url)
+                    DispatchQueue.main.async {
+                        self.abstractImage?.image = UIImage(data: data!)
+                    }
+                }
             }
         }
     }
-
+    
 }
