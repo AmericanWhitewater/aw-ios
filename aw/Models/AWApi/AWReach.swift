@@ -8,6 +8,7 @@ struct AWReach: Codable {
     //swiftlint:disable:next identifier_name
     let id: Int
     let name: String
+    let altName: String?
     let putInLat: String?
     let putInLon: String?
     let lastGageReading: String?
@@ -27,6 +28,7 @@ struct AWReach: Codable {
         //swiftlint:disable:next identifier_name
         case id, name, section, unit, state, delta, rc
         case difficulty = "class"
+        case altName = "altname"
         case condition = "cond"
         case putInLat = "plat"
         case putInLon = "plon"
