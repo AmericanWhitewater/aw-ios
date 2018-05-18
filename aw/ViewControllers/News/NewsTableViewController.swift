@@ -52,7 +52,7 @@ class NewsTableViewController: UITableViewController {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "supportAWCell",
                 for: indexPath) as? NewsDonateTableViewCell else {
-                fatalError("Failed to deque donate cell")
+                fatalError("Failed to dequeue donate cell")
             }
             return cell
         default:
@@ -69,25 +69,7 @@ class NewsTableViewController: UITableViewController {
             return cell
         }
     }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 0:
-            return 204
-        default:
-            return 196
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case 0:
-            return 1
-        default:
-            return 18
-        }
-    }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -123,8 +105,6 @@ extension NewsTableViewController {
 
     func setupRefreshControl() {
         let refreshControl = UIRefreshControl()
-        let title = NSLocalizedString("Pull to Refresh", comment: "Pull to Refresh")
-        refreshControl.attributedTitle = NSAttributedString(string: title)
         refreshControl.addTarget(self, action: #selector(refreshArticles), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }

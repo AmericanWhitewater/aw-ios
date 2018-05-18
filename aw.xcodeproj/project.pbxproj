@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2F78EF49209920C600193DCB /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F78EF47209920C600193DCB /* Fabric.framework */; };
 		2F78EF4A209920C600193DCB /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F78EF48209920C600193DCB /* Crashlytics.framework */; };
+		2F8C7A7E20AF3F7A00AB6521 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C7A7D20AF3F7A00AB6521 /* UIImageView.swift */; };
 		3807299B209CB7C800C61223 /* MapKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807299A209CB7C800C61223 /* MapKeyView.swift */; };
 		3807299D209CD06500C61223 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807299C209CD06500C61223 /* Fonts.swift */; };
 		380729A1209CD0F300C61223 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3807299F209CD0F300C61223 /* OpenSans-SemiBold.ttf */; };
@@ -77,6 +78,7 @@
 /* Begin PBXFileReference section */
 		2F78EF47209920C600193DCB /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		2F78EF48209920C600193DCB /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		2F8C7A7D20AF3F7A00AB6521 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		3807299A209CB7C800C61223 /* MapKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKeyView.swift; sourceTree = "<group>"; };
 		3807299C209CD06500C61223 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		3807299F209CD0F300C61223 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				3836C48D20708E7900490999 /* Article.swift */,
 				3836C4932071031400490999 /* AWButton.swift */,
 				380729A3209CDD6700C61223 /* UILabel.swift */,
+				2F8C7A7D20AF3F7A00AB6521 /* UIImageView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				38A98F822067EFA3009853E1 /* FilterRegionViewController.swift in Sources */,
 				380729A4209CDD6700C61223 /* UILabel.swift in Sources */,
 				38A98F7F2067EF90009853E1 /* FilterViewController.swift in Sources */,
+				2F8C7A7E20AF3F7A00AB6521 /* UIImageView.swift in Sources */,
 				38A98F882067EFC0009853E1 /* FilterDistanceViewController.swift in Sources */,
 				3836C4902070941600490999 /* SingleArticleViewController.swift in Sources */,
 				38B3CD1320672EAA0016630F /* RunDetailTableViewController.swift in Sources */,

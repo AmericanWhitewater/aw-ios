@@ -10,13 +10,10 @@ class NewsTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
     func update() {
@@ -30,12 +27,11 @@ class NewsTableViewCell: UITableViewCell {
             authorDateLabel.text = article.byline
             authorDateLabel.apply(style: .Text2)
             
-            if let photoURL = article.abstractPhotoURL,
-                let url = URL(string: photoURL),
-                let data = try? Data(contentsOf: url) {
-                abstractImage?.image = UIImage(data: data)
+            if let photoURL = article.abstractPhotoURL {
+                self.abstractImage?.image = nil
+                self.abstractImage?.loadFromUrlAsync(urlString: photoURL)
             }
         }
     }
-
+    
 }
