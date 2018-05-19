@@ -22,8 +22,8 @@
         <!--American Whitewater-->
         <scene sceneID="nlO-qF-hbq">
             <objects>
-                <tableViewController id="3ys-v3-MBW" customClass="NewsTableViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="18" estimatedSectionFooterHeight="18" id="uJe-Yz-gca">
+                <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="3ys-v3-MBW" customClass="NewsTableViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="8" estimatedSectionFooterHeight="8" contentViewInsetsToSafeArea="NO" id="uJe-Yz-gca">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
