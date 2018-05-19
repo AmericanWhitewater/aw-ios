@@ -38,15 +38,15 @@ enum FontStyle {
         case .Headline1:
             return UIColor(named: "font_black")!
         case .Text1:
-            return UIColor(named: "font_light_grey")!
+            return UIColor(named: "font_grey")!
         case .Text2:
-            return UIColor(named: "font_very_light_grey")!
+            return UIColor(named: "font_light_grey")!
         case .Text3:
             return UIColor(named: "font_black")!
         case .Label1:
             return UIColor(named: "font_black")!
         case .Tab1:
-            return UIColor(named: "font_very_light_grey")!
+            return UIColor(named: "font_light_grey")!
         case .Tab2:
             return  UIColor(named: "font_clickable")!
         case .Number1, .Number2:
