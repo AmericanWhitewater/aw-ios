@@ -1,11 +1,12 @@
 import UIKit
+import ActiveLabel
 
 class SingleArticleViewController: UIViewController {
     var article: Article?
     @IBOutlet weak var articleImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var bylineLabel: UILabel!
-    @IBOutlet weak var bodyLabel: UILabel!
+    @IBOutlet weak var bodyLabel: ActiveLabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
