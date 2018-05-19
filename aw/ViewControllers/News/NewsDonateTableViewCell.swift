@@ -2,9 +2,14 @@ import UIKit
 
 class NewsDonateTableViewCell: UITableViewCell {
     @IBOutlet weak var donateButton: UIView!
-
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var subtitle: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        title.apply(style: .Headline1)
+        subtitle.apply(style: .Text1)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

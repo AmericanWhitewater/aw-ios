@@ -32,6 +32,7 @@ extension SingleArticleViewController {
 
         titleLabel.apply(style: FontStyle.Headline1)
         bylineLabel.apply(style: FontStyle.Text2)
+        bodyLabel.apply(style: FontStyle.Text1)
     }
 
     @objc func shareButtonTapped(_ sender: Any) {
@@ -51,19 +52,12 @@ extension SingleArticleViewController {
             titleLabel.text = article.title
             bylineLabel.text = article.byline
 
-            if let imageURL = article.abstractPhotoURL,
-                let url = URL(string: imageURL),
-                let data = try? Data(contentsOf: url) {
-                articleImage.image = UIImage(data: data)
+            if let imageURL = article.abstractPhotoURL {
+                articleImage.loadFromUrlAsync(urlString: imageURL)
             }
 
-            if let content = article.contents,
-                let data = content.data(using: .utf8),
-            let html = try? NSMutableAttributedString(
-                data: data,
-                options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
-                documentAttributes: nil) {
-                bodyLabel.attributedText = html
+            if let html = article.contents {
+                bodyLabel.attributedText = html.htmlToAttributedString
             }
         }
     }

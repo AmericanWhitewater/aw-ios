@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F4CAED020AF9BC400B67704 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4CAECF20AF9BC400B67704 /* String.swift */; };
 		2F78EF49209920C600193DCB /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F78EF47209920C600193DCB /* Fabric.framework */; };
 		2F78EF4A209920C600193DCB /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F78EF48209920C600193DCB /* Crashlytics.framework */; };
 		2F8C7A7E20AF3F7A00AB6521 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C7A7D20AF3F7A00AB6521 /* UIImageView.swift */; };
@@ -74,6 +75,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F4CAECF20AF9BC400B67704 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2F78EF47209920C600193DCB /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		2F78EF48209920C600193DCB /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		2F8C7A7D20AF3F7A00AB6521 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				3836C4932071031400490999 /* AWButton.swift */,
 				380729A3209CDD6700C61223 /* UILabel.swift */,
 				2F8C7A7D20AF3F7A00AB6521 /* UIImageView.swift */,
+				2F4CAECF20AF9BC400B67704 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				38A6C8F120670AEF00B5BA29 /* MapViewController.swift in Sources */,
 				38A98F692067EA78009853E1 /* AboutAWExtendedNavBarView.swift in Sources */,
 				38B3CD1620672F310016630F /* Segues.swift in Sources */,
+				2F4CAED020AF9BC400B67704 /* String.swift in Sources */,
 				3836C4942071031400490999 /* AWButton.swift in Sources */,
 				3836C48C20708B5400490999 /* NewsTableViewCell.swift in Sources */,
 				3807299B209CB7C800C61223 /* MapKeyView.swift in Sources */,
