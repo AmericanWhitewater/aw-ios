@@ -34,6 +34,11 @@ extension SingleArticleViewController {
         titleLabel.apply(style: FontStyle.Headline1)
         bylineLabel.apply(style: FontStyle.Text2)
         bodyLabel.apply(style: FontStyle.Text1)
+        bodyLabel.handleURLTap {
+            url in
+            print("Success. You just tapped the \(url) hashtag")
+            UIApplication.shared.openURL(url)
+        }
     }
 
     @objc func shareButtonTapped(_ sender: Any) {
