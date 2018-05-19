@@ -5,6 +5,6 @@ target 'aw' do
   use_frameworks!
 
   # Pods for aw
-  pod 'ActiveLabel'
+  pod 'ActiveLabel', '~> 0.8'
 
 end

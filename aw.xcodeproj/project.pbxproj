@@ -72,7 +72,7 @@
 		38BE74A8206839F200DE555D /* FilterManagerViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A7206839F200DE555D /* FilterManagerViewControllerType.swift */; };
 		38C421542065C7DE0044D717 /* AWApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C421532065C7DE0044D717 /* AWApiHelper.swift */; };
 		38EBD1CE2070785600D7B1C1 /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EBD1CD2070785600D7B1C1 /* NewsTableViewController.swift */; };
-		D5F68FBDAA15E9417D25F829 /* Pods_aw.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80E52B037FAD5157E2C7E5E /* Pods_aw.framework */; };
+		C9BC5BD4CB6D91E73EB235F5 /* Pods_aw.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80E52B037FAD5157E2C7E5E /* Pods_aw.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -156,7 +156,7 @@
 				385E59D52063073900A68EC9 /* MapKit.framework in Frameworks */,
 				2F78EF4A209920C600193DCB /* Crashlytics.framework in Frameworks */,
 				2F78EF49209920C600193DCB /* Fabric.framework in Frameworks */,
-				D5F68FBDAA15E9417D25F829 /* Pods_aw.framework in Frameworks */,
+				C9BC5BD4CB6D91E73EB235F5 /* Pods_aw.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,7 +421,6 @@
 				3864857E206C3412009B360F /* Swiftlint */,
 				2F78EF4B209920F600193DCB /* ShellScript */,
 				FC7A22E971D2144FC880C60F /* [CP] Embed Pods Frameworks */,
-				BB2EBEE209B6963AA2D84D84 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -516,34 +515,22 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
-		BB2EBEE209B6963AA2D84D84 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-aw/Pods-aw-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C50973D7B4282C98C1EE9212 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-aw-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FC7A22E971D2144FC880C60F /* [CP] Embed Pods Frameworks */ = {
@@ -552,9 +539,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-aw/Pods-aw-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ActiveLabel/ActiveLabel.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActiveLabel.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -658,6 +648,7 @@
 /* Begin XCBuildConfiguration section */
 		385E59CE2063047B00A68EC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0058A8AEB1F64027AF54104E /* Pods-aw.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -712,11 +703,13 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
 		385E59CF2063047B00A68EC9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38CCB60111CB4CE8C8F7419F /* Pods-aw.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -763,6 +756,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
