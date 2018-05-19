@@ -1,11 +1,12 @@
 import UIKit
+import ActiveLabel
 
 class SingleArticleViewController: UIViewController {
     var article: Article?
     @IBOutlet weak var articleImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var bylineLabel: UILabel!
-    @IBOutlet weak var bodyLabel: UILabel!
+    @IBOutlet weak var bodyLabel: ActiveLabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,11 @@ extension SingleArticleViewController {
         titleLabel.apply(style: FontStyle.Headline1)
         bylineLabel.apply(style: FontStyle.Text2)
         bodyLabel.apply(style: FontStyle.Text1)
+        bodyLabel.handleURLTap {
+            url in
+            print("Success. You just tapped the \(url) hashtag")
+            UIApplication.shared.openURL(url)
+        }
     }
 
     @objc func shareButtonTapped(_ sender: Any) {

@@ -1,9 +1,15 @@
 import UIKit
 
 class MoreTableViewController: UITableViewController {
-
+    @IBOutlet weak var version: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.version.apply(style: FontStyle.Text2)
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            self.version.text = "v \(version)"
+        }
     }
 
     // MARK: - Table view data source
