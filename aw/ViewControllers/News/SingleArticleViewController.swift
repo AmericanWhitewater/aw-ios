@@ -32,6 +32,7 @@ extension SingleArticleViewController {
 
         titleLabel.apply(style: FontStyle.Headline1)
         bylineLabel.apply(style: FontStyle.Text2)
+        bodyLabel.apply(style: FontStyle.Text1)
     }
 
     @objc func shareButtonTapped(_ sender: Any) {
