@@ -65,7 +65,7 @@
                                             <rect key="frame" x="16" y="45" width="343" height="21"/>
                                             <string key="text">American Whitewater is a national non-profit organization with a mission “to conserve and restore America's whitewater resources and to enhance opportunities to enjoy them safely.” American Whitewater is a membership organization representing a broad diversity of individual whitewater enthusiasts, river conservationists, and more than 100 local paddling club affiliates across America. The organization is the primary advocate for the preservation and protection of whitewater rivers throughout the United States, and connects the interests of human-powered recreational river users with ecological and science-based data to achieve the goals within its mission.</string>
                                             <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="15"/>
-                                            <color key="textColor" name="font_light_grey"/>
+                                            <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -85,6 +85,8 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="donateButton" destination="nsx-dA-ZnG" id="E2P-79-9vd"/>
+                                    <outlet property="subtitle" destination="Fqr-NV-zth" id="fOf-PL-lg6"/>
+                                    <outlet property="title" destination="EBM-hO-TuS" id="LmF-XE-7vM"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="newsCell" rowHeight="196" id="05I-jc-nBw" customClass="NewsTableViewCell" customModule="aw" customModuleProvider="target">
@@ -97,13 +99,13 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="News Item" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="grs-RT-6V1">
                                             <rect key="frame" x="16" y="11" width="343" height="46"/>
                                             <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="17"/>
-                                            <color key="textColor" name="font_grey"/>
+                                            <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="author and date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qyv-TH-OIu">
                                             <rect key="frame" x="16" y="164" width="227" height="15"/>
                                             <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="13"/>
-                                            <color key="textColor" name="font_very_light_grey"/>
+                                            <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IXb-dU-ORI">
@@ -116,7 +118,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text=" abstract" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehI-wN-cx7">
                                             <rect key="frame" x="16" y="54" width="235" height="21"/>
                                             <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="15"/>
-                                            <color key="textColor" name="font_light_grey"/>
+                                            <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -296,9 +298,6 @@
         </namedColor>
         <namedColor name="font_light_grey">
             <color red="0.36862745098039218" green="0.36862745098039218" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="font_very_light_grey">
-            <color red="0.61960784313725492" green="0.61960784313725492" blue="0.61960784313725492" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
