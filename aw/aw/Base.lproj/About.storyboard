@@ -24,6 +24,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="XUz-k5-aWQ">
+                            <rect key="frame" x="0.0" y="273" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FtY-gy-gct">
+                                    <rect key="frame" x="15" y="0.0" width="360" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
                         <sections>
                             <tableViewSection id="M1D-fc-5cV">
                                 <cells>
@@ -149,10 +163,13 @@
                     <navigationItem key="navigationItem" title="American Whitewater" id="YmA-33-5Iw">
                         <barButtonItem key="backBarButtonItem" title="More" id="JTf-qT-5PO"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="version" destination="FtY-gy-gct" id="yoU-Ic-hFs"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MdM-iW-RG1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4687" y="902"/>
+            <point key="canvasLocation" x="4685.6000000000004" y="901.79910044977521"/>
         </scene>
         <!--American Whitewater-->
         <scene sceneID="kmA-12-WeM">
