@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2F4CAED020AF9BC400B67704 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4CAECF20AF9BC400B67704 /* String.swift */; };
-		2F78EF49209920C600193DCB /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F78EF47209920C600193DCB /* Fabric.framework */; };
-		2F78EF4A209920C600193DCB /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F78EF48209920C600193DCB /* Crashlytics.framework */; };
 		2F8C7A7E20AF3F7A00AB6521 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C7A7D20AF3F7A00AB6521 /* UIImageView.swift */; };
 		3807299B209CB7C800C61223 /* MapKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807299A209CB7C800C61223 /* MapKeyView.swift */; };
 		3807299D209CD06500C61223 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807299C209CD06500C61223 /* Fonts.swift */; };
@@ -78,8 +76,6 @@
 /* Begin PBXFileReference section */
 		0058A8AEB1F64027AF54104E /* Pods-aw.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aw.debug.xcconfig"; path = "Pods/Target Support Files/Pods-aw/Pods-aw.debug.xcconfig"; sourceTree = "<group>"; };
 		2F4CAECF20AF9BC400B67704 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
-		2F78EF47209920C600193DCB /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		2F78EF48209920C600193DCB /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		2F8C7A7D20AF3F7A00AB6521 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		3807299A209CB7C800C61223 /* MapKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKeyView.swift; sourceTree = "<group>"; };
 		3807299C209CD06500C61223 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -154,8 +150,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				385E59D52063073900A68EC9 /* MapKit.framework in Frameworks */,
-				2F78EF4A209920C600193DCB /* Crashlytics.framework in Frameworks */,
-				2F78EF49209920C600193DCB /* Fabric.framework in Frameworks */,
 				C9BC5BD4CB6D91E73EB235F5 /* Pods_aw.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,8 +206,6 @@
 		385E59B52063047B00A68EC9 = {
 			isa = PBXGroup;
 			children = (
-				2F78EF48209920C600193DCB /* Crashlytics.framework */,
-				2F78EF47209920C600193DCB /* Fabric.framework */,
 				385E59C02063047B00A68EC9 /* aw */,
 				385E59BF2063047B00A68EC9 /* Products */,
 				385E59D32063073900A68EC9 /* Frameworks */,
@@ -499,7 +491,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PROJECT_DIR}/Fabric.framework/run\" b67e4513fcf72d81b5607976a8613ad0240f3105 5d7e4288f0737654ce9fcc143ec957e2377bda83031275b990bf0dee07be9439";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 58e7e779ba7b01ef1111b7eddedf2f7bc95c682f d48b25842a32d4a7063d1a8404670a9643eb82c8e24967987fa0c57a14b15031";
 		};
 		3864857E206C3412009B360F /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
