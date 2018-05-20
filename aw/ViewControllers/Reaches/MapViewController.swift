@@ -8,10 +8,11 @@ class MapViewController: UIViewController, MOCViewControllerType {
     var managedObjectContext: NSManagedObjectContext?
 
     var fetchedResultsController: NSFetchedResultsController<Reach>?
-    var predicates: [NSPredicate] = []
+    var predicates: [NSPredicate] = [NSPredicate(format: "putInLat != nil"), NSPredicate(format: "putInLon != nil")]
     var difficulties: [Int]?
     var regions: [String]?
     var distance: Float?
+    var zoom = true
 
 
     override func viewDidLoad() {
@@ -109,6 +110,10 @@ extension MapViewController {
 
         guard difficulties != self.difficulties || regions != self.regions || distance != self.distance else { return }
 
+        if regions != self.regions || distance != self.distance {
+            zoom = true
+        }
+
         self.difficulties = difficulties
         self.regions = regions
         self.distance = distance
@@ -134,6 +139,10 @@ extension MapViewController {
         // add the reaches in core data
         if let reaches = fetchedResultsController?.fetchedObjects {
             mapView.addAnnotations(reaches)
+            if zoom {
+                mapView.showAnnotations(reaches, animated: true)
+                zoom = false
+            }
         }
     }
 }
@@ -169,6 +178,20 @@ extension MapViewController: MKMapViewDelegate {
             let button = UIButton(type: .detailDisclosure)
             button.addTarget(self, action: #selector(reachButtonTapped), for: .touchUpInside)
             view?.rightCalloutAccessoryView = button
+
+            let subtitle = UILabel()
+            subtitle.text = reach.subtitle
+            subtitle.apply(style: .Text2)
+
+            let runnableClass = UILabel()
+            runnableClass.text = reach.runnableClass
+            runnableClass.apply(style: .Label1)
+            runnableClass.textColor = reach.color
+
+            let stack = UIStackView(arrangedSubviews: [subtitle, runnableClass])
+            stack.axis = .vertical
+            view?.detailCalloutAccessoryView = stack
+
             return view
         /*} else if let cluster = annotation as? MKClusterAnnotation {
             var view = mapView.dequeueReusableAnnotationView(withIdentifier: "cluster") as? MKMarkerAnnotationView
