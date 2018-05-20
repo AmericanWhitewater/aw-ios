@@ -15,6 +15,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     var predicates: [NSPredicate] = []
     var favorite: Bool = false
     let cellId = "runCell"
+    let UPDATE_INTERVAL_s: Double = -3600
 
     let searchController = UISearchController(searchResultsController: nil)
 
@@ -28,6 +29,19 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         super.viewWillAppear(animated)
         updateFetchPredicates()
         updateTime()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        guard let lastUpdated = DefaultsManager.lastUpdated else {
+            refreshData()
+            return
+        }
+
+        if lastUpdated < Date().addingTimeInterval(UPDATE_INTERVAL_s) {
+            refreshData()
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -96,15 +110,19 @@ extension RunListTableViewController {
         setupSearchControl()
         setupRefreshControl()
         setupRunnableToggle()
+    }
 
-        if !DefaultsManager.onboardingCompleted {
-            tableView.refreshControl?.beginRefreshing()
-            if let context = managedObjectContext {
-                AWApiHelper.updateRegions(viewContext: context) {
-                    DefaultsManager.onboardingCompleted = true
-                    self.updateTime()
-                    self.tableView.refreshControl?.endRefreshing()
-                }
+    func refreshData() {
+        guard let refreshControl = tableView.refreshControl else {
+            return
+        }
+        refreshControl.beginRefreshing()
+        tableView.setContentOffset(CGPoint(x: 0, y: -refreshControl.frame.height), animated: true)
+        if let context = managedObjectContext {
+            AWApiHelper.updateRegions(viewContext: context) {
+                DefaultsManager.onboardingCompleted = true
+                self.updateTime()
+                refreshControl.endRefreshing()
             }
         }
     }
@@ -125,11 +143,21 @@ extension RunListTableViewController {
         searchController.searchBar.delegate = self
         searchController.searchBar.returnKeyType = .done
         searchController.searchBar.tintColor = UIColor.white
+        setTextFieldTintColor(to: .black, for: searchController.searchBar)
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = searchText()
         searchController.hidesNavigationBarDuringPresentation = false
 
         navigationItem.titleView = searchController.searchBar
+    }
+
+    func setTextFieldTintColor(to color: UIColor, for view: UIView) {
+        if view is UITextField {
+            view.tintColor = color
+        }
+        for subview in view.subviews {
+            setTextFieldTintColor(to: color, for: subview)
+        }
     }
 
     func dismissSearch() {
