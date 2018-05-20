@@ -44,10 +44,12 @@ class FilterViewController: UIViewController {
             distanceView.isHidden = true
         case "class":
             regionView.isHidden = true
+            regionView.endEditing(true)
             classView.isHidden = false
             distanceView.isHidden = true
         case "distance":
             regionView.isHidden = true
+            regionView.endEditing(true)
             classView.isHidden = true
             distanceView.isHidden = false
         default:
