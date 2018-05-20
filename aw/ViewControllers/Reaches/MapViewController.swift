@@ -178,6 +178,20 @@ extension MapViewController: MKMapViewDelegate {
             let button = UIButton(type: .detailDisclosure)
             button.addTarget(self, action: #selector(reachButtonTapped), for: .touchUpInside)
             view?.rightCalloutAccessoryView = button
+
+            let subtitle = UILabel()
+            subtitle.text = reach.subtitle
+            subtitle.apply(style: .Text2)
+
+            let runnableClass = UILabel()
+            runnableClass.text = reach.runnableClass
+            runnableClass.apply(style: .Label1)
+            runnableClass.textColor = reach.color
+
+            let stack = UIStackView(arrangedSubviews: [subtitle, runnableClass])
+            stack.axis = .vertical
+            view?.detailCalloutAccessoryView = stack
+
             return view
         /*} else if let cluster = annotation as? MKClusterAnnotation {
             var view = mapView.dequeueReusableAnnotationView(withIdentifier: "cluster") as? MKMarkerAnnotationView

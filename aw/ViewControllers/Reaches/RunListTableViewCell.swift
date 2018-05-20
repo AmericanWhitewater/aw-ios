@@ -121,7 +121,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
             riverName.text = reach.name
             sectionLabel.text = reach.sectionCleanedHTML
-            difficultyLabel.text = "Level: \(reach.readingFormatted) Class: \(reach.difficulty ?? "Unknown")"
+            difficultyLabel.text = reach.runnableClass
             difficultyLabel.textColor = reach.color
 
             let favoriteIcon = reach.favorite ?

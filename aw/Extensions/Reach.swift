@@ -79,6 +79,10 @@ extension Reach {
     var url: URL? {
         return URL(string: "https://www.americanwhitewater.org/content/River/detail/id/\( id )/")
     }
+
+    var runnableClass: String {
+        return "Level: \(readingFormatted) Class: \(difficulty ?? "Unknown")"
+    }
 }
 
 // MARK: - MKAnnotation
