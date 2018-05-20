@@ -53,7 +53,6 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.accessoryType = .disclosureIndicator
         contentView.addSubview(conditionColorView)
 
         NSLayoutConstraint.activate([
