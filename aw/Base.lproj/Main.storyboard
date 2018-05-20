@@ -800,8 +800,8 @@ plan for your next run!</string>
                                         </constraints>
                                         <segments>
                                             <segment title="By Region"/>
-                                            <segment title="By Class"/>
                                             <segment title="By Distance"/>
+                                            <segment title="By Class"/>
                                         </segments>
                                         <connections>
                                             <action selector="segmentedControllerChanged:" destination="ATx-FW-h4a" eventType="valueChanged" id="NYr-x6-5dg"/>

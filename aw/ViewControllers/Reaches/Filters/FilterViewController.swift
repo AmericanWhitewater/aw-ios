@@ -62,9 +62,9 @@ class FilterViewController: UIViewController {
         case 0:
             setViewShown(name: "region")
         case 1:
-            setViewShown(name: "class")
-        case 2:
             setViewShown(name: "distance")
+        case 2:
+            setViewShown(name: "class")
         default:
             break
         }
