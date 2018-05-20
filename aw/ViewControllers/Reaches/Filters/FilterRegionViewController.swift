@@ -36,8 +36,10 @@ extension FilterRegionViewController {
     func setRegionsLabel() {
         if selectedRegions.count == 0 {
             selectedRegionsLabel.text = "Showing runs from everywhere"
+        } else if selectedRegions.count == 1 {
+            selectedRegionsLabel.text = "Your selected region: \(selectedRegions.first ?? "")"
         } else {
-            selectedRegionsLabel.text = "Showing runs from: \(selectedRegions.joined(separator: ", "))"
+            selectedRegionsLabel.text = "Your selected regions: \(selectedRegions.joined(separator: ", "))"
         }
     }
 }
