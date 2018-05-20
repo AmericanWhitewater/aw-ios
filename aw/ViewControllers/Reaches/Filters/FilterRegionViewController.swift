@@ -4,6 +4,7 @@ class FilterRegionViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var selectedRegionsLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableviewBottomConstraint: NSLayoutConstraint!
 
     var selectedRegions: [String] = []
 
@@ -13,6 +14,16 @@ class FilterRegionViewController: UIViewController {
         super.viewDidLoad()
 
         initialize()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: .UIKeyboardDidHide, object: nil)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -30,6 +41,29 @@ extension FilterRegionViewController {
 
         setRegionsLabel()
         selectedRegionsLabel.apply(style: .Headline1)
+    }
+
+    @objc func keyboardWillAppear(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+            let keyboardFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
+            let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? Double
+            else { return }
+
+        tableviewBottomConstraint.constant = keyboardFrameValue.cgRectValue.size.height
+        UIView.animate(withDuration: TimeInterval(animationDuration), animations: { [weak self] in
+            self?.view.layoutIfNeeded()
+        })
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+            let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? Double
+            else { return }
+
+        tableviewBottomConstraint.constant = 0
+        UIView.animate(withDuration: TimeInterval(animationDuration), animations: { [weak self] in
+            self?.view.layoutIfNeeded()
+        })
     }
 
     func setRegionsLabel() {
@@ -92,6 +126,8 @@ extension FilterRegionViewController: UITableViewDelegate, UITableViewDataSource
         let region = regionsForSection(section: indexPath.section)[indexPath.row]
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "regionFilterCell", for: indexPath)
+
+        cell.textLabel?.apply(style: .Text3)
 
         if ["US", "CA"].contains(region.country) {
             cell.textLabel?.text = "\(region.title), \(region.country)"
