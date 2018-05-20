@@ -30,6 +30,18 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         updateTime()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        guard let lastUpdated = DefaultsManager.lastUpdated else {
+            refreshData()
+            return
+        }
+        if lastUpdated < Date().addingTimeInterval(-3600) {
+            refreshData()
+        }
+    }
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         dismissSearch()
@@ -96,15 +108,19 @@ extension RunListTableViewController {
         setupSearchControl()
         setupRefreshControl()
         setupRunnableToggle()
+    }
 
-        if !DefaultsManager.onboardingCompleted {
-            tableView.refreshControl?.beginRefreshing()
-            if let context = managedObjectContext {
-                AWApiHelper.updateRegions(viewContext: context) {
-                    DefaultsManager.onboardingCompleted = true
-                    self.updateTime()
-                    self.tableView.refreshControl?.endRefreshing()
-                }
+    func refreshData() {
+        guard let refreshControl = tableView.refreshControl else {
+            return
+        }
+        refreshControl.beginRefreshing()
+        tableView.setContentOffset(CGPoint(x: 0, y: -refreshControl.frame.height), animated: true)
+        if let context = managedObjectContext {
+            AWApiHelper.updateRegions(viewContext: context) {
+                DefaultsManager.onboardingCompleted = true
+                self.updateTime()
+                refreshControl.endRefreshing()
             }
         }
     }
