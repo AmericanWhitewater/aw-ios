@@ -15,6 +15,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     var predicates: [NSPredicate] = []
     var favorite: Bool = false
     let cellId = "runCell"
+    let UPDATE_INTERVAL_s: Double = -3600
 
     let searchController = UISearchController(searchResultsController: nil)
 
@@ -37,7 +38,8 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
             refreshData()
             return
         }
-        if lastUpdated < Date().addingTimeInterval(-3600) {
+
+        if lastUpdated < Date().addingTimeInterval(UPDATE_INTERVAL_s) {
             refreshData()
         }
     }
