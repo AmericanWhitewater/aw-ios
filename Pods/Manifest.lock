@@ -1,16 +1,25 @@
 PODS:
   - ActiveLabel (0.8.1)
+  - Crashlytics (3.10.1):
+    - Fabric (~> 1.7.5)
+  - Fabric (1.7.6)
 
 DEPENDENCIES:
   - ActiveLabel (~> 0.8)
+  - Crashlytics
+  - Fabric
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - ActiveLabel
+    - Crashlytics
+    - Fabric
 
 SPEC CHECKSUMS:
   ActiveLabel: e361127c355b911a467db3d5a897b3d7f902e568
+  Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
+  Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
 
-PODFILE CHECKSUM: 0b5de05ad7727950a9197291b6b821466fa35477
+PODFILE CHECKSUM: 63072274f6b8580b9f9cba57529aa64ce838d9ed
 
 COCOAPODS: 1.5.2

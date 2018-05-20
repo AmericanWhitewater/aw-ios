@@ -6,5 +6,7 @@ target 'aw' do
 
   # Pods for aw
   pod 'ActiveLabel', '~> 0.8'
-
+  pod 'Fabric'
+  pod 'Crashlytics'
+  
 end
