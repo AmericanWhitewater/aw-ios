@@ -7,8 +7,7 @@ class FilterRegionViewController: UIViewController {
 
     var selectedRegions: [String] = []
 
-    var isFiltered = false
-    var filteredRegions: [Region] = []
+    var searchText = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +41,22 @@ extension FilterRegionViewController {
             selectedRegionsLabel.text = "Your selected regions: \(selectedRegions.joined(separator: ", "))"
         }
     }
+
+    func regionsForSection(section: Int) -> [Region] {
+        let header = Region.alphaGroupKeys[section]
+
+        guard let region = Region.grouped[header] else {
+            fatalError("Unable find section: \(section)")
+        }
+
+        if searchText != "" {
+            return region.filter { region in
+                return region.title.lowercased().contains(searchText.lowercased()) || region.country.lowercased().contains(searchText.lowercased())
+            }
+        }
+
+        return region
+    }
 }
 
 // MARK: - FilterViewControllerType
@@ -53,14 +68,7 @@ extension FilterRegionViewController: FilterViewControllerType {
 
 extension FilterRegionViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.count == 0 {
-            isFiltered = false
-        } else {
-            isFiltered = true
-            filteredRegions = Region.all.filter { (region) in
-                return region.title.contains(searchText)
-            }
-        }
+        self.searchText = searchText
         self.tableView.reloadData()
     }
 
@@ -73,29 +81,24 @@ extension FilterRegionViewController: UISearchBarDelegate {
 extension FilterRegionViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return Region.alphaGroupKeys.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltered {
-            return filteredRegions.count
-        } else {
-            return Region.all.count
-        }
+        return regionsForSection(section: section).count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let region = regionsForSection(section: indexPath.section)[indexPath.row]
 
-        let region: Region
-
-        if isFiltered {
-            region = filteredRegions[indexPath.row]
-        } else {
-            region = Region.all[indexPath.row]
-        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "regionFilterCell", for: indexPath)
 
-        cell.textLabel?.text = region.title
+        if ["US", "CA"].contains(region.country) {
+            cell.textLabel?.text = "\(region.title), \(region.country)"
+        } else {
+            cell.textLabel?.text = region.title
+        }
+
 
         if selectedRegions.contains(region.title) {
             cell.accessoryType = .checkmark
@@ -111,14 +114,22 @@ extension FilterRegionViewController: UITableViewDelegate, UITableViewDataSource
 
         let cell = tableView.cellForRow(at: indexPath)
 
+        guard let regionName = cell?.textLabel?.text?.split(separator: ",").first else {
+            fatalError("No cell text")
+        }
+
         if cell?.accessoryType == UITableViewCellAccessoryType.checkmark {
             cell?.accessoryType = .none
-            selectedRegions = selectedRegions.filter { $0 != cell?.textLabel?.text }
+            selectedRegions = selectedRegions.filter { $0 != String(regionName) }
         } else {
             cell?.accessoryType = .checkmark
-            selectedRegions.append((cell?.textLabel?.text)!)
+            selectedRegions.append(String(regionName))
         }
 
         setRegionsLabel()
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return Region.alphaGroupKeys[section]
     }
 }

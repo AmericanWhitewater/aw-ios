@@ -86,5 +86,26 @@ struct Region {
         // ,Region(code: "rgIN", title: "International", country: "N/A")
     ]
 
+    static let states = all.filter { $0.country == "US" }
+    static let international = all.filter { $0.country != "US" }
+
+    static let grouped: [String: [Region]] = {
+        var dict = Region.states.reduce(into: [:]) { dict, state in
+            dict[String(state.title.first!).capitalized, default: []].append(state)
+        }
+        dict["International"] = Region.international
+        return dict
+    }()
+
+    static let alphaGroupKeys: [String] = grouped.keys.sorted(by: {(first, second) in
+        if second == "International" {
+            return true
+        } else if first == "International" {
+            return false
+        } else {
+            return first < second
+        }
+    })
+
     static let apiDict = Dictionary(grouping: Region.all, by: { $0.apiResponse }).mapValues { $0.first! }
 }
