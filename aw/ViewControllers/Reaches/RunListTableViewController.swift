@@ -141,11 +141,21 @@ extension RunListTableViewController {
         searchController.searchBar.delegate = self
         searchController.searchBar.returnKeyType = .done
         searchController.searchBar.tintColor = UIColor.white
+        setTextFieldTintColor(to: .black, for: searchController.searchBar)
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = searchText()
         searchController.hidesNavigationBarDuringPresentation = false
 
         navigationItem.titleView = searchController.searchBar
+    }
+
+    func setTextFieldTintColor(to color: UIColor, for view: UIView) {
+        if view is UITextField {
+            view.tintColor = color
+        }
+        for subview in view.subviews {
+            setTextFieldTintColor(to: color, for: subview)
+        }
     }
 
     func dismissSearch() {
