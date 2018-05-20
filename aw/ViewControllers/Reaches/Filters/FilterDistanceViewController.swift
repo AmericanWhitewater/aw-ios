@@ -20,6 +20,8 @@ class FilterDistanceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        distanceLabel.apply(style: .Text2)
+
         distance = DefaultsManager.distanceFilter
 
         slider.value = distance
