@@ -43,14 +43,6 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
         return button
     }()
 
-    private let distanceLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.apply(style: .Text1)
-        lbl.textAlignment = .right
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
-    }()
-
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(conditionColorView)
@@ -62,7 +54,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
             conditionColorView.widthAnchor.constraint(equalToConstant: 8)
             ])
 
-        let rightStack = UIStackView(arrangedSubviews: [distanceLabel, favoriteButton])
+        let rightStack = UIStackView(arrangedSubviews: [favoriteButton])
         rightStack.axis = .vertical
         rightStack.translatesAutoresizingMaskIntoConstraints = false
         rightStack.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
@@ -131,7 +123,6 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
             sectionLabel.text = reach.sectionCleanedHTML
             difficultyLabel.text = "Level: \(reach.readingFormatted) Class: \(reach.difficulty ?? "Unknown")"
             difficultyLabel.textColor = reach.color
-            distanceLabel.text = reach.lengthFormatted
 
             let favoriteIcon = reach.favorite ?
                 UIImage(named: "icon_favorite_selected") : UIImage(named: "icon_favorite")
