@@ -24,6 +24,8 @@ extension FilterRegionViewController {
         tableView.dataSource = self
         searchBar.delegate = self
         searchBar.returnKeyType = .done
+        let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+        searchTextField?.backgroundColor = UIColor(named: "grey_divider")
 
         selectedRegions = DefaultsManager.regionsFilter
 
