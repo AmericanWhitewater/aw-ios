@@ -791,10 +791,13 @@ plan for your next run!</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="43V-qh-8sk" customClass="FilterExtendedNavBarView" customModule="aw" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="46"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="B68-6d-gHW">
-                                        <rect key="frame" x="57.5" y="8" width="260" height="29"/>
+                                        <rect key="frame" x="24" y="8" width="327" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="6tP-e8-afn"/>
+                                        </constraints>
                                         <segments>
                                             <segment title="By Region"/>
                                             <segment title="By Class"/>
@@ -809,18 +812,19 @@ plan for your next run!</string>
                                 <color key="tintColor" name="white"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="B68-6d-gHW" secondAttribute="bottom" constant="8" id="550-cM-SF4"/>
+                                    <constraint firstItem="B68-6d-gHW" firstAttribute="leading" secondItem="43V-qh-8sk" secondAttribute="leadingMargin" constant="16" id="6Hf-BJ-K4J"/>
                                     <constraint firstItem="B68-6d-gHW" firstAttribute="top" secondItem="43V-qh-8sk" secondAttribute="top" constant="8" id="GXB-P6-Xf6"/>
-                                    <constraint firstItem="B68-6d-gHW" firstAttribute="centerX" secondItem="43V-qh-8sk" secondAttribute="centerX" id="zvB-kj-Nvr"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="B68-6d-gHW" secondAttribute="trailing" constant="16" id="Vwv-Rq-sJi"/>
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fOu-vI-2Mf" userLabel="Region">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="110" width="375" height="557"/>
                                 <connections>
                                     <segue destination="lDp-zN-gO5" kind="embed" id="ood-tv-pjw"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nji-X1-Fa4" userLabel="Class">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="110" width="375" height="557"/>
                                 <connections>
                                     <segue destination="KIr-Na-5z5" kind="embed" id="UAW-51-SdU"/>
                                 </connections>
@@ -876,7 +880,7 @@ plan for your next run!</string>
             <objects>
                 <viewController title="Region Filter" id="lDp-zN-gO5" userLabel="Region Filter" customClass="FilterRegionViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Kc5-h2-ACn">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="557"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="jVx-ZA-lpW">
@@ -890,7 +894,7 @@ plan for your next run!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ghP-yE-Jgk">
-                                <rect key="frame" x="0.0" y="92.5" width="375" height="466.5"/>
+                                <rect key="frame" x="0.0" y="92.5" width="375" height="464.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="regionFilterCell" textLabel="4zb-kh-g7n" style="IBUITableViewCellStyleDefault" id="JJM-iv-uzm">
@@ -1004,7 +1008,7 @@ plan for your next run!</string>
             <objects>
                 <viewController id="KIr-Na-5z5" customClass="FilterClassViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hXt-gd-LRX">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="557"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" axis="vertical" alignment="top" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="GYA-ew-sOc">
