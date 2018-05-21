@@ -12,6 +12,14 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="OpenSans-Regular.ttf">
+            <string>OpenSans-Regular</string>
+        </array>
+        <array key="OpenSans-SemiBold.ttf">
+            <string>OpenSans-SemiBold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Run List-->
         <scene sceneID="o5f-ag-QKN">
@@ -522,16 +530,14 @@
                                 <color key="textColor" name="white"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nW-RO-4cC">
-                                <rect key="frame" x="92" y="113.5" width="191.5" height="48"/>
-                                <string key="text">See nearby rivers, and
-plan for your next run!</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="See nearby rivers,  by entering your zipcode" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nW-RO-4cC">
+                                <rect key="frame" x="68.5" y="113.5" width="238" height="54.5"/>
+                                <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="20"/>
                                 <color key="textColor" name="white"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="BLG-wd-svF" customClass="AWButton" customModule="aw" customModuleProvider="target">
-                                <rect key="frame" x="18" y="290" width="339" height="45"/>
+                                <rect key="frame" x="18" y="301.5" width="339" height="45"/>
                                 <color key="backgroundColor" name="white"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="KFh-gL-1dH"/>
@@ -547,10 +553,10 @@ plan for your next run!</string>
                                     <action selector="allowLocationPressed:" destination="LNl-Ac-cP5" eventType="touchUpInside" id="HwI-j7-HZj"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Zipcode" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sji-LF-bct">
-                                <rect key="frame" x="139" y="191.5" width="97" height="32"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sji-LF-bct">
+                                <rect key="frame" x="182" y="198" width="11" height="36"/>
                                 <color key="textColor" name="white"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="26"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="continue" textContentType="postal-code"/>
                                 <connections>
                                     <action selector="zipcodeChanged:" destination="LNl-Ac-cP5" eventType="editingChanged" id="MYf-Ka-9ka"/>
@@ -558,13 +564,13 @@ plan for your next run!</string>
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5l-T0-HsO">
-                                <rect key="frame" x="178" y="243.5" width="19.5" height="26.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <rect key="frame" x="177.5" y="254" width="21" height="27.5"/>
+                                <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="20"/>
                                 <color key="textColor" name="white"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="sjJ-ak-F8i">
-                                <rect key="frame" x="69" y="305" width="237.5" height="15"/>
+                                <rect key="frame" x="69" y="316.5" width="237.5" height="15"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="pKm-dl-hLp">
                                         <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
@@ -582,7 +588,7 @@ plan for your next run!</string>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="aFl-84-eea" userLabel="Invisible Button" customClass="AWButton" customModule="aw" customModuleProvider="target">
-                                <rect key="frame" x="18" y="290" width="339" height="45"/>
+                                <rect key="frame" x="18" y="301.5" width="339" height="45"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <state key="normal">
                                     <color key="titleColor" name="primary"/>
@@ -620,6 +626,7 @@ plan for your next run!</string>
                         <viewLayoutGuide key="safeArea" id="43e-gY-2j4"/>
                     </view>
                     <connections>
+                        <outlet property="awTitle" destination="IIh-HC-8MY" id="QN8-IN-GjU"/>
                         <outlet property="buttonText" destination="v5U-wE-40J" id="qse-2q-Omo"/>
                         <outlet property="locationArrow" destination="pKm-dl-hLp" id="vCP-eD-iRQ"/>
                         <outlet property="locationButton" destination="BLG-wd-svF" id="oUa-ez-1fK"/>
@@ -1485,6 +1492,9 @@ plan for your next run!</string>
         </namedColor>
         <namedColor name="primary">
             <color red="0.0" green="0.48627450979999998" blue="0.70196078429999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
