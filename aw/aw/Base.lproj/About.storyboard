@@ -579,8 +579,8 @@ American Whitewater is working full-time to assure protection of whitewater rive
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xeh-9n-p8Z">
                                                 <rect key="frame" x="16" y="162" width="343" height="267"/>
-                                                <mutableString key="text">To finance its projects, American Whitewater seeks memberships, member gifts, corporate and foundation support. In addition, revenue from events, advertising and branded products support stewardship efforts.  
-Individual memberships are crucial to American Whitewater and our goal is to remain an organization of whitewater enthusiasts funded by and ultimately representative of the interests of those to whom the health and enjoyment of our nation’s rivers is a priority. Currently American Whitewater receives support from over 5,000 dues paying member and 100 affiliate paddling clubs.</mutableString>
+                                                <string key="text">To finance its projects, American Whitewater seeks memberships, member gifts, corporate and foundation support. In addition, revenue from events, advertising and branded products support stewardship efforts.  
+Individual memberships are crucial to American Whitewater and our goal is to remain an organization of whitewater enthusiasts funded by and ultimately representative of the interests of those to whom the health and enjoyment of our nation’s rivers is a priority. Currently American Whitewater receives support from over 5,000 dues paying member and 100 affiliate paddling clubs.</string>
                                                 <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="14"/>
                                                 <color key="textColor" name="font_grey"/>
                                                 <nil key="highlightedColor"/>
@@ -672,9 +672,6 @@ Individual memberships are crucial to American Whitewater and our goal is to rem
         </namedColor>
         <namedColor name="font_grey">
             <color red="0.36862745098039218" green="0.36862745098039218" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="primary">
-            <color red="0.0" green="0.48627450980392156" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="primary">
             <color red="0.0" green="0.48627450980392156" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

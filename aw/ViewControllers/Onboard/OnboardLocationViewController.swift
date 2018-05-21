@@ -3,6 +3,7 @@ import CoreLocation
 import UIKit
 
 class OnboardLocationViewController: UIViewController, MOCViewControllerType {
+    @IBOutlet weak var awTitle: UILabel!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var buttonText: UILabel!
     @IBOutlet weak var zipcodeField: UITextField!
@@ -17,6 +18,17 @@ class OnboardLocationViewController: UIViewController, MOCViewControllerType {
         super.viewDidLoad()
 
         initialize()
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        awTitle.font = UIFont.italicSystemFont(ofSize: 28)
+        zipcodeField.attributedPlaceholder = NSAttributedString(string: "Zipcode",
+                                                                attributes: [NSAttributedStringKey.foregroundColor: UIColor.white.withAlphaComponent(0.25),
+                                                                             NSAttributedStringKey.font: UIFont(name: "OpenSans-Regular", size: 26)!])
     }
 
     override func didReceiveMemoryWarning() {
@@ -100,7 +112,7 @@ extension OnboardLocationViewController {
         case .noZip:
             locationButton.isEnabled = true
             orLabel.isHidden = false
-            buttonText.textColor = UIColor(named: "font_clickable")
+            buttonText.textColor = UIColor(named: "primary")
             buttonText.text = "Use your current location?"
             locationArrow.isHidden = false
             zipcodeField.isEnabled = true
@@ -114,7 +126,7 @@ extension OnboardLocationViewController {
         case .fullZip:
             locationButton.isEnabled = true
             orLabel.isHidden = true
-            buttonText.textColor = UIColor(named: "font_clickable")
+            buttonText.textColor = UIColor(named: "primary")
             buttonText.text = "Confirm location"
             locationArrow.isHidden = true
             zipcodeField.isEnabled = true
