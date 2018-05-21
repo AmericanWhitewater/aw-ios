@@ -836,9 +836,8 @@
                                     <segue destination="KIr-Na-5z5" kind="embed" id="UAW-51-SdU"/>
                                 </connections>
                             </containerView>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mv7-TD-e3E" userLabel="Distance">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mv7-TD-e3E" userLabel="Distance">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <connections>
                                     <segue destination="Ync-eu-HPl" kind="embed" id="wg2-u9-SgN"/>
                                 </connections>
@@ -846,8 +845,12 @@
                         </subviews>
                         <color key="backgroundColor" name="grey_divider"/>
                         <constraints>
+                            <constraint firstItem="mv7-TD-e3E" firstAttribute="top" secondItem="43V-qh-8sk" secondAttribute="top" id="0fr-ja-JlS"/>
                             <constraint firstItem="yRr-ST-sqP" firstAttribute="trailing" secondItem="43V-qh-8sk" secondAttribute="trailing" id="0za-5r-hpx"/>
                             <constraint firstItem="Nji-X1-Fa4" firstAttribute="trailing" secondItem="yRr-ST-sqP" secondAttribute="trailing" id="1UJ-4a-pUZ"/>
+                            <constraint firstItem="mv7-TD-e3E" firstAttribute="bottom" secondItem="yRr-ST-sqP" secondAttribute="bottom" id="FWM-8u-4a3"/>
+                            <constraint firstItem="mv7-TD-e3E" firstAttribute="trailing" secondItem="yRr-ST-sqP" secondAttribute="trailing" id="H1a-mz-8dA"/>
+                            <constraint firstItem="mv7-TD-e3E" firstAttribute="leading" secondItem="yRr-ST-sqP" secondAttribute="leading" id="KWn-jx-trE"/>
                             <constraint firstItem="Nji-X1-Fa4" firstAttribute="bottom" secondItem="yRr-ST-sqP" secondAttribute="bottom" id="LkG-WG-pEw"/>
                             <constraint firstItem="yRr-ST-sqP" firstAttribute="trailing" secondItem="fOu-vI-2Mf" secondAttribute="trailing" id="WYf-1g-aK6"/>
                             <constraint firstItem="yRr-ST-sqP" firstAttribute="bottom" secondItem="fOu-vI-2Mf" secondAttribute="bottom" id="YDa-Ky-7F3"/>
@@ -966,7 +969,7 @@
             <objects>
                 <viewController id="Ync-eu-HPl" customClass="FilterDistanceViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ysd-YH-tk0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2FG-LC-b4K">
@@ -1493,9 +1496,6 @@
         </namedColor>
         <namedColor name="primary">
             <color red="0.0" green="0.48627450979999998" blue="0.70196078429999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="white">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
