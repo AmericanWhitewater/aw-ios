@@ -4,16 +4,26 @@ class FilterRegionViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var selectedRegionsLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableviewBottomConstraint: NSLayoutConstraint!
 
     var selectedRegions: [String] = []
 
-    var isFiltered = false
-    var filteredRegions: [Region] = []
+    var searchText = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initialize()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: .UIKeyboardDidHide, object: nil)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -24,6 +34,8 @@ extension FilterRegionViewController {
         tableView.dataSource = self
         searchBar.delegate = self
         searchBar.returnKeyType = .done
+        let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+        searchTextField?.backgroundColor = UIColor(named: "grey_divider")
 
         selectedRegions = DefaultsManager.regionsFilter
 
@@ -31,12 +43,53 @@ extension FilterRegionViewController {
         selectedRegionsLabel.apply(style: .Headline1)
     }
 
+    @objc func keyboardWillAppear(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+            let keyboardFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
+            let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? Double
+            else { return }
+
+        tableviewBottomConstraint.constant = keyboardFrameValue.cgRectValue.size.height
+        UIView.animate(withDuration: TimeInterval(animationDuration), animations: { [weak self] in
+            self?.view.layoutIfNeeded()
+        })
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+            let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? Double
+            else { return }
+
+        tableviewBottomConstraint.constant = 0
+        UIView.animate(withDuration: TimeInterval(animationDuration), animations: { [weak self] in
+            self?.view.layoutIfNeeded()
+        })
+    }
+
     func setRegionsLabel() {
         if selectedRegions.count == 0 {
             selectedRegionsLabel.text = "Showing runs from everywhere"
+        } else if selectedRegions.count == 1 {
+            selectedRegionsLabel.text = "Your selected region: \(selectedRegions.first ?? "")"
         } else {
-            selectedRegionsLabel.text = "Showing runs from: \(selectedRegions.joined(separator: ", "))"
+            selectedRegionsLabel.text = "Your selected regions: \(selectedRegions.joined(separator: ", "))"
         }
+    }
+
+    func regionsForSection(section: Int) -> [Region] {
+        let header = Region.alphaGroupKeys[section]
+
+        guard let region = Region.grouped[header] else {
+            fatalError("Unable find section: \(section)")
+        }
+
+        if searchText != "" {
+            return region.filter { region in
+                return region.title.lowercased().contains(searchText.lowercased()) || region.country.lowercased().contains(searchText.lowercased())
+            }
+        }
+
+        return region
     }
 }
 
@@ -49,14 +102,7 @@ extension FilterRegionViewController: FilterViewControllerType {
 
 extension FilterRegionViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.count == 0 {
-            isFiltered = false
-        } else {
-            isFiltered = true
-            filteredRegions = Region.all.filter { (region) in
-                return region.title.contains(searchText)
-            }
-        }
+        self.searchText = searchText
         self.tableView.reloadData()
     }
 
@@ -69,29 +115,26 @@ extension FilterRegionViewController: UISearchBarDelegate {
 extension FilterRegionViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return Region.alphaGroupKeys.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltered {
-            return filteredRegions.count
-        } else {
-            return Region.all.count
-        }
+        return regionsForSection(section: section).count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let region = regionsForSection(section: indexPath.section)[indexPath.row]
 
-        let region: Region
-
-        if isFiltered {
-            region = filteredRegions[indexPath.row]
-        } else {
-            region = Region.all[indexPath.row]
-        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "regionFilterCell", for: indexPath)
 
-        cell.textLabel?.text = region.title
+        cell.textLabel?.apply(style: .Text3)
+
+        if ["US", "CA"].contains(region.country) {
+            cell.textLabel?.text = "\(region.title), \(region.country)"
+        } else {
+            cell.textLabel?.text = region.title
+        }
+
 
         if selectedRegions.contains(region.title) {
             cell.accessoryType = .checkmark
@@ -107,14 +150,22 @@ extension FilterRegionViewController: UITableViewDelegate, UITableViewDataSource
 
         let cell = tableView.cellForRow(at: indexPath)
 
+        guard let regionName = cell?.textLabel?.text?.split(separator: ",").first else {
+            fatalError("No cell text")
+        }
+
         if cell?.accessoryType == UITableViewCellAccessoryType.checkmark {
             cell?.accessoryType = .none
-            selectedRegions = selectedRegions.filter { $0 != cell?.textLabel?.text }
+            selectedRegions = selectedRegions.filter { $0 != String(regionName) }
         } else {
             cell?.accessoryType = .checkmark
-            selectedRegions.append((cell?.textLabel?.text)!)
+            selectedRegions.append(String(regionName))
         }
 
         setRegionsLabel()
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return Region.alphaGroupKeys[section]
     }
 }

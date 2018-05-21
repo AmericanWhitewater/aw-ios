@@ -44,10 +44,12 @@ class FilterViewController: UIViewController {
             distanceView.isHidden = true
         case "class":
             regionView.isHidden = true
+            regionView.endEditing(true)
             classView.isHidden = false
             distanceView.isHidden = true
         case "distance":
             regionView.isHidden = true
+            regionView.endEditing(true)
             classView.isHidden = true
             distanceView.isHidden = false
         default:
@@ -62,9 +64,9 @@ class FilterViewController: UIViewController {
         case 0:
             setViewShown(name: "region")
         case 1:
-            setViewShown(name: "class")
-        case 2:
             setViewShown(name: "distance")
+        case 2:
+            setViewShown(name: "class")
         default:
             break
         }
