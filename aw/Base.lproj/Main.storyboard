@@ -954,6 +954,7 @@
                         <outlet property="searchBar" destination="jVx-ZA-lpW" id="afF-hR-GeN"/>
                         <outlet property="selectedRegionsLabel" destination="yAg-VY-lV6" id="hDN-NG-gvp"/>
                         <outlet property="tableView" destination="ghP-yE-Jgk" id="ab3-yM-FKc"/>
+                        <outlet property="tableviewBottomConstraint" destination="esi-hd-9Z2" id="PDa-2u-9lY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vQT-Ja-lmk" userLabel="First Responder" sceneMemberID="firstResponder"/>
