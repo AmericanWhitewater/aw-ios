@@ -845,7 +845,7 @@
                         </subviews>
                         <color key="backgroundColor" name="grey_divider"/>
                         <constraints>
-                            <constraint firstItem="mv7-TD-e3E" firstAttribute="top" secondItem="43V-qh-8sk" secondAttribute="top" id="0fr-ja-JlS"/>
+                            <constraint firstItem="mv7-TD-e3E" firstAttribute="top" secondItem="43V-qh-8sk" secondAttribute="bottom" id="0fr-ja-JlS"/>
                             <constraint firstItem="yRr-ST-sqP" firstAttribute="trailing" secondItem="43V-qh-8sk" secondAttribute="trailing" id="0za-5r-hpx"/>
                             <constraint firstItem="Nji-X1-Fa4" firstAttribute="trailing" secondItem="yRr-ST-sqP" secondAttribute="trailing" id="1UJ-4a-pUZ"/>
                             <constraint firstItem="mv7-TD-e3E" firstAttribute="bottom" secondItem="yRr-ST-sqP" secondAttribute="bottom" id="FWM-8u-4a3"/>
