@@ -1,11 +1,11 @@
 import UIKit
 
 class FilterClassViewController: UIViewController {
-    @IBOutlet weak var class1: UISwitch!
-    @IBOutlet weak var class2: UISwitch!
-    @IBOutlet weak var class3: UISwitch!
-    @IBOutlet weak var class4: UISwitch!
-    @IBOutlet weak var class5: UISwitch!
+    @IBOutlet weak var class1: CheckBoxButton!
+    @IBOutlet weak var class2: CheckBoxButton!
+    @IBOutlet weak var class3: CheckBoxButton!
+    @IBOutlet weak var class4: CheckBoxButton!
+    @IBOutlet weak var class5: CheckBoxButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,28 +16,30 @@ class FilterClassViewController: UIViewController {
 
 extension FilterClassViewController {
     func initialize() {
-        setClassSwitches()
+        setCheckboxes()
     }
 
-    func setClassSwitches() {
+    func setCheckboxes() {
         let difficultyRange = DefaultsManager.classFilter
 
-        class1.isOn = difficultyRange.contains(1)
-        class2.isOn = difficultyRange.contains(2)
-        class3.isOn = difficultyRange.contains(3)
-        class4.isOn = difficultyRange.contains(4)
-        class5.isOn = difficultyRange.contains(5)
+        class1.isSelected = difficultyRange.contains(1)
+        class2.isSelected = difficultyRange.contains(2)
+        class3.isSelected = difficultyRange.contains(3)
+        class4.isSelected = difficultyRange.contains(4)
+        class5.isSelected = difficultyRange.contains(5)
     }
 }
 
 extension FilterClassViewController: FilterViewControllerType {
     func save() {
         var range: [Int] = []
-        if class1.isOn { range.append(1)}
-        if class2.isOn { range.append(2)}
-        if class3.isOn { range.append(3)}
-        if class4.isOn { range.append(4)}
-        if class5.isOn { range.append(5)}
+
+        if class1.isSelected { range.append(1) }
+        if class2.isSelected { range.append(2) }
+        if class3.isSelected { range.append(3) }
+        if class4.isSelected { range.append(4) }
+        if class5.isSelected { range.append(5) }
+
         DefaultsManager.classFilter = range
     }
 }
