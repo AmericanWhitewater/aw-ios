@@ -70,6 +70,7 @@
 		38BE74A8206839F200DE555D /* FilterManagerViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A7206839F200DE555D /* FilterManagerViewControllerType.swift */; };
 		38C421542065C7DE0044D717 /* AWApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C421532065C7DE0044D717 /* AWApiHelper.swift */; };
 		38EBD1CE2070785600D7B1C1 /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EBD1CD2070785600D7B1C1 /* NewsTableViewController.swift */; };
+		38EBDF0B20B4F8AA007F7B15 /* CheckBoxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EBDF0A20B4F8AA007F7B15 /* CheckBoxButton.swift */; };
 		C9BC5BD4CB6D91E73EB235F5 /* Pods_aw.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80E52B037FAD5157E2C7E5E /* Pods_aw.framework */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +142,7 @@
 		38C421532065C7DE0044D717 /* AWApiHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiHelper.swift; sourceTree = "<group>"; };
 		38CCB60111CB4CE8C8F7419F /* Pods-aw.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aw.release.xcconfig"; path = "Pods/Target Support Files/Pods-aw/Pods-aw.release.xcconfig"; sourceTree = "<group>"; };
 		38EBD1CD2070785600D7B1C1 /* NewsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
+		38EBDF0A20B4F8AA007F7B15 /* CheckBoxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxButton.swift; sourceTree = "<group>"; };
 		B80E52B037FAD5157E2C7E5E /* Pods_aw.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aw.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -285,6 +287,7 @@
 				380729A3209CDD6700C61223 /* UILabel.swift */,
 				2F8C7A7D20AF3F7A00AB6521 /* UIImageView.swift */,
 				2F4CAECF20AF9BC400B67704 /* String.swift */,
+				38EBDF0A20B4F8AA007F7B15 /* CheckBoxButton.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -568,6 +571,7 @@
 				3807299B209CB7C800C61223 /* MapKeyView.swift in Sources */,
 				3836C4922071007F00490999 /* NewsDonateTableViewCell.swift in Sources */,
 				38A6C8EA2066884800B5BA29 /* NSManagedObjectContext.swift in Sources */,
+				38EBDF0B20B4F8AA007F7B15 /* CheckBoxButton.swift in Sources */,
 				38BE74A6206827A200DE555D /* DifficultyHelper.swift in Sources */,
 				385E59C22063047B00A68EC9 /* AppDelegate.swift in Sources */,
 				38A6C8ED2066E6EC00B5BA29 /* AmericanWhitewater.xcdatamodeld in Sources */,
