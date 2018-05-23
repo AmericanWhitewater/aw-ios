@@ -7,7 +7,8 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     @IBOutlet weak var runnableToggle: UISwitch?
     @IBOutlet weak var updateTimeLabel: UILabel!
     @IBOutlet weak var updateTimeView: UIView!
-    
+    @IBOutlet weak var filterButton: UIBarButtonItem?
+
     var managedObjectContext: NSManagedObjectContext?
 
     var fetchedResultsController: NSFetchedResultsController<Reach>?
@@ -29,6 +30,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         super.viewWillAppear(animated)
         updateFetchPredicates()
         updateTime()
+        updateFilterButton()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -239,6 +241,17 @@ extension RunListTableViewController {
         }
 
         return "No runs found. Have you checked which filters are applied?"
+    }
+
+    func updateFilterButton() {
+        guard let filterButton = filterButton else {
+            return
+        }
+        if DefaultsManager.classFilter.count > 0 || DefaultsManager.regionsFilter.count > 0 || DefaultsManager.distanceFilter > 0 {
+            filterButton.image = UIImage(named: "filterOn")
+        } else {
+            filterButton.image = UIImage(named: "filterOff")
+        }
     }
 }
 
