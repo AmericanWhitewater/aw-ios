@@ -35,18 +35,21 @@ class AppTeamTVC: UITableViewController {
             
             switch indexPath.row {
             case 0:
+                cell.setProfilePhoto(image: UIImage(named: "profileAK")!)
                 cell.setName(name: "Alex Kerney")
                 cell.setTitle(title: "Software Engineer")
-                cell.setEmail(email: "alex@americanwhitewater.org")
+                cell.setEmail(email: "Abk@mac.com")
                 return cell
                 
             case 1:
+                cell.setProfilePhoto(image: UIImage(named: "profileRJ")!)
                 cell.setName(name: "Rachel Jin")
                 cell.setTitle(title: "Product Designer")
                 cell.setEmail(email: "girlracheljin@gmail.com")
                 return cell
                 
             case 2:
+                cell.setProfilePhoto(image: UIImage(named: "profileGL")!)
                 cell.setName(name: "Gregory Lee")
                 cell.setTitle(title: "Project Lead/Engineer")
                 cell.setEmail(email: "greg@americanwhitewater.org")

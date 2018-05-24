@@ -612,6 +612,9 @@ American Whitewater is working full-time to assure protection of whitewater rive
                             <outlet property="delegate" destination="fwG-eD-VmM" id="ajd-rk-oOU"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="AW App Team" id="PAA-Vf-bFL">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="Azs-2S-9rm"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfs-mq-qe1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

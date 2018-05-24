@@ -15,6 +15,10 @@ class TeamMemberTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    func setProfilePhoto(image: UIImage) {
+        self.profilePhoto.image = image
+    }
+    
     func setName(name: String) {
         self.name.text = name
     }
