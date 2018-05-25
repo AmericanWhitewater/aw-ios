@@ -10,6 +10,9 @@ class NewsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialize()
+        
+        tableView.estimatedRowHeight = 60
+        tableView.rowHeight = UITableViewAutomaticDimension
 
         if let lastUpdated = DefaultsManager.articlesLastUpdated {
             if lastUpdated < Date(timeIntervalSinceNow: -86400) {
@@ -72,6 +75,10 @@ class NewsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section != 0
     }
 }
 
