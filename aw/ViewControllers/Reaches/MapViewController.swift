@@ -161,48 +161,47 @@ extension MapViewController: MKMapViewDelegate {
             }
             view?.annotation = annotation
             view?.canShowCallout = true
-            //view?.clusteringIdentifier = "reach"
-            // cluster view is causing exc_bad_access crashes
-            // see: https://forums.developer.apple.com/thread/92799
             if let icon = reach.icon {
                 view?.image = icon
             }
-            // change display priority based on current conditions
-//            switch reach.condition {
-//            case "low", "med", "high":
-//                break
-//            default:
-//                view?.displayPriority = .defaultLow
-//            }
-            let button = UIButton(type: .detailDisclosure)
-            button.addTarget(self, action: #selector(reachButtonTapped), for: .touchUpInside)
-            view?.rightCalloutAccessoryView = button
-
-            let subtitle = UILabel()
-            subtitle.text = reach.subtitle
-            subtitle.apply(style: .Text2)
-
-            let runnableClass = UILabel()
-            runnableClass.text = reach.runnableClass
-            runnableClass.apply(style: .Label1)
-            runnableClass.textColor = reach.color
-
-            let stack = UIStackView(arrangedSubviews: [subtitle, runnableClass])
-            stack.axis = .vertical
-            view?.detailCalloutAccessoryView = stack
-
             return view
-        /*} else if let cluster = annotation as? MKClusterAnnotation {
-            var view = mapView.dequeueReusableAnnotationView(withIdentifier: "cluster") as? MKMarkerAnnotationView
-            if view == nil {
-                view = MKMarkerAnnotationView(annotation: nil, reuseIdentifier: "cluster")
-            }
-            view?.annotation = cluster
-            return view*/
         } else {
             // default view for user location and unknown annotations
             return nil
         }
+    }
+
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let reach = view.annotation as? Reach else {
+            return
+        }
+
+        let button = UIButton(type: .detailDisclosure)
+        button.addTarget(self, action: #selector(reachButtonTapped), for: .touchUpInside)
+        view.rightCalloutAccessoryView = button
+
+        let subtitle = UILabel()
+        subtitle.text = reach.section
+        subtitle.apply(style: .Text2)
+
+        let runnableClass = UILabel()
+        runnableClass.text = reach.runnableClass
+        runnableClass.apply(style: .Label1)
+        runnableClass.textColor = reach.color
+
+        let stack = UIStackView(arrangedSubviews: [subtitle, runnableClass])
+        stack.axis = .vertical
+
+        view.detailCalloutAccessoryView = stack
+    }
+
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        guard view.annotation is Reach else {
+            return
+        }
+
+        view.rightCalloutAccessoryView = nil
+        view.detailCalloutAccessoryView = nil
     }
 }
 
