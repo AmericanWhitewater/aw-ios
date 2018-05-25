@@ -105,7 +105,6 @@ class RunDetailTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath {
         case IndexPath(row: 0, section: 0):
-            //return 117
             return UITableViewAutomaticDimension
         case IndexPath(row: 0, section: 1): // Image
             if reach?.photoUrl != nil {
@@ -192,9 +191,9 @@ extension RunDetailTableViewController {
             readingLabel.textColor = reach.color
             unitsLabel.text = unit
         } else {
-            readingLabel.text = ""
+            readingLabel.text = " "
             unitsLabel.textColor = reach.color
-            unitsLabel.text = "Unknown"
+            unitsLabel.text = "Unknown runnability"
         }
 
         if let length = reach.length {
