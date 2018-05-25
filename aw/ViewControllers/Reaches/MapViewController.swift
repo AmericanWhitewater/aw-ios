@@ -4,6 +4,7 @@ import MapKit
 
 class MapViewController: UIViewController, MOCViewControllerType {
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var filterButton: UIBarButtonItem?
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -23,6 +24,7 @@ class MapViewController: UIViewController, MOCViewControllerType {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        updateFilterButton()
         updateFetchPredicates()
     }
 
@@ -66,20 +68,6 @@ extension MapViewController {
     func setupMapView() {
         mapView.delegate = self
         mapView.showsUserLocation = true
-
-        let distance = Double(DefaultsManager.distanceFilter)
-        let latitude = DefaultsManager.latitude
-        let longitude = DefaultsManager.longitude
-
-        if distance != 0 {
-            let scalingFactor = abs( (cos(2 * Double.pi * latitude / 360.0)))
-            let span = MKCoordinateSpan(latitudeDelta: distance / 69.0, longitudeDelta: distance/(scalingFactor * 69.0))
-            let region = MKCoordinateRegion(center:
-                CLLocationCoordinate2D(
-                    latitude: latitude, longitude: longitude),
-                span: span)
-            mapView.setRegion(region, animated: false)
-        }
     }
 
     func prepareDetailSegue(_ segue: UIStoryboardSegue) {
@@ -143,6 +131,17 @@ extension MapViewController {
                 mapView.showAnnotations(reaches, animated: true)
                 zoom = false
             }
+        }
+    }
+
+    func updateFilterButton() {
+        guard let filterButton = filterButton else {
+            return
+        }
+        if DefaultsManager.classFilter.count > 0 || DefaultsManager.regionsFilter.count > 0 || DefaultsManager.distanceFilter > 0 {
+            filterButton.image = UIImage(named: "filterOn")
+        } else {
+            filterButton.image = UIImage(named: "filterOff")
         }
     }
 }

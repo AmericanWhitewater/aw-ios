@@ -477,6 +477,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="filterButton" destination="8z3-0y-QQi" id="Acx-BK-rf4"/>
                         <outlet property="mapView" destination="NbB-v1-cby" id="kHf-yu-Jy2"/>
                         <segue destination="lOP-Q4-YiZ" kind="show" identifier="runDetailMap" id="nNq-n1-7H9"/>
                     </connections>
@@ -1510,8 +1511,8 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="vCc-Lg-GX5"/>
+        <segue reference="35b-Ee-eOR"/>
         <segue reference="HLz-3E-X9y"/>
-        <segue reference="kal-PE-jUf"/>
+        <segue reference="nNq-n1-7H9"/>
     </inferredMetricsTieBreakers>
 </document>
