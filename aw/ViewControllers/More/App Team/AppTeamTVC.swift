@@ -2,6 +2,27 @@ import CoreData
 import UIKit
 
 class AppTeamTVC: UITableViewController {
+    let teamMembers = [
+        [
+            "image": "profileAK",
+            "name": "Alex Kerney",
+            "title": "Software Engineer",
+            "email": "Abk@mac.com"
+        ],
+        [
+            "image": "profileRJ",
+            "name": "Rachel Jin",
+            "title": "Product Designer",
+            "email": "girlracheljin@gmail.com"
+        ],
+        [
+            "image": "profileGL",
+            "name": "Gregory Lee",
+            "title": "Project Lead/Engineer",
+            "email": "greg@americanwhitewater.org"
+        ],
+    ]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,34 +54,38 @@ class AppTeamTVC: UITableViewController {
                     fatalError("Failed to dequeue donate cell")
             }
             
-            switch indexPath.row {
-            case 0:
-                cell.setProfilePhoto(image: UIImage(named: "profileAK")!)
-                cell.setName(name: "Alex Kerney")
-                cell.setTitle(title: "Software Engineer")
-                cell.setEmail(email: "Abk@mac.com")
-                return cell
-                
-            case 1:
-                cell.setProfilePhoto(image: UIImage(named: "profileRJ")!)
-                cell.setName(name: "Rachel Jin")
-                cell.setTitle(title: "Product Designer")
-                cell.setEmail(email: "girlracheljin@gmail.com")
-                return cell
-                
-            case 2:
-                cell.setProfilePhoto(image: UIImage(named: "profileGL")!)
-                cell.setName(name: "Gregory Lee")
-                cell.setTitle(title: "Project Lead/Engineer")
-                cell.setEmail(email: "greg@americanwhitewater.org")
-                return cell
+            let teamMember = teamMembers[indexPath.row]
             
-            default:
-                fatalError("Incorrect index path")
-            }
+            cell.setProfilePhoto(image: UIImage(named: teamMember["image"]!)!)
+            cell.setName(name: teamMember["name"]!)
+            cell.setTitle(title: teamMember["title"]!)
+            cell.setEmail(email: teamMember["email"]!)
+            
+            return cell
             
         } else {
             return tableView.dequeueReusableCell(withIdentifier: "description", for: indexPath)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath.section == 0) {
+            let email = teamMembers[indexPath.row]["email"]!
+            openUrl(url: "mailto://" + email)
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func openUrl(url: String) {
+        if let url = URL(string: url), UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
         }
     }
 }

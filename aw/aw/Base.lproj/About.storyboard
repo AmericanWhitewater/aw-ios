@@ -509,58 +509,57 @@ American Whitewater is working full-time to assure protection of whitewater rive
         <scene sceneID="htT-hi-l2Y">
             <objects>
                 <tableViewController storyboardIdentifier="App Team" id="fwG-eD-VmM" userLabel="App Team" customClass="AppTeamTVC" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="kg6-iI-A4c">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="kg6-iI-A4c">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="teamMember" rowHeight="96" id="VWE-nl-6HU" userLabel="Team Member Cell" customClass="TeamMemberTableViewCell" customModule="aw" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="96"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="96"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VWE-nl-6HU" id="IOv-e1-H7U">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="95.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="A8x-lB-ocb">
-                                            <rect key="frame" x="16" y="12" width="55" height="55"/>
+                                            <rect key="frame" x="20" y="20.5" width="55" height="55"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="55" id="Ug9-sq-wtV"/>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="55" id="XXe-UO-BuD"/>
                                                 <constraint firstAttribute="width" constant="55" id="hBt-5O-Hkl"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gregory Lee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hvB-mO-1im">
-                                            <rect key="frame" x="83" y="15" width="280" height="26"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Gregory Lee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hvB-mO-1im">
+                                            <rect key="frame" x="95" y="15" width="268" height="26"/>
                                             <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="19"/>
                                             <color key="textColor" name="font_blue"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Manager" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHl-Pt-nxe">
-                                            <rect key="frame" x="83" y="44" width="121" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Product Manager" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHl-Pt-nxe">
+                                            <rect key="frame" x="95" y="44" width="121" height="21"/>
                                             <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="15"/>
                                             <color key="textColor" name="font_grey"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="greg@americanwhitewater.org" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b4l-xZ-DZy">
-                                            <rect key="frame" x="83" y="65" width="280" height="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="greg@americanwhitewater.org" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b4l-xZ-DZy">
+                                            <rect key="frame" x="95" y="65" width="268" height="18"/>
                                             <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="13"/>
                                             <color key="textColor" name="font_light_grey"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="fHl-Pt-nxe" firstAttribute="top" secondItem="hvB-mO-1im" secondAttribute="bottom" constant="3" id="265-Em-Z3f"/>
+                                        <constraint firstItem="fHl-Pt-nxe" firstAttribute="top" secondItem="hvB-mO-1im" secondAttribute="bottom" constant="6" id="265-Em-Z3f"/>
                                         <constraint firstItem="b4l-xZ-DZy" firstAttribute="leading" secondItem="fHl-Pt-nxe" secondAttribute="leading" id="7wl-aV-iyw"/>
-                                        <constraint firstAttribute="bottom" secondItem="b4l-xZ-DZy" secondAttribute="bottom" constant="12" id="FnC-WO-Nw4"/>
+                                        <constraint firstAttribute="bottom" secondItem="b4l-xZ-DZy" secondAttribute="bottom" constant="35" id="FnC-WO-Nw4"/>
                                         <constraint firstItem="fHl-Pt-nxe" firstAttribute="leading" secondItem="hvB-mO-1im" secondAttribute="leading" id="KKf-Xv-Y2o"/>
                                         <constraint firstItem="b4l-xZ-DZy" firstAttribute="top" secondItem="fHl-Pt-nxe" secondAttribute="bottom" id="TA4-Iw-Mki"/>
+                                        <constraint firstItem="A8x-lB-ocb" firstAttribute="centerY" secondItem="IOv-e1-H7U" secondAttribute="centerY" id="UMF-aC-riK"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fHl-Pt-nxe" secondAttribute="trailing" constant="12" id="Ugi-BN-9EK"/>
-                                        <constraint firstItem="A8x-lB-ocb" firstAttribute="leading" secondItem="IOv-e1-H7U" secondAttribute="leading" constant="16" id="Y5M-0t-gOd"/>
+                                        <constraint firstItem="A8x-lB-ocb" firstAttribute="leading" secondItem="IOv-e1-H7U" secondAttribute="leading" constant="20" id="Y5M-0t-gOd"/>
                                         <constraint firstAttribute="trailing" secondItem="b4l-xZ-DZy" secondAttribute="trailing" constant="12" id="jtU-7h-JOe"/>
                                         <constraint firstAttribute="trailing" secondItem="hvB-mO-1im" secondAttribute="trailing" constant="12" id="mlA-GC-H0q"/>
-                                        <constraint firstItem="A8x-lB-ocb" firstAttribute="top" secondItem="IOv-e1-H7U" secondAttribute="top" constant="12" id="oy3-py-po5"/>
-                                        <constraint firstItem="hvB-mO-1im" firstAttribute="top" secondItem="IOv-e1-H7U" secondAttribute="top" constant="15" id="qgs-Ph-VRz"/>
-                                        <constraint firstItem="hvB-mO-1im" firstAttribute="leading" secondItem="A8x-lB-ocb" secondAttribute="trailing" constant="12" id="sgB-Zy-vhh"/>
+                                        <constraint firstItem="hvB-mO-1im" firstAttribute="top" secondItem="IOv-e1-H7U" secondAttribute="top" constant="35" id="qgs-Ph-VRz"/>
+                                        <constraint firstItem="hvB-mO-1im" firstAttribute="leading" secondItem="A8x-lB-ocb" secondAttribute="trailing" constant="20" id="sgB-Zy-vhh"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -571,7 +570,7 @@ American Whitewater is working full-time to assure protection of whitewater rive
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="description" rowHeight="181" id="wJG-4y-l2o" userLabel="Description Cell">
-                                <rect key="frame" x="0.0" y="124" width="375" height="181"/>
+                                <rect key="frame" x="0.0" y="151.5" width="375" height="181"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wJG-4y-l2o" id="dRd-RO-JPP">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="180.5"/>
@@ -585,10 +584,10 @@ American Whitewater is working full-time to assure protection of whitewater rive
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZzH-65-taz">
                                             <rect key="frame" x="16" y="53" width="347" height="116"/>
-                                            <mutableString key="text">This app was built entirely with volunteer hours. Special thanks to the following people for making this app a reality:         Alex Kerney, for building almost the entire app, and putting up with my incessant requests for changes.
-        Rachel Jin, who designed this beautiful app. She's never been in a kayak, but she worked tirelessly to understand exactly what the whitewater community needs. And, maybe this will get her out on the water :).
-        Ryan Groth, for fielding my incessant questions and massaging the backend to work with a mobile app.  This was no small feat, since mobile apps hadn't even been invented when the AW backend was designed.
-        Mark Singleton and Thomas O'Keefe for their support of this project and help getting everything set up, including all of the accounts, api access, documentation, beta testers, etc.
+                                            <mutableString key="text">This app was built entirely with volunteer hours. Special thanks to the following people for making this app a reality:          Alex Kerney, for building almost the entire app, and putting up with my incessant requests for changes. 
+        Rachel Jin, who designed this beautiful app. She's never been in a kayak, but she worked tirelessly to understand exactly what the whitewater community needs. And, maybe this will get her out on the water :). 
+        Ryan Groth, for fielding my incessant questions and massaging the backend to work with a mobile app.  This was no small feat, since mobile apps hadn't even been invented when the AW backend was designed. 
+        Mark Singleton and Thomas O'Keefe for their support of this project and help getting everything set up, including all of the accounts, api access, documentation, beta testers, etc. 
         If you have any questions or feedback, or find a bug, please don't hesitate to contact Greg at greg@americanwhitewater.org.</mutableString>
                                             <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="15"/>
                                             <color key="textColor" name="font_grey"/>
