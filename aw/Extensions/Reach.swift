@@ -95,10 +95,6 @@ extension Reach: MKAnnotation {
         }
     }
 
-    public var subtitle: String? {
-        return sectionCleanedHTML
-    }
-
     public var coordinate: CLLocationCoordinate2D {
         guard let lat = putInLat, let latitude = Double(lat),
             let lon = putInLon, let longitude = Double(lon) else {
