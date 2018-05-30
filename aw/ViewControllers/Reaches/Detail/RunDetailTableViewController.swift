@@ -210,7 +210,7 @@ extension RunDetailTableViewController {
 
         detailUpdated.text = reach.updatedString ?? "Updating Run Details"
 
-        if detailUpdated != nil {
+        if reach.detailUpdated != nil {
             if let description = reach.longDescription, let data = description.data(using: .utf8) {
                 if let html = try? NSMutableAttributedString(data: data,
                          options: [NSAttributedString.DocumentReadingOptionKey.documentType:
@@ -222,7 +222,7 @@ extension RunDetailTableViewController {
                 descriptionLabel.text = "No description"
             }
         } else {
-            descriptionLabel.text = "Updating run details"
+            descriptionLabel.text = "Loading"
         }
         if let photoUrl = reach.photoUrl {
             imageView.loadFromUrlAsync(urlString: photoUrl)
