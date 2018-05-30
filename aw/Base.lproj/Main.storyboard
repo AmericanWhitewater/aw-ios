@@ -240,17 +240,27 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MHQ-gG-Eyu">
-                                                    <rect key="frame" x="16" y="11" width="343" height="146"/>
+                                                    <rect key="frame" x="16" y="11" width="343" height="124"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" name="font_light_grey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJY-UN-K9p">
+                                                    <rect key="frame" x="16" y="135" width="343" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="LIO-C1-aUV"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Read More"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="vJY-UN-K9p" firstAttribute="top" secondItem="MHQ-gG-Eyu" secondAttribute="bottom" id="QkG-gp-loo"/>
                                                 <constraint firstItem="MHQ-gG-Eyu" firstAttribute="top" secondItem="1ae-aq-1ug" secondAttribute="topMargin" id="SfS-ij-FKh"/>
                                                 <constraint firstItem="MHQ-gG-Eyu" firstAttribute="leading" secondItem="1ae-aq-1ug" secondAttribute="leadingMargin" id="Uhg-5Z-3c1"/>
-                                                <constraint firstItem="MHQ-gG-Eyu" firstAttribute="bottom" secondItem="1ae-aq-1ug" secondAttribute="bottomMargin" id="aiG-YJ-bxg"/>
+                                                <constraint firstItem="vJY-UN-K9p" firstAttribute="leading" secondItem="1ae-aq-1ug" secondAttribute="leadingMargin" id="gpF-tY-RSQ"/>
                                                 <constraint firstItem="MHQ-gG-Eyu" firstAttribute="trailing" secondItem="1ae-aq-1ug" secondAttribute="trailingMargin" id="r7t-VQ-A2q"/>
+                                                <constraint firstItem="vJY-UN-K9p" firstAttribute="bottom" secondItem="1ae-aq-1ug" secondAttribute="bottomMargin" id="wc5-CI-BwI"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="vJY-UN-K9p" secondAttribute="trailing" id="yy5-Fr-gJu"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -397,6 +407,7 @@
                         <outlet property="imageView" destination="g8W-io-yJF" id="57f-rR-DKH"/>
                         <outlet property="lengthLabel" destination="Yom-8R-JHN" id="2Om-eS-DlS"/>
                         <outlet property="nameLabel" destination="S9f-5l-pA7" id="p2c-7S-JwG"/>
+                        <outlet property="readMoreButton" destination="vJY-UN-K9p" id="pXc-Ag-BtN"/>
                         <outlet property="readingLabel" destination="ZtZ-4I-4fN" id="SDq-T3-zUF"/>
                         <outlet property="runnabilityLabel" destination="P9j-Ul-Wzu" id="3SV-K4-17H"/>
                         <outlet property="sectionLabel" destination="t7C-b4-Xvm" id="4aV-fH-E7K"/>

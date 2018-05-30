@@ -14,6 +14,7 @@ class RunDetailTableViewController: UITableViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var runnabilityLabel: UILabel!
     @IBOutlet var statsLabels: [UILabel]!
+    @IBOutlet weak var readMoreButton: UIButton!
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -87,6 +88,11 @@ class RunDetailTableViewController: UITableViewController {
         case IndexPath(row: 1, section: 1):
             expandDescription = !expandDescription
             self.tableView.reloadRows(at: [indexPath], with: .none)
+            if !descriptionLabel.isTruncated {
+                readMoreButton.isHidden = false
+            } else {
+                readMoreButton.isHidden = true
+            }
         case IndexPath(row: 0, section: 3):
             guard let reach = reach, reach.gageId != 0 else {
                 return
@@ -234,6 +240,12 @@ extension RunDetailTableViewController {
         }
         runnabilityLabel.text = reach.runnable
         runnabilityLabel.textColor = reach.color
+
+        if descriptionLabel.isTruncated {
+            readMoreButton.isHidden = false
+        } else {
+            readMoreButton.isHidden = true
+        }
 
         self.tableView.reloadData()
     }
