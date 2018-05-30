@@ -1,6 +1,8 @@
 import CoreData
 import UIKit
 
+import ActiveLabel
+
 class RunDetailTableViewController: UITableViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var sectionLabel: UILabel!
@@ -10,7 +12,7 @@ class RunDetailTableViewController: UITableViewController {
     @IBOutlet weak var readingLabel: UILabel!
     @IBOutlet weak var unitsLabel: UILabel!
     @IBOutlet weak var detailUpdated: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: ActiveLabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var runnabilityLabel: UILabel!
     @IBOutlet var statsLabels: [UILabel]!
@@ -222,13 +224,8 @@ extension RunDetailTableViewController {
         detailUpdated.text = reach.updatedString ?? "Updating Run Details"
 
         if reach.detailUpdated != nil {
-            if let description = reach.longDescription, let data = description.data(using: .utf8) {
-                if let html = try? NSMutableAttributedString(data: data,
-                         options: [NSAttributedString.DocumentReadingOptionKey.documentType:
-                            NSAttributedString.DocumentType.html],
-                         documentAttributes: nil) {
-                    descriptionLabel.attributedText = html
-                }
+            if let description = reach.longDescription {
+                descriptionLabel.attributedText = description.htmlToAttributedString
             } else {
                 descriptionLabel.text = "No description"
             }
