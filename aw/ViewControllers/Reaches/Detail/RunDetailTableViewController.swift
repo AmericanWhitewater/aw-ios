@@ -13,6 +13,7 @@ class RunDetailTableViewController: UITableViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var runnabilityLabel: UILabel!
+    @IBOutlet var statsLabels: [UILabel]!
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -176,6 +177,10 @@ extension RunDetailTableViewController {
         runnabilityLabel.numberOfLines = 0
         runnabilityLabel.textAlignment = .right
         runnabilityLabel.lineBreakMode = .byWordWrapping
+
+        for label in statsLabels {
+            label.apply(style: .Text1)
+        }
     }
 
     func drawView() {
