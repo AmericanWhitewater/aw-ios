@@ -187,7 +187,7 @@ extension RunDetailTableViewController {
         guard let reach = reach else { return }
         nameLabel.text = reach.name
         sectionLabel.text = reach.sectionCleanedHTML
-        difficultyLabel.text = reach.difficulty
+        difficultyLabel.text = reach.difficulty != nil ? "Class \(reach.difficulty!)" : "N/A"
 
         if let lastReading = reach.lastGageReading,
             let reading = Float(lastReading),
