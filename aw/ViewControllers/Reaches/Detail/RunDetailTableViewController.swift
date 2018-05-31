@@ -89,9 +89,15 @@ class RunDetailTableViewController: UITableViewController {
         switch indexPath {
         case IndexPath(row: 1, section: 1):
             expandDescription = !expandDescription
+            if expandDescription, let cell = tableView.cellForRow(at: indexPath) {
+                //cell.isUserInteractionEnabled = false
+                cell.selectionStyle = .none
+            }
             self.tableView.reloadRows(at: [indexPath], with: .none)
             if !descriptionLabel.isTruncated {
                 readMoreButton.isHidden = false
+
+
             } else {
                 readMoreButton.isHidden = true
             }
@@ -142,6 +148,11 @@ extension RunDetailTableViewController {
         styleLabels()
         drawView()
         setupRefreshControl()
+
+        descriptionLabel.handleURLTap { url in
+            print("Url tapped")
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
 
     func setupRefreshControl() {
