@@ -41,6 +41,7 @@
 		385E59CC2063047B00A68EC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 385E59CA2063047B00A68EC9 /* LaunchScreen.storyboard */; };
 		385E59D52063073900A68EC9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 385E59D42063073900A68EC9 /* MapKit.framework */; };
 		3864857D206BC355009B360F /* OnboardLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3864857C206BC355009B360F /* OnboardLocationViewController.swift */; };
+		38A4AB1A20BF517100543A33 /* ReachDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A4AB1920BF517100543A33 /* ReachDetailViewController.swift */; };
 		38A6C8D92066759A00B5BA29 /* RunListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8D82066759A00B5BA29 /* RunListTableViewController.swift */; };
 		38A6C8DB206677EC00B5BA29 /* RunListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8DA206677EC00B5BA29 /* RunListTableViewCell.swift */; };
 		38A6C8E3206687EC00B5BA29 /* MOCViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6C8E2206687EC00B5BA29 /* MOCViewControllerType.swift */; };
@@ -112,6 +113,7 @@
 		385E59CD2063047B00A68EC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		385E59D42063073900A68EC9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3864857C206BC355009B360F /* OnboardLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardLocationViewController.swift; sourceTree = "<group>"; };
+		38A4AB1920BF517100543A33 /* ReachDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachDetailViewController.swift; sourceTree = "<group>"; };
 		38A6C8D82066759A00B5BA29 /* RunListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunListTableViewController.swift; sourceTree = "<group>"; };
 		38A6C8DA206677EC00B5BA29 /* RunListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunListTableViewCell.swift; sourceTree = "<group>"; };
 		38A6C8E2206687EC00B5BA29 /* MOCViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOCViewControllerType.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				38B3CD1220672EAA0016630F /* RunDetailTableViewController.swift */,
 				381ED39A206FBA3B00B03F13 /* ReachDetailContainerViewController.swift */,
 				381ED39E206FC15700B03F13 /* ReachDetailMapViewController.swift */,
+				38A4AB1920BF517100543A33 /* ReachDetailViewController.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				3843F8912087D9C7009BC211 /* GageViewController.swift in Sources */,
 				38BE74A420681B9D00DE555D /* FilterViewControllerType.swift in Sources */,
 				38A6C8EF2067074700B5BA29 /* Reach.swift in Sources */,
+				38A4AB1A20BF517100543A33 /* ReachDetailViewController.swift in Sources */,
 				38A6C8D92066759A00B5BA29 /* RunListTableViewController.swift in Sources */,
 				38C421542065C7DE0044D717 /* AWApiHelper.swift in Sources */,
 			);

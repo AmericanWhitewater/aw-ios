@@ -92,7 +92,7 @@ extension ReachDetailViewController {
         nameLabel.text = reach.name
         sectionLabel.text = reach.sectionCleanedHTML
         descriptionSectionLabel.text = reach.sectionCleanedHTML
-        // updated
+        updatedLabel.text = reach.updatedString ?? "Updating Run Details"
 
         if let lastReading = reach.lastGageReading,
             let reading = Float(lastReading),

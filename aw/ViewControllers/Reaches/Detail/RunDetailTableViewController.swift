@@ -84,38 +84,38 @@ class RunDetailTableViewController: UITableViewController {
         }
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        switch indexPath {
-        case IndexPath(row: 1, section: 1):
-            expandDescription = !expandDescription
-            if expandDescription, let cell = tableView.cellForRow(at: indexPath) {
-                //cell.isUserInteractionEnabled = false
-                cell.selectionStyle = .none
-            }
-            self.tableView.reloadRows(at: [indexPath], with: .none)
-            if !descriptionLabel.isTruncated {
-                readMoreButton.isHidden = false
-
-
-            } else {
-                readMoreButton.isHidden = true
-            }
-        case IndexPath(row: 0, section: 3):
-            guard let reach = reach, reach.gageId != 0 else {
-                return
-            }
-            self.parent?.performSegue(withIdentifier: Segue.gageDetail.rawValue, sender: self)
-        case IndexPath(row: 1, section: 3):
-            guard let reach = reach, let url = reach.url else { return }
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        case IndexPath(row: 2, section: 3):
-            let cell = tableView.cellForRow(at: indexPath)
-            share(cell)
-        default:
-            break
-        }
-    }
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+//        switch indexPath {
+//        case IndexPath(row: 1, section: 1):
+//            expandDescription = !expandDescription
+//            if expandDescription, let cell = tableView.cellForRow(at: indexPath) {
+//                //cell.isUserInteractionEnabled = false
+//                cell.selectionStyle = .none
+//            }
+//            self.tableView.reloadRows(at: [indexPath], with: .none)
+//            if !descriptionLabel.isTruncated {
+//                readMoreButton.isHidden = false
+//
+//
+//            } else {
+//                readMoreButton.isHidden = true
+//            }
+//        case IndexPath(row: 0, section: 3):
+//            guard let reach = reach, reach.gageId != 0 else {
+//                return
+//            }
+//            self.parent?.performSegue(withIdentifier: Segue.gageDetail.rawValue, sender: self)
+//        case IndexPath(row: 1, section: 3):
+//            guard let reach = reach, let url = reach.url else { return }
+//            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//        case IndexPath(row: 2, section: 3):
+//            let cell = tableView.cellForRow(at: indexPath)
+//            share(cell)
+//        default:
+//            break
+//        }
+//    }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath {
@@ -127,7 +127,8 @@ class RunDetailTableViewController: UITableViewController {
             }
             return 0
         case IndexPath(row: 1, section: 1): // Description
-            return expandDescription ? UITableViewAutomaticDimension : 168
+            return UITableViewAutomaticDimension
+        //return expandDescription ? UITableViewAutomaticDimension : 168
         case IndexPath(row: 0, section: 2):
             return 77
         case IndexPath(row: 0, section: 3): // Gage info
@@ -139,16 +140,26 @@ class RunDetailTableViewController: UITableViewController {
             return 44
         }
     }
+
+//    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+//        switch indexPath {
+//        case IndexPath(row: 1, section: 1):
+//            return expandDescription ? nil : indexPath
+//        default:
+//            return indexPath
+//        }
+//    }
 }
 
 extension RunDetailTableViewController {
     func initialize() {
-        tableView.contentInset = UIEdgeInsets(top: -36, left: 0, bottom: 0, right: 0) //UIEdgeInsetsMake(-36, 0, 0, 0)
+        tableView.contentInset = UIEdgeInsets(top: -36, left: 0, bottom: 0, right: 0)
 
         styleLabels()
         drawView()
         setupRefreshControl()
 
+        descriptionLabel.enabledTypes = [.url]
         descriptionLabel.handleURLTap { url in
             print("Url tapped")
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
