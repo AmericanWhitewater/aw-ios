@@ -515,7 +515,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mc9-lQ-B8O">
                                                 <rect key="frame" x="0.0" y="105.5" width="375" height="352.5"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zda-nl-vw0">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zda-nl-vw0">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="186"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="186" id="uTV-J1-rEY"/>
@@ -541,6 +541,9 @@
                                                         <state key="normal" title="READ MORE">
                                                             <color key="titleColor" name="font_clickable"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="readMoreTapped:" destination="FfM-l8-uAu" eventType="touchUpInside" id="sHu-Kc-9eo"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

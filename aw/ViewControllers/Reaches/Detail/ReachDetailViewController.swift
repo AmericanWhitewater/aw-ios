@@ -64,15 +64,21 @@ class ReachDetailViewController: UIViewController {
         }
     }
 
+    @IBAction func readMoreTapped(_ sender: Any) {
+        descriptionLabel.numberOfLines = 0
+        readMoreButton.isHidden = true
+    }
 
     @IBAction func gageInfoButtonTapped(_ sender: Any) {
         guard let reach = reach, reach.gageId != 0 else { return }
         self.parent?.performSegue(withIdentifier: Segue.gageDetail.rawValue, sender: sender)
     }
+
     @IBAction func learnMoreTapped(_ sender: Any) {
         guard let reach = reach, let url = reach.url else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
+
     @IBAction func shareButtonTapped(_ sender: Any) {
         share(sender)
     }
@@ -133,6 +139,8 @@ extension ReachDetailViewController {
             } else {
                 descriptionLabel.text = "No description"
             }
+
+            readMoreButton.isHidden = !descriptionLabel.isTruncated
         } else {
             descriptionLabel.text = "Loading"
         }
