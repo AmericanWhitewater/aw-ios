@@ -22,6 +22,8 @@ class ReachDetailViewController: UIViewController {
     @IBOutlet weak var gradientLabel: UILabel!
     @IBOutlet var statsLabels: [UILabel]!
 
+    @IBOutlet var buttonLabels: [UILabel]!
+
 
     var reach: Reach?
     var managedObjectContext: NSManagedObjectContext?
@@ -84,6 +86,10 @@ extension ReachDetailViewController {
         gradientLabel.apply(style: .Headline1)
         for label in statsLabels {
             label.apply(style: .Text1)
+        }
+
+        for label in buttonLabels {
+            label.apply(style: .Text3)
         }
     }
 
