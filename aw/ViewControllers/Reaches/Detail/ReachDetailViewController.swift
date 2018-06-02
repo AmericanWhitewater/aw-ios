@@ -68,6 +68,8 @@ class ReachDetailViewController: UIViewController {
     @IBAction func gageInfoButtonTapped(_ sender: Any) {
     }
     @IBAction func learnMoreTapped(_ sender: Any) {
+        guard let reach = reach, let url = reach.url else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     @IBAction func shareButtonTapped(_ sender: Any) {
         share(sender)
