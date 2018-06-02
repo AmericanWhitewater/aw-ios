@@ -10,7 +10,24 @@ enum Fonts: String {
 }
 
 enum FontStyle {
-    case Headline1, Text1, Text2, Text3, Label1, Tab1, Tab2, Number1, Number2
+    /// Black semi-bold 17
+    case Headline1
+    /// Grey regular 17
+    case Text1
+    /// Light grey regular 13
+    case Text2
+    /// Black regular 17
+    case Text3
+    /// Black semi-bold 15
+    case Label1
+    /// Light grey regular 10
+    case Tab1
+    /// Clickable regular 10
+    case Tab2
+    /// Black semi-bold 17
+    case Number1
+    /// Black regular 34
+    case Number2
 
     func font() -> UIFont {
         switch self {

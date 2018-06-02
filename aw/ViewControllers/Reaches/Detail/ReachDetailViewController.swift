@@ -80,6 +80,7 @@ extension ReachDetailViewController {
 
         descriptionSectionLabel.apply(style: .Headline1)
         descriptionLabel.apply(style: .Text1)
+        readMoreButton.titleLabel?.apply(style: .Label1)
 
         difficultyLabel.apply(style: .Headline1)
         lengthLabel.apply(style: .Headline1)
