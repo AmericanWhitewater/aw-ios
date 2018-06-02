@@ -66,6 +66,8 @@ class ReachDetailViewController: UIViewController {
 
 
     @IBAction func gageInfoButtonTapped(_ sender: Any) {
+        guard let reach = reach, reach.gageId != 0 else { return }
+        self.parent?.performSegue(withIdentifier: Segue.gageDetail.rawValue, sender: sender)
     }
     @IBAction func learnMoreTapped(_ sender: Any) {
         guard let reach = reach, let url = reach.url else { return }
@@ -163,6 +165,11 @@ extension ReachDetailViewController {
         reccomendationLabel.textColor = reach.color
 
         // read more button
+
+
+        if reach.gageId == 0 {
+            seeGageInfoView.isHidden = true
+        }
     }
 
     func share(_ sender: Any?) {
