@@ -652,6 +652,9 @@
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KwS-bN-Zac">
                                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                                                                        <connections>
+                                                                            <action selector="gageInfoButtonTapped:" destination="FfM-l8-uAu" eventType="touchUpInside" id="K0H-MD-lb3"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -686,6 +689,9 @@
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lg2-X3-DHi">
                                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                                                                        <connections>
+                                                                            <action selector="learnMoreTapped:" destination="FfM-l8-uAu" eventType="touchUpInside" id="50Z-Na-cPs"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -720,6 +726,9 @@
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4e-lm-zr3">
                                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                                                                        <connections>
+                                                                            <action selector="shareButtonTapped:" destination="FfM-l8-uAu" eventType="touchUpInside" id="YoJ-yG-rFd"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -782,6 +791,7 @@
                         <outlet property="reccomendationLabel" destination="2mb-tb-U5D" id="Pym-mh-Vju"/>
                         <outlet property="scrollView" destination="zWJ-FI-Iyk" id="nXY-rd-k5e"/>
                         <outlet property="sectionLabel" destination="43r-0x-NNW" id="mLr-hg-eau"/>
+                        <outlet property="seeGageInfoView" destination="EJ2-Y4-1Ft" id="WBG-tC-ebU"/>
                         <outlet property="unitsLabel" destination="bZX-lQ-2ty" id="gzJ-KY-aSy"/>
                         <outlet property="updatedLabel" destination="A1n-9Y-5Os" id="rfa-ge-yeh"/>
                         <outletCollection property="statsLabels" destination="brJ-Ab-ioK" collectionClass="NSMutableArray" id="kaH-mX-scZ"/>

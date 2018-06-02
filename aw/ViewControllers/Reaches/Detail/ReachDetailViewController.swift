@@ -23,6 +23,7 @@ class ReachDetailViewController: UIViewController {
     @IBOutlet var statsLabels: [UILabel]!
 
     @IBOutlet var buttonLabels: [UILabel]!
+    @IBOutlet weak var seeGageInfoView: UIView!
 
 
     var reach: Reach?
@@ -61,6 +62,15 @@ class ReachDetailViewController: UIViewController {
             print("Details already updated")
             drawInfo()
         }
+    }
+
+
+    @IBAction func gageInfoButtonTapped(_ sender: Any) {
+    }
+    @IBAction func learnMoreTapped(_ sender: Any) {
+    }
+    @IBAction func shareButtonTapped(_ sender: Any) {
+        share(sender)
     }
 }
 
@@ -147,15 +157,30 @@ extension ReachDetailViewController {
             gradientLabel.text = "Unknown"
         }
 
-
-        // length
-
-        // gradient
-
         reccomendationLabel.text = reach.runnable
         reccomendationLabel.textColor = reach.color
 
         // read more button
+    }
+
+    func share(_ sender: Any?) {
+        guard let reach = reach,
+            let section = reach.section,
+            let name = reach.name,
+            let url = reach.url else { return }
+
+        let title: String
+        if reach.runnable.count > 0 {
+            title = "\( section) of \( name ) is \( reach.runnable )"
+        } else {
+            title = "\( section ) of \( name )"
+        }
+        let activityController = UIActivityViewController(activityItems: [title, url], applicationActivities: nil)
+        if let sender = sender as? UIView {
+            activityController.popoverPresentationController?.sourceView = sender
+        }
+
+        present(activityController, animated: true, completion: nil)
     }
 }
 
