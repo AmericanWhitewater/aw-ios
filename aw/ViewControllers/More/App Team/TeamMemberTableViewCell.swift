@@ -10,7 +10,7 @@ class TeamMemberTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         name.font = UIFont(name: "OpenSans", size: 19)
-        name.textColor = UIColor(named: "font_black")
+        name.textColor = UIColor(named: "font_blue")
         title.apply(style: .Text1)
         email.apply(style: .Text2)
     }
