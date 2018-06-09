@@ -306,7 +306,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEv-ug-no5">
-                                        <rect key="frame" x="54.5" y="69" width="265" height="30"/>
+                                        <rect key="frame" x="60.5" y="69" width="253" height="30"/>
                                         <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="14"/>
                                         <state key="normal" title="Know more about American Whitewater ">
                                             <color key="titleColor" name="font_blue"/>
@@ -331,7 +331,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3hf-UD-UqL">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="449.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="405"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="awLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Q8G-E5-Vml">
                                                 <rect key="frame" x="101.5" y="20" width="171" height="84"/>
@@ -341,7 +341,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qIW-6K-AS2">
-                                                <rect key="frame" x="16" y="124" width="343" height="305.5"/>
+                                                <rect key="frame" x="16" y="124" width="343" height="261"/>
                                                 <string key="text">Founded in 1954, American Whitewater is a national non-profit organization (Non-profit # 23-7083760) with a mission “to conserve and restore America's whitewater resources and to enhance opportunities to enjoy them safely.” American Whitewater is a membership organization representing a broad diversity of individual whitewater enthusiasts, river conservationists, and more than 100 local paddling club affiliates across America.
 
 The organization is the primary advocate for the preservation and protection of whitewater rivers throughout the United States, and connects the interests of human-powered recreational river users with ecological and science-based data to achieve the goals within its mission.</string>
@@ -419,7 +419,7 @@ The organization is the primary advocate for the preservation and protection of 
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIm-1J-htP">
-                                        <rect key="frame" x="54.5" y="69" width="265" height="30"/>
+                                        <rect key="frame" x="60.5" y="69" width="253" height="30"/>
                                         <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="14"/>
                                         <state key="normal" title="Know more about American Whitewater ">
                                             <color key="titleColor" name="font_blue"/>
@@ -445,10 +445,10 @@ The organization is the primary advocate for the preservation and protection of 
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cfU-TQ-Xrz">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="506.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="438"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNC-4I-G3k">
-                                                <rect key="frame" x="16" y="124" width="343" height="362.5"/>
+                                                <rect key="frame" x="16" y="124" width="343" height="294"/>
                                                 <string key="text">American Whitewater works to protect and restore rivers, maintains a national inventory of whitewater rivers, monitors potential threats to whitewater river resources, publishes information on river conservation, works with government agencies to protect the ability of the public to have a voice in the management of rivers, advocates for legislation protecting our rivers and their aquatic resources, and provides technical advice to local groups regarding river conservation and management.
 
 American Whitewater is working full-time to assure protection of whitewater rivers and the ability of the public to enjoy clean, free-flowing rivers. This includes our access program that focuses on protecting navigability on our nation's waterways and acquisition of lands that provide public access to rivers.
@@ -584,11 +584,11 @@ American Whitewater is working full-time to assure protection of whitewater rive
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZzH-65-taz">
                                             <rect key="frame" x="16" y="53" width="347" height="116"/>
-                                            <mutableString key="text">This app was built entirely with volunteer hours. Special thanks to the following people for making this app a reality:          Alex Kerney, for building almost the entire app, and putting up with my incessant requests for changes. 
+                                            <string key="text">This app was built entirely with volunteer hours. Special thanks to the following people for making this app a reality:          Alex Kerney, for building almost the entire app, and putting up with my incessant requests for changes. 
         Rachel Jin, who designed this beautiful app. She's never been in a kayak, but she worked tirelessly to understand exactly what the whitewater community needs. And, maybe this will get her out on the water :). 
         Ryan Groth, for fielding my incessant questions and massaging the backend to work with a mobile app.  This was no small feat, since mobile apps hadn't even been invented when the AW backend was designed. 
         Mark Singleton and Thomas O'Keefe for their support of this project and help getting everything set up, including all of the accounts, api access, documentation, beta testers, etc. 
-        If you have any questions or feedback, or find a bug, please don't hesitate to contact Greg at greg@americanwhitewater.org.</mutableString>
+        If you have any questions or feedback, or find a bug, please don't hesitate to contact Greg at greg@americanwhitewater.org.</string>
                                             <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="15"/>
                                             <color key="textColor" name="font_grey"/>
                                             <nil key="highlightedColor"/>
@@ -648,7 +648,7 @@ American Whitewater is working full-time to assure protection of whitewater rive
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCX-Yy-h4E">
-                                        <rect key="frame" x="118" y="69" width="138" height="30"/>
+                                        <rect key="frame" x="120.5" y="69" width="133" height="30"/>
                                         <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="14"/>
                                         <state key="normal" title="Join our membership">
                                             <color key="titleColor" name="font_blue"/>
@@ -674,10 +674,10 @@ American Whitewater is working full-time to assure protection of whitewater rive
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y12-GS-I48">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="449"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="393"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xeh-9n-p8Z">
-                                                <rect key="frame" x="16" y="162" width="343" height="267"/>
+                                                <rect key="frame" x="16" y="160.5" width="343" height="212.5"/>
                                                 <string key="text">To finance its projects, American Whitewater seeks memberships, member gifts, corporate and foundation support. In addition, revenue from events, advertising and branded products support stewardship efforts.  
 Individual memberships are crucial to American Whitewater and our goal is to remain an organization of whitewater enthusiasts funded by and ultimately representative of the interests of those to whom the health and enjoyment of our nation’s rivers is a priority. Currently American Whitewater receives support from over 5,000 dues paying member and 100 affiliate paddling clubs.</string>
                                                 <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="14"/>
@@ -692,7 +692,7 @@ Individual memberships are crucial to American Whitewater and our goal is to rem
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let’s Support AW together!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MJL-cy-59y">
-                                                <rect key="frame" x="41" y="120" width="205.5" height="22"/>
+                                                <rect key="frame" x="41" y="121.5" width="194" height="19"/>
                                                 <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
