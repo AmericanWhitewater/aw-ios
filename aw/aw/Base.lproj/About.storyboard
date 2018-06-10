@@ -569,7 +569,7 @@ American Whitewater is working full-time to assure protection of whitewater rive
                                     <outlet property="title" destination="fHl-Pt-nxe" id="TaJ-zo-BBy"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="description" rowHeight="181" id="wJG-4y-l2o" userLabel="Description Cell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="description" rowHeight="181" id="wJG-4y-l2o" userLabel="Description Cell" customClass="AppDescriptionTableViewCell" customModule="aw" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="151.5" width="375" height="181"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wJG-4y-l2o" id="dRd-RO-JPP">
@@ -584,11 +584,11 @@ American Whitewater is working full-time to assure protection of whitewater rive
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZzH-65-taz">
                                             <rect key="frame" x="16" y="53" width="347" height="116"/>
-                                            <mutableString key="text">This app was built entirely with volunteer hours. Special thanks to the following people for making this app a reality:          Alex Kerney, for building almost the entire app, and putting up with my incessant requests for changes. 
+                                            <string key="text">This app was built entirely with volunteer hours. Special thanks to the following people for making this app a reality:          Alex Kerney, for building almost the entire app, and putting up with my incessant requests for changes. 
         Rachel Jin, who designed this beautiful app. She's never been in a kayak, but she worked tirelessly to understand exactly what the whitewater community needs. And, maybe this will get her out on the water :). 
         Ryan Groth, for fielding my incessant questions and massaging the backend to work with a mobile app.  This was no small feat, since mobile apps hadn't even been invented when the AW backend was designed. 
         Mark Singleton and Thomas O'Keefe for their support of this project and help getting everything set up, including all of the accounts, api access, documentation, beta testers, etc. 
-        If you have any questions or feedback, or find a bug, please don't hesitate to contact Greg at greg@americanwhitewater.org.</mutableString>
+        If you have any questions or feedback, or find a bug, please don't hesitate to contact Greg at greg@americanwhitewater.org.</string>
                                             <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="15"/>
                                             <color key="textColor" name="font_grey"/>
                                             <nil key="highlightedColor"/>
@@ -604,6 +604,10 @@ American Whitewater is working full-time to assure protection of whitewater rive
                                         <constraint firstItem="ZzH-65-taz" firstAttribute="leading" secondItem="0t8-LH-Uz3" secondAttribute="leading" id="rMP-rH-Cc1"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="ZzH-65-taz" id="3aB-lf-NDb"/>
+                                    <outlet property="titleLabel" destination="0t8-LH-Uz3" id="kpp-Kq-AW5"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

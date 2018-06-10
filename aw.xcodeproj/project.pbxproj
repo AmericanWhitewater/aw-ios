@@ -10,6 +10,7 @@
 		2F4CAED020AF9BC400B67704 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4CAECF20AF9BC400B67704 /* String.swift */; };
 		2F6B9A4920B6F9A80037CE2A /* TeamMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B9A4820B6F9A80037CE2A /* TeamMemberTableViewCell.swift */; };
 		2F8C7A7E20AF3F7A00AB6521 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C7A7D20AF3F7A00AB6521 /* UIImageView.swift */; };
+		2F97013320CC14360066A0DC /* AppDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F97013220CC14360066A0DC /* AppDescriptionTableViewCell.swift */; };
 		2FBD282B20B6F4660023E91B /* AppTeamTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD282A20B6F4660023E91B /* AppTeamTVC.swift */; };
 		3807299B209CB7C800C61223 /* MapKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807299A209CB7C800C61223 /* MapKeyView.swift */; };
 		3807299D209CD06500C61223 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807299C209CD06500C61223 /* Fonts.swift */; };
@@ -81,6 +82,7 @@
 		2F4CAECF20AF9BC400B67704 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2F6B9A4820B6F9A80037CE2A /* TeamMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberTableViewCell.swift; sourceTree = "<group>"; };
 		2F8C7A7D20AF3F7A00AB6521 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		2F97013220CC14360066A0DC /* AppDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		2FBD282A20B6F4660023E91B /* AppTeamTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTeamTVC.swift; sourceTree = "<group>"; };
 		3807299A209CB7C800C61223 /* MapKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKeyView.swift; sourceTree = "<group>"; };
 		3807299C209CD06500C61223 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			children = (
 				2FBD282A20B6F4660023E91B /* AppTeamTVC.swift */,
 				2F6B9A4820B6F9A80037CE2A /* TeamMemberTableViewCell.swift */,
+				2F97013220CC14360066A0DC /* AppDescriptionTableViewCell.swift */,
 			);
 			path = "App Team";
 			sourceTree = "<group>";
@@ -605,6 +608,7 @@
 				38ACD9F32078E66C00FFBBF7 /* Runnable.swift in Sources */,
 				38A98F622067E6E7009853E1 /* AboutAWViewController.swift in Sources */,
 				3858D23520693A36004A39C6 /* TabViewController.swift in Sources */,
+				2F97013320CC14360066A0DC /* AppDescriptionTableViewCell.swift in Sources */,
 				38A98F5E2067CAF8009853E1 /* FavoriteListTableViewController.swift in Sources */,
 				381ED393206F012400B03F13 /* ReachFetchRequestControllerType.swift in Sources */,
 				381ED39D206FBE1900B03F13 /* RunDetailViewControllerType.swift in Sources */,
