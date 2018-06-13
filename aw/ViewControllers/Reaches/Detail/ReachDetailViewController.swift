@@ -26,7 +26,6 @@ class ReachDetailViewController: UIViewController {
     @IBOutlet var buttonLabels: [UILabel]!
     @IBOutlet weak var seeGageInfoView: UIView!
 
-
     var reach: Reach?
     var managedObjectContext: NSManagedObjectContext?
 
@@ -142,7 +141,6 @@ extension ReachDetailViewController {
             imageViewHeightContraint.constant = 0
         }
 
-
         if let difficulty = reach.difficulty {
             difficultyLabel.text = "Class \(difficulty)"
         } else {
@@ -162,9 +160,6 @@ extension ReachDetailViewController {
 
         reccomendationLabel.text = reach.runnable
         reccomendationLabel.textColor = reach.color
-
-        // read more button
-
 
         if reach.gageId == 0 {
             seeGageInfoView.isHidden = true
