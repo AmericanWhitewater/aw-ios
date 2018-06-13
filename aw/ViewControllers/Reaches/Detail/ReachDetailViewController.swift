@@ -38,27 +38,10 @@ class ReachDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let reach = reach,
-            let context = managedObjectContext,
             reach.detailUpdated == nil {
             drawInfo()
             print("Updating reach detail")
-            // refreshcontrol
-
-            AWApiHelper.updateReachDetail(reachID: String(reach.id), viewContext: context) {
-                print("Updated reach details")
-                // end refreshing
-                self.drawInfo()
-                if let parentVC = self.parent {
-                    for vc in parentVC.childViewControllers {
-                        if let mapVC = vc as? ReachDetailMapViewController {
-                            mapVC.reloadAnnotations()
-                        }
-                    }
-                }
-            }
-            AWApiHelper.updateReaches(reachIds: [String(reach.id)], viewContext: context) {
-                self.drawInfo()
-            }
+            refreshReach(sender: nil)
         } else {
             print("Details already updated")
             drawInfo()
@@ -89,6 +72,7 @@ extension ReachDetailViewController {
     func initialize() {
         styleLabels()
         drawInfo()
+        setupRefreshControl()
     }
 
     func styleLabels() {
@@ -184,6 +168,33 @@ extension ReachDetailViewController {
 
         if reach.gageId == 0 {
             seeGageInfoView.isHidden = true
+        }
+    }
+
+    func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshReach(sender:)), for: .valueChanged)
+        scrollView.refreshControl = refreshControl
+    }
+
+    @objc func refreshReach(sender: UIRefreshControl?) {
+        guard let reach = reach, let context = managedObjectContext else { return }
+
+        self.scrollView.refreshControl?.beginRefreshing()
+
+        AWApiHelper.updateReachDetail(reachID: String(reach.id), viewContext: context) {
+            self.scrollView.refreshControl?.endRefreshing()
+            self.drawInfo()
+            if let parentVC = self.parent {
+                for vc in parentVC.childViewControllers {
+                    if let mapVC = vc as? ReachDetailMapViewController {
+                        mapVC.reloadAnnotations()
+                    }
+                }
+            }
+        }
+        AWApiHelper.updateReaches(reachIds: [String(reach.id)], viewContext: context) {
+            self.drawInfo()
         }
     }
 
