@@ -1,6 +1,8 @@
 import CoreData
 import UIKit
 
+import ActiveLabel
+
 class ReachDetailViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -13,8 +15,7 @@ class ReachDetailViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageViewHeightContraint: NSLayoutConstraint!
     @IBOutlet weak var descriptionSectionLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var descriptionLabelHeightContraint: NSLayoutConstraint!
+    @IBOutlet weak var descriptionLabel: ActiveLabel!
     @IBOutlet weak var readMoreButton: UIButton!
 
     @IBOutlet weak var difficultyLabel: UILabel!
@@ -101,6 +102,12 @@ extension ReachDetailViewController {
         descriptionSectionLabel.apply(style: .Headline1)
         descriptionLabel.apply(style: .Text1)
         readMoreButton.titleLabel?.apply(style: .Label1)
+
+        descriptionLabel.enabledTypes = [.url]
+        descriptionLabel.handleURLTap { url in
+            print("Url tapped")
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
 
         difficultyLabel.apply(style: .Headline1)
         lengthLabel.apply(style: .Headline1)

@@ -64,7 +64,6 @@
 		38A98F8C2067EFCD009853E1 /* FilterClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F8A2067EFCD009853E1 /* FilterClassViewController.swift */; };
 		38A98F8F2067F0B4009853E1 /* FilterExtendedNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A98F8E2067F0B4009853E1 /* FilterExtendedNavBarView.swift */; };
 		38ACD9F32078E66C00FFBBF7 /* Runnable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ACD9F22078E66C00FFBBF7 /* Runnable.swift */; };
-		38B3CD1320672EAA0016630F /* RunDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B3CD1220672EAA0016630F /* RunDetailTableViewController.swift */; };
 		38B3CD1620672F310016630F /* Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B3CD1520672F310016630F /* Segues.swift */; };
 		38BE74A420681B9D00DE555D /* FilterViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */; };
 		38BE74A6206827A200DE555D /* DifficultyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE74A5206827A200DE555D /* DifficultyHelper.swift */; };
@@ -136,7 +135,6 @@
 		38A98F8A2067EFCD009853E1 /* FilterClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterClassViewController.swift; sourceTree = "<group>"; };
 		38A98F8E2067F0B4009853E1 /* FilterExtendedNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExtendedNavBarView.swift; sourceTree = "<group>"; };
 		38ACD9F22078E66C00FFBBF7 /* Runnable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runnable.swift; sourceTree = "<group>"; };
-		38B3CD1220672EAA0016630F /* RunDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDetailTableViewController.swift; sourceTree = "<group>"; };
 		38B3CD1520672F310016630F /* Segues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segues.swift; sourceTree = "<group>"; };
 		38BE74A320681B9C00DE555D /* FilterViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewControllerType.swift; sourceTree = "<group>"; };
 		38BE74A5206827A200DE555D /* DifficultyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyHelper.swift; sourceTree = "<group>"; };
@@ -181,7 +179,6 @@
 		381ED3A0206FC16200B03F13 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				38B3CD1220672EAA0016630F /* RunDetailTableViewController.swift */,
 				381ED39A206FBA3B00B03F13 /* ReachDetailContainerViewController.swift */,
 				381ED39E206FC15700B03F13 /* ReachDetailMapViewController.swift */,
 				38A4AB1920BF517100543A33 /* ReachDetailViewController.swift */,
@@ -564,7 +561,6 @@
 				2F8C7A7E20AF3F7A00AB6521 /* UIImageView.swift in Sources */,
 				38A98F882067EFC0009853E1 /* FilterDistanceViewController.swift in Sources */,
 				3836C4902070941600490999 /* SingleArticleViewController.swift in Sources */,
-				38B3CD1320672EAA0016630F /* RunDetailTableViewController.swift in Sources */,
 				38A6C8F120670AEF00B5BA29 /* MapViewController.swift in Sources */,
 				38A98F692067EA78009853E1 /* AboutAWExtendedNavBarView.swift in Sources */,
 				38B3CD1620672F310016630F /* Segues.swift in Sources */,
