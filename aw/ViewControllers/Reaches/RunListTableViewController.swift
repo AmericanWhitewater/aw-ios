@@ -24,6 +24,9 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         super.viewDidLoad()
 
         initialize()
+        
+        // Add space below the last element for the tab bar and runnable switch.
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 140, right: 0)
     }
 
     override func viewWillAppear(_ animated: Bool) {
