@@ -108,4 +108,8 @@ struct Region {
     })
 
     static let apiDict = Dictionary(grouping: Region.all, by: { $0.apiResponse }).mapValues { $0.first! }
+
+    func matches(searchText: String) -> Bool {
+        return title.lowercased().contains(searchText.lowercased()) || country.lowercased().contains(searchText.lowercased())
+    }
 }
