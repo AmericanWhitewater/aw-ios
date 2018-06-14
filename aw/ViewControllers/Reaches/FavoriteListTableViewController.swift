@@ -1,7 +1,7 @@
 import UIKit
 
 class FavoriteListTableViewController: RunListTableViewController {
-    let UPDATE_INTERVAL_s: Double = -3600
+    let UPDATE_INTERVAL_s: Double = 3600
 
     override func viewDidLoad() {
         predicates.append(NSPredicate(format: "favorite = TRUE" ))
@@ -12,11 +12,10 @@ class FavoriteListTableViewController: RunListTableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        print("appeared")
         guard let favoritesLastUpdated = DefaultsManager.favoritesLastUpdated
             else { return }
 
-        if favoritesLastUpdated < Date().addingTimeInterval(UPDATE_INTERVAL_s) {
+        if favoritesLastUpdated < Date().addingTimeInterval( -UPDATE_INTERVAL_s ) {
             refreshReaches(sender: nil)
         }
     }
