@@ -17,6 +17,7 @@
 		380729A1209CD0F300C61223 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3807299F209CD0F300C61223 /* OpenSans-SemiBold.ttf */; };
 		380729A2209CD0F300C61223 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 380729A0209CD0F300C61223 /* OpenSans-Regular.ttf */; };
 		380729A4209CDD6700C61223 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380729A3209CDD6700C61223 /* UILabel.swift */; };
+		3809170520D32EBF0058B3E9 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3809170420D32EBF0058B3E9 /* UITableView.swift */; };
 		38150B262067F75800CBE8D8 /* Regions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38150B252067F75800CBE8D8 /* Regions.swift */; };
 		381ED393206F012400B03F13 /* ReachFetchRequestControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED392206F012400B03F13 /* ReachFetchRequestControllerType.swift */; };
 		381ED39B206FBA3B00B03F13 /* ReachDetailContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381ED39A206FBA3B00B03F13 /* ReachDetailContainerViewController.swift */; };
@@ -89,6 +90,7 @@
 		3807299F209CD0F300C61223 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		380729A0209CD0F300C61223 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		380729A3209CDD6700C61223 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		3809170420D32EBF0058B3E9 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		38150B252067F75800CBE8D8 /* Regions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regions.swift; sourceTree = "<group>"; };
 		381ED392206F012400B03F13 /* ReachFetchRequestControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFetchRequestControllerType.swift; sourceTree = "<group>"; };
 		381ED39A206FBA3B00B03F13 /* ReachDetailContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachDetailContainerViewController.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				2F8C7A7D20AF3F7A00AB6521 /* UIImageView.swift */,
 				2F4CAECF20AF9BC400B67704 /* String.swift */,
 				38EBDF0A20B4F8AA007F7B15 /* CheckBoxButton.swift */,
+				3809170420D32EBF0058B3E9 /* UITableView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 				3836C4942071031400490999 /* AWButton.swift in Sources */,
 				3836C48C20708B5400490999 /* NewsTableViewCell.swift in Sources */,
 				3807299B209CB7C800C61223 /* MapKeyView.swift in Sources */,
+				3809170520D32EBF0058B3E9 /* UITableView.swift in Sources */,
 				3836C4922071007F00490999 /* NewsDonateTableViewCell.swift in Sources */,
 				38A6C8EA2066884800B5BA29 /* NSManagedObjectContext.swift in Sources */,
 				38EBDF0B20B4F8AA007F7B15 /* CheckBoxButton.swift in Sources */,
