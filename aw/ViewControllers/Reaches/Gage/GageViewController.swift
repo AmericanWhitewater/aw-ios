@@ -89,6 +89,7 @@ extension GageViewController {
         nameLabel.apply(style: .Headline1)
         readingLabel.text = String(format: reading == floor(reading) ? "%.0f" : "%.2f", reading)
         readingLabel.apply(style: .Number2)
+        readingLabel.textColor = reach.color
         unitsLabel.text = metric?.unit
 
         let dateFormat = DateFormatter()
