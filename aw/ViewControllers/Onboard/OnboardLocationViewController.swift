@@ -41,9 +41,9 @@ class OnboardLocationViewController: UIViewController, MOCViewControllerType {
     }
 
     @IBAction func zipcodeChanged(_ sender: UITextField) {
-        if sender.text?.count == 0 {
+        if sender.text?.trimmingCharacters(in: .whitespacesAndNewlines).count == 0 {
             toggleLayout(.noZip)
-        } else if sender.text?.count == 5 {
+        } else if sender.text?.trimmingCharacters(in: .whitespacesAndNewlines).count == 5 {
             toggleLayout(.fullZip)
         } else {
             toggleLayout(.partialZip)
@@ -55,9 +55,9 @@ class OnboardLocationViewController: UIViewController, MOCViewControllerType {
     }
 
     @IBAction func allowLocationPressed(_ sender: Any) {
-        if zipcodeField.text?.count == 0 {
+        if zipcodeField.text?.trimmingCharacters(in: .whitespacesAndNewlines).count == 0 {
             setupLocationUpdates()
-        } else if zipcodeField.text?.count == 5 {
+        } else if zipcodeField.text?.trimmingCharacters(in: .whitespacesAndNewlines).count == 5 {
             locationFromZip()
         }
 
@@ -86,7 +86,7 @@ extension OnboardLocationViewController {
     }
 
     func locationFromZip() {
-        guard zipcodeField.text?.count == 5,
+        guard zipcodeField.text?.trimmingCharacters(in: .whitespacesAndNewlines).count == 5,
             let zipcode = zipcodeField.text else { return }
 
         let decoder = CLGeocoder()
