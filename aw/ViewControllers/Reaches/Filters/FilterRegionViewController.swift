@@ -83,12 +83,6 @@ extension FilterRegionViewController {
             fatalError("Unable find section: \(section)")
         }
 
-        if searchText != "" {
-            return region.filter { region in
-                return region.title.lowercased().contains(searchText.lowercased()) || region.country.lowercased().contains(searchText.lowercased())
-            }
-        }
-
         return region
     }
 }
@@ -115,15 +109,37 @@ extension FilterRegionViewController: UISearchBarDelegate {
 extension FilterRegionViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
+        if self.searchText.count > 0 {
+            return 1
+        }
+
         return Region.alphaGroupKeys.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.searchText.count > 0 {
+            let regions = Region.all.filter { region in
+                return region.matches(searchText: searchText)
+            }
+            return regions.count
+        }
+
         return regionsForSection(section: section).count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let region = regionsForSection(section: indexPath.section)[indexPath.row]
+
+        let region: Region
+        if self.searchText.count > 0 {
+            let regions = Region.all.filter { region in
+                return region.matches(searchText: searchText)
+            }
+            region = regions[indexPath.row]
+        } else {
+            region = regionsForSection(section: indexPath.section)[indexPath.row]
+        }
+
+
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "regionFilterCell", for: indexPath)
 
@@ -166,6 +182,9 @@ extension FilterRegionViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if searchText.count > 0 {
+            return nil
+        }
         return Region.alphaGroupKeys[section]
     }
 }
