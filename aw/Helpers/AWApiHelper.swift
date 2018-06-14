@@ -182,6 +182,7 @@ struct AWApiHelper {
                 }
             }
             DefaultsManager.lastUpdated = Date()
+            DefaultsManager.favoritesLastUpdated = Date()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             callback()
         }

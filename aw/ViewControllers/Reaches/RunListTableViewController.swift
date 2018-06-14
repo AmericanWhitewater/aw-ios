@@ -16,7 +16,6 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     var predicates: [NSPredicate] = []
     var favorite: Bool = false
     let cellId = "runCell"
-    let UPDATE_INTERVAL_s: Double = -3600
 
     let searchController = UISearchController(searchResultsController: nil)
 
@@ -39,13 +38,9 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        guard let lastUpdated = DefaultsManager.lastUpdated else {
-            refreshData()
+        guard DefaultsManager.lastUpdated != nil else {
+            refreshReaches(sender: nil)
             return
-        }
-
-        if lastUpdated < Date().addingTimeInterval(UPDATE_INTERVAL_s) {
-            refreshData()
         }
     }
 
@@ -70,14 +65,21 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         }
     }
 
-    @objc func refreshReaches(sender: UIRefreshControl) {
+    @objc func refreshReaches(sender: UIRefreshControl?) {
+        guard let refreshControl = self.tableView.refreshControl else { return }
+
+        refreshControl.beginRefreshing()
+        self.tableView.setContentOffset(CGPoint(x: 0, y: -refreshControl.frame.height), animated: true)
+
         if let context = managedObjectContext {
             AWApiHelper.updateRegions(viewContext: context) {
-                sender.endRefreshing()
+                refreshControl.endRefreshing()
+                DefaultsManager.onboardingCompleted = true
                 self.updateTime()
             }
         }
     }
+
     @IBAction func runnableToggled(_ sender: Any) {
         guard let runnableToggle = runnableToggle else { return }
         DefaultsManager.runnableFilter = runnableToggle.isOn
@@ -115,21 +117,6 @@ extension RunListTableViewController {
         setupSearchControl()
         setupRefreshControl()
         setupRunnableToggle()
-    }
-
-    func refreshData() {
-        guard let refreshControl = tableView.refreshControl else {
-            return
-        }
-        refreshControl.beginRefreshing()
-        tableView.setContentOffset(CGPoint(x: 0, y: -refreshControl.frame.height), animated: true)
-        if let context = managedObjectContext {
-            AWApiHelper.updateRegions(viewContext: context) {
-                DefaultsManager.onboardingCompleted = true
-                self.updateTime()
-                refreshControl.endRefreshing()
-            }
-        }
     }
 
     func setupRunnableToggle() {
