@@ -21,19 +21,6 @@ extension Reach {
         return Condition.fromApi(condition: condition ?? "").icon
     }
 
-    var sectionCleanedHTML: String? {
-        if let section = section,
-            let data = section.data(using: .utf8),
-            let html = try? NSMutableAttributedString(
-                data: data,
-                options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
-                documentAttributes: nil) {
-            return html.string
-        } else {
-            return nil
-        }
-    }
-
     var distanceFormatted: String? {
         return distance != 0 ? "\(Int(distance)) mi" : ""
     }
