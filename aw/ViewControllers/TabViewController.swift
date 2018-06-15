@@ -7,6 +7,7 @@ class TabViewController: UITabBarController, MOCViewControllerType {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selectedIndex = 1
+        DefaultsManager.fetchingreaches = false
 
         self.delegate = self
 
