@@ -2,6 +2,9 @@ import UIKit
 
 extension UITableView {
 
+    // tableView headerViews change height on when set,
+    // so we need to reset it to force autolayout changes when
+    // the contents heights change
     func layoutTableHeaderView() {
 
         guard let headerView = self.tableHeaderView else { return }
