@@ -144,6 +144,13 @@ struct AWApiHelper {
     }
 
     static func updateRegions(viewContext: NSManagedObjectContext, callback: @escaping UpdateCallback) {
+
+        guard DefaultsManager.fetchingreaches == false else {
+            callback()
+            return
+        }
+
+        DefaultsManager.fetchingreaches = true
         let regions = Region.all
         let dispatchGroup = DispatchGroup()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -183,6 +190,7 @@ struct AWApiHelper {
             }
             DefaultsManager.lastUpdated = Date()
             DefaultsManager.favoritesLastUpdated = Date()
+            DefaultsManager.fetchingreaches = false
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             callback()
         }

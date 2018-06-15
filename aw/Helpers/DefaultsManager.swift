@@ -108,4 +108,14 @@ class DefaultsManager {
             UserDefaults.standard.set(newValue, forKey: articlesUpdatedKey)
         }
     }
+
+    private static let fetchingReachesKey = "fetchingReachesKey"
+    static var fetchingreaches: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: fetchingReachesKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: fetchingReachesKey)
+        }
+    }
 }
