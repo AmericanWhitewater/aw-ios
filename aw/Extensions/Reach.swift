@@ -21,13 +21,6 @@ extension Reach {
         return Condition.fromApi(condition: condition ?? "").icon
     }
 
-    var sectionName: String {
-        if let sectionName = section {
-            return sectionName
-        }
-        return ""
-    }
-
     var distanceFormatted: String? {
         return distance != 0 ? "\(Int(distance)) mi" : ""
     }

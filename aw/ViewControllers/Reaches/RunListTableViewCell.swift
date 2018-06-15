@@ -120,7 +120,7 @@ class RunListTableViewCell: UITableViewCell, MOCViewControllerType {
             conditionColorView.backgroundColor = reach.color
 
             riverName.text = reach.name
-            sectionLabel.text = reach.sectionName
+            sectionLabel.text = reach.section
             difficultyLabel.text = reach.runnableClass
             difficultyLabel.textColor = reach.color
 
