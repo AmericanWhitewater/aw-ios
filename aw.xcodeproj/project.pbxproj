@@ -514,7 +514,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 58e7e779ba7b01ef1111b7eddedf2f7bc95c682f d48b25842a32d4a7063d1a8404670a9643eb82c8e24967987fa0c57a14b15031";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" b67e4513fcf72d81b5607976a8613ad0240f3105 5d7e4288f0737654ce9fcc143ec957e2377bda83031275b990bf0dee07be9439";
 		};
 		3864857E206C3412009B360F /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
