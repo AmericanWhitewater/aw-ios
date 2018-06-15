@@ -16,6 +16,7 @@ class GageViewController: UIViewController {
     var gageDetail: AWGageResponse? {
         didSet {
             draw()
+            tableView.refreshControl?.endRefreshing()
             tableView.reloadData()
             updateFetchPredicates()
         }
@@ -27,6 +28,7 @@ class GageViewController: UIViewController {
         super.viewDidLoad()
 
         drawLoading()
+        setupRefreshControl()
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -42,12 +44,8 @@ class GageViewController: UIViewController {
             let url = URL(string:
                 "https://www.americanwhitewater.org/content/Gauge2/graph/id/\(reach.gageId)/metric/\(reach.gageMetric)/.raw")
             else { return }
-        AWApiHelper.fetchGageDetail(gageId: Int(reach.gageId)) { gageResponse in
-            DispatchQueue.main.async {
-                self.updateTime = Date()
-                self.gageDetail = gageResponse
-            }
-        }
+        refreshGage(sender: nil)
+
         if let imageData = try? Data(contentsOf: url) {
             graphImage.image = UIImage(data: imageData)
         }
@@ -74,6 +72,7 @@ extension GageViewController {
         readingLabel.text = ""
         unitsLabel.text = ""
         updateTimeLabel.text = ""
+        tableView.refreshControl?.beginRefreshing()
     }
 
     func draw() {
@@ -89,7 +88,9 @@ extension GageViewController {
         nameLabel.apply(style: .Headline1)
         readingLabel.text = String(format: reading == floor(reading) ? "%.0f" : "%.2f", reading)
         readingLabel.apply(style: .Number2)
+        readingLabel.textColor = reach.color
         unitsLabel.text = metric?.unit
+        unitsLabel.apply(style: .Text1)
 
         let dateFormat = DateFormatter()
         dateFormat.dateStyle = .medium
@@ -100,6 +101,30 @@ extension GageViewController {
 
         updateTimeLabel.text = "\(dateFormat.string(from: updateTime)) \(timeFormat.string(from: updateTime))"
         updateTimeLabel.apply(style: .Text2)
+
+        tableView.layoutTableHeaderView()
+    }
+
+    func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshGage(sender:)), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+
+    @objc func refreshGage(sender: UIRefreshControl?) {
+        guard let reach = sourceReach,
+            reach.gageId != 0, reach.gageMetric != 0
+            else { return }
+
+        self.tableView.refreshControl?.beginRefreshing()
+
+        AWApiHelper.fetchGageDetail(gageId: Int(reach.gageId)) { gageResponse in
+            DispatchQueue.main.async {
+                self.tableView.refreshControl?.endRefreshing()
+                self.updateTime = Date()
+                self.gageDetail = gageResponse
+            }
+        }
     }
 
     func initializeFetchedResultController() -> NSFetchedResultsController<Reach>? {
