@@ -8,6 +8,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     @IBOutlet weak var updateTimeLabel: UILabel!
     @IBOutlet weak var updateTimeView: UIView!
     @IBOutlet weak var filterButton: UIBarButtonItem?
+    @IBOutlet weak var initialLoad: UIView?
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -26,6 +27,8 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         
         // Add space below the last element for the tab bar and runnable switch.
         self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 140, right: 0)
+
+        initialLoad?.isHidden = DefaultsManager.onboardingCompleted
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -75,6 +78,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
             AWApiHelper.updateRegions(viewContext: context) {
                 refreshControl.endRefreshing()
                 DefaultsManager.onboardingCompleted = true
+                self.initialLoad?.isHidden = true
                 self.updateTime()
             }
         }
