@@ -21,17 +21,11 @@ extension Reach {
         return Condition.fromApi(condition: condition ?? "").icon
     }
 
-    var sectionCleanedHTML: String? {
-        if let section = section,
-            let data = section.data(using: .utf8),
-            let html = try? NSMutableAttributedString(
-                data: data,
-                options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
-                documentAttributes: nil) {
-            return html.string
-        } else {
-            return nil
+    var sectionName: String {
+        if let sectionName = section {
+            return sectionName
         }
+        return ""
     }
 
     var distanceFormatted: String? {

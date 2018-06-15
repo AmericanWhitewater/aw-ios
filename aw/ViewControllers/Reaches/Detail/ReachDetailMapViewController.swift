@@ -63,7 +63,7 @@ extension ReachDetailMapViewController {
                     latitude: latitude,
                     longitude: longitude,
                     title: "Put In",
-                    subtitle: reach.sectionCleanedHTML,
+                    subtitle: reach.sectionName,
                     type: .putIn)
                 mapView.addAnnotation(annotation)
             }
@@ -76,7 +76,7 @@ extension ReachDetailMapViewController {
                     latitude: latitude,
                     longitude: longitude,
                     title: "Take Out",
-                    subtitle: reach.sectionCleanedHTML,
+                    subtitle: reach.sectionName,
                     type: .takeOut)
                 mapView.addAnnotation(annotation)
             }

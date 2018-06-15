@@ -107,8 +107,8 @@ extension ReachDetailViewController {
     func drawInfo() {
         guard let reach = reach else { return }
         nameLabel.text = reach.name
-        sectionLabel.text = reach.sectionCleanedHTML
-        descriptionSectionLabel.text = reach.sectionCleanedHTML
+        sectionLabel.text = reach.sectionName
+        descriptionSectionLabel.text = reach.sectionName
         updatedLabel.text = reach.updatedString ?? "Updating Run Details"
 
         if let lastReading = reach.lastGageReading,
