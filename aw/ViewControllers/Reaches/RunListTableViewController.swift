@@ -145,6 +145,13 @@ extension RunListTableViewController {
         searchController.searchBar.placeholder = searchText()
         searchController.hidesNavigationBarDuringPresentation = false
 
+        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            if let backgroundView = textField.subviews.first {
+                backgroundView.layer.cornerRadius = 18
+                backgroundView.clipsToBounds = true
+            }
+        }
+
         navigationItem.titleView = searchController.searchBar
     }
 

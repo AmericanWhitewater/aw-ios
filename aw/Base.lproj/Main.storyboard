@@ -137,11 +137,11 @@
             <objects>
                 <viewController id="FfM-l8-uAu" customClass="ReachDetailViewController" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="O3R-sb-p75">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zWJ-FI-Iyk">
-                                <rect key="frame" x="0.0" y="20" width="375" height="627"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="534"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="aUA-aU-2G5">
                                         <rect key="frame" x="0.0" y="-222" width="375" height="748"/>
@@ -299,13 +299,13 @@
                                                                 <rect key="frame" x="114.5" y="0.0" width="114" height="96"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LengthLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LSj-K7-WGz">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="114" height="20.5"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="114" height="78"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Length" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brJ-Ab-ioK">
-                                                                        <rect key="frame" x="0.0" y="20.5" width="114" height="75.5"/>
+                                                                        <rect key="frame" x="0.0" y="78" width="114" height="18"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" name="font_light_grey"/>
                                                                         <nil key="highlightedColor"/>
@@ -801,7 +801,7 @@
         <scene sceneID="EmL-kd-r4u">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mpl-fJ-4gn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Favorites" image="icon_favorites" selectedImage="icon_favorites_selected" id="7hZ-Ak-FPy"/>
+                    <tabBarItem key="tabBarItem" title="Favorites" image="favOutline" selectedImage="icon_favorites_selected" id="7hZ-Ak-FPy"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mKg-PZ-yoh">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -1606,10 +1606,10 @@
     <resources>
         <image name="deselected" width="22" height="22"/>
         <image name="donateArrow" width="8" height="12"/>
+        <image name="favOutline" width="30" height="20"/>
         <image name="filter" width="23" height="18"/>
         <image name="filterOff" width="30" height="28"/>
         <image name="frozenPin" width="19" height="28"/>
-        <image name="icon_favorites" width="30" height="20"/>
         <image name="icon_favorites_selected" width="30" height="22"/>
         <image name="icon_map" width="26" height="23"/>
         <image name="icon_map_selected" width="26" height="23"/>
