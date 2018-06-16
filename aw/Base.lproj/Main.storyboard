@@ -208,7 +208,7 @@
                                                 <constraints>
                                                     <constraint firstItem="A1n-9Y-5Os" firstAttribute="leading" secondItem="MZ2-Hr-1iC" secondAttribute="leading" constant="16" id="0e2-Ja-t9z"/>
                                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="UFk-zI-dvs" secondAttribute="bottom" constant="16" id="1N5-Ch-6Fz"/>
-                                                    <constraint firstAttribute="trailing" secondItem="UFk-zI-dvs" secondAttribute="trailing" constant="8" id="GI1-72-8Is"/>
+                                                    <constraint firstAttribute="trailing" secondItem="UFk-zI-dvs" secondAttribute="trailing" constant="16" id="GI1-72-8Is"/>
                                                     <constraint firstItem="43r-0x-NNW" firstAttribute="top" secondItem="zkc-p8-yoa" secondAttribute="bottom" constant="2" id="Hwe-zh-xJo"/>
                                                     <constraint firstItem="UFk-zI-dvs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zkc-p8-yoa" secondAttribute="trailing" constant="8" id="KiX-PT-WNk"/>
                                                     <constraint firstAttribute="bottom" secondItem="A1n-9Y-5Os" secondAttribute="bottom" constant="16" id="RrD-yz-X53"/>
@@ -360,7 +360,7 @@
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="8" id="4Ox-bO-Z6O"/>
                                                                         </constraints>
-                                                                        <color key="tintColor" name="font_black"/>
+                                                                        <color key="tintColor" name="another_grey"/>
                                                                         <state key="normal" title="Button" image="donateArrow"/>
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KwS-bN-Zac">
@@ -397,7 +397,7 @@
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="8" id="fQ9-kN-8If"/>
                                                                         </constraints>
-                                                                        <color key="tintColor" name="font_black"/>
+                                                                        <color key="tintColor" name="another_grey"/>
                                                                         <state key="normal" title="Button" image="donateArrow"/>
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lg2-X3-DHi">
@@ -434,7 +434,7 @@
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="8" id="AoA-7o-peO"/>
                                                                         </constraints>
-                                                                        <color key="tintColor" name="font_black"/>
+                                                                        <color key="tintColor" name="another_grey"/>
                                                                         <state key="normal" title="Button" image="donateArrow"/>
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4e-lm-zr3">
@@ -1621,11 +1621,11 @@
         <image name="icon_runs_selected" width="22" height="22"/>
         <image name="location_arrow" width="16" height="15"/>
         <image name="round_logo" width="97" height="97"/>
+        <namedColor name="another_grey">
+            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="blue_oval">
             <color red="0.0039215686274509803" green="0.66666666666666663" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="font_black">
-            <color red="0.15294117647058825" green="0.23137254901960785" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="font_blue">
             <color red="0.17254901960784313" green="0.49019607843137253" blue="0.76078431372549016" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
