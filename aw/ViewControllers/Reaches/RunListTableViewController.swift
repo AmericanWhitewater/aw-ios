@@ -31,7 +31,11 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         // Add space below the last element for the tab bar and runnable switch.
         self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 140, right: 0)
 
-        initialLoad?.isHidden = DefaultsManager.onboardingCompleted
+        if DefaultsManager.onboardingCompleted {
+            initialLoad?.isHidden = true
+        } else {
+            initialLoadSpinner?.startRotating(duration: 2)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -82,6 +86,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
                 refreshControl.endRefreshing()
                 DefaultsManager.onboardingCompleted = true
                 self.initialLoad?.isHidden = true
+                self.initialLoadSpinner?.stopRotating()
                 self.updateTime()
             }
         }
