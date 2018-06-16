@@ -131,6 +131,7 @@ extension RunListTableViewController {
         toggleView.layer.cornerRadius = toggleView.frame.size.height / 2
         runnableToggle.isOn = DefaultsManager.runnableFilter
         runnableToggle.backgroundColor = UIColor.white
+        runnableToggle.onTintColor = UIColor(named: "font_green")
         runnableToggle.layer.cornerRadius = 16
     }
 
@@ -303,7 +304,7 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let rows = fetchedResultsController?.fetchedObjects?.count ?? 0
 
-        if rows != 0 {
+        if rows != 0 || searchController.searchBar.text?.count ?? 0 > 0 {
             tableView.separatorStyle = .singleLine
             tableView.backgroundView = nil
             updateTimeLabel.isHidden = false
@@ -322,6 +323,8 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
                 tableView.backgroundView = noDataLabel
             } else {
                 let noDataView = UIView()
+
+                noDataView.backgroundColor = UIColor(named: "grey_divider")
 
                 let image = UIImageView(image: UIImage(named: "fill1"))
                 image.contentMode = .scaleAspectFit
@@ -355,7 +358,6 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
 
             tableView.separatorStyle = .none
             updateTimeLabel.isHidden = true
-            updateTimeView.backgroundColor = UIColor.white
         }
 
         return rows
