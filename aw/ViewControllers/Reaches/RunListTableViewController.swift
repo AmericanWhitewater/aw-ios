@@ -116,7 +116,7 @@ extension RunListTableViewController {
         fetchedResultsController?.delegate = self
         updateFetchPredicates()
 
-        updateTimeLabel.apply(style: .Text2)
+        updateTimeLabel.apply(style: .Text4)
 
         setupSearchControl()
         setupRefreshControl()
