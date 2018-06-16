@@ -18,6 +18,16 @@ class FilterDistanceViewController: UIViewController {
     var distance: Float! {
         didSet {
             setDistanceLabel()
+
+            if distance > 0, let parent = self.parent {
+                for child in parent.childViewControllers {
+                    if let child = child as? FilterRegionViewController {
+                        child.selectedRegions = []
+                        child.setRegionsLabel()
+                        child.tableView.reloadData()
+                    }
+                }
+            }
         }
     }
     var locateTapped = false
@@ -36,10 +46,15 @@ class FilterDistanceViewController: UIViewController {
         updateButton.titleLabel?.apply(style: .Text3)
         updateButton.setTitleColor(.black, for: .normal)
 
+        locationManager.delegate = self
+
         distance = DefaultsManager.distanceFilter
 
+        showDistance()
+    }
+
+    func showDistance() {
         slider.value = distance
-        locationManager.delegate = self
 
         displayLocation()
     }
