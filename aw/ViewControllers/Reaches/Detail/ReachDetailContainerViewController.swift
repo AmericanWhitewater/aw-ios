@@ -76,6 +76,15 @@ extension ReachDetailContainerViewController {
         let segmentedControl = UISegmentedControl(items: ["Details", "Map"])
         segmentedControl.addTarget(self, action: #selector(segmentedControlChanged), for: .valueChanged)
         segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+
+        let width = segmentedControl.widthAnchor.constraint(equalToConstant: 170)
+        width.priority = .defaultHigh
+
+        NSLayoutConstraint.activate([
+            width
+        ])
+
         self.navigationItem.titleView = segmentedControl
     }
 
