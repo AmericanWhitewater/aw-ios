@@ -9,6 +9,9 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     @IBOutlet weak var updateTimeView: UIView!
     @IBOutlet weak var filterButton: UIBarButtonItem?
     @IBOutlet weak var initialLoad: UIView?
+    @IBOutlet weak var initialLoadSpinner: UIImageView?
+    @IBOutlet weak var initialLoadTitle: UILabel?
+    @IBOutlet weak var initialLoadBody: UILabel?
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -117,6 +120,9 @@ extension RunListTableViewController {
         updateFetchPredicates()
 
         updateTimeLabel.apply(style: .Text4)
+
+        initialLoadTitle?.apply(style: .Headline1)
+        initialLoadBody?.apply(style: .Text1)
 
         setupSearchControl()
         setupRefreshControl()
