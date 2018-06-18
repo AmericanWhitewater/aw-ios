@@ -136,7 +136,6 @@ extension ReachDetailViewController {
             descriptionLabel.apply(style: .Text1)
         }
 
-
         if let photoUrl = reach.photoUrl {
             imageView.loadFromUrlAsync(urlString: photoUrl)
         } else {
