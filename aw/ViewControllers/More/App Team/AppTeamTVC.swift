@@ -78,6 +78,15 @@ class AppTeamTVC: UITableViewController {
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return false
     }
+
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0:
+            return 0.5
+        default:
+            return 8
+        }
+    }
     
     func openUrl(url: String) {
         if let url = URL(string: url), UIApplication.shared.canOpenURL(url) {

@@ -19,6 +19,8 @@ enum FontStyle {
     /// Black regular 17
     case Text3
     /// Black semi-bold 15
+    case Text4
+    /// Grey regular 13
     case Label1
     /// Light grey regular 10
     case Tab1
@@ -39,6 +41,8 @@ enum FontStyle {
             return Fonts.Regular.of(size: 13)
         case .Text3:
             return Fonts.Regular.of(size: 17)
+        case .Text4:
+            return Fonts.Regular.of(size: 13)
         case .Label1:
             return Fonts.SemiBold.of(size: 15)
         case .Tab1, .Tab2:
@@ -60,6 +64,8 @@ enum FontStyle {
             return UIColor(named: "font_light_grey")!
         case .Text3:
             return UIColor(named: "font_black")!
+        case .Text4:
+            return UIColor(named: "font_grey")!
         case .Label1:
             return UIColor(named: "font_black")!
         case .Tab1:

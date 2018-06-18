@@ -129,10 +129,11 @@ extension ReachDetailViewController {
             } else {
                 descriptionLabel.text = "No description"
             }
-
+            descriptionLabel.apply(style: .Text1)
             readMoreButton.isHidden = !descriptionLabel.isTruncated
         } else {
             descriptionLabel.text = "Loading"
+            descriptionLabel.apply(style: .Text1)
         }
 
         if let photoUrl = reach.photoUrl {

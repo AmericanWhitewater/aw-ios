@@ -9,6 +9,9 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     @IBOutlet weak var updateTimeView: UIView!
     @IBOutlet weak var filterButton: UIBarButtonItem?
     @IBOutlet weak var initialLoad: UIView?
+    @IBOutlet weak var initialLoadSpinner: UIImageView?
+    @IBOutlet weak var initialLoadTitle: UILabel?
+    @IBOutlet weak var initialLoadBody: UILabel?
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -28,7 +31,11 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
         // Add space below the last element for the tab bar and runnable switch.
         self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 140, right: 0)
 
-        initialLoad?.isHidden = DefaultsManager.onboardingCompleted
+        if DefaultsManager.onboardingCompleted {
+            initialLoad?.isHidden = true
+        } else {
+            initialLoadSpinner?.startRotating(duration: 2)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -79,6 +86,7 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
                 refreshControl.endRefreshing()
                 DefaultsManager.onboardingCompleted = true
                 self.initialLoad?.isHidden = true
+                self.initialLoadSpinner?.stopRotating()
                 self.updateTime()
             }
         }
@@ -116,7 +124,10 @@ extension RunListTableViewController {
         fetchedResultsController?.delegate = self
         updateFetchPredicates()
 
-        updateTimeLabel.apply(style: .Text2)
+        updateTimeLabel.apply(style: .Text4)
+
+        initialLoadTitle?.apply(style: .Headline1)
+        initialLoadBody?.apply(style: .Text1)
 
         setupSearchControl()
         setupRefreshControl()
@@ -131,6 +142,7 @@ extension RunListTableViewController {
         toggleView.layer.cornerRadius = toggleView.frame.size.height / 2
         runnableToggle.isOn = DefaultsManager.runnableFilter
         runnableToggle.backgroundColor = UIColor.white
+        runnableToggle.onTintColor = UIColor(named: "font_green")
         runnableToggle.layer.cornerRadius = 16
     }
 
@@ -143,6 +155,13 @@ extension RunListTableViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = searchText()
         searchController.hidesNavigationBarDuringPresentation = false
+
+        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            if let backgroundView = textField.subviews.first {
+                backgroundView.layer.cornerRadius = 18
+                backgroundView.clipsToBounds = true
+            }
+        }
 
         navigationItem.titleView = searchController.searchBar
     }
@@ -303,7 +322,7 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let rows = fetchedResultsController?.fetchedObjects?.count ?? 0
 
-        if rows != 0 {
+        if rows != 0 || searchController.searchBar.text?.count ?? 0 > 0 {
             tableView.separatorStyle = .singleLine
             tableView.backgroundView = nil
             updateTimeLabel.isHidden = false
@@ -322,6 +341,8 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
                 tableView.backgroundView = noDataLabel
             } else {
                 let noDataView = UIView()
+
+                noDataView.backgroundColor = UIColor(named: "grey_divider")
 
                 let image = UIImageView(image: UIImage(named: "fill1"))
                 image.contentMode = .scaleAspectFit
@@ -355,7 +376,6 @@ extension RunListTableViewController: UITableViewDelegate, UITableViewDataSource
 
             tableView.separatorStyle = .none
             updateTimeLabel.isHidden = true
-            updateTimeView.backgroundColor = UIColor.white
         }
 
         return rows

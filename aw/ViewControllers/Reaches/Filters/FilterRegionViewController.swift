@@ -6,7 +6,20 @@ class FilterRegionViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableviewBottomConstraint: NSLayoutConstraint!
 
-    var selectedRegions: [String] = []
+    var selectedRegions: [String] = [] {
+        didSet {
+            tableView.reloadData()
+            if let parent = self.parent, selectedRegions.count > 0 {
+                for child in parent.childViewControllers {
+                    if let child = child as? FilterDistanceViewController {
+                        child.distance = 0
+                        child.showDistance()
+                    }
+                }
+            }
+            
+        }
+    }
 
     var searchText = ""
 

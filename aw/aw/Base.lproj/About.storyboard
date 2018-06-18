@@ -289,7 +289,7 @@
                                 <rect key="frame" x="0.0" y="400" width="375" height="110"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ej0-OI-Xhz">
-                                        <rect key="frame" x="67" y="-9" width="240" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
                                         <color key="backgroundColor" name="grey_divider"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="C6f-NQ-xRl"/>
@@ -412,7 +412,7 @@ The organization is the primary advocate for the preservation and protection of 
                                 <rect key="frame" x="0.0" y="400" width="375" height="110"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T5Z-Oc-WcR">
-                                        <rect key="frame" x="67" y="-9" width="240" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
                                         <color key="backgroundColor" name="grey_divider"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="a7Z-fE-tJy"/>
@@ -529,7 +529,7 @@ American Whitewater is working full-time to assure protection of whitewater rive
         <scene sceneID="htT-hi-l2Y">
             <objects>
                 <tableViewController storyboardIdentifier="App Team" id="fwG-eD-VmM" userLabel="App Team" customClass="AppTeamTVC" customModule="aw" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="kg6-iI-A4c">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="18" id="kg6-iI-A4c">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -551,7 +551,7 @@ American Whitewater is working full-time to assure protection of whitewater rive
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Gregory Lee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hvB-mO-1im">
                                             <rect key="frame" x="95" y="15" width="268" height="26"/>
                                             <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="19"/>
-                                            <color key="textColor" name="font_blue"/>
+                                            <color key="textColor" name="font_black"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Product Manager" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHl-Pt-nxe">
@@ -599,7 +599,7 @@ American Whitewater is working full-time to assure protection of whitewater rive
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="About The App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0t8-LH-Uz3">
                                             <rect key="frame" x="16" y="17" width="121.5" height="23.5"/>
                                             <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="17"/>
-                                            <color key="textColor" name="font_blue"/>
+                                            <color key="textColor" name="font_black"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZzH-65-taz">
@@ -655,7 +655,7 @@ American Whitewater is working full-time to assure protection of whitewater rive
                                 <rect key="frame" x="0.0" y="400" width="375" height="110"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2zM-K9-n2X">
-                                        <rect key="frame" x="67" y="-9" width="240" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
                                         <color key="backgroundColor" name="grey_divider"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="mfq-sy-VaA"/>
