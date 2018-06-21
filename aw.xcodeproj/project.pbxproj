@@ -433,7 +433,6 @@
 				385E59BA2063047B00A68EC9 /* Sources */,
 				385E59BB2063047B00A68EC9 /* Frameworks */,
 				385E59BC2063047B00A68EC9 /* Resources */,
-				3864857E206C3412009B360F /* Swiftlint */,
 				2F78EF4B209920F600193DCB /* ShellScript */,
 				FC7A22E971D2144FC880C60F /* [CP] Embed Pods Frameworks */,
 			);
@@ -515,20 +514,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" b67e4513fcf72d81b5607976a8613ad0240f3105 5d7e4288f0737654ce9fcc143ec957e2377bda83031275b990bf0dee07be9439";
-		};
-		3864857E206C3412009B360F /* Swiftlint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Swiftlint;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		C50973D7B4282C98C1EE9212 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -799,6 +784,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -822,6 +808,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
