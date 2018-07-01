@@ -50,6 +50,7 @@ extension ReachDetailMapViewController {
 
     func setupMap() {
         mapView.showsUserLocation = true
+        mapView.layoutMargins = UIEdgeInsetsMake(0, 0, 40, 0)
         setupAnnotations()
     }
 
