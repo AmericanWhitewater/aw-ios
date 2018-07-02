@@ -5,6 +5,7 @@ class FilterViewController: UIViewController {
     @IBOutlet weak var regionView: UIView!
     @IBOutlet weak var classView: UIView!
     @IBOutlet weak var distanceView: UIView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
 
     var managedObjectContext: NSManagedObjectContext?
 
@@ -25,7 +26,15 @@ class FilterViewController: UIViewController {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.shadowImage = UIImage(named: "TransparentPixel")
 
-        setViewShown(name: "region")
+        if DefaultsManager.regionsFilter.count > 0 {
+            setViewShown(name: "region")
+        } else if DefaultsManager.distanceFilter > 0 {
+            setViewShown(name: "distance")
+        } else if DefaultsManager.classFilter.count > 0 {
+            setViewShown(name: "class")
+        } else {
+            setViewShown(name: "region")
+        }
     }
 
     func initializeChildVC() {
@@ -39,20 +48,24 @@ class FilterViewController: UIViewController {
     func setViewShown(name: String) {
         switch name {
         case "region":
+            segmentedControl.selectedSegmentIndex = 0
             regionView.isHidden = false
             classView.isHidden = true
             distanceView.isHidden = true
         case "class":
+            segmentedControl.selectedSegmentIndex = 2
             regionView.isHidden = true
             regionView.endEditing(true)
             classView.isHidden = false
             distanceView.isHidden = true
         case "distance":
+            segmentedControl.selectedSegmentIndex = 1
             regionView.isHidden = true
             regionView.endEditing(true)
             classView.isHidden = true
             distanceView.isHidden = false
         default:
+            segmentedControl.selectedSegmentIndex = 0
             regionView.isHidden = false
             classView.isHidden = true
             distanceView.isHidden = true
