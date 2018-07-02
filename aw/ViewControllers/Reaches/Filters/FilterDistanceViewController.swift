@@ -10,7 +10,9 @@ class FilterDistanceViewController: UIViewController {
     @IBOutlet weak var cityStateLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var updateButton: UIButton!
+    @IBOutlet weak var toggleDistanceFilterSwitch: UISwitch!
 
+    @IBOutlet var filterViews: [UIView]!
     var managedObjectContext: NSManagedObjectContext?
 
     let locationManager = CLLocationManager()
@@ -56,7 +58,19 @@ class FilterDistanceViewController: UIViewController {
     func showDistance() {
         slider.value = distance
 
+        if distance == 0 {
+            toggleViews(false)
+        }
+
         displayLocation()
+    }
+
+    func toggleViews(_ show: Bool) {
+        toggleDistanceFilterSwitch.isOn = show
+
+        for view in filterViews {
+            view.isHidden = !show
+        }
     }
 
     fileprivate func setDistanceLabel() {
@@ -74,6 +88,9 @@ class FilterDistanceViewController: UIViewController {
     @IBAction func updateLocationTapped(_ sender: Any) {
         locateTapped = true
         setupLocationUpdates()
+    }
+    @IBAction func showDistanceFilters(_ sender: UISwitch) {
+        toggleViews(sender.isOn)
     }
 }
 
@@ -127,7 +144,12 @@ extension FilterDistanceViewController {
 
 extension FilterDistanceViewController: FilterViewControllerType {
     func save() {
-        DefaultsManager.distanceFilter = distance
+        if toggleDistanceFilterSwitch.isOn {
+            DefaultsManager.distanceFilter = distance
+        } else {
+            DefaultsManager.distanceFilter = 0
+        }
+
     }
 }
 
