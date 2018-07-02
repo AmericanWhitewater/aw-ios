@@ -77,22 +77,22 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z3H-Fo-enR">
-                                        <rect key="frame" x="62.5" y="167" width="250" height="220"/>
+                                        <rect key="frame" x="62.5" y="104" width="250" height="346"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We need some time to load all the runs for the first time. This shouldn't take too long." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8P-gm-VTM">
-                                                <rect key="frame" x="0.0" y="159" width="250" height="61"/>
+                                                <rect key="frame" x="0.0" y="285" width="250" height="61"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We are loading runs nearby." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zm0-RF-UQD">
-                                                <rect key="frame" x="0.0" y="114" width="250" height="21"/>
+                                                <rect key="frame" x="0.0" y="240" width="250" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="page1" translatesAutoresizingMaskIntoConstraints="NO" id="Ebi-uB-cbw">
-                                                <rect key="frame" x="88.5" y="0.0" width="73" height="74"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Dual Ring" translatesAutoresizingMaskIntoConstraints="NO" id="Ebi-uB-cbw">
+                                                <rect key="frame" x="25" y="0.0" width="200" height="200"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
@@ -1632,6 +1632,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Dual Ring" width="200" height="200"/>
         <image name="deselected" width="22" height="22"/>
         <image name="donateArrow" width="8" height="12"/>
         <image name="favOutline" width="30" height="20"/>
@@ -1648,7 +1649,6 @@
         <image name="icon_runs" width="22" height="22"/>
         <image name="icon_runs_selected" width="22" height="22"/>
         <image name="location_arrow" width="16" height="15"/>
-        <image name="page1" width="73" height="74"/>
         <image name="round_logo" width="97" height="97"/>
         <namedColor name="another_grey">
             <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
