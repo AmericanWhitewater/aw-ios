@@ -93,6 +93,7 @@ struct AWApiHelper {
         } else {
             reach.section = newReach.section
         }
+        reach.sortName = newReach.section
 
         //reach.section = newReach.section
         //reach.section = newReach.altName != "" ? newReach.altName : newReach.section

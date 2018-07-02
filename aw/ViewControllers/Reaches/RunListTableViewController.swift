@@ -207,10 +207,13 @@ extension RunListTableViewController {
         if DefaultsManager.distanceFilter > 0 {
             self.fetchedResultsController?.fetchRequest.sortDescriptors = [
                 NSSortDescriptor(key: "distance", ascending: true),
-                NSSortDescriptor(key: "name", ascending: true)]
+                NSSortDescriptor(key: "name", ascending: true)
+            ]
         } else {
             self.fetchedResultsController?.fetchRequest.sortDescriptors = [
-                NSSortDescriptor(key: "name", ascending: true)]
+                NSSortDescriptor(key: "name", ascending: true),
+                NSSortDescriptor(key: "sortName", ascending: true)
+            ]
         }
 
         self.fetchedResultsController?.fetchRequest.predicate = NSCompoundPredicate(
