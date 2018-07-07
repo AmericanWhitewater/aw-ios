@@ -59,13 +59,13 @@ class FilterDistanceViewController: UIViewController {
         slider.value = distance
 
         if distance == 0 {
-            toggleViews(false)
+            showViews(false)
         }
 
         displayLocation()
     }
 
-    func toggleViews(_ show: Bool) {
+    func showViews(_ show: Bool) {
         toggleDistanceFilterSwitch.isOn = show
 
         for view in filterViews {
@@ -90,7 +90,7 @@ class FilterDistanceViewController: UIViewController {
         setupLocationUpdates()
     }
     @IBAction func showDistanceFilters(_ sender: UISwitch) {
-        toggleViews(sender.isOn)
+        showViews(sender.isOn)
     }
 }
 
