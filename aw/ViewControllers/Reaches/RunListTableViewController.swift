@@ -239,7 +239,7 @@ extension RunListTableViewController {
             let timeFormat = DateFormatter()
             timeFormat.dateFormat = "h:mm a"
 
-            updateTimeLabel.text = "\( favorite ? "Favorites " : "" )Last Updated \(dateFormat.string(from: date)) at \(timeFormat.string(from: date))"
+            updateTimeLabel.text = "Last Updated \(dateFormat.string(from: date)) at \(timeFormat.string(from: date))"
         } else {
             updateTimeLabel.text = "Update in progress"
         }

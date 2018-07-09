@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yab-LZ-egI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yab-LZ-egI">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -80,22 +80,22 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z3H-Fo-enR">
-                                        <rect key="frame" x="62.5" y="104" width="250" height="346"/>
+                                        <rect key="frame" x="62.5" y="124" width="250" height="306"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We need some time to load all the runs for the first time. This shouldn't take too long." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8P-gm-VTM">
-                                                <rect key="frame" x="0.0" y="285" width="250" height="61"/>
+                                                <rect key="frame" x="0.0" y="245" width="250" height="61"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We are loading runs nearby." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zm0-RF-UQD">
-                                                <rect key="frame" x="0.0" y="240" width="250" height="21"/>
+                                                <rect key="frame" x="0.0" y="200" width="250" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Dual Ring" translatesAutoresizingMaskIntoConstraints="NO" id="Ebi-uB-cbw">
-                                                <rect key="frame" x="25" y="0.0" width="200" height="200"/>
+                                                <rect key="frame" x="45" y="0.0" width="160" height="160"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
@@ -417,7 +417,7 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6x-gI-jaN">
                                                                 <rect key="frame" x="0.0" y="49" width="375" height="48"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Learn More" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LEz-kL-xkr">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go To Website" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LEz-kL-xkr">
                                                                         <rect key="frame" x="16" y="14" width="87" height="20.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <nil key="textColor"/>
@@ -679,15 +679,14 @@
                                 <color key="textColor" name="white"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="See nearby rivers, 
-by entering your zipcode" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nW-RO-4cC">
-                                <rect key="frame" x="68.5" y="113.5" width="238" height="54.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="See nearby rivers,  by entering your zipcode" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nW-RO-4cC">
+                                <rect key="frame" x="-23" y="113.5" width="421" height="27.5"/>
                                 <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="20"/>
                                 <color key="textColor" name="white"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="BLG-wd-svF" customClass="AWButton" customModule="aw" customModuleProvider="target">
-                                <rect key="frame" x="18" y="301.5" width="339" height="45"/>
+                                <rect key="frame" x="18" y="274.5" width="339" height="45"/>
                                 <color key="backgroundColor" name="white"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="KFh-gL-1dH"/>
@@ -704,7 +703,7 @@ by entering your zipcode" textAlignment="center" lineBreakMode="tailTruncation" 
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sji-LF-bct">
-                                <rect key="frame" x="182" y="198" width="11" height="36"/>
+                                <rect key="frame" x="182" y="171" width="11" height="36"/>
                                 <color key="textColor" name="white"/>
                                 <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="26"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="continue" textContentType="postal-code"/>
@@ -714,13 +713,13 @@ by entering your zipcode" textAlignment="center" lineBreakMode="tailTruncation" 
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5l-T0-HsO">
-                                <rect key="frame" x="177" y="254" width="21" height="27.5"/>
+                                <rect key="frame" x="177" y="227" width="21" height="27.5"/>
                                 <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="20"/>
                                 <color key="textColor" name="white"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="sjJ-ak-F8i">
-                                <rect key="frame" x="69" y="316.5" width="237.5" height="15"/>
+                                <rect key="frame" x="69" y="289.5" width="237.5" height="15"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="pKm-dl-hLp">
                                         <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
@@ -738,7 +737,7 @@ by entering your zipcode" textAlignment="center" lineBreakMode="tailTruncation" 
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="aFl-84-eea" userLabel="Invisible Button" customClass="AWButton" customModule="aw" customModuleProvider="target">
-                                <rect key="frame" x="18" y="301.5" width="339" height="45"/>
+                                <rect key="frame" x="18" y="274.5" width="339" height="45"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <state key="normal">
                                     <color key="titleColor" name="primary"/>
@@ -1676,7 +1675,7 @@ by entering your zipcode" textAlignment="center" lineBreakMode="tailTruncation" 
         </scene>
     </scenes>
     <resources>
-        <image name="Dual Ring" width="200" height="200"/>
+        <image name="Dual Ring" width="160" height="160"/>
         <image name="deselected" width="22" height="22"/>
         <image name="donateArrow" width="8" height="12"/>
         <image name="favOutline" width="30" height="20"/>
