@@ -390,6 +390,11 @@ struct AWApiHelper {
     }
 
     static func updateDistances(viewContext: NSManagedObjectContext) {
+        // At times it may take a noticable amount of time to calculate the distance
+        // from the current location to each reach. This causes slow shuffling of rows
+        // on the run list screen. To avoid this we set all reaches to a very large
+        // distance, causing everything to dissapear, then update the indivudual reaches.
+        //
         // batch update all distances quickly
         let bulkGroup = DispatchGroup()
         let bulkContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
