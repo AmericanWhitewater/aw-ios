@@ -390,6 +390,48 @@ struct AWApiHelper {
     }
 
     static func updateDistances(viewContext: NSManagedObjectContext) {
+        // At times it may take a noticable amount of time to calculate the distance
+        // from the current location to each reach. This causes slow shuffling of rows
+        // on the run list screen. To avoid this we set all reaches to a very large
+        // distance, causing everything to dissapear, then update the indivudual reaches.
+        //
+        // batch update all distances quickly
+        let bulkGroup = DispatchGroup()
+        let bulkContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        bulkContext.parent = viewContext
+
+        bulkGroup.enter()
+        bulkContext.perform {
+            let request = NSBatchUpdateRequest(entityName: "Reach")
+            request.propertiesToUpdate = ["distance": 10000]
+            request.resultType = .updatedObjectsCountResultType
+
+            do {
+                let result = try bulkContext.execute(request) as! NSBatchUpdateResult
+
+                if let count = result.result {
+                    print("\(count) rows updated")
+                }
+            } catch {
+                print("unable to execute batch update")
+            }
+            bulkGroup.leave()
+        }
+        bulkGroup.notify(queue: .main) {
+            viewContext.perform {
+                viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+
+                do {
+                    try viewContext.save()
+                    print("saved view context")
+                } catch {
+                    let error = error as NSError
+                    print("unable to save view context \(error) \(error.userInfo)")
+                }
+            }
+        }
+
+        // now update to actual distances
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.parent = viewContext
 
