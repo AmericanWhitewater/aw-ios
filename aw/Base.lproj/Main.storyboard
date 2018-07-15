@@ -74,6 +74,7 @@
                                     <constraint firstAttribute="trailing" secondItem="pKP-07-WHl" secondAttribute="trailing" constant="9" id="i71-0g-gYR"/>
                                     <constraint firstAttribute="height" constant="45" id="lEH-7Y-dA7"/>
                                     <constraint firstItem="pKP-07-WHl" firstAttribute="centerY" secondItem="nT2-Ot-yag" secondAttribute="centerY" id="vYh-fB-Hk6"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="360" id="yWO-Ba-1ZJ"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RKx-VR-yfE">
@@ -123,8 +124,8 @@
                         <constraints>
                             <constraint firstItem="Ebb-VE-vnA" firstAttribute="trailing" secondItem="gFy-a9-hIJ" secondAttribute="trailing" id="22f-Hm-fe9"/>
                             <constraint firstItem="RKx-VR-yfE" firstAttribute="leading" secondItem="Jks-hI-pjh" secondAttribute="leading" id="2rb-PD-X9e"/>
-                            <constraint firstItem="Ebb-VE-vnA" firstAttribute="trailing" secondItem="nT2-Ot-yag" secondAttribute="trailing" constant="16" id="3v0-1b-YtH"/>
-                            <constraint firstItem="nT2-Ot-yag" firstAttribute="leading" secondItem="Ebb-VE-vnA" secondAttribute="leading" constant="16" id="5Ws-g1-7zx"/>
+                            <constraint firstItem="Ebb-VE-vnA" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nT2-Ot-yag" secondAttribute="trailing" constant="16" id="3v0-1b-YtH"/>
+                            <constraint firstItem="nT2-Ot-yag" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ebb-VE-vnA" secondAttribute="leading" constant="16" id="5Ws-g1-7zx"/>
                             <constraint firstItem="Ebb-VE-vnA" firstAttribute="trailing" secondItem="KvD-IO-b3b" secondAttribute="trailing" id="AOZ-oV-EjD"/>
                             <constraint firstItem="gFy-a9-hIJ" firstAttribute="leading" secondItem="Ebb-VE-vnA" secondAttribute="leading" id="Acr-RI-0Ru"/>
                             <constraint firstItem="Ebb-VE-vnA" firstAttribute="bottom" secondItem="nT2-Ot-yag" secondAttribute="bottom" constant="10" id="GAU-Q8-I0s"/>
@@ -134,6 +135,7 @@
                             <constraint firstItem="Ebb-VE-vnA" firstAttribute="bottom" secondItem="KvD-IO-b3b" secondAttribute="bottom" constant="-49" id="Qqq-ua-7J1"/>
                             <constraint firstItem="KvD-IO-b3b" firstAttribute="top" secondItem="gFy-a9-hIJ" secondAttribute="bottom" id="UAM-nt-pKT"/>
                             <constraint firstItem="gFy-a9-hIJ" firstAttribute="top" secondItem="Ebb-VE-vnA" secondAttribute="top" id="cs9-3R-wFO"/>
+                            <constraint firstItem="nT2-Ot-yag" firstAttribute="centerX" secondItem="Ebb-VE-vnA" secondAttribute="centerX" id="dnQ-dc-sS7"/>
                             <constraint firstItem="RKx-VR-yfE" firstAttribute="top" secondItem="gFy-a9-hIJ" secondAttribute="top" id="vzX-vb-ni4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ebb-VE-vnA"/>
@@ -347,13 +349,13 @@
                                                                 <rect key="frame" x="228.5" y="0.0" width="114.5" height="96"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GradientLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyV-Wt-Z0k">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="114.5" height="78"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="114.5" height="20.5"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gradient" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0US-Ng-6i6">
-                                                                        <rect key="frame" x="0.0" y="78" width="114.5" height="18"/>
+                                                                        <rect key="frame" x="0.0" y="20.5" width="114.5" height="75.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" name="font_light_grey"/>
                                                                         <nil key="highlightedColor"/>
@@ -418,7 +420,7 @@
                                                                 <rect key="frame" x="0.0" y="49" width="375" height="48"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go To Website" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LEz-kL-xkr">
-                                                                        <rect key="frame" x="16" y="14" width="87" height="20.5"/>
+                                                                        <rect key="frame" x="16" y="14" width="111.5" height="20.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
