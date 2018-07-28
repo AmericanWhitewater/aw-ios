@@ -50,6 +50,9 @@ extension SingleArticleViewController {
         if let sender = sender as? UIView {
             activityController.popoverPresentationController?.sourceView = sender
         }
+        if let sender = sender as? UIBarButtonItem {
+            activityController.popoverPresentationController?.barButtonItem = sender
+        }
         present(activityController, animated: true, completion: nil)
     }
 
