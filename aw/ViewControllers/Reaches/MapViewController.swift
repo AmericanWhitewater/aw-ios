@@ -38,6 +38,10 @@ class MapViewController: UIViewController, MOCViewControllerType {
             print("Unknown segue \(segue.identifier ?? "unknown identifier")")
         }
     }
+
+    deinit {
+        mapView.delegate = nil
+    }
 }
 
 // MARK: - Extension

@@ -27,6 +27,10 @@ class ReachDetailMapViewController: UIViewController {
         mapItem.name = "\(reach.name ?? "") \(annotation.title ?? "")"
         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
+
+    deinit {
+        mapView.delegate = nil
+    }
 }
 
 // MARK: - Extension
