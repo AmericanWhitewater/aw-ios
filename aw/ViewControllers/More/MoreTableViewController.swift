@@ -32,7 +32,11 @@ class MoreTableViewController: UITableViewController {
             
             break
         case IndexPath(row: 3, section: 0): // Feedback
-            openUrl(url: "mailto://greg@americanwhitewater.org")
+            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                openUrl(url: "mailto://greg@americanwhitewater.org?body=%0A%0AiOS%20v%20\(version)")
+            } else {
+                openUrl(url: "mailto://greg@americanwhitewater.org")
+            }
             
             break
         case IndexPath(row: 4, section: 0): // Donate
