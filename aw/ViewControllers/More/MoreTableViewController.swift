@@ -3,6 +3,10 @@ import UIKit
 class MoreTableViewController: UITableViewController {
     @IBOutlet weak var version: UILabel!
     
+    @IBAction func refreshToggled(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: "shouldAutoRefresh")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -18,7 +22,7 @@ class MoreTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -50,6 +54,14 @@ class MoreTableViewController: UITableViewController {
         default:
             break
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row == 5 {
+            return false
+        }
+        
+        return true
     }
     
     func openUrl(url: String) {
