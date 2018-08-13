@@ -1,8 +1,6 @@
 import UIKit
 
 class FavoriteListTableViewController: RunListTableViewController {
-    let UPDATE_INTERVAL_s: Double = 3600
-
     override func viewDidLoad() {
         predicates.append(NSPredicate(format: "favorite = TRUE" ))
         super.viewDidLoad()

@@ -2,6 +2,8 @@ import CoreData
 import UIKit
 
 class RunListTableViewController: UIViewController, MOCViewControllerType {
+    let UPDATE_INTERVAL_s: Double = 60 * 60 // 1 hour
+    
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var toggleView: UIView?
     @IBOutlet weak var runnableToggle: UISwitch?
@@ -47,10 +49,17 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        guard DefaultsManager.lastUpdated != nil else {
+        
+        if let lastUpdated = DefaultsManager.lastUpdated {
+            // If data is stale
+            let isAutoRefreshEnabled = UserDefaults.standard.bool(forKey: "shouldAutoRefresh")
+            if isAutoRefreshEnabled && lastUpdated < Date().addingTimeInterval( -UPDATE_INTERVAL_s ) {
+                refreshReaches(sender: nil)
+            }
+            
+        // If there has never been an update
+        } else {
             refreshReaches(sender: nil)
-            return
         }
     }
 
