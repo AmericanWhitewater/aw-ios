@@ -2,6 +2,7 @@ import UIKit
 
 class MoreTableViewController: UITableViewController {
     @IBOutlet weak var version: UILabel!
+    @IBOutlet weak var autoRefreshToggle: UISwitch!
     
     @IBAction func refreshToggled(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: "shouldAutoRefresh")
@@ -14,6 +15,8 @@ class MoreTableViewController: UITableViewController {
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
             self.version.text = "v \(version)"
         }
+        
+        autoRefreshToggle.setOn(UserDefaults.standard.bool(forKey: "shouldAutoRefresh"), animated: false)
     }
 
     // MARK: - Table view data source

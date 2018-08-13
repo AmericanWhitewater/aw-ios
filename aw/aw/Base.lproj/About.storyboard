@@ -191,6 +191,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="JTf-qT-5PO"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="autoRefreshToggle" destination="uWG-nX-es8" id="bgx-dt-7qs"/>
                         <outlet property="version" destination="FtY-gy-gct" id="yoU-Ic-hFs"/>
                     </connections>
                 </tableViewController>

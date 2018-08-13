@@ -19,6 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if var initialVC = window?.rootViewController as? MOCViewControllerType {
             initialVC.managedObjectContext = persistentContainer.viewContext
         }
+        
+        if UserDefaults.standard.object(forKey: "shouldAutoRefresh") == nil {
+            UserDefaults.standard.set(true, forKey: "shouldAutoRefresh")
+        }
 
         return true
     }
