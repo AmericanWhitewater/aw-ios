@@ -2,6 +2,11 @@ import UIKit
 
 class MoreTableViewController: UITableViewController {
     @IBOutlet weak var version: UILabel!
+    @IBOutlet weak var autoRefreshToggle: UISwitch!
+    
+    @IBAction func refreshToggled(_ sender: UISwitch) {
+        DefaultsManager.shouldAutoRefresh = sender.isOn
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -10,6 +15,8 @@ class MoreTableViewController: UITableViewController {
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
             self.version.text = "v \(version)"
         }
+        
+        autoRefreshToggle.setOn(DefaultsManager.shouldAutoRefresh!, animated: false)
     }
 
     // MARK: - Table view data source
@@ -18,7 +25,7 @@ class MoreTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -50,6 +57,14 @@ class MoreTableViewController: UITableViewController {
         default:
             break
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row == 5 {
+            return false
+        }
+        
+        return true
     }
     
     func openUrl(url: String) {

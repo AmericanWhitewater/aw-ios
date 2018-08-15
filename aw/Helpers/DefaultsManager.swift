@@ -2,6 +2,16 @@ import Foundation
 
 class DefaultsManager {
 
+    private static let shouldAutoRefreshKey = "shouldAutoRefresh"
+    static var shouldAutoRefresh: Bool? {
+        get {
+            return UserDefaults.standard.object(forKey: shouldAutoRefreshKey) as? Bool
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: shouldAutoRefreshKey)
+        }
+    }
+    
     private static let onboardingCompletedKey = "onboardingCompletedKey"
     static var onboardingCompleted: Bool {
         get {
