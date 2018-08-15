@@ -5,7 +5,7 @@ class MoreTableViewController: UITableViewController {
     @IBOutlet weak var autoRefreshToggle: UISwitch!
     
     @IBAction func refreshToggled(_ sender: UISwitch) {
-        UserDefaults.standard.set(sender.isOn, forKey: "shouldAutoRefresh")
+        DefaultsManager.shouldAutoRefresh = sender.isOn
     }
     
     override func viewDidLoad() {
@@ -16,7 +16,7 @@ class MoreTableViewController: UITableViewController {
             self.version.text = "v \(version)"
         }
         
-        autoRefreshToggle.setOn(UserDefaults.standard.bool(forKey: "shouldAutoRefresh"), animated: false)
+        autoRefreshToggle.setOn(DefaultsManager.shouldAutoRefresh!, animated: false)
     }
 
     // MARK: - Table view data source

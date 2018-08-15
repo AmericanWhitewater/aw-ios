@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             initialVC.managedObjectContext = persistentContainer.viewContext
         }
         
-        if UserDefaults.standard.object(forKey: "shouldAutoRefresh") == nil {
-            UserDefaults.standard.set(true, forKey: "shouldAutoRefresh")
+        if DefaultsManager.shouldAutoRefresh == nil {
+            DefaultsManager.shouldAutoRefresh = true
         }
 
         return true

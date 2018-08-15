@@ -50,9 +50,8 @@ class RunListTableViewController: UIViewController, MOCViewControllerType {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if let lastUpdated = DefaultsManager.lastUpdated {
+        if let lastUpdated = DefaultsManager.lastUpdated, let isAutoRefreshEnabled = DefaultsManager.shouldAutoRefresh {
             // If data is stale
-            let isAutoRefreshEnabled = UserDefaults.standard.bool(forKey: "shouldAutoRefresh")
             if isAutoRefreshEnabled && lastUpdated < Date().addingTimeInterval( -UPDATE_INTERVAL_s ) {
                 refreshReaches(sender: nil)
             }
