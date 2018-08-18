@@ -40,9 +40,9 @@ class MapViewController: UIViewController, MOCViewControllerType {
     }
 
     deinit {
-        if let mapView = mapView {
-            mapView.delegate = nil
-        }
+        guard let mapView = mapView else { return }
+        
+        mapView.delegate = nil
     }
 }
 
@@ -72,10 +72,10 @@ extension MapViewController {
     }
 
     func setupMapView() {
-        if let mapView = mapView {
-            mapView.delegate = self
-            mapView.showsUserLocation = true
-        }
+        guard let mapView = mapView else { return }
+        
+        mapView.delegate = self
+        mapView.showsUserLocation = true
     }
 
     func prepareDetailSegue(_ segue: UIStoryboardSegue) {

@@ -29,9 +29,9 @@ class ReachDetailMapViewController: UIViewController {
     }
 
     deinit {
-        if let mapView = mapView {
-            mapView.delegate = nil
-        }
+        guard let mapView = mapView else { return }
+        
+        mapView.delegate = nil
     }
 }
 
@@ -65,49 +65,48 @@ extension ReachDetailMapViewController {
     }
 
     func setupAnnotations() {
-        guard let mapView = mapView else { return }
+        guard let mapView = mapView,
+            let reach = reach else { return }
         
-        if let reach = reach {
-            if let lat = reach.putInLat,
-                let latitude = Double(lat),
-                let lon = reach.putInLon,
-                let longitude = Double(lon) {
-                let annotation = RunAnnotation(
-                    latitude: latitude,
-                    longitude: longitude,
-                    title: "Put In",
-                    subtitle: reach.section,
-                    type: .putIn)
-                mapView.addAnnotation(annotation)
-            }
+        if let lat = reach.putInLat,
+            let latitude = Double(lat),
+            let lon = reach.putInLon,
+            let longitude = Double(lon) {
+            let annotation = RunAnnotation(
+                latitude: latitude,
+                longitude: longitude,
+                title: "Put In",
+                subtitle: reach.section,
+                type: .putIn)
+            mapView.addAnnotation(annotation)
+        }
 
-            if let lat = reach.takeOutLat,
-                let latitude = Double(lat),
-                let lon = reach.takeOutLon,
-                let longitude = Double(lon) {
-                let annotation = RunAnnotation(
-                    latitude: latitude,
-                    longitude: longitude,
-                    title: "Take Out",
-                    subtitle: reach.section,
-                    type: .takeOut)
-                mapView.addAnnotation(annotation)
-            }
-            if let rapids = reach.rapids {
-                for rapid in rapids {
-                    if let rapid = rapid as? Rapid, rapid.lat != 0, rapid.lon != 0 {
-                        let annotation = RunAnnotation(
-                            latitude: rapid.lat,
-                            longitude: rapid.lon,
-                            title: "\(rapid.name ?? "") \(rapid.difficulty ?? "")",
-                            subtitle: nil,
-                            type: .rapid)
-                        mapView.addAnnotation(annotation)
-                    }
+        if let lat = reach.takeOutLat,
+            let latitude = Double(lat),
+            let lon = reach.takeOutLon,
+            let longitude = Double(lon) {
+            let annotation = RunAnnotation(
+                latitude: latitude,
+                longitude: longitude,
+                title: "Take Out",
+                subtitle: reach.section,
+                type: .takeOut)
+            mapView.addAnnotation(annotation)
+        }
+        if let rapids = reach.rapids {
+            for rapid in rapids {
+                if let rapid = rapid as? Rapid, rapid.lat != 0, rapid.lon != 0 {
+                    let annotation = RunAnnotation(
+                        latitude: rapid.lat,
+                        longitude: rapid.lon,
+                        title: "\(rapid.name ?? "") \(rapid.difficulty ?? "")",
+                        subtitle: nil,
+                        type: .rapid)
+                    mapView.addAnnotation(annotation)
                 }
             }
-            mapView.showAnnotations(mapView.annotations, animated: true)
         }
+        mapView.showAnnotations(mapView.annotations, animated: true)
     }
 
     func reloadAnnotations() {
