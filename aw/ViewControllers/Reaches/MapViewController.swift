@@ -3,7 +3,7 @@ import UIKit
 import MapKit
 
 class MapViewController: UIViewController, MOCViewControllerType {
-    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var mapView: MKMapView?
     @IBOutlet weak var filterButton: UIBarButtonItem?
 
     var managedObjectContext: NSManagedObjectContext?
@@ -40,6 +40,8 @@ class MapViewController: UIViewController, MOCViewControllerType {
     }
 
     deinit {
+        guard let mapView = mapView else { return }
+        
         mapView.delegate = nil
     }
 }
@@ -70,12 +72,14 @@ extension MapViewController {
     }
 
     func setupMapView() {
+        guard let mapView = mapView else { return }
+        
         mapView.delegate = self
         mapView.showsUserLocation = true
     }
 
     func prepareDetailSegue(_ segue: UIStoryboardSegue) {
-        if let selectedReach = mapView.selectedAnnotations.first as? Reach,
+        if let mapView = mapView, let selectedReach = mapView.selectedAnnotations.first as? Reach,
             let context = managedObjectContext {
             let request: NSFetchRequest<Reach> = Reach.fetchRequest()
             request.predicate = NSPredicate(format: "id = %i", selectedReach.id)
@@ -100,7 +104,8 @@ extension MapViewController {
         let regions = DefaultsManager.regionsFilter
         let distance = DefaultsManager.distanceFilter
 
-        guard difficulties != self.difficulties || regions != self.regions || distance != self.distance else { return }
+        guard let mapView = mapView,
+            difficulties != self.difficulties || regions != self.regions || distance != self.distance else { return }
 
         if regions != self.regions || distance != self.distance {
             zoom = true
@@ -218,7 +223,8 @@ extension MapViewController: NSFetchedResultsControllerDelegate {
                     at indexPath: IndexPath?,
                     for type: NSFetchedResultsChangeType,
                     newIndexPath: IndexPath?) {
-        guard let reach = anObject as? Reach else {
+        guard let reach = anObject as? Reach,
+            let mapView = mapView else {
             print("not a reach")
             return
         }

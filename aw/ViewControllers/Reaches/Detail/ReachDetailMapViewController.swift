@@ -3,7 +3,7 @@ import MapKit
 import UIKit
 
 class ReachDetailMapViewController: UIViewController {
-    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var mapView: MKMapView?
 
     var managedObjectContext: NSManagedObjectContext?
     var reach: Reach?
@@ -19,7 +19,7 @@ class ReachDetailMapViewController: UIViewController {
     }
 
     @objc func showDirections(sender: UIButton) {
-        guard let annotation = mapView.selectedAnnotations.first as? RunAnnotation,
+        guard let mapView = mapView, let annotation = mapView.selectedAnnotations.first as? RunAnnotation,
             let reach = reach
             else { return }
 
@@ -29,6 +29,8 @@ class ReachDetailMapViewController: UIViewController {
     }
 
     deinit {
+        guard let mapView = mapView else { return }
+        
         mapView.delegate = nil
     }
 }
@@ -36,6 +38,8 @@ class ReachDetailMapViewController: UIViewController {
 // MARK: - Extension
 extension ReachDetailMapViewController {
     func initialize() {
+        guard let mapView = mapView else { return }
+        
         mapView.mapType = .hybrid
         mapView.delegate = self
 
@@ -53,56 +57,61 @@ extension ReachDetailMapViewController {
     }
 
     func setupMap() {
+        guard let mapView = mapView else { return }
+        
         mapView.showsUserLocation = true
         mapView.layoutMargins = UIEdgeInsetsMake(0, 0, 40, 0)
         setupAnnotations()
     }
 
     func setupAnnotations() {
-        if let reach = reach {
-            if let lat = reach.putInLat,
-                let latitude = Double(lat),
-                let lon = reach.putInLon,
-                let longitude = Double(lon) {
-                let annotation = RunAnnotation(
-                    latitude: latitude,
-                    longitude: longitude,
-                    title: "Put In",
-                    subtitle: reach.section,
-                    type: .putIn)
-                mapView.addAnnotation(annotation)
-            }
+        guard let mapView = mapView,
+            let reach = reach else { return }
+        
+        if let lat = reach.putInLat,
+            let latitude = Double(lat),
+            let lon = reach.putInLon,
+            let longitude = Double(lon) {
+            let annotation = RunAnnotation(
+                latitude: latitude,
+                longitude: longitude,
+                title: "Put In",
+                subtitle: reach.section,
+                type: .putIn)
+            mapView.addAnnotation(annotation)
+        }
 
-            if let lat = reach.takeOutLat,
-                let latitude = Double(lat),
-                let lon = reach.takeOutLon,
-                let longitude = Double(lon) {
-                let annotation = RunAnnotation(
-                    latitude: latitude,
-                    longitude: longitude,
-                    title: "Take Out",
-                    subtitle: reach.section,
-                    type: .takeOut)
-                mapView.addAnnotation(annotation)
-            }
-            if let rapids = reach.rapids {
-                for rapid in rapids {
-                    if let rapid = rapid as? Rapid, rapid.lat != 0, rapid.lon != 0 {
-                        let annotation = RunAnnotation(
-                            latitude: rapid.lat,
-                            longitude: rapid.lon,
-                            title: "\(rapid.name ?? "") \(rapid.difficulty ?? "")",
-                            subtitle: nil,
-                            type: .rapid)
-                        mapView.addAnnotation(annotation)
-                    }
+        if let lat = reach.takeOutLat,
+            let latitude = Double(lat),
+            let lon = reach.takeOutLon,
+            let longitude = Double(lon) {
+            let annotation = RunAnnotation(
+                latitude: latitude,
+                longitude: longitude,
+                title: "Take Out",
+                subtitle: reach.section,
+                type: .takeOut)
+            mapView.addAnnotation(annotation)
+        }
+        if let rapids = reach.rapids {
+            for rapid in rapids {
+                if let rapid = rapid as? Rapid, rapid.lat != 0, rapid.lon != 0 {
+                    let annotation = RunAnnotation(
+                        latitude: rapid.lat,
+                        longitude: rapid.lon,
+                        title: "\(rapid.name ?? "") \(rapid.difficulty ?? "")",
+                        subtitle: nil,
+                        type: .rapid)
+                    mapView.addAnnotation(annotation)
                 }
             }
-            mapView.showAnnotations(mapView.annotations, animated: true)
         }
+        mapView.showAnnotations(mapView.annotations, animated: true)
     }
 
     func reloadAnnotations() {
+        guard let mapView = mapView else { return }
+        
         mapView.removeAnnotations(mapView.annotations)
         setupAnnotations()
     }
