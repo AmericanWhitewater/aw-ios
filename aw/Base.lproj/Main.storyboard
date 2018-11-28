@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yab-LZ-egI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yab-LZ-egI">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -195,7 +192,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Updated At" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A1n-9Y-5Os">
-                                                        <rect key="frame" x="16" y="61" width="87.5" height="20.5"/>
+                                                        <rect key="frame" x="16" y="61" width="87" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -349,13 +346,13 @@
                                                                 <rect key="frame" x="228.5" y="0.0" width="114.5" height="96"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GradientLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyV-Wt-Z0k">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="114.5" height="20.5"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="114.5" height="78"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gradient" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0US-Ng-6i6">
-                                                                        <rect key="frame" x="0.0" y="20.5" width="114.5" height="75.5"/>
+                                                                        <rect key="frame" x="0.0" y="78" width="114.5" height="18"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" name="font_light_grey"/>
                                                                         <nil key="highlightedColor"/>
@@ -1058,7 +1055,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected Regions Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yAg-VY-lV6">
-                                <rect key="frame" x="16" y="64" width="359" height="20.5"/>
+                                <rect key="frame" x="16" y="64" width="359" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1086,15 +1083,26 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✕" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6MU-ST-fve" userLabel="Clear Regions">
+                                <rect key="frame" x="335" y="53" width="40" height="38.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="QSe-6b-Zmb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
+                                <color key="textColor" name="font_clickable"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ynW-WM-Ixn" firstAttribute="bottom" secondItem="jVx-ZA-lpW" secondAttribute="bottom" id="Hnk-ak-xfP"/>
                             <constraint firstAttribute="trailing" secondItem="ghP-yE-Jgk" secondAttribute="trailing" id="Lpu-ht-7F2"/>
                             <constraint firstItem="ynW-WM-Ixn" firstAttribute="trailing" secondItem="jVx-ZA-lpW" secondAttribute="trailing" id="Mk4-26-rmv"/>
+                            <constraint firstItem="6MU-ST-fve" firstAttribute="top" secondItem="yAg-VY-lV6" secondAttribute="top" constant="-11" id="Mla-mS-xAa"/>
                             <constraint firstItem="jVx-ZA-lpW" firstAttribute="leading" secondItem="Kc5-h2-ACn" secondAttribute="leading" id="PHb-Lx-zbl"/>
                             <constraint firstItem="ynW-WM-Ixn" firstAttribute="leading" secondItem="jVx-ZA-lpW" secondAttribute="leading" id="Z6o-Zg-H2f"/>
                             <constraint firstItem="jVx-ZA-lpW" firstAttribute="top" secondItem="Kc5-h2-ACn" secondAttribute="top" id="bzu-LF-i6Z"/>
+                            <constraint firstItem="6MU-ST-fve" firstAttribute="trailing" secondItem="yAg-VY-lV6" secondAttribute="trailing" id="dIr-2J-qbs"/>
                             <constraint firstAttribute="bottom" secondItem="ghP-yE-Jgk" secondAttribute="bottom" id="esi-hd-9Z2"/>
                             <constraint firstItem="ghP-yE-Jgk" firstAttribute="top" secondItem="yAg-VY-lV6" secondAttribute="bottom" constant="8" id="hNy-B7-coB"/>
                             <constraint firstItem="yAg-VY-lV6" firstAttribute="trailing" secondItem="Kc5-h2-ACn" secondAttribute="trailingMargin" constant="16" id="j4k-Dh-a6H"/>
@@ -1106,6 +1114,7 @@
                         <viewLayoutGuide key="safeArea" id="Ntd-ZS-60Z"/>
                     </view>
                     <connections>
+                        <outlet property="clearRegionsButton" destination="6MU-ST-fve" id="q9m-gl-azs"/>
                         <outlet property="searchBar" destination="jVx-ZA-lpW" id="afF-hR-GeN"/>
                         <outlet property="selectedRegionsLabel" destination="yAg-VY-lV6" id="hDN-NG-gvp"/>
                         <outlet property="tableView" destination="ghP-yE-Jgk" id="ab3-yM-FKc"/>
@@ -1114,7 +1123,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vQT-Ja-lmk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="210" y="4388"/>
+            <point key="canvasLocation" x="208.80000000000001" y="4387.5562218890555"/>
         </scene>
         <!--Filter Distance View Controller-->
         <scene sceneID="sOX-1o-azr">
