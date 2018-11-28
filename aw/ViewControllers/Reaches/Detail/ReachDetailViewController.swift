@@ -10,7 +10,7 @@ class ReachDetailViewController: UIViewController {
     @IBOutlet weak var updatedLabel: UILabel!
     @IBOutlet weak var flowLabel: UILabel!
     @IBOutlet weak var unitsLabel: UILabel!
-    @IBOutlet weak var reccomendationLabel: UILabel!
+    @IBOutlet weak var recommendationLabel: UILabel!
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageViewHeightContraint: NSLayoutConstraint!
@@ -80,7 +80,7 @@ extension ReachDetailViewController {
         updatedLabel.apply(style: .Text2)
         flowLabel.apply(style: .Number2)
         unitsLabel.apply(style: .Text1)
-        reccomendationLabel.apply(style: .Text1)
+        recommendationLabel.apply(style: .Text1)
 
         descriptionSectionLabel.apply(style: .Headline1)
         descriptionLabel.apply(style: .Text1)
@@ -159,8 +159,8 @@ extension ReachDetailViewController {
             gradientLabel.text = "Unknown"
         }
 
-        reccomendationLabel.text = reach.runnable
-        reccomendationLabel.textColor = reach.color
+        recommendationLabel.text = reach.runnable
+        recommendationLabel.textColor = reach.color
 
         if reach.gageId == 0 {
             seeGageInfoView.isHidden = true
