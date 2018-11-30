@@ -4,11 +4,10 @@ import MapKit
 extension Reach {
 
     var readingFormatted: String {
-        guard let lastGageReading = lastGageReading, let unit = unit else {
-            //print(self.lastGageReading, self.unit)
+        guard let currentReading = currentGageReading, let unit = unit else {
             return "n/a"
         }
-        return "\(lastGageReading) \(unit)"
+        return "\(currentReading) \(unit)"
     }
 
     var color: UIColor {

@@ -11,6 +11,7 @@ struct AWReach: Codable {
     let altName: String?
     let putInLat: String?
     let putInLon: String?
+    let currentGageReading: String?
     let lastGageReading: String?
     let lastGageUpdated: String?
     let section: String
@@ -34,6 +35,7 @@ struct AWReach: Codable {
         case condition = "cond"
         case putInLat = "plat"
         case putInLon = "plon"
+        case currentGageReading = "gauge_reading"
         case lastGageReading = "last_gauge_reading"
         case lastGageUpdated = "last_gauge_updated"
         case takeOutLat = "tlat"

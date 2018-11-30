@@ -111,8 +111,8 @@ extension ReachDetailViewController {
         descriptionSectionLabel.text = reach.section
         updatedLabel.text = reach.updatedString ?? "Updating Run Details"
 
-        if let lastReading = reach.lastGageReading,
-            let reading = Float(lastReading),
+        if let currentReading = reach.currentGageReading,
+            let reading = Float(currentReading),
             let unit = reach.unit {
             flowLabel.text = String(format: reading == floor(reading) ? "%.0f" : "%.2f", reading)
             flowLabel.textColor = reach.color

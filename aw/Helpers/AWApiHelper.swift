@@ -100,6 +100,7 @@ struct AWApiHelper {
         reach.putInLat = newReach.putInLat
         reach.putInLon = newReach.putInLon
         reach.name = newReach.name
+        reach.currentGageReading = newReach.currentGageReading ?? "n/a"
         reach.lastGageReading = newReach.lastGageReading ?? "n/a"
         reach.id = Int16(newReach.id)
         reach.difficulty = newReach.difficulty

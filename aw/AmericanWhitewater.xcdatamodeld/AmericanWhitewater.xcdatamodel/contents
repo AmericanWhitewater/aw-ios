@@ -24,6 +24,7 @@
         <attribute name="abstract" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="avgGradient" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="condition" attributeType="String" syncable="YES"/>
+        <attribute name="currentGageReading" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="delta" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="detailUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="difficulty" attributeType="String" syncable="YES"/>
@@ -67,6 +68,6 @@
     <elements>
         <element name="Article" positionX="-72" positionY="-9" width="128" height="180"/>
         <element name="Rapid" positionX="-72" positionY="396" width="128" height="148"/>
-        <element name="Reach" positionX="-299" positionY="-9" width="128" height="600"/>
+        <element name="Reach" positionX="-299" positionY="-9" width="128" height="615"/>
     </elements>
 </model>
