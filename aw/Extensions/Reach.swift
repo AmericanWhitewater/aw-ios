@@ -70,6 +70,26 @@ extension Reach {
     var runnableClass: String {
         return "Level: \(readingFormatted) Class: \(difficulty ?? "Unknown")"
     }
+    
+    var gageMaxRecommended: String {
+        if let gageUnit = unit, let max = gageMax, let maxFloat = Float(max) {
+            let formatString = gageUnit == "cfs" ? "%.0f" : "%.2f"
+            
+            return String(format: formatString, maxFloat)
+        } else {
+            return ""
+        }
+    }
+    
+    var gageMinRecommended: String {
+        if let gageUnit = unit, let min = gageMin, let minFloat = Float(min) {
+            let formatString = gageUnit == "cfs" ? "%.0f" : "%.2f"
+            
+            return String(format: formatString, minFloat)
+        } else {
+            return ""
+        }
+    }
 }
 
 // MARK: - MKAnnotation

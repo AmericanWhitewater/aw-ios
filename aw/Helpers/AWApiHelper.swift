@@ -111,6 +111,8 @@ struct AWApiHelper {
         reach.delta = newReach.delta
         reach.gageId = Int32(newReach.gageId ?? 0)
         reach.gageMetric = Int16(newReach.gageMetric ?? 0)
+        reach.gageMax = newReach.gageMax
+        reach.gageMin = newReach.gageMin
 
         // API returns seconds before present as a string
         // that needs to be changed to a date
