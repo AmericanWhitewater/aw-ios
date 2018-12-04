@@ -47,6 +47,13 @@ class FavoriteListTableViewController: RunListTableViewController {
     }
 
     override func segueDetail() {
-        performSegue(withIdentifier: Segue.runDetailFavorites.rawValue, sender: self)
+        guard let indexPath = tableView.indexPathForSelectedRow,
+            let reach = fetchedResultsController?.fetchedObjects![indexPath.row] else { return }
+        
+        if (reach.gageId == 0) {
+            performSegue(withIdentifier: Segue.runDetail.rawValue, sender: self)
+        } else {
+            performSegue(withIdentifier: Segue.gageDetail.rawValue, sender: self)
+        }
     }
 }

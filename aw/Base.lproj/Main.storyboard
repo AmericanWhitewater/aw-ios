@@ -912,7 +912,8 @@
                         <outlet property="tableView" destination="9py-7s-WQq" id="0ph-8b-s6G"/>
                         <outlet property="updateTimeLabel" destination="S9h-zB-2tj" id="uaH-x4-Qsd"/>
                         <outlet property="updateTimeView" destination="gmY-XI-hxh" id="thb-pv-C7c"/>
-                        <segue destination="lOP-Q4-YiZ" kind="show" identifier="runDetailFavorites" id="n1I-mv-LT1"/>
+                        <segue destination="oyk-GY-GuU" kind="show" identifier="gageDetail" id="ZPw-eR-cyG"/>
+                        <segue destination="lOP-Q4-YiZ" kind="show" identifier="runDetail" id="pvQ-ZH-6yS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T7X-XK-xtp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1730,8 +1731,9 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="ZPw-eR-cyG"/>
         <segue reference="vCc-Lg-GX5"/>
         <segue reference="HLz-3E-X9y"/>
-        <segue reference="kal-PE-jUf"/>
+        <segue reference="pvQ-ZH-6yS"/>
     </inferredMetricsTieBreakers>
 </document>
