@@ -8,7 +8,8 @@ class GageViewController: UIViewController {
     @IBOutlet weak var graphImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var updateTimeLabel: UILabel!
-
+    @IBOutlet weak var rangeLabel: UILabel!
+    
     var managedObjectContext: NSManagedObjectContext?
     var fetchedResultsController: NSFetchedResultsController<Reach>?
 
@@ -102,6 +103,15 @@ extension GageViewController {
         updateTimeLabel.text = "\(dateFormat.string(from: updateTime)) \(timeFormat.string(from: updateTime))"
         updateTimeLabel.apply(style: .Text2)
 
+        let rangeMax = reach.gageMaxRecommended
+        let rangeMin = reach.gageMinRecommended
+        if !rangeMax.isEmpty && !rangeMin.isEmpty {
+            rangeLabel.text = rangeMin + " - " + rangeMax
+            rangeLabel.textColor = reach.color
+        } else {
+            rangeLabel.text = ""
+        }
+        
         tableView.layoutTableHeaderView()
     }
 

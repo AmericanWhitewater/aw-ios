@@ -100,6 +100,7 @@ struct AWApiHelper {
         reach.putInLat = newReach.putInLat
         reach.putInLon = newReach.putInLon
         reach.name = newReach.name
+        reach.currentGageReading = newReach.currentGageReading ?? "n/a"
         reach.lastGageReading = newReach.lastGageReading ?? "n/a"
         reach.id = Int16(newReach.id)
         reach.difficulty = newReach.difficulty
@@ -111,6 +112,8 @@ struct AWApiHelper {
         reach.delta = newReach.delta
         reach.gageId = Int32(newReach.gageId ?? 0)
         reach.gageMetric = Int16(newReach.gageMetric ?? 0)
+        reach.gageMax = newReach.gageMax
+        reach.gageMin = newReach.gageMin
 
         // API returns seconds before present as a string
         // that needs to be changed to a date

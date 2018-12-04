@@ -11,6 +11,7 @@ struct AWReach: Codable {
     let altName: String?
     let putInLat: String?
     let putInLon: String?
+    let currentGageReading: String?
     let lastGageReading: String?
     let lastGageUpdated: String?
     let section: String
@@ -23,6 +24,8 @@ struct AWReach: Codable {
     let rc: String?
     let gageId: Int?
     let gageMetric: Int?
+    let gageMax: String?
+    let gageMin: String?
 
     enum CodingKeys: String, CodingKey {
         //swiftlint:disable:next identifier_name
@@ -32,12 +35,15 @@ struct AWReach: Codable {
         case condition = "cond"
         case putInLat = "plat"
         case putInLon = "plon"
+        case currentGageReading = "gauge_reading"
         case lastGageReading = "last_gauge_reading"
         case lastGageUpdated = "last_gauge_updated"
         case takeOutLat = "tlat"
         case takeOutLon = "tlon"
         case gageId = "gauge_id"
         case gageMetric = "gauge_metric"
+        case gageMax = "gauge_max"
+        case gageMin = "gauge_min"
     }
 
     func distanceFrom(location: CLLocation) -> Double? {
@@ -78,11 +84,15 @@ struct AWReachGage: Codable {
     let gageID: Int
     let gageReading: String?
     let rangeComment: String?
+    let gageMax: String?
+    let gageMin: String?
 
     enum CodingKeys: String, CodingKey {
         case gageID = "gauge_id"
         case gageReading = "gauge_reading"
         case rangeComment = "range_comment"
+        case gageMax = "gauge_max"
+        case gageMin = "gauge_min"
     }
 }
 

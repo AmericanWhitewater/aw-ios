@@ -4,11 +4,10 @@ import MapKit
 extension Reach {
 
     var readingFormatted: String {
-        guard let lastGageReading = lastGageReading, let unit = unit else {
-            //print(self.lastGageReading, self.unit)
+        guard let currentReading = currentGageReading, let unit = unit else {
             return "n/a"
         }
-        return "\(lastGageReading) \(unit)"
+        return "\(currentReading) \(unit)"
     }
 
     var color: UIColor {
@@ -69,6 +68,26 @@ extension Reach {
 
     var runnableClass: String {
         return "Level: \(readingFormatted) Class: \(difficulty ?? "Unknown")"
+    }
+    
+    var gageMaxRecommended: String {
+        if let gageUnit = unit, let max = gageMax, let maxFloat = Float(max) {
+            let formatString = gageUnit == "cfs" ? "%.0f" : "%.2f"
+            
+            return String(format: formatString, maxFloat)
+        } else {
+            return ""
+        }
+    }
+    
+    var gageMinRecommended: String {
+        if let gageUnit = unit, let min = gageMin, let minFloat = Float(min) {
+            let formatString = gageUnit == "cfs" ? "%.0f" : "%.2f"
+            
+            return String(format: formatString, minFloat)
+        } else {
+            return ""
+        }
     }
 }
 
