@@ -5,7 +5,8 @@ class FilterRegionViewController: UIViewController {
     @IBOutlet weak var selectedRegionsLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableviewBottomConstraint: NSLayoutConstraint!
-
+    @IBOutlet weak var clearRegionsButton: UILabel!
+    
     var selectedRegions: [String] = [] {
         didSet {
             tableView.reloadData()
@@ -31,6 +32,12 @@ class FilterRegionViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: .UIKeyboardDidHide, object: nil)
+        
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(FilterRegionViewController.onClearRegionsTapped))
+        clearRegionsButton.isUserInteractionEnabled = true
+        clearRegionsButton.addGestureRecognizer(tap)
+        clearRegionsButton.font = clearRegionsButton.font.withSize(18)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -97,6 +104,13 @@ extension FilterRegionViewController {
         }
 
         return region
+    }
+    
+    @objc
+    func onClearRegionsTapped() {
+        selectedRegions.removeAll()
+        
+        setRegionsLabel()
     }
 }
 
