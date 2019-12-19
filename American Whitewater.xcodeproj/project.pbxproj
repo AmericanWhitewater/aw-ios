@@ -1,0 +1,1000 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4760DD5C0E5548BBA92D25AF /* Pods_American_Whitewater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A750E2F24748D3B54A1DEB84 /* Pods_American_Whitewater.framework */; };
+		630586642350428800A436BE /* RunRapidDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */; };
+		63081BF8236B2EDE00FC3823 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63081BF7236B2EDE00FC3823 /* GoogleService-Info.plist */; };
+		63081BFA236B2F8500FC3823 /* OpenTerminal.sh in Resources */ = {isa = PBXBuildFile; fileRef = 63081BF9236B2F8500FC3823 /* OpenTerminal.sh */; };
+		631B3573237C722200738889 /* OpenSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 631B3572237C722200738889 /* OpenSans-ExtraBoldItalic.ttf */; };
+		631EFF9923677C4000BA17F7 /* Article+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFF9723677C4000BA17F7 /* Article+CoreDataClass.swift */; };
+		631EFF9A23677C4000BA17F7 /* Article+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFF9823677C4000BA17F7 /* Article+CoreDataProperties.swift */; };
+		631EFF9D23677C8900BA17F7 /* Reach+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFF9B23677C8800BA17F7 /* Reach+CoreDataClass.swift */; };
+		631EFFA123677CB600BA17F7 /* Rapid+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFF9F23677CB600BA17F7 /* Rapid+CoreDataClass.swift */; };
+		631EFFA223677CB600BA17F7 /* Rapid+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFFA023677CB600BA17F7 /* Rapid+CoreDataProperties.swift */; };
+		631EFFA42367842300BA17F7 /* DifficultyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFFA32367842300BA17F7 /* DifficultyHelper.swift */; };
+		631EFFAB23688A3600BA17F7 /* Reach+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFFAA23688A3600BA17F7 /* Reach+CoreDataProperties.swift */; };
+		63203C0E23694BFF006A4148 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63203C0D23694BFF006A4148 /* Reach.swift */; };
+		63203C1023694C59006A4148 /* Runnable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63203C0F23694C59006A4148 /* Runnable.swift */; };
+		63309E32233D965500E6DBC4 /* AboutAWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63309E31233D965500E6DBC4 /* AboutAWViewController.swift */; };
+		63309E36233DA29000E6DBC4 /* MoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63309E35233DA29000E6DBC4 /* MoreTableViewController.swift */; };
+		63309E38233DA2AC00E6DBC4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63309E37233DA2AC00E6DBC4 /* StoreKit.framework */; };
+		63309E3A233DACAD00E6DBC4 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63309E39233DACAD00E6DBC4 /* MessageUI.framework */; };
+		63309E3D233E739C00E6DBC4 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63309E3C233E739C00E6DBC4 /* MapViewController.swift */; };
+		63309E3F233E73AA00E6DBC4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63309E3E233E73AA00E6DBC4 /* MapKit.framework */; };
+		63309E43234166BB00E6DBC4 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63309E42234166BB00E6DBC4 /* FilterViewController.swift */; };
+		63309E452343D9B500E6DBC4 /* NoRiversTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63309E442343D9B500E6DBC4 /* NoRiversTableViewCell.swift */; };
+		633117092373172100D5EEFB /* AWRapid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633117082373172100D5EEFB /* AWRapid.swift */; };
+		63387B6322CDBFFC0089BAA8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63387B6222CDBFFC0089BAA8 /* AppDelegate.swift */; };
+		63387B6822CDBFFC0089BAA8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63387B6622CDBFFC0089BAA8 /* Main.storyboard */; };
+		63387B6A22CDBFFE0089BAA8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63387B6922CDBFFE0089BAA8 /* Assets.xcassets */; };
+		63387B6D22CDBFFE0089BAA8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63387B6B22CDBFFE0089BAA8 /* LaunchScreen.storyboard */; };
+		6342A3E92385A3A400B54365 /* UISearchBar+UITextFieldColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6342A3E82385A3A400B54365 /* UISearchBar+UITextFieldColor.swift */; };
+		6342A3EB2385AD3500B54365 /* MKMapView+FitAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6342A3EA2385AD3500B54365 /* MKMapView+FitAnnotations.swift */; };
+		63491B03232882170036A906 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B02232882170036A906 /* NewsTableViewCell.swift */; };
+		63491B05232897BE0036A906 /* SingleArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B04232897BE0036A906 /* SingleArticleViewController.swift */; };
+		63491B0723289A440036A906 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63491B0623289A430036A906 /* WebKit.framework */; };
+		63491B092328A1DF0036A906 /* AWReach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B082328A1DF0036A906 /* AWReach.swift */; };
+		63491B0B2328A2250036A906 /* RunsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B0A2328A2250036A906 /* RunsListViewController.swift */; };
+		63491B0D2328A2800036A906 /* RunsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B0C2328A2800036A906 /* RunsListTableViewCell.swift */; };
+		63491B0F2328D72D0036A906 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B0E2328D72D0036A906 /* UIColor+Hex.swift */; };
+		63491B11232933370036A906 /* RunDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B10232933370036A906 /* RunDetailTableViewController.swift */; };
+		63491B1323294CC80036A906 /* GaugeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B1223294CC80036A906 /* GaugeDetailViewController.swift */; };
+		63491B16232952E30036A906 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B15232952E30036A906 /* FavoritesViewController.swift */; };
+		637D0737236B541000BE90D0 /* UISearchBar+BGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637D0736236B541000BE90D0 /* UISearchBar+BGColor.swift */; };
+		637FF784236B33F300F18400 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637FF783236B33F300F18400 /* NotificationService.swift */; };
+		637FF788236B33F300F18400 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 637FF781236B33F300F18400 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6389BFAE234CC59E00DE7D6C /* RunMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389BFAD234CC59E00DE7D6C /* RunMapViewController.swift */; };
+		6389BFB0234E311500DE7D6C /* RunMapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389BFAF234E311500DE7D6C /* RunMapAnnotation.swift */; };
+		63A6FD672363EEA200148231 /* AWApiArticleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */; };
+		63A6FD692367730C00148231 /* AWApiReachHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD682367730C00148231 /* AWApiReachHelper.swift */; };
+		63A6FD6B2367748F00148231 /* AWApiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD6A2367748F00148231 /* AWApiLinks.swift */; };
+		63A8B17D23281A8A00FD2E00 /* AWArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8B17C23281A8A00FD2E00 /* AWArticle.swift */; };
+		63C1DAC1235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63C1DABF235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld */; };
+		63D7BD132319738D00935693 /* AWApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD122319738D00935693 /* AWApiHelper.swift */; };
+		63D7BD152319774500935693 /* Regions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD142319774500935693 /* Regions.swift */; };
+		63D7BD172319980600935693 /* OnboardLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD162319980600935693 /* OnboardLocationViewController.swift */; };
+		63D7BD1923199D1900935693 /* DuffekDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD1823199D1900935693 /* DuffekDialog.swift */; };
+		63D7BD1F231A205500935693 /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD1E231A205500935693 /* NewsTableViewController.swift */; };
+		63E0B22C23A3EDDE00A348FC /* MKMapView+FitAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E0B22B23A3EDDE00A348FC /* MKMapView+FitAll.swift */; };
+		63E32B1A2357F2A40057DE34 /* FilterRegionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E32B192357F2A40057DE34 /* FilterRegionCollectionViewCell.swift */; };
+		63E32B1D2357F3260057DE34 /* FilterClassCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E32B1C2357F3260057DE34 /* FilterClassCollectionViewCell.swift */; };
+		63E32B1F2357F3350057DE34 /* FilterDistanceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E32B1E2357F3350057DE34 /* FilterDistanceCollectionViewCell.swift */; };
+		63E90EAD22EAA14700C8DAA3 /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E90EAC22EAA14700C8DAA3 /* DefaultsManager.swift */; };
+		63E90EBC22EAAF2700C8DAA3 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E90EB922EAAF2700C8DAA3 /* Fonts.swift */; };
+		63E90EBD22EAAF2700C8DAA3 /* Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E90EBA22EAAF2700C8DAA3 /* Segues.swift */; };
+		63E90EC022EAB5CC00C8DAA3 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63E90EBE22EAB5CC00C8DAA3 /* OpenSans-Regular.ttf */; };
+		63E90EC122EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63E90EBF22EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf */; };
+		63F712E2238869A50047C8F0 /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F712E1238869A50047C8F0 /* UIImage+Color.swift */; };
+		63F712E4238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */; };
+		63F87AD5236A923D0005AA0B /* AWReachDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F87AD4236A923D0005AA0B /* AWReachDetail.swift */; };
+		8222C7A33AF93FD8DF4B96A1 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF7C1C4D5C1D7A62181BBA5D /* Pods_OneSignalNotificationServiceExtension.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		637FF786236B33F300F18400 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63387B5722CDBFFC0089BAA8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 637FF780236B33F300F18400;
+			remoteInfo = OneSignalNotificationServiceExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		637FF78C236B33F300F18400 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				637FF788236B33F300F18400 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunRapidDetailsTableViewController.swift; sourceTree = "<group>"; };
+		63081BF6236B2E7500FC3823 /* AW.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AW.entitlements; sourceTree = "<group>"; };
+		63081BF7236B2EDE00FC3823 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		63081BF9236B2F8500FC3823 /* OpenTerminal.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = OpenTerminal.sh; sourceTree = "<group>"; };
+		631B3572237C722200738889 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		631EFF9723677C4000BA17F7 /* Article+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Article+CoreDataClass.swift"; sourceTree = "<group>"; };
+		631EFF9823677C4000BA17F7 /* Article+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Article+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		631EFF9B23677C8800BA17F7 /* Reach+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reach+CoreDataClass.swift"; sourceTree = "<group>"; };
+		631EFF9F23677CB600BA17F7 /* Rapid+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Rapid+CoreDataClass.swift"; sourceTree = "<group>"; };
+		631EFFA023677CB600BA17F7 /* Rapid+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Rapid+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		631EFFA32367842300BA17F7 /* DifficultyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyHelper.swift; sourceTree = "<group>"; };
+		631EFFAA23688A3600BA17F7 /* Reach+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reach+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		63203C0D23694BFF006A4148 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
+		63203C0F23694C59006A4148 /* Runnable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runnable.swift; sourceTree = "<group>"; };
+		63309E31233D965500E6DBC4 /* AboutAWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAWViewController.swift; sourceTree = "<group>"; };
+		63309E35233DA29000E6DBC4 /* MoreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewController.swift; sourceTree = "<group>"; };
+		63309E37233DA2AC00E6DBC4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		63309E39233DACAD00E6DBC4 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		63309E3C233E739C00E6DBC4 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		63309E3E233E73AA00E6DBC4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		63309E42234166BB00E6DBC4 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		63309E442343D9B500E6DBC4 /* NoRiversTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRiversTableViewCell.swift; sourceTree = "<group>"; };
+		633117082373172100D5EEFB /* AWRapid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWRapid.swift; sourceTree = "<group>"; };
+		63387B5F22CDBFFC0089BAA8 /* AW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AW.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		63387B6222CDBFFC0089BAA8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		63387B6722CDBFFC0089BAA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		63387B6922CDBFFE0089BAA8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		63387B6C22CDBFFE0089BAA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		63387B6E22CDBFFE0089BAA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6342A3E82385A3A400B54365 /* UISearchBar+UITextFieldColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+UITextFieldColor.swift"; sourceTree = "<group>"; };
+		6342A3EA2385AD3500B54365 /* MKMapView+FitAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+FitAnnotations.swift"; sourceTree = "<group>"; };
+		63491B02232882170036A906 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
+		63491B04232897BE0036A906 /* SingleArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleArticleViewController.swift; sourceTree = "<group>"; };
+		63491B0623289A430036A906 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		63491B082328A1DF0036A906 /* AWReach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWReach.swift; sourceTree = "<group>"; };
+		63491B0A2328A2250036A906 /* RunsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunsListViewController.swift; sourceTree = "<group>"; };
+		63491B0C2328A2800036A906 /* RunsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunsListTableViewCell.swift; sourceTree = "<group>"; };
+		63491B0E2328D72D0036A906 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
+		63491B10232933370036A906 /* RunDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDetailTableViewController.swift; sourceTree = "<group>"; };
+		63491B1223294CC80036A906 /* GaugeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeDetailViewController.swift; sourceTree = "<group>"; };
+		63491B15232952E30036A906 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		637D0736236B541000BE90D0 /* UISearchBar+BGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+BGColor.swift"; sourceTree = "<group>"; };
+		637FF781236B33F300F18400 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		637FF783236B33F300F18400 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		637FF785236B33F300F18400 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		637FF78D236B357200F18400 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
+		6389BFAD234CC59E00DE7D6C /* RunMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunMapViewController.swift; sourceTree = "<group>"; };
+		6389BFAF234E311500DE7D6C /* RunMapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunMapAnnotation.swift; sourceTree = "<group>"; };
+		63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiArticleHelper.swift; sourceTree = "<group>"; };
+		63A6FD682367730C00148231 /* AWApiReachHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiReachHelper.swift; sourceTree = "<group>"; };
+		63A6FD6A2367748F00148231 /* AWApiLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiLinks.swift; sourceTree = "<group>"; };
+		63A8B17C23281A8A00FD2E00 /* AWArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWArticle.swift; sourceTree = "<group>"; };
+		63C1DAC0235FEEFA00587A20 /* AmericanWhitewater.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AmericanWhitewater.xcdatamodel; sourceTree = "<group>"; };
+		63D7BD122319738D00935693 /* AWApiHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiHelper.swift; sourceTree = "<group>"; };
+		63D7BD142319774500935693 /* Regions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regions.swift; sourceTree = "<group>"; };
+		63D7BD162319980600935693 /* OnboardLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardLocationViewController.swift; sourceTree = "<group>"; };
+		63D7BD1823199D1900935693 /* DuffekDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuffekDialog.swift; sourceTree = "<group>"; };
+		63D7BD1E231A205500935693 /* NewsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
+		63E0B22B23A3EDDE00A348FC /* MKMapView+FitAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+FitAll.swift"; sourceTree = "<group>"; };
+		63E32B192357F2A40057DE34 /* FilterRegionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRegionCollectionViewCell.swift; sourceTree = "<group>"; };
+		63E32B1C2357F3260057DE34 /* FilterClassCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterClassCollectionViewCell.swift; sourceTree = "<group>"; };
+		63E32B1E2357F3350057DE34 /* FilterDistanceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDistanceCollectionViewCell.swift; sourceTree = "<group>"; };
+		63E90EAC22EAA14700C8DAA3 /* DefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsManager.swift; sourceTree = "<group>"; };
+		63E90EB922EAAF2700C8DAA3 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		63E90EBA22EAAF2700C8DAA3 /* Segues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segues.swift; sourceTree = "<group>"; };
+		63E90EBE22EAB5CC00C8DAA3 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		63E90EBF22EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		63F712E1238869A50047C8F0 /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
+		63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentControl+PreiOS13.swift"; sourceTree = "<group>"; };
+		63F87AD4236A923D0005AA0B /* AWReachDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWReachDetail.swift; sourceTree = "<group>"; };
+		65E877CED14ADC6BDB5FF406 /* Pods-American Whitewater.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-American Whitewater.debug.xcconfig"; path = "Target Support Files/Pods-American Whitewater/Pods-American Whitewater.debug.xcconfig"; sourceTree = "<group>"; };
+		70CBD677B582500887F2048A /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		9C2C42AD446583582644A912 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		A3867C1633B5FEED2F4D6BE1 /* Pods-American Whitewater.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-American Whitewater.release.xcconfig"; path = "Target Support Files/Pods-American Whitewater/Pods-American Whitewater.release.xcconfig"; sourceTree = "<group>"; };
+		A750E2F24748D3B54A1DEB84 /* Pods_American_Whitewater.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_American_Whitewater.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF7C1C4D5C1D7A62181BBA5D /* Pods_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		63387B5C22CDBFFC0089BAA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63309E38233DA2AC00E6DBC4 /* StoreKit.framework in Frameworks */,
+				63491B0723289A440036A906 /* WebKit.framework in Frameworks */,
+				63309E3F233E73AA00E6DBC4 /* MapKit.framework in Frameworks */,
+				63309E3A233DACAD00E6DBC4 /* MessageUI.framework in Frameworks */,
+				4760DD5C0E5548BBA92D25AF /* Pods_American_Whitewater.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		637FF77E236B33F300F18400 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8222C7A33AF93FD8DF4B96A1 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0BFB237E8159CFF108C5FEAC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				63309E3E233E73AA00E6DBC4 /* MapKit.framework */,
+				63309E39233DACAD00E6DBC4 /* MessageUI.framework */,
+				63309E37233DA2AC00E6DBC4 /* StoreKit.framework */,
+				63491B0623289A430036A906 /* WebKit.framework */,
+				A750E2F24748D3B54A1DEB84 /* Pods_American_Whitewater.framework */,
+				EF7C1C4D5C1D7A62181BBA5D /* Pods_OneSignalNotificationServiceExtension.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		57C0D2ADEDAEBE7010E98154 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				65E877CED14ADC6BDB5FF406 /* Pods-American Whitewater.debug.xcconfig */,
+				A3867C1633B5FEED2F4D6BE1 /* Pods-American Whitewater.release.xcconfig */,
+				9C2C42AD446583582644A912 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
+				70CBD677B582500887F2048A /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		63309E3B233E738A00E6DBC4 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				63309E3C233E739C00E6DBC4 /* MapViewController.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		63387B5622CDBFFC0089BAA8 = {
+			isa = PBXGroup;
+			children = (
+				63387B6122CDBFFC0089BAA8 /* American Whitewater */,
+				637FF782236B33F300F18400 /* OneSignalNotificationServiceExtension */,
+				63387B6022CDBFFC0089BAA8 /* Products */,
+				57C0D2ADEDAEBE7010E98154 /* Pods */,
+				0BFB237E8159CFF108C5FEAC /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		63387B6022CDBFFC0089BAA8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				63387B5F22CDBFFC0089BAA8 /* AW.app */,
+				637FF781236B33F300F18400 /* OneSignalNotificationServiceExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		63387B6122CDBFFC0089BAA8 /* American Whitewater */ = {
+			isa = PBXGroup;
+			children = (
+				63E90EAE22EAA28900C8DAA3 /* Etc */,
+				63E90EB022EAA31300C8DAA3 /* Protocols */,
+				63E90EB122EAA32300C8DAA3 /* Models */,
+				63E90EB222EAA33100C8DAA3 /* ViewControllers */,
+				63E90EB722EAA3D500C8DAA3 /* Helpers */,
+				63E90EAF22EAA30900C8DAA3 /* Extensions */,
+				63387B6222CDBFFC0089BAA8 /* AppDelegate.swift */,
+				63387B6622CDBFFC0089BAA8 /* Main.storyboard */,
+				63387B6B22CDBFFE0089BAA8 /* LaunchScreen.storyboard */,
+				63081BF6236B2E7500FC3823 /* AW.entitlements */,
+				63387B6E22CDBFFE0089BAA8 /* Info.plist */,
+				63081BF7236B2EDE00FC3823 /* GoogleService-Info.plist */,
+				63387B6922CDBFFE0089BAA8 /* Assets.xcassets */,
+			);
+			path = "American Whitewater";
+			sourceTree = "<group>";
+		};
+		63491B14232952C30036A906 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				63491B15232952E30036A906 /* FavoritesViewController.swift */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		637FF782236B33F300F18400 /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				637FF78D236B357200F18400 /* OneSignalNotificationServiceExtension.entitlements */,
+				637FF783236B33F300F18400 /* NotificationService.swift */,
+				637FF785236B33F300F18400 /* Info.plist */,
+			);
+			path = OneSignalNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
+		63E32B1B2357F2B80057DE34 /* Filtering */ = {
+			isa = PBXGroup;
+			children = (
+				63309E42234166BB00E6DBC4 /* FilterViewController.swift */,
+				63E32B192357F2A40057DE34 /* FilterRegionCollectionViewCell.swift */,
+				63E32B1C2357F3260057DE34 /* FilterClassCollectionViewCell.swift */,
+				63E32B1E2357F3350057DE34 /* FilterDistanceCollectionViewCell.swift */,
+			);
+			path = Filtering;
+			sourceTree = "<group>";
+		};
+		63E90EAE22EAA28900C8DAA3 /* Etc */ = {
+			isa = PBXGroup;
+			children = (
+				63E90EC222EAB5D100C8DAA3 /* fonts */,
+				63E90EB922EAAF2700C8DAA3 /* Fonts.swift */,
+				63E90EBA22EAAF2700C8DAA3 /* Segues.swift */,
+			);
+			path = Etc;
+			sourceTree = "<group>";
+		};
+		63E90EAF22EAA30900C8DAA3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				63203C0D23694BFF006A4148 /* Reach.swift */,
+				63491B0E2328D72D0036A906 /* UIColor+Hex.swift */,
+				637D0736236B541000BE90D0 /* UISearchBar+BGColor.swift */,
+				6342A3E82385A3A400B54365 /* UISearchBar+UITextFieldColor.swift */,
+				6342A3EA2385AD3500B54365 /* MKMapView+FitAnnotations.swift */,
+				63081BF9236B2F8500FC3823 /* OpenTerminal.sh */,
+				63F712E1238869A50047C8F0 /* UIImage+Color.swift */,
+				63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */,
+				63E0B22B23A3EDDE00A348FC /* MKMapView+FitAll.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		63E90EB022EAA31300C8DAA3 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		63E90EB122EAA32300C8DAA3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				63203C0F23694C59006A4148 /* Runnable.swift */,
+				63A8B17C23281A8A00FD2E00 /* AWArticle.swift */,
+				63491B082328A1DF0036A906 /* AWReach.swift */,
+				63F87AD4236A923D0005AA0B /* AWReachDetail.swift */,
+				633117082373172100D5EEFB /* AWRapid.swift */,
+				63C1DABF235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld */,
+				631EFF9723677C4000BA17F7 /* Article+CoreDataClass.swift */,
+				631EFF9823677C4000BA17F7 /* Article+CoreDataProperties.swift */,
+				631EFF9B23677C8800BA17F7 /* Reach+CoreDataClass.swift */,
+				631EFFAA23688A3600BA17F7 /* Reach+CoreDataProperties.swift */,
+				631EFF9F23677CB600BA17F7 /* Rapid+CoreDataClass.swift */,
+				631EFFA023677CB600BA17F7 /* Rapid+CoreDataProperties.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		63E90EB222EAA33100C8DAA3 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				63E90EB322EAA34F00C8DAA3 /* OnBoard */,
+				63E90EB422EAA36200C8DAA3 /* News */,
+				63E90EB622EAA3B000C8DAA3 /* Reaches */,
+				63491B14232952C30036A906 /* Favorites */,
+				63309E3B233E738A00E6DBC4 /* Map */,
+				63E90EB522EAA36A00C8DAA3 /* More */,
+				63E32B1B2357F2B80057DE34 /* Filtering */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		63E90EB322EAA34F00C8DAA3 /* OnBoard */ = {
+			isa = PBXGroup;
+			children = (
+				63D7BD162319980600935693 /* OnboardLocationViewController.swift */,
+			);
+			path = OnBoard;
+			sourceTree = "<group>";
+		};
+		63E90EB422EAA36200C8DAA3 /* News */ = {
+			isa = PBXGroup;
+			children = (
+				63D7BD1E231A205500935693 /* NewsTableViewController.swift */,
+				63491B02232882170036A906 /* NewsTableViewCell.swift */,
+				63491B04232897BE0036A906 /* SingleArticleViewController.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
+		63E90EB522EAA36A00C8DAA3 /* More */ = {
+			isa = PBXGroup;
+			children = (
+				63309E35233DA29000E6DBC4 /* MoreTableViewController.swift */,
+				63309E31233D965500E6DBC4 /* AboutAWViewController.swift */,
+			);
+			path = More;
+			sourceTree = "<group>";
+		};
+		63E90EB622EAA3B000C8DAA3 /* Reaches */ = {
+			isa = PBXGroup;
+			children = (
+				63491B0A2328A2250036A906 /* RunsListViewController.swift */,
+				63491B0C2328A2800036A906 /* RunsListTableViewCell.swift */,
+				63309E442343D9B500E6DBC4 /* NoRiversTableViewCell.swift */,
+				63491B10232933370036A906 /* RunDetailTableViewController.swift */,
+				6389BFAD234CC59E00DE7D6C /* RunMapViewController.swift */,
+				6389BFAF234E311500DE7D6C /* RunMapAnnotation.swift */,
+				630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */,
+				63491B1223294CC80036A906 /* GaugeDetailViewController.swift */,
+			);
+			path = Reaches;
+			sourceTree = "<group>";
+		};
+		63E90EB722EAA3D500C8DAA3 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				63E90EAC22EAA14700C8DAA3 /* DefaultsManager.swift */,
+				63D7BD122319738D00935693 /* AWApiHelper.swift */,
+				63A6FD682367730C00148231 /* AWApiReachHelper.swift */,
+				63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */,
+				63A6FD6A2367748F00148231 /* AWApiLinks.swift */,
+				63D7BD142319774500935693 /* Regions.swift */,
+				63D7BD1823199D1900935693 /* DuffekDialog.swift */,
+				631EFFA32367842300BA17F7 /* DifficultyHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		63E90EC222EAB5D100C8DAA3 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				63E90EBE22EAB5CC00C8DAA3 /* OpenSans-Regular.ttf */,
+				63E90EBF22EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf */,
+				631B3572237C722200738889 /* OpenSans-ExtraBoldItalic.ttf */,
+			);
+			name = fonts;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		63387B5E22CDBFFC0089BAA8 /* American Whitewater */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63387B7122CDBFFE0089BAA8 /* Build configuration list for PBXNativeTarget "American Whitewater" */;
+			buildPhases = (
+				C5A3EE7F12EB780BAA720589 /* [CP] Check Pods Manifest.lock */,
+				631EFFA9236884FE00BA17F7 /* ShellScript */,
+				63387B5B22CDBFFC0089BAA8 /* Sources */,
+				63387B5C22CDBFFC0089BAA8 /* Frameworks */,
+				63387B5D22CDBFFC0089BAA8 /* Resources */,
+				E9E2B22FD2DE305D092B73A8 /* [CP] Embed Pods Frameworks */,
+				637FF77C236B327400F18400 /* ShellScript */,
+				637FF78C236B33F300F18400 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				637FF787236B33F300F18400 /* PBXTargetDependency */,
+			);
+			name = "American Whitewater";
+			productName = "American Whitewater";
+			productReference = 63387B5F22CDBFFC0089BAA8 /* AW.app */;
+			productType = "com.apple.product-type.application";
+		};
+		637FF780236B33F300F18400 /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 637FF789236B33F300F18400 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
+			buildPhases = (
+				06A0DA006D0740DB36FCB77E /* [CP] Check Pods Manifest.lock */,
+				637FF77D236B33F300F18400 /* Sources */,
+				637FF77E236B33F300F18400 /* Frameworks */,
+				637FF77F236B33F300F18400 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OneSignalNotificationServiceExtension;
+			productName = OneSignalNotificationServiceExtension;
+			productReference = 637FF781236B33F300F18400 /* OneSignalNotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		63387B5722CDBFFC0089BAA8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1110;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "American Whitewater";
+				TargetAttributes = {
+					63387B5E22CDBFFC0089BAA8 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					637FF780236B33F300F18400 = {
+						CreatedOnToolsVersion = 11.1;
+					};
+				};
+			};
+			buildConfigurationList = 63387B5A22CDBFFC0089BAA8 /* Build configuration list for PBXProject "American Whitewater" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 63387B5622CDBFFC0089BAA8;
+			productRefGroup = 63387B6022CDBFFC0089BAA8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				63387B5E22CDBFFC0089BAA8 /* American Whitewater */,
+				637FF780236B33F300F18400 /* OneSignalNotificationServiceExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		63387B5D22CDBFFC0089BAA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63387B6D22CDBFFE0089BAA8 /* LaunchScreen.storyboard in Resources */,
+				63387B6A22CDBFFE0089BAA8 /* Assets.xcassets in Resources */,
+				63E90EC122EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf in Resources */,
+				63081BFA236B2F8500FC3823 /* OpenTerminal.sh in Resources */,
+				63E90EC022EAB5CC00C8DAA3 /* OpenSans-Regular.ttf in Resources */,
+				63387B6822CDBFFC0089BAA8 /* Main.storyboard in Resources */,
+				63081BF8236B2EDE00FC3823 /* GoogleService-Info.plist in Resources */,
+				631B3573237C722200738889 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		637FF77F236B33F300F18400 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		06A0DA006D0740DB36FCB77E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OneSignalNotificationServiceExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		631EFFA9236884FE00BA17F7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nTAGS=\"AWTODO:|FIXME:\"\nERRORTAG=\"ERROR:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$|($ERRORTAG).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\" | perl -p -e \"s/($ERRORTAG)/ error: \\$1/\"\n";
+		};
+		637FF77C236B327400F18400 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\"\n";
+		};
+		C5A3EE7F12EB780BAA720589 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-American Whitewater-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E9E2B22FD2DE305D092B73A8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-American Whitewater/Pods-American Whitewater-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-American Whitewater/Pods-American Whitewater-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-American Whitewater/Pods-American Whitewater-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		63387B5B22CDBFFC0089BAA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63E90EBD22EAAF2700C8DAA3 /* Segues.swift in Sources */,
+				63A6FD6B2367748F00148231 /* AWApiLinks.swift in Sources */,
+				63F87AD5236A923D0005AA0B /* AWReachDetail.swift in Sources */,
+				63491B03232882170036A906 /* NewsTableViewCell.swift in Sources */,
+				63D7BD132319738D00935693 /* AWApiHelper.swift in Sources */,
+				63491B0F2328D72D0036A906 /* UIColor+Hex.swift in Sources */,
+				633117092373172100D5EEFB /* AWRapid.swift in Sources */,
+				63D7BD172319980600935693 /* OnboardLocationViewController.swift in Sources */,
+				63E90EBC22EAAF2700C8DAA3 /* Fonts.swift in Sources */,
+				63491B05232897BE0036A906 /* SingleArticleViewController.swift in Sources */,
+				63203C0E23694BFF006A4148 /* Reach.swift in Sources */,
+				63387B6322CDBFFC0089BAA8 /* AppDelegate.swift in Sources */,
+				63309E3D233E739C00E6DBC4 /* MapViewController.swift in Sources */,
+				63E32B1D2357F3260057DE34 /* FilterClassCollectionViewCell.swift in Sources */,
+				631EFF9A23677C4000BA17F7 /* Article+CoreDataProperties.swift in Sources */,
+				6342A3E92385A3A400B54365 /* UISearchBar+UITextFieldColor.swift in Sources */,
+				631EFFA42367842300BA17F7 /* DifficultyHelper.swift in Sources */,
+				637D0737236B541000BE90D0 /* UISearchBar+BGColor.swift in Sources */,
+				63A6FD672363EEA200148231 /* AWApiArticleHelper.swift in Sources */,
+				63491B1323294CC80036A906 /* GaugeDetailViewController.swift in Sources */,
+				631EFFAB23688A3600BA17F7 /* Reach+CoreDataProperties.swift in Sources */,
+				63E90EAD22EAA14700C8DAA3 /* DefaultsManager.swift in Sources */,
+				6342A3EB2385AD3500B54365 /* MKMapView+FitAnnotations.swift in Sources */,
+				63D7BD1923199D1900935693 /* DuffekDialog.swift in Sources */,
+				63309E452343D9B500E6DBC4 /* NoRiversTableViewCell.swift in Sources */,
+				631EFFA223677CB600BA17F7 /* Rapid+CoreDataProperties.swift in Sources */,
+				63D7BD1F231A205500935693 /* NewsTableViewController.swift in Sources */,
+				6389BFAE234CC59E00DE7D6C /* RunMapViewController.swift in Sources */,
+				63491B11232933370036A906 /* RunDetailTableViewController.swift in Sources */,
+				63C1DAC1235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld in Sources */,
+				63D7BD152319774500935693 /* Regions.swift in Sources */,
+				63A8B17D23281A8A00FD2E00 /* AWArticle.swift in Sources */,
+				6389BFB0234E311500DE7D6C /* RunMapAnnotation.swift in Sources */,
+				63F712E4238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift in Sources */,
+				63309E36233DA29000E6DBC4 /* MoreTableViewController.swift in Sources */,
+				631EFF9923677C4000BA17F7 /* Article+CoreDataClass.swift in Sources */,
+				63491B0D2328A2800036A906 /* RunsListTableViewCell.swift in Sources */,
+				631EFF9D23677C8900BA17F7 /* Reach+CoreDataClass.swift in Sources */,
+				63E32B1A2357F2A40057DE34 /* FilterRegionCollectionViewCell.swift in Sources */,
+				63309E43234166BB00E6DBC4 /* FilterViewController.swift in Sources */,
+				63E32B1F2357F3350057DE34 /* FilterDistanceCollectionViewCell.swift in Sources */,
+				63309E32233D965500E6DBC4 /* AboutAWViewController.swift in Sources */,
+				63491B0B2328A2250036A906 /* RunsListViewController.swift in Sources */,
+				631EFFA123677CB600BA17F7 /* Rapid+CoreDataClass.swift in Sources */,
+				63491B16232952E30036A906 /* FavoritesViewController.swift in Sources */,
+				63203C1023694C59006A4148 /* Runnable.swift in Sources */,
+				630586642350428800A436BE /* RunRapidDetailsTableViewController.swift in Sources */,
+				63491B092328A1DF0036A906 /* AWReach.swift in Sources */,
+				63F712E2238869A50047C8F0 /* UIImage+Color.swift in Sources */,
+				63A6FD692367730C00148231 /* AWApiReachHelper.swift in Sources */,
+				63E0B22C23A3EDDE00A348FC /* MKMapView+FitAll.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		637FF77D236B33F300F18400 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				637FF784236B33F300F18400 /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		637FF787236B33F300F18400 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 637FF780236B33F300F18400 /* OneSignalNotificationServiceExtension */;
+			targetProxy = 637FF786236B33F300F18400 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		63387B6622CDBFFC0089BAA8 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				63387B6722CDBFFC0089BAA8 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		63387B6B22CDBFFE0089BAA8 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				63387B6C22CDBFFE0089BAA8 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		63387B6F22CDBFFE0089BAA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		63387B7022CDBFFE0089BAA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		63387B7222CDBFFE0089BAA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 65E877CED14ADC6BDB5FF406 /* Pods-American Whitewater.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "American Whitewater/AW.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 22;
+				DEVELOPMENT_TEAM = Z2H33QQ8P7;
+				INFOPLIST_FILE = "American Whitewater/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw;
+				PRODUCT_NAME = AW;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		63387B7322CDBFFE0089BAA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3867C1633B5FEED2F4D6BE1 /* Pods-American Whitewater.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "American Whitewater/AW.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 22;
+				DEVELOPMENT_TEAM = Z2H33QQ8P7;
+				INFOPLIST_FILE = "American Whitewater/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw;
+				PRODUCT_NAME = AW;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		637FF78A236B33F300F18400 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9C2C42AD446583582644A912 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 22;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Z2H33QQ8P7;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		637FF78B236B33F300F18400 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 70CBD677B582500887F2048A /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 22;
+				DEVELOPMENT_TEAM = Z2H33QQ8P7;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		63387B5A22CDBFFC0089BAA8 /* Build configuration list for PBXProject "American Whitewater" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63387B6F22CDBFFE0089BAA8 /* Debug */,
+				63387B7022CDBFFE0089BAA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63387B7122CDBFFE0089BAA8 /* Build configuration list for PBXNativeTarget "American Whitewater" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63387B7222CDBFFE0089BAA8 /* Debug */,
+				63387B7322CDBFFE0089BAA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		637FF789236B33F300F18400 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				637FF78A236B33F300F18400 /* Debug */,
+				637FF78B236B33F300F18400 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		63C1DABF235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				63C1DAC0235FEEFA00587A20 /* AmericanWhitewater.xcdatamodel */,
+			);
+			currentVersion = 63C1DAC0235FEEFA00587A20 /* AmericanWhitewater.xcdatamodel */;
+			path = AmericanWhitewaterV2.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 63387B5722CDBFFC0089BAA8 /* Project object */;
+}

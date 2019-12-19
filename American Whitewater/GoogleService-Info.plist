@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>375090455326-mfd94qjdc6u788j8tgokcqfvn1e4u8lv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.375090455326-mfd94qjdc6u788j8tgokcqfvn1e4u8lv</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCJl0Fa3siGEKgRQOFds4nfyIe92aHvMCM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>375090455326</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.americanwhitewater.aw</string>
+	<key>PROJECT_ID</key>
+	<string>american-whitewater</string>
+	<key>STORAGE_BUCKET</key>
+	<string>american-whitewater.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:375090455326:ios:5ed7ae2bac8cffa4ed9f0f</string>
+	<key>DATABASE_URL</key>
+	<string>https://american-whitewater.firebaseio.com</string>
+</dict>
+</plist>
