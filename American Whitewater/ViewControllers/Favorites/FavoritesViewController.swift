@@ -139,23 +139,27 @@ class FavoritesViewController: UIViewController {
 
 
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("fectched count: \(fetchedResultsController?.fetchedObjects?.count ?? -1)")
+        
         if fetchedResultsController?.fetchedObjects?.count == 0 {
-            return 1
+            favoritesTableView.isHidden = true;
         } else {
-           return fetchedResultsController?.fetchedObjects?.count ?? 0
+            favoritesTableView.isHidden = false;
         }
+        
+        return fetchedResultsController?.fetchedObjects?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // no favorites? Show a message
-        if (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "NoFavsCell", for: indexPath)
-            print("returning nofavscell")
-            return cell
-        }
+//        if (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0 {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "NoFavsCell", for: indexPath)
+//            print("returning nofavscell")
+//            return cell
+//        }
 
         // show the favorites
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavRunCell", for: indexPath) as! RunsListTableViewCell

@@ -65,7 +65,7 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
                     
                 let mail = MFMailComposeViewController()
                 mail.mailComposeDelegate = self
-                mail.setToRecipients(["support@americanwhitewater.org"])
+                mail.setToRecipients(["evan@americanwhitewater.org"])
                 mail.setMessageBody("<p>Here is some feedback for the AW iOS App:</p><br/>", isHTML: true)
 
                 present(mail, animated: true)

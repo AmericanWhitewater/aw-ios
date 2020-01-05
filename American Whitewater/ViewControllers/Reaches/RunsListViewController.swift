@@ -64,20 +64,20 @@ class RunsListViewController: UIViewController {
         // first fetch the rivers we have stored locally
         fetchRiversFromCoreData();
         
-        // This can be a bit tricky to follow:
-        // -- Check if we need to show the onboarding modal
-        // -- Even if we do show it, go ahead and update the
-        //    data model behind the scenes we pull all the data
-        //    in the background once, then update it on an as
-        //    needed basis unless the user wants it all again
         if checkIfOnboardingNeeded() == false {
-            // check how long it's been since we updated from the server
-            // if it's too long we just update
-            if let lastUpdated = DefaultsManager.lastUpdated {
-                if lastUpdated < Date(timeIntervalSinceNow: -600) { // 60s * 10m
+            print("Onboading needed == false")
+            
+            if let date = DefaultsManager.lastUpdated {
+                if let diff = Calendar.current.dateComponents([.minute], from: date, to: Date()).minute, diff > 2 {
+                    
+                    print("2 mins has passed so update is needed")
                     self.refresh()
+                } else {
+                    print("2 mins has not passed yet")
                 }
-            } else {
+                
+            } else { // if we haven't set a date yet just refresh
+                print("no first lastUpdated")
                 self.refresh()
             }
             
@@ -87,6 +87,30 @@ class RunsListViewController: UIViewController {
                 self.refresh();
             }
         }
+        
+        // This can be a bit tricky to follow:
+        // -- Check if we need to show the onboarding modal
+        // -- Even if we do show it, go ahead and update the
+        //    data model behind the scenes we pull all the data
+        //    in the background once, then update it on an as
+        //    needed basis unless the user wants it all again
+//        if checkIfOnboardingNeeded() == false {
+//            // check how long it's been since we updated from the server
+//            // if it's too long we just update
+//            if let lastUpdated = DefaultsManager.lastUpdated {
+//                if lastUpdated < Date(timeIntervalSinceNow: -600) { // 60s * 10m
+//                    self.refresh()
+//                }
+//            } else {
+//                self.refresh()
+//            }
+//
+//            // if regions fitler has changed then refresh
+//            if DefaultsManager.regionsUpdated {
+//                DefaultsManager.regionsUpdated = false
+//                self.refresh();
+//            }
+//        }
         
         // show the ugly legend until we design a better one
         if DefaultsManager.legendFirstRun == false {

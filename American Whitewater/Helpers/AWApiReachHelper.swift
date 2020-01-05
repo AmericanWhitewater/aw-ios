@@ -438,6 +438,8 @@ class AWApiReachHelper {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             callback()
         }
+        
+        DefaultsManager.lastUpdated = Date()
     }
     
     func fetchReachDetail(reachId: String,
@@ -611,6 +613,8 @@ class AWApiReachHelper {
                 let error = error as NSError
                 print("Unable to save main view context: \(error), \(error.userInfo)")
             }
+            
+            DefaultsManager.lastUpdated = Date()
         }
     }
 }

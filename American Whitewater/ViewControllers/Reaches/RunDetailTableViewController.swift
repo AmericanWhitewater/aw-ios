@@ -26,6 +26,8 @@ class RunDetailTableViewController: UITableViewController {
     
     @IBOutlet weak var readAllButton: UIButton!
     
+    @IBOutlet weak var seeGaugeInfoCell: UITableViewCell!
+    
     let dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
@@ -70,6 +72,12 @@ class RunDetailTableViewController: UITableViewController {
                 runLevelLabel.textColor = UIColor.AW.Unknown
                 runGaugeDeltaLabel.textColor = UIColor.AW.Unknown
             }
+        }
+        
+        if selectedRun?.condition == nil || selectedRun?.currentGageReading == nil {
+            seeGaugeInfoCell.isHidden = true
+        } else {
+            seeGaugeInfoCell.isHidden = false
         }
     }
 

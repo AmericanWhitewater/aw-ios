@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DZd-kw-GNv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DZd-kw-GNv">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -384,7 +384,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.57" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="Okt-J6-DDI">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="Okt-J6-DDI">
                                                     <rect key="frame" x="244" y="10" width="87" height="84.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="87" id="7qw-uf-WaU"/>
@@ -634,7 +634,7 @@
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title=" " id="kjV-Zw-pbm"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="XJm-oK-aBb">
-                            <rect key="frame" x="87.5" y="6" width="200" height="33"/>
+                            <rect key="frame" x="87.5" y="5.5" width="200" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <segments>
@@ -665,6 +665,7 @@
                         <outlet property="runNameLabel" destination="ZcP-52-Jw1" id="KBe-mD-9rM"/>
                         <outlet property="runSectionLabel" destination="j7C-u8-2LT" id="80k-Wj-Yih"/>
                         <outlet property="runUnitsLabel" destination="rCX-TB-xMt" id="8ef-oW-5rP"/>
+                        <outlet property="seeGaugeInfoCell" destination="8Z1-pj-GVP" id="sZ6-nR-LRj"/>
                         <outlet property="viewSegmentControl" destination="XJm-oK-aBb" id="kmO-PZ-ftF"/>
                         <segue destination="d0p-zh-OyD" kind="show" identifier="gaugeDetail" id="Zas-WB-RmZ"/>
                         <segue destination="My9-Zv-qOS" kind="show" identifier="reachMapEmbed" id="Tue-13-egA"/>
@@ -1993,8 +1994,84 @@ Individual memberships are crucial to American Whitewater and our goal is to rem
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="98" id="PNt-EJ-AxU">
+                                        <rect key="frame" x="0.0" y="366" width="375" height="98"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PNt-EJ-AxU" id="lsV-FW-DbL">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="98"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profileDN" translatesAutoresizingMaskIntoConstraints="NO" id="Drb-Ek-3AV">
+                                                    <rect key="frame" x="16" y="21.5" width="55" height="55"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="55" id="nW5-Cd-6Dy"/>
+                                                        <constraint firstAttribute="width" constant="55" id="oaW-pV-Sy7"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="David Nelson" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QjI-5v-6IW">
+                                                    <rect key="frame" x="91" y="14" width="268" height="26"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="26" id="v7o-ql-zPy"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="19"/>
+                                                    <color key="textColor" name="font_black"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duffek Mobile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A9M-jO-TnN">
+                                                    <rect key="frame" x="91" y="43" width="180" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="180" id="KeQ-wG-VD1"/>
+                                                        <constraint firstAttribute="height" constant="21" id="ugx-32-Nus"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="15"/>
+                                                    <color key="textColor" name="font_grey"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="david@duffekmobile.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BcE-iO-TAA">
+                                                    <rect key="frame" x="91" y="64.5" width="268" height="18"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="18" id="6ZX-Pc-pHo"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="13"/>
+                                                    <color key="textColor" name="font_light_grey"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="QjI-5v-6IW" firstAttribute="leading" secondItem="Drb-Ek-3AV" secondAttribute="trailing" constant="20" id="152-ue-9o7"/>
+                                                <constraint firstItem="QjI-5v-6IW" firstAttribute="top" secondItem="lsV-FW-DbL" secondAttribute="top" constant="14" id="RW6-VU-8Gb"/>
+                                                <constraint firstItem="A9M-jO-TnN" firstAttribute="leading" secondItem="Drb-Ek-3AV" secondAttribute="trailing" constant="20" id="Wnt-l1-WfD"/>
+                                                <constraint firstItem="A9M-jO-TnN" firstAttribute="top" secondItem="QjI-5v-6IW" secondAttribute="bottom" constant="3" id="XTq-7N-rFf"/>
+                                                <constraint firstItem="Drb-Ek-3AV" firstAttribute="leading" secondItem="lsV-FW-DbL" secondAttribute="leading" constant="16" id="YvT-JD-hsH"/>
+                                                <constraint firstAttribute="trailing" secondItem="QjI-5v-6IW" secondAttribute="trailing" constant="16" id="gQF-Qy-9Hb"/>
+                                                <constraint firstAttribute="trailing" secondItem="BcE-iO-TAA" secondAttribute="trailing" constant="16" id="lZE-Dk-8ah"/>
+                                                <constraint firstAttribute="bottom" secondItem="BcE-iO-TAA" secondAttribute="bottom" constant="15.5" id="pNj-3H-OyW"/>
+                                                <constraint firstItem="BcE-iO-TAA" firstAttribute="leading" secondItem="Drb-Ek-3AV" secondAttribute="trailing" constant="20" id="q6j-wS-c6B"/>
+                                                <constraint firstItem="Drb-Ek-3AV" firstAttribute="centerY" secondItem="lsV-FW-DbL" secondAttribute="centerY" id="xpW-iW-JXz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="98" id="PQK-4O-z4F">
+                                        <rect key="frame" x="0.0" y="464" width="375" height="98"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PQK-4O-z4F" id="1KJ-wg-yXB">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="98"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CoastGuardLogo" translatesAutoresizingMaskIntoConstraints="NO" id="1Ed-SK-w4g">
+                                                    <rect key="frame" x="16" y="10" width="343" height="78"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="1Ed-SK-w4g" firstAttribute="leading" secondItem="1KJ-wg-yXB" secondAttribute="leading" constant="16" id="23o-SR-cyd"/>
+                                                <constraint firstAttribute="bottom" secondItem="1Ed-SK-w4g" secondAttribute="bottom" constant="10" id="Ooy-5H-RXf"/>
+                                                <constraint firstAttribute="trailing" secondItem="1Ed-SK-w4g" secondAttribute="trailing" constant="16" id="U4l-og-ddE"/>
+                                                <constraint firstItem="1Ed-SK-w4g" firstAttribute="top" secondItem="1KJ-wg-yXB" secondAttribute="top" constant="10" id="fof-oc-tXX"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="689" id="bce-Xo-Na5">
-                                        <rect key="frame" x="0.0" y="366" width="375" height="689"/>
+                                        <rect key="frame" x="0.0" y="562" width="375" height="689"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bce-Xo-Na5" id="YCf-LA-bIa">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="689"/>
@@ -2012,7 +2089,11 @@ Individual memberships are crucial to American Whitewater and our goal is to rem
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XWZ-Va-j39">
                                                     <rect key="frame" x="20" y="51.5" width="335" height="585"/>
-                                                    <string key="text">This app was built entirely with volunteer hours. Special thanks to the following people for making this app a reality:          Alex Kerney, for building almost the entire app, and putting up with my incessant requests for changes. 
+                                                    <string key="text">This app was initially built entirely with volunteer hours. 
+
+Then American Whitewater was awarded a grant from the Coast Guard to improve this application. David Nelson, a kayaker and mobile app developer of Duffek Mobile was then contracted to make these improvements and maintain the app.  
+
+Special thanks to the following people for making this app a reality:          Alex Kerney, for building almost the entire app, and putting up with my incessant requests for changes. 
         Rachel Jin, who designed this beautiful app. She's never been in a kayak, but she worked tirelessly to understand exactly what the whitewater community needs. And, maybe this will get her out on the water :). 
         Ryan Groth, for fielding my incessant questions and massaging the backend to work with a mobile app.  This was no small feat, since mobile apps hadn't even been invented when the AW backend was designed. 
         Mark Singleton and Thomas O'Keefe for their support of this project and help getting everything set up, including all of the accounts, api access, documentation, beta testers, etc. 
@@ -2044,7 +2125,7 @@ Individual memberships are crucial to American Whitewater and our goal is to rem
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rKz-Qf-gRq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2473" y="3366"/>
+            <point key="canvasLocation" x="2472.8000000000002" y="3365.667166416792"/>
         </scene>
         <!--American Whitewater-->
         <scene sceneID="fSg-4u-mUy">
@@ -2054,11 +2135,50 @@ Individual memberships are crucial to American Whitewater and our goal is to rem
                         <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z1X-TQ-OfP" userLabel="NoFavsView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simply tap the star icon next to your favorite runs and then you can quickly find them here." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H1Q-8i-EkA">
+                                        <rect key="frame" x="57.5" y="296" width="260" height="53"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="53" id="gNi-1t-Oiy"/>
+                                            <constraint firstAttribute="width" constant="260" id="iwT-xU-lvi"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No favorite runs, yet!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pCb-lg-tgW">
+                                        <rect key="frame" x="112.5" y="270" width="150" height="18"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="NXT-Uj-HQi"/>
+                                            <constraint firstAttribute="height" constant="18" id="Txm-l9-3pL"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_favorite" translatesAutoresizingMaskIntoConstraints="NO" id="1WM-d5-aRD">
+                                        <rect key="frame" x="167.5" y="224" width="40" height="38"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="38" id="Pwf-ND-rYO"/>
+                                            <constraint firstAttribute="width" constant="40" id="aIP-MK-JjD"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="H1Q-8i-EkA" firstAttribute="centerY" secondItem="z1X-TQ-OfP" secondAttribute="centerY" constant="35.5" id="UZi-Ne-gB7"/>
+                                    <constraint firstItem="pCb-lg-tgW" firstAttribute="centerX" secondItem="z1X-TQ-OfP" secondAttribute="centerX" id="l82-88-O7T"/>
+                                    <constraint firstItem="1WM-d5-aRD" firstAttribute="centerY" secondItem="z1X-TQ-OfP" secondAttribute="centerY" constant="-44.25" id="olh-2Q-RGk"/>
+                                    <constraint firstItem="1WM-d5-aRD" firstAttribute="centerX" secondItem="z1X-TQ-OfP" secondAttribute="centerX" id="pdx-4y-ShP"/>
+                                    <constraint firstItem="pCb-lg-tgW" firstAttribute="centerY" secondItem="z1X-TQ-OfP" secondAttribute="centerY" constant="-8" id="rso-yJ-vTm"/>
+                                    <constraint firstItem="H1Q-8i-EkA" firstAttribute="centerX" secondItem="z1X-TQ-OfP" secondAttribute="centerX" id="vfL-nq-qpt"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nED-Dl-MI0">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="nSY-OV-t6N">
-                                    <rect key="frame" x="0.0" y="561" width="375" height="1"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="8fn-bN-bd8">
+                                    <rect key="frame" x="0.0" y="176" width="375" height="1"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
@@ -2136,52 +2256,6 @@ Individual memberships are crucial to American Whitewater and our goal is to rem
                                             <outlet property="runTitleLabel" destination="V7r-jA-Lwf" id="gO4-g9-Ko4"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NoFavsCell" rowHeight="385" id="Hgm-aQ-c1J">
-                                        <rect key="frame" x="0.0" y="148" width="375" height="385"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hgm-aQ-c1J" id="kWX-Gm-f1n">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="385"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_favorite" translatesAutoresizingMaskIntoConstraints="NO" id="LAv-rW-KPi">
-                                                    <rect key="frame" x="167.5" y="130.5" width="40" height="37.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="38" id="ecw-kC-Q1K"/>
-                                                        <constraint firstAttribute="width" constant="40" id="k7y-si-h1X"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No favorite runs, yet!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jb4-Dr-JSm">
-                                                    <rect key="frame" x="112.5" y="176" width="150" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="150" id="Yh6-zj-aap"/>
-                                                        <constraint firstAttribute="height" constant="18" id="olU-go-HcQ"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simply tap the star icon next to your favorite runs and then you can quickly find them here." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5H-gQ-q56">
-                                                    <rect key="frame" x="57.5" y="201" width="260" height="53"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="260" id="Scb-b5-FCK"/>
-                                                        <constraint firstAttribute="height" constant="53" id="pTo-Ao-GD3"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="K5H-gQ-q56" secondAttribute="bottom" constant="131" id="0uH-Sl-KJc"/>
-                                                <constraint firstItem="LAv-rW-KPi" firstAttribute="centerY" secondItem="kWX-Gm-f1n" secondAttribute="centerY" constant="-43.25" id="1jB-uj-cPL"/>
-                                                <constraint firstItem="jb4-Dr-JSm" firstAttribute="top" secondItem="LAv-rW-KPi" secondAttribute="bottom" constant="8" id="Eqh-RJ-LGV"/>
-                                                <constraint firstItem="K5H-gQ-q56" firstAttribute="top" secondItem="jb4-Dr-JSm" secondAttribute="bottom" constant="7" id="KFM-Tr-PWH"/>
-                                                <constraint firstItem="LAv-rW-KPi" firstAttribute="centerX" secondItem="kWX-Gm-f1n" secondAttribute="centerX" id="KRM-tC-hA9"/>
-                                                <constraint firstItem="jb4-Dr-JSm" firstAttribute="centerX" secondItem="kWX-Gm-f1n" secondAttribute="centerX" id="Z9x-Rv-hA5"/>
-                                                <constraint firstItem="K5H-gQ-q56" firstAttribute="centerX" secondItem="kWX-Gm-f1n" secondAttribute="centerX" id="bol-Vm-O65"/>
-                                                <constraint firstItem="LAv-rW-KPi" firstAttribute="top" secondItem="kWX-Gm-f1n" secondAttribute="top" constant="130.5" id="nCV-k5-cXA"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="Uir-Wj-Fam" id="qKr-q8-6SZ"/>
@@ -2191,10 +2265,14 @@ Individual memberships are crucial to American Whitewater and our goal is to rem
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="z1X-TQ-OfP" firstAttribute="bottom" secondItem="eLU-rr-8zK" secondAttribute="bottom" id="OwN-8g-zLT"/>
+                            <constraint firstItem="z1X-TQ-OfP" firstAttribute="top" secondItem="eLU-rr-8zK" secondAttribute="top" id="fI8-iK-NaP"/>
                             <constraint firstItem="nED-Dl-MI0" firstAttribute="leading" secondItem="eLU-rr-8zK" secondAttribute="leading" id="nj9-bn-9Qp"/>
+                            <constraint firstItem="z1X-TQ-OfP" firstAttribute="leading" secondItem="eLU-rr-8zK" secondAttribute="leading" id="oTt-n3-WCj"/>
                             <constraint firstItem="nED-Dl-MI0" firstAttribute="trailing" secondItem="eLU-rr-8zK" secondAttribute="trailing" id="qU8-JY-Ps8"/>
                             <constraint firstItem="nED-Dl-MI0" firstAttribute="top" secondItem="eLU-rr-8zK" secondAttribute="top" id="u04-Mt-4Pg"/>
                             <constraint firstItem="nED-Dl-MI0" firstAttribute="bottom" secondItem="eLU-rr-8zK" secondAttribute="bottom" id="yFz-L7-eGM"/>
+                            <constraint firstItem="z1X-TQ-OfP" firstAttribute="trailing" secondItem="eLU-rr-8zK" secondAttribute="trailing" id="z62-0x-I1I"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eLU-rr-8zK"/>
                     </view>
@@ -2208,7 +2286,7 @@ Individual memberships are crucial to American Whitewater and our goal is to rem
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="THz-Gi-0Qn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-242" y="2608"/>
+            <point key="canvasLocation" x="-242.40000000000001" y="2607.3463268365817"/>
         </scene>
         <!--Run Map View Controller-->
         <scene sceneID="zfH-LQ-f6g">
@@ -3272,6 +3350,7 @@ Don't worry, you'll be checking levels in no time!</string>
         </scene>
     </scenes>
     <resources>
+        <image name="CoastGuardLogo" width="79" height="28.5"/>
         <image name="aboutAw" width="29" height="29"/>
         <image name="appTeam" width="30" height="29"/>
         <image name="awLogo" width="1367" height="673"/>
@@ -3300,6 +3379,7 @@ Don't worry, you'll be checking levels in no time!</string>
         <image name="mapPinNone" width="98.5" height="134"/>
         <image name="mapPinRunning" width="98.5" height="134"/>
         <image name="profileAK" width="200" height="200"/>
+        <image name="profileDN" width="200" height="200"/>
         <image name="profileGL" width="200" height="200"/>
         <image name="profileRJ" width="200" height="200"/>
         <image name="rateApp" width="30" height="29"/>
@@ -3335,6 +3415,6 @@ Don't worry, you'll be checking levels in no time!</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="WuA-iS-hol"/>
-        <segue reference="4rq-Cg-hJK"/>
+        <segue reference="fet-7n-7sr"/>
     </inferredMetricsTieBreakers>
 </document>
