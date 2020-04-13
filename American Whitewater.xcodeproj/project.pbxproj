@@ -49,14 +49,15 @@
 		637D0737236B541000BE90D0 /* UISearchBar+BGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637D0736236B541000BE90D0 /* UISearchBar+BGColor.swift */; };
 		637FF784236B33F300F18400 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637FF783236B33F300F18400 /* NotificationService.swift */; };
 		637FF788236B33F300F18400 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 637FF781236B33F300F18400 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		638811CC23EE09780068D2A0 /* Upload-dSyms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 638811CB23EE09780068D2A0 /* Upload-dSyms.txt */; };
 		6389BFAE234CC59E00DE7D6C /* RunMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389BFAD234CC59E00DE7D6C /* RunMapViewController.swift */; };
 		6389BFB0234E311500DE7D6C /* RunMapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389BFAF234E311500DE7D6C /* RunMapAnnotation.swift */; };
+		63A276D4242961A400EDAD69 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A276D3242961A400EDAD69 /* SignInViewController.swift */; };
 		63A6FD672363EEA200148231 /* AWApiArticleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */; };
 		63A6FD692367730C00148231 /* AWApiReachHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD682367730C00148231 /* AWApiReachHelper.swift */; };
 		63A6FD6B2367748F00148231 /* AWApiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD6A2367748F00148231 /* AWApiLinks.swift */; };
 		63A8B17D23281A8A00FD2E00 /* AWArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8B17C23281A8A00FD2E00 /* AWArticle.swift */; };
 		63C1DAC1235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63C1DABF235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld */; };
-		63D7BD132319738D00935693 /* AWApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD122319738D00935693 /* AWApiHelper.swift */; };
 		63D7BD152319774500935693 /* Regions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD142319774500935693 /* Regions.swift */; };
 		63D7BD172319980600935693 /* OnboardLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD162319980600935693 /* OnboardLocationViewController.swift */; };
 		63D7BD1923199D1900935693 /* DuffekDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD1823199D1900935693 /* DuffekDialog.swift */; };
@@ -147,14 +148,15 @@
 		637FF783236B33F300F18400 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		637FF785236B33F300F18400 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		637FF78D236B357200F18400 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
+		638811CB23EE09780068D2A0 /* Upload-dSyms.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Upload-dSyms.txt"; sourceTree = "<group>"; };
 		6389BFAD234CC59E00DE7D6C /* RunMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunMapViewController.swift; sourceTree = "<group>"; };
 		6389BFAF234E311500DE7D6C /* RunMapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunMapAnnotation.swift; sourceTree = "<group>"; };
+		63A276D3242961A400EDAD69 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiArticleHelper.swift; sourceTree = "<group>"; };
 		63A6FD682367730C00148231 /* AWApiReachHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiReachHelper.swift; sourceTree = "<group>"; };
 		63A6FD6A2367748F00148231 /* AWApiLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiLinks.swift; sourceTree = "<group>"; };
 		63A8B17C23281A8A00FD2E00 /* AWArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWArticle.swift; sourceTree = "<group>"; };
 		63C1DAC0235FEEFA00587A20 /* AmericanWhitewater.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AmericanWhitewater.xcdatamodel; sourceTree = "<group>"; };
-		63D7BD122319738D00935693 /* AWApiHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiHelper.swift; sourceTree = "<group>"; };
 		63D7BD142319774500935693 /* Regions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regions.swift; sourceTree = "<group>"; };
 		63D7BD162319980600935693 /* OnboardLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardLocationViewController.swift; sourceTree = "<group>"; };
 		63D7BD1823199D1900935693 /* DuffekDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuffekDialog.swift; sourceTree = "<group>"; };
@@ -322,10 +324,10 @@
 				637D0736236B541000BE90D0 /* UISearchBar+BGColor.swift */,
 				6342A3E82385A3A400B54365 /* UISearchBar+UITextFieldColor.swift */,
 				6342A3EA2385AD3500B54365 /* MKMapView+FitAnnotations.swift */,
+				63E0B22B23A3EDDE00A348FC /* MKMapView+FitAll.swift */,
 				63081BF9236B2F8500FC3823 /* OpenTerminal.sh */,
 				63F712E1238869A50047C8F0 /* UIImage+Color.swift */,
 				63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */,
-				63E0B22B23A3EDDE00A348FC /* MKMapView+FitAll.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -374,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				63D7BD162319980600935693 /* OnboardLocationViewController.swift */,
+				63A276D3242961A400EDAD69 /* SignInViewController.swift */,
 			);
 			path = OnBoard;
 			sourceTree = "<group>";
@@ -416,13 +419,13 @@
 			isa = PBXGroup;
 			children = (
 				63E90EAC22EAA14700C8DAA3 /* DefaultsManager.swift */,
-				63D7BD122319738D00935693 /* AWApiHelper.swift */,
 				63A6FD682367730C00148231 /* AWApiReachHelper.swift */,
 				63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */,
 				63A6FD6A2367748F00148231 /* AWApiLinks.swift */,
 				63D7BD142319774500935693 /* Regions.swift */,
 				63D7BD1823199D1900935693 /* DuffekDialog.swift */,
 				631EFFA32367842300BA17F7 /* DifficultyHelper.swift */,
+				638811CB23EE09780068D2A0 /* Upload-dSyms.txt */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 			files = (
 				63387B6D22CDBFFE0089BAA8 /* LaunchScreen.storyboard in Resources */,
 				63387B6A22CDBFFE0089BAA8 /* Assets.xcassets in Resources */,
+				638811CC23EE09780068D2A0 /* Upload-dSyms.txt in Resources */,
 				63E90EC122EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf in Resources */,
 				63081BFA236B2F8500FC3823 /* OpenTerminal.sh in Resources */,
 				63E90EC022EAB5CC00C8DAA3 /* OpenSans-Regular.ttf in Resources */,
@@ -650,7 +654,6 @@
 				63A6FD6B2367748F00148231 /* AWApiLinks.swift in Sources */,
 				63F87AD5236A923D0005AA0B /* AWReachDetail.swift in Sources */,
 				63491B03232882170036A906 /* NewsTableViewCell.swift in Sources */,
-				63D7BD132319738D00935693 /* AWApiHelper.swift in Sources */,
 				63491B0F2328D72D0036A906 /* UIColor+Hex.swift in Sources */,
 				633117092373172100D5EEFB /* AWRapid.swift in Sources */,
 				63D7BD172319980600935693 /* OnboardLocationViewController.swift in Sources */,
@@ -690,6 +693,7 @@
 				63309E32233D965500E6DBC4 /* AboutAWViewController.swift in Sources */,
 				63491B0B2328A2250036A906 /* RunsListViewController.swift in Sources */,
 				631EFFA123677CB600BA17F7 /* Rapid+CoreDataClass.swift in Sources */,
+				63A276D4242961A400EDAD69 /* SignInViewController.swift in Sources */,
 				63491B16232952E30036A906 /* FavoritesViewController.swift in Sources */,
 				63203C1023694C59006A4148 /* Runnable.swift in Sources */,
 				630586642350428800A436BE /* RunRapidDetailsTableViewController.swift in Sources */,
@@ -870,7 +874,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw;
 				PRODUCT_NAME = AW;
 				SWIFT_VERSION = 5.0;
@@ -894,7 +898,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw;
 				PRODUCT_NAME = AW;
 				SWIFT_VERSION = 5.0;
@@ -918,7 +922,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -942,7 +946,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

@@ -62,7 +62,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         if lastLocation != nil {
             if let lastLocation = lastLocation, let newLocation = userLocation.location {
-                print("Last Location Distnace to new location: \(lastLocation.distance(from: newLocation))")
+                print("Last Location Distance to new location: \(lastLocation.distance(from: newLocation))")
                 if (lastLocation.distance(from: newLocation) < 100) {
                    return
                }
@@ -86,14 +86,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         if (DefaultsManager.showDistanceFilter == true) {
             // this set the map to show the region around the users location
-            let regionRadius: CLLocationDistance = 100000 // this is used to build a boudning box around the users location
+            let regionRadius: CLLocationDistance = 100000 // this is used to build a bounding box around the users location
             let coordinateRegion = MKCoordinateRegion(center: self.mapView.userLocation.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
             self.mapView.setRegion(coordinateRegion, animated: true)
             
         } else {
             // This just shows the region without the users location automatically selected
             print("mapView annotations: \(mapView.annotations.count)")
-            // some reaches may have invalid corodinates (i.e. -180) we need to skip those
+            // some reaches may have invalid coordinates (i.e. -180) we need to skip those
             let cleanedAnnotations = mapView.annotations.filter { $0.coordinate.latitude > 0 && $0.coordinate.longitude > -170 }
             mapView.fitAll(in: cleanedAnnotations, andShow: true)
         }
@@ -184,10 +184,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         performSegue(withIdentifier: Segue.runDetailMap.rawValue, sender: selectedReach)
         
-        // use if we want to open to directions
-        // let launchOptions = [MKLaunchOptionsDirectionsModeKey:
-        //                                MKLaunchOptionsDirectionsModeDriving]
-        // location.mapItem().openInMaps(launchOptions: launchOptions)
     }
     
     

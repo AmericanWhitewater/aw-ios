@@ -209,7 +209,7 @@ class DefaultsManager {
     private static let userFavoritesKey = "userFavoritesKey"
     static var userFavorites: [AWReach] {
         get {
-            // grab [String] from userdefaults, convert to [AWReach]
+            // grab [String] from user defaults, convert to [AWReach]
             let favStrings = UserDefaults.standard.array(forKey: userFavoritesKey) as? [String]
             var favsArray:[AWReach] = []
             

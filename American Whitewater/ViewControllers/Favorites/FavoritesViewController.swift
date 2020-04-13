@@ -31,7 +31,7 @@ class FavoritesViewController: UIViewController {
         favoritesTableView.reloadData()
 
         // check how long its been since we pulled from the server
-        // user can alwasy pull to refresh too
+        // user can always pull to refresh too
         if fetchedResultsController?.fetchedObjects?.count ?? 0 > 0 {
             // check how long it's been since we updated from the server
             // if it's too long we just update
@@ -58,7 +58,7 @@ class FavoritesViewController: UIViewController {
                 try managedObjectContext.save()
             } catch {
                 let error = error as NSError
-                print("Unable to save reaches in coredata: \(error), \(error.localizedDescription)")
+                print("Unable to save reaches in core data: \(error), \(error.localizedDescription)")
             }
 
             favoritesTableView.reloadData()
@@ -80,7 +80,7 @@ class FavoritesViewController: UIViewController {
             try fetchedResultsController?.performFetch()
         } catch {
             let error = error as NSError
-            print("Error fetching favorites from coredata: \(error), \(error.userInfo)")
+            print("Error fetching favorites from core data: \(error), \(error.userInfo)")
             DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.userInfo.description)
         }
     }
@@ -108,18 +108,6 @@ class FavoritesViewController: UIViewController {
             self.refreshControl.endRefreshing()
             print("Error fetching by IDs: \(error?.localizedDescription ?? "Unknown Reason")")
         }
-        
-//        AWApiReachHelper.shared.fetchReachesByIds(reachIds: reachIds, callback: { (reaches) in
-//            self.refreshControl.endRefreshing()
-//
-//            print("Fetched favorite rivers")
-//            self.fetchRiversFromCoreData()
-//            DefaultsManager.favoritesLastUpdated = Date()
-//
-//        }) { (error) in
-//            self.refreshControl.endRefreshing()
-//            print("Error fetching by IDs: \(error?.localizedDescription ?? "Unknown Reason")")
-//        }
     }
     
 
@@ -141,7 +129,7 @@ class FavoritesViewController: UIViewController {
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("fectched count: \(fetchedResultsController?.fetchedObjects?.count ?? -1)")
+        print("fetched count: \(fetchedResultsController?.fetchedObjects?.count ?? -1)")
         
         if fetchedResultsController?.fetchedObjects?.count == 0 {
             favoritesTableView.isHidden = true;
@@ -181,7 +169,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
             } else if status == "med" {
                 cell.runStatusLeftBar.backgroundColor = UIColor.AW.Med
                 cell.runLevelAndClassLabel.textColor = UIColor.AW.Med
-            } else if status == "high" {
+            } else if status == "high" || status == "hi" {
                 cell.runStatusLeftBar.backgroundColor = UIColor.AW.High
                 cell.runLevelAndClassLabel.textColor = UIColor.AW.High
             } else {

@@ -1,17 +1,9 @@
-//
-//  OnboardLocationViewController.swift
-//  American Whitewater
-//
-//  Created by David Nelson on 8/30/19.
-//  Copyright © 2019 American Whitewater. All rights reserved.
-//
-
 /*
  The main entry point for the app is the TabViewController.
  On load the app checks if onboarding needs to take place:
  -- YES: it shows this modal view over the whole screen
  -- NO: it continues as normal
- The design for this view is handeled entirely in Interface Builder
+ The design for this view is handled entirely in Interface Builder
 */
 
 import UIKit
@@ -40,7 +32,7 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
     
     /*
      zipCodeChanged(_ textField: UITextField)
-     Hanldes changes in the zipCodeTextField and responds based on
+     Handled changes in the zipCodeTextField and responds based on
      user entering their location manually
     */
     @IBAction func zipCodeChanged(_ textField: UITextField) {
@@ -66,20 +58,20 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
      nextButtonPressed(_ sender: Any)
      When user presses next the app decides to grab their
      location automatically or it'll use any manually entered
-     zipcode to find the users default region
+     zip code to find the users default region
     */
     @IBAction func nextButtonPressed(_ sender: Any) {
         
         if nextButton.titleLabel?.text == "Use Your Current Location" {
             
-            // check for requesting userlocation permissions
+            // check for requesting user location permissions
             // ask if they don't have it and continue if they do
             setupLocationUpdates()
             
         } else if nextButton.titleLabel?.text == "Use Entered Zipcode" {
             
-            // Geocode the zipcode so we can get the region from the
-            // administravtiveArea property
+            // Geocode the zip code so we can get the region from the
+            // administrative Area property
             let decoder = CLGeocoder()
             decoder.geocodeAddressString(zipcodeTextField.text!) { (placemarks, error) in
                 guard error == nil,

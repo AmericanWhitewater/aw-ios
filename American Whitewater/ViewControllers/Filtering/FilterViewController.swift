@@ -24,8 +24,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
-        
+             
         filterSegmentControl.fallBackToPreIOS13Layout(using: UIColor.white)
         let selectedSegTitle = [NSAttributedString.Key.foregroundColor: UIColor(named: "primary") ?? UIColor.black]
                                 as [NSAttributedString.Key : Any]
@@ -34,7 +33,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     func imageWithColor(color: UIColor) -> UIImage? {
-        
         let rect = CGRect(origin: .zero, size: CGSize(width: 1, height: 1))
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
         color.setFill()
@@ -73,8 +71,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //
     
     
-    // Clears regions from search and local stroage
-    @objc func clearReagionsButtonPressed(_ sender: Any) {
+    // Clears regions from search and local storage
+    @objc func clearRegionsButtonPressed(_ sender: Any) {
         
         selectedRegions.removeAll()
         DefaultsManager.regionsFilter.removeAll()
@@ -102,8 +100,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if indexPath.row == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterRegionCell", for: indexPath) as! FilterRegionCollectionViewCell
 
-            cell.clearRegionsButton.addTarget(self, action: #selector(clearReagionsButtonPressed(_:)), for: .touchUpInside)
-            
+            cell.clearRegionsButton.addTarget(self, action: #selector(clearRegionsButtonPressed(_:)), for: .touchUpInside)
             
             cell.searchBar.delegate = self
             cell.regionTableView.delegate = self
@@ -207,9 +204,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 // reverse geocode the location
                 let location = CLLocation(latitude: latitude, longitude: longitude)
-                geoCoder.reverseGeocodeLocation(location) { (placemakrs, error) in
+                geoCoder.reverseGeocodeLocation(location) { (placemarks, error) in
                     if error == nil {
-                        let placemark = placemakrs?.last
+                        let placemark = placemarks?.last
                         if let placemark = placemark {
                             cell.currentLocationTitleLabel?.text = placemark.name
                             cell.currentLocationAddressLabel?.text = "\(placemark.postalAddress?.street ?? ""), \(placemark.postalAddress?.city ?? ""), \(placemark.postalAddress?.state ?? "") \(placemark.postalAddress?.postalCode ?? "")"
@@ -366,14 +363,14 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //
     
 
-    // Update the switch and store changes in UserDefauts
+    // Update the switch and store changes in UserDefaults
     @objc func classFilterChanged(classSwitch: UISwitch) {
         addRemoveClassFilter(filterClass: classSwitch.tag)
     }
     
     
     // Checks if class filter exists and adds / removes
-    // as needed - then stores in persistant storage
+    // as needed - then stores in persistent storage
     func addRemoveClassFilter(filterClass: Int) {
 
         if classFilters.contains(filterClass) {
@@ -384,7 +381,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             classFilters.append(filterClass)
         }
         
-        // sotre any changes in user defaults
+        // store any changes in user defaults
         DefaultsManager.classFilter = classFilters
     }
 

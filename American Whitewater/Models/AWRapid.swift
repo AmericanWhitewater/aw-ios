@@ -1,11 +1,3 @@
-//
-//  AWRapid.swift
-//  American Whitewater
-//
-//  Last Updated by David Nelson on 11/6/19.
-//  Copyright © 2019 American Whitewater. All rights reserved.
-//
-
 import Foundation
 import SwiftyJSON
 import CoreLocation
@@ -32,9 +24,6 @@ class AWRapid {
         description = json["description"].string
         rapidLatitude = json["rlat"].string
         rapidLongitude = json["rlon"].string
-//        print(json.debugDescription)
-//        print("JSON Rapid Lat/Lon: \(json["rlat"].string ?? "?")x\(json["rlon"].string ?? "?")")
-//        print("Setting Rapid Lat/Lon: \(rapidLatitude ?? "?")x\(rapidLongitude ?? "?")")
         difficulty = json["difficulty"].string
         
         isHazard = (json["ishazard"].int ?? 0) == 1 ? true : false

@@ -1,11 +1,3 @@
-//
-//  MKMapView+FitAnnotations.swift
-//  American Whitewater
-//
-//  Created by David Nelson on 11/20/19.
-//  Copyright © 2019 American Whitewater. All rights reserved.
-//
-
 import UIKit
 import MapKit
 import Foundation

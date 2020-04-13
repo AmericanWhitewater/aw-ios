@@ -205,7 +205,7 @@ extension NewsTableViewController {
     /*
      stripHTML()
      Helper function to strip out HTML tags for display as a UILabel
-     NOTE: Used multiple times, shoudl be put in a helper wrapper
+     NOTE: Used multiple times, should be put in a helper wrapper
     */
     private func stripHTML(string: String?) -> String {
         if let string = string {

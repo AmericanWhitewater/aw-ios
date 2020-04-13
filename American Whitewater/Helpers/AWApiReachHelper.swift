@@ -6,18 +6,8 @@ import Foundation
 import CoreLocation
 
 /*
- This is the new version of the API Helper Singleton
- - Greatly simplified how it works with CoreData
- - Reduced how it does the calls to the server
-    We were getting 500 errors when we'd queue up to many
-    Async calls. I changed it to a recursive setup to do
-    a single call at a time... much longer download of all
-    reaches but works without having issues... needs further
-    exploration to speed it up at some point
- - NEEDS: Rapids to be processed and stored
- 
- - Added Error handling so we can see what's going wrong and respond
-    to it correctly as needed (i.e. ReachErrorCallback)
+ This is the main API helper class for retrieving
+ Reaches and storing them in core data
 */
 
 class AWApiReachHelper {
@@ -235,7 +225,7 @@ class AWApiReachHelper {
                 reach.gageUpdated = Date().addingTimeInterval(TimeInterval(-updatedSecondsAgo))
             }
             
-            // calcualte the distance from the user
+            // calculate the distance from the user
             if let distance = newReach.distanceFrom(location:
                 CLLocation(latitude: DefaultsManager.latitude, longitude: DefaultsManager.longitude)) {
                 
@@ -268,7 +258,7 @@ class AWApiReachHelper {
             try context.save()
         } catch {
             let error = error as NSError
-            print("Unable to save reaches in coredata: \(error), \(error.localizedDescription)")
+            print("Unable to save reaches in core data: \(error), \(error.localizedDescription)")
         }
     }
 
@@ -336,7 +326,7 @@ class AWApiReachHelper {
         }
     }
     
-    func downloadAllReachsInBackground(callback: @escaping UpdateCallback) {
+    func downloadAllReachesInBackground(callback: @escaping UpdateCallback) {
         let codes = Region.all.map { $0.code }
 
         let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -600,7 +590,7 @@ class AWApiReachHelper {
                 guard CLLocationCoordinate2DIsValid(reachCoordinate.coordinate) else { continue }
 
                 let distance = reachCoordinate.distance(from: CLLocation(latitude: DefaultsManager.latitude, longitude: DefaultsManager.longitude))
-                print("Distnace: \(distance / 1609)")
+                print("Distance: \(distance / 1609)")
                 reach.distance = distance / 1609
             }
             

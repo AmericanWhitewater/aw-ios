@@ -1,17 +1,7 @@
-//
-//  DuffekDialog.swift
-//
-//  Used to display a nice dialog that is styled nicely
-//
-//  Created by David Nelson on 8/22/18.
-//  Copyright © 2018 Duffek Mobile. All rights reserved.
-//
-
 import Foundation
 import NYAlertViewController
 import Contacts
 
-/// The BrewFund Dialog Singleton makes it easy to display a BrewFund styled dialog
 class DuffekDialog {
     
     static let shared = DuffekDialog()
@@ -195,7 +185,7 @@ class DuffekDialog {
     /// - Parameter alertController: displays the alert to the rootViewController
     private func displayAlert(alertController: UIViewController) {
         
-        // the rooteViewController may change based on where they are in the app
+        // the rootViewController may change based on where they are in the app
         // all views will be a tabViewController or NavigationViewController
         var rootViewController = UIApplication.shared.keyWindow?.rootViewController
         

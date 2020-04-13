@@ -1,17 +1,8 @@
-//
-//  UIColor+Hex.swift
-//  Duffek Mobile
-//
-//  Created by David Nelson on 8/22/18.
-//  Copyright © 2019 Duffek Mobile. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
 extension UIColor {
     
-    // List of BrewFund Specific Colors
     struct AW {
         static let Low = UIColor(webHex: 0xff8684)
         static let Med = UIColor(webHex: 0x59e68d)

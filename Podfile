@@ -6,7 +6,7 @@ target 'American Whitewater' do
   use_frameworks!
 
   # Pods for American Whitewater
-  pod 'IQKeyboardManagerSwift', '~> 6.4.0'
+  pod 'IQKeyboardManagerSwift', '~> 6.5.5'
   pod 'OneSignal', '~> 2.11.2'
   
   pod 'Alamofire'

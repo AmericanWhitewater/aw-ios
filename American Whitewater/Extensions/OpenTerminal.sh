@@ -1,7 +1,6 @@
 #!/bin/sh
 
 #  OpenTerminal.sh
-#  Duffek Mobile
 #
 #  This is a short cut hooked up to the project
 #  to allow for a shortcut to open the terminal
@@ -11,7 +10,5 @@
 #  XCode -> Behaviors -> Edit -> Add (+)
 #  Name it, Select 'Run' and choose this file to be run
 #  then assign a shortcut you want to use
-#
-#  Created by David Nelson on 8/27/18.
 
 open -a Terminal "$SRCROOT"

@@ -57,7 +57,7 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         mapView.removeAnnotations(mapView.annotations)
         
         if let selectedRun = selectedRun {
-            // add putin marker if we have data for it
+            // add put in marker if we have data for it
             if let putinLat = Double( selectedRun.putInLat ?? "" ), let putinLon = Double( selectedRun.putInLon ?? "")  {
                 let putinCoordinate = CLLocationCoordinate2D(latitude: putinLat, longitude: putinLon)
                 let putinAnnotation = RunMapAnnotation(title: "Put-In", sectionSubtitle: "", coordinate: putinCoordinate, reach: selectedRun)
@@ -96,7 +96,7 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
                 }
             }
             
-            // set the bounding region to the putin and take out
+            // set the bounding region to the put in and take out
             mapView.showAnnotations(mapView.annotations, animated: false)
         }
         
@@ -133,7 +133,7 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         //DuffekDialog.shared.showOkDialog(title: "Rapid Info", message: "Info coming soon...")
         if let annotation = view.annotation as? RunMapAnnotation {
 
-            // check if putin or take out, if so open in apple maps (ask first?)
+            // check if put in or take out, if so open in apple maps (ask first?)
             if annotation.title?.lowercased().contains("Put-In".lowercased()) == true ||
                annotation.title?.lowercased().contains("Take-Out".lowercased()) == true {
                 

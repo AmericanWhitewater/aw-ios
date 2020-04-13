@@ -44,14 +44,21 @@ class RunsListViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshRiverData), for: .valueChanged)
         tableView.refreshControl = refreshControl
         
+        // add tap-away from search to dismiss keyboard
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false;
+        self.view.addGestureRecognizer(tapGesture)
+        
         mainLegendBackgroundView.layer.cornerRadius = 15
         mainLegendBackgroundView.clipsToBounds = true
         legendCloseButton.layer.cornerRadius = legendCloseButton.frame.height / 2
         legendCloseButton.clipsToBounds = true
         
-        runnableFilterContainerView.layer.cornerRadius = 22.5
-        runnableFilterContainerView.clipsToBounds = true
         runnableSwitch.isOn = DefaultsManager.runnableFilter        
+    }
+    
+    @objc func dismissKeyboard() {
+        self.searchBar.textField?.endEditing(true)
     }
         
     
@@ -87,30 +94,6 @@ class RunsListViewController: UIViewController {
                 self.refresh();
             }
         }
-        
-        // This can be a bit tricky to follow:
-        // -- Check if we need to show the onboarding modal
-        // -- Even if we do show it, go ahead and update the
-        //    data model behind the scenes we pull all the data
-        //    in the background once, then update it on an as
-        //    needed basis unless the user wants it all again
-//        if checkIfOnboardingNeeded() == false {
-//            // check how long it's been since we updated from the server
-//            // if it's too long we just update
-//            if let lastUpdated = DefaultsManager.lastUpdated {
-//                if lastUpdated < Date(timeIntervalSinceNow: -600) { // 60s * 10m
-//                    self.refresh()
-//                }
-//            } else {
-//                self.refresh()
-//            }
-//
-//            // if regions fitler has changed then refresh
-//            if DefaultsManager.regionsUpdated {
-//                DefaultsManager.regionsUpdated = false
-//                self.refresh();
-//            }
-//        }
         
         // show the ugly legend until we design a better one
         if DefaultsManager.legendFirstRun == false {
@@ -177,21 +160,21 @@ class RunsListViewController: UIViewController {
             try fetchedResultsController?.performFetch()
         } catch {
             let error = error as NSError
-            print("Error fetching reaches from coredata: \(error), \(error.userInfo)")
+            print("Error fetching reaches from CoreData: \(error), \(error.userInfo)")
             DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.userInfo.description)
         }
         
         tableView.reloadData()
         
         // Here we determined if the user has downloaded their local
-        // region data. Then if they havne't already we start downloading
+        // region data. Then if they haven't already we start downloading
         // all reaches in the background.
         // Since the Onboarding is now modal this may be completely hidden
         // from the user and it wont impact their experience
         if !DefaultsManager.completedFirstRun {
             print("downloading all reaches")
             DefaultsManager.completedFirstRun = true
-            AWApiReachHelper.shared.downloadAllReachsInBackground {
+            AWApiReachHelper.shared.downloadAllReachesInBackground {
                 print("Completed downloading all data")
             }
         }
@@ -201,7 +184,7 @@ class RunsListViewController: UIViewController {
         let appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
         print("AppVersion: \(appVersion) - Defaults: \(DefaultsManager.appVersion ?? 0.0)")
         
-        // This ads version checking and forces users to onboard if thier version is less than the current version
+        // This ads version checking and forces users to onboard if their version is less than the current version
         // we might want to adjust this in the next release
         if DefaultsManager.appVersion == nil || DefaultsManager.appVersion! < appVersion || !DefaultsManager.onboardingCompleted {
             if let modalOnboadingVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardingVC") as? OnboardLocationViewController {
@@ -540,7 +523,7 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
             } else if status == "med" {
                 cell.runStatusLeftBar.backgroundColor = UIColor.AW.Med
                 cell.runLevelAndClassLabel.textColor = UIColor.AW.Med
-            } else if status == "high" {
+            } else if status == "high" || status == "hi" {
                 cell.runStatusLeftBar.backgroundColor = UIColor.AW.High
                 cell.runLevelAndClassLabel.textColor = UIColor.AW.High
             } else {
@@ -671,6 +654,8 @@ extension RunsListViewController: UISearchBarDelegate {
         searchBar.tintColor = UIColor(named: "primary") ?? UIColor.AW.Unknown
         searchBar.textField?.textColor = UIColor.AW.Unknown
         searchBar.placeholder = "Search for a Run"
+        searchBar.enablesReturnKeyAutomatically = false
+        searchBar.returnKeyType = .done
         let searchBarContainer = SearchBarContainerView(customSearchBar: searchBar)
         searchBarContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 44)
         navigationItem.titleView = searchBarContainer
@@ -681,6 +666,12 @@ extension RunsListViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
         
         fetchRiversFromCoreData()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count > 1 {
+            fetchRiversFromCoreData()
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

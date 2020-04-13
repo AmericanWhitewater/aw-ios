@@ -10,16 +10,6 @@ extension Reach {
         return "\(currentReading) \(unit)"
     }
 
-//    var color: UIColor {
-//        let con = Condition.fromApi(condition: condition ?? "")
-//
-//        return con.color
-//    }
-
-//    var icon: UIImage? {
-//        return Condition.fromApi(condition: condition ?? "").icon
-//    }
-
     var distanceFormatted: String? {
         return distance != 0 ? "\(Int(distance)) mi" : ""
     }
@@ -112,14 +102,12 @@ extension Reach: MKAnnotation {
     public var coordinate: CLLocationCoordinate2D {
         guard let lat = putInLat, let latitude = Double(lat),
             let lon = putInLon, let longitude = Double(lon) else {
-                //print("1. \(name ?? "n/a") \(id) has invalid coordinates (\(putInLat ?? "?"), \(putInLon ?? "?"))")
                 return kCLLocationCoordinate2DInvalid
         }
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         if CLLocationCoordinate2DIsValid(coordinate) {
             return coordinate
         } else {
-            //print("2. \(name ?? "n/a") \(id) has invalid coordinates (\(putInLat ?? "?"), \(putInLon ?? "?"))")
             return kCLLocationCoordinate2DInvalid
         }
     }
@@ -140,5 +128,4 @@ extension Reach: MKAnnotation {
             return "mapPinNoneSm"
         }
     }
-    
 }
