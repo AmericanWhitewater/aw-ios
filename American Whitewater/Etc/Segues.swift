@@ -11,4 +11,7 @@ enum Segue: String {
     case reachDetailEmbed, reachMapEmbed
     case gageToRunDetail
     case mapRapidDetails
+    case riverAlertsSeg
+    case riverAccidentsSeg
+    case accidentDetailsSeg
 }

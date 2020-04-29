@@ -8,7 +8,9 @@ class RunsListTableViewCell: UITableViewCell {
     @IBOutlet weak var runStatusLeftBar: UIView!
     @IBOutlet weak var runFavoritesButton: UIButton!
     @IBOutlet weak var runDistanceAwayLabel: UILabel!
-
+    @IBOutlet weak var runAlertsButton: UIButton!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

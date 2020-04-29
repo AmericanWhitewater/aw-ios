@@ -28,6 +28,13 @@ class RunDetailTableViewController: UITableViewController {
     
     @IBOutlet weak var seeGaugeInfoCell: UITableViewCell!
     
+    @IBOutlet weak var addPhotoButton: UIButton!
+    @IBOutlet weak var viewAllPhotosButton: UIButton!
+    @IBOutlet weak var imagePreview1Button: UIButton!
+    @IBOutlet weak var imagePreview2Button: UIButton!
+    
+    var awImagePicker: AWImagePicker!
+    
     let dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
@@ -39,7 +46,10 @@ class RunDetailTableViewController: UITableViewController {
         let selectedSegTitle = [NSAttributedString.Key.foregroundColor: UIColor(named: "primary") ?? UIColor.black]
                                 as [NSAttributedString.Key : Any]
         viewSegmentControl.setTitleTextAttributes(selectedSegTitle, for: .selected)
-
+        
+        awImagePicker = AWImagePicker(presentationController: self, delegate: self)
+        imagePreview1Button?.setTitle("", for: .normal)
+        imagePreview2Button?.setTitle("", for: .normal)
         
         readAllButton.layer.cornerRadius = readAllButton.frame.height/2
         readAllButton.clipsToBounds = true
@@ -162,11 +172,15 @@ class RunDetailTableViewController: UITableViewController {
             
             // check what option the user selected
             if indexPath.row == 0 {
+                self.performSegue(withIdentifier: Segue.riverAlertsSeg.rawValue, sender: selectedRun)
+            } else if indexPath.row == 1 {
+                self.performSegue(withIdentifier: Segue.riverAccidentsSeg.rawValue, sender: selectedRun)
+            } else if indexPath.row == 2 {
                 // Handle 'See Gauge Info'
                 if let selectedRun = selectedRun {
                     self.performSegue(withIdentifier: Segue.gaugeDetail.rawValue, sender: selectedRun)
                 }
-            } else if indexPath.row == 1 {
+            } else if indexPath.row == 3 {
                 
                 // Handle go to website view
                 guard let run = selectedRun,
@@ -174,7 +188,7 @@ class RunDetailTableViewController: UITableViewController {
                 
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 
-            } else if indexPath.row == 2 {
+            } else if indexPath.row == 4 {
                 // Handle share button pressed
                 shareButtonPressed()
             }
@@ -202,6 +216,15 @@ class RunDetailTableViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
+    @IBAction func addPhotoButtonPressed(_ sender: UIButton) {
+        print("Photo button pressed")
+        awImagePicker.present(from: sender)
+    }
+    
+    @IBAction func viewAllPhotosButtonPressed(_ sender: Any) {
+        
+    }
+    
     
     @IBAction func detailViewSegmentChanged(_ segmentControl: UISegmentedControl) {
         
@@ -210,11 +233,13 @@ class RunDetailTableViewController: UITableViewController {
         }
     }
     
+    
+
+    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
         if let selectedRun = sender as? Reach {
             if segue.identifier == Segue.gaugeDetail.rawValue {
                 let gaugeVC = segue.destination as? GaugeDetailViewController
@@ -223,10 +248,28 @@ class RunDetailTableViewController: UITableViewController {
             } else if segue.identifier == Segue.reachMapEmbed.rawValue {
                 let mapVC = segue.destination as? RunMapViewController
                 mapVC?.selectedRun = selectedRun
+            } else if segue.identifier == Segue.riverAlertsSeg.rawValue {
+                let alertsVC = segue.destination as? RunAlertsViewController
+                alertsVC?.selectedRun = selectedRun
+            } else if segue.identifier == Segue.riverAccidentsSeg.rawValue {
+                let accidentsVC = segue.destination as? RunAccidentsViewController
+                accidentsVC?.selectedRun = selectedRun
             }
         }
 
     }
-    
+}
 
+extension RunDetailTableViewController: AWImagePickerDelegate {
+    
+    func didSelect(image: UIImage?) {
+        if self.imagePreview1Button.backgroundImage(for: .normal) == nil {
+            self.imagePreview1Button.setBackgroundImage(image, for: .normal)
+        } else {
+            self.imagePreview2Button.setBackgroundImage(image, for: .normal)
+        }
+        
+        // AWTODO: add push to save photos to GraphQL Backend
+    }
+    
 }

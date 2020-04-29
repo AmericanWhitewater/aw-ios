@@ -101,6 +101,9 @@ class RunsListViewController: UIViewController {
            DefaultsManager.legendFirstRun = true
         }
 
+        
+        /* Debug Only */
+        self.showLoginScreen()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -187,6 +190,7 @@ class RunsListViewController: UIViewController {
         // This ads version checking and forces users to onboard if their version is less than the current version
         // we might want to adjust this in the next release
         if DefaultsManager.appVersion == nil || DefaultsManager.appVersion! < appVersion || !DefaultsManager.onboardingCompleted {
+            
             if let modalOnboadingVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardingVC") as? OnboardLocationViewController {
                 modalOnboadingVC.modalPresentationStyle = .overCurrentContext
                 modalOnboadingVC.referenceViewController = self
@@ -198,6 +202,15 @@ class RunsListViewController: UIViewController {
         return false
     }
 
+/* Debug Screen Only */
+    func showLoginScreen() {
+        if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
+            modalSignInVC.modalPresentationStyle = .overCurrentContext
+            modalSignInVC.referenceViewController = self
+            tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+        }
+    }
+    
     
     func refresh(regions: [Region] = Region.all) {
         
@@ -537,6 +550,13 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
             cell.runFavoritesButton.setImage(UIImage(named: "icon_favorite_selected"), for: .normal)
         } else {
             cell.runFavoritesButton.setImage(UIImage(named: "icon_favorite"), for: .normal)
+        }
+        
+// DEBUG ONLY!
+        if let name = reach.name, name.lowercased().contains("watauga") {
+            cell.runAlertsButton.setImage(UIImage(named: "alert-filled"), for: .normal)
+        } else {
+            cell.runAlertsButton.setImage(UIImage(named: "alert-empty"), for: .normal)
         }
         
         // show distance to the river if we have it

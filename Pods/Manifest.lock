@@ -71,12 +71,14 @@ PODS:
   - GoogleUtilities/UserDefaults (6.5.1):
     - GoogleUtilities/Logger
   - IQKeyboardManagerSwift (6.5.5)
+  - KeychainSwift (19.0.0)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
   - NYAlertViewController (1.3.0)
+  - OAuthSwift (2.1.0)
   - OneSignal (2.11.2)
   - PromisesObjC (1.2.8)
   - SwiftyJSON (5.0.0)
@@ -88,7 +90,9 @@ DEPENDENCIES:
   - Fabric
   - Firebase/Analytics
   - IQKeyboardManagerSwift (~> 6.5.5)
+  - KeychainSwift (~> 19.0)
   - NYAlertViewController (~> 1.3.0)
+  - OAuthSwift (~> 2.1.0)
   - OneSignal (~> 2.11.2)
   - SwiftyJSON
 
@@ -110,8 +114,10 @@ SPEC REPOS:
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
     - IQKeyboardManagerSwift
+    - KeychainSwift
     - nanopb
     - NYAlertViewController
+    - OAuthSwift
     - OneSignal
     - PromisesObjC
     - SwiftyJSON
@@ -133,12 +139,14 @@ SPEC CHECKSUMS:
   GoogleDataTransportCCTSupport: f880d70972efa2ed1be4e9173a0f4c5f3dc2d176
   GoogleUtilities: 06eb53bb579efe7099152735900dd04bf09e7275
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
+  KeychainSwift: a06190cf933ad46b1e0abc3d77d29c06331715c7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   NYAlertViewController: b93f82e2c1fc6d5e9485512ddbe7b481f463a074
+  OAuthSwift: ab1675598273e04355e0282459c328e65c9ddacd
   OneSignal: 4e3e68bb6c29975286a2fa910cb49132bc6e20bb
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 60951a4e7787da565fc9b9a5bf3a236202db56b6
+PODFILE CHECKSUM: 6e572615d5735766301abfb115ff97769e756ff8
 
 COCOAPODS: 1.8.4

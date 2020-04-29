@@ -13,6 +13,9 @@ target 'American Whitewater' do
   pod 'AlamofireNetworkActivityIndicator'
   pod 'SwiftyJSON'
   
+  pod 'OAuthSwift', '~> 2.1.0'
+  pod 'KeychainSwift', '~> 19.0'
+  
   pod 'NYAlertViewController', '~> 1.3.0'
   
   # Firebase added for analytics and Crashlytics

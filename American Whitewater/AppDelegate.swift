@@ -2,6 +2,7 @@ import UIKit
 import CoreData
 import Firebase
 import OneSignal
+import OAuthSwift
 import IQKeyboardManagerSwift
 
 @UIApplicationMain
@@ -39,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // setup OneSignal for push notifications (only works on actual devices)
         let oneSignalInitSettings = [kOSSettingsKeyAutoPrompt: false]
         
-        OneSignal.initWithLaunchOptions(launchOptions, appId: "[insert OneSignal Key Here]",
+        OneSignal.initWithLaunchOptions(launchOptions, appId: "fd159b28-68c6-465e-9301-1bf712f6c435",
                                         handleNotificationAction: nil, settings: oneSignalInitSettings)
         OneSignal.inFocusDisplayType = OSNotificationDisplayType.notification;
 
@@ -67,8 +68,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: "primary")!], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
 
-        
         return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey  : Any] = [:]) -> Bool {
+      if (url.host == "oauth-callback") {
+        OAuthSwift.handle(url: url)
+      }
+      return true
     }
 }
 
