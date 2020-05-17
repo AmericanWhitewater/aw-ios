@@ -1,6 +1,7 @@
 import UIKit
 import StoreKit
 import MessageUI
+import KeychainSwift
 
 class MoreTableViewController: UITableViewController, MFMailComposeViewControllerDelegate {
 
@@ -71,6 +72,15 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
             // DONATE BUTTON PRESSED
             UIApplication.shared.open(URL(string:"https://www.americanwhitewater.org/content/Membership/donate")!)
             
+        } else if indexPath.row == 5 {
+            
+            // Sign out button pressed
+            let keychain = KeychainSwift()
+            if keychain.get(SignInViewController.AuthKeychainToken) != nil {
+                keychain.delete(SignInViewController.AuthKeychainToken)
+            }
+            
+            DuffekDialog.shared.showOkDialog(title: "Signed Out", message: "You are now signed out.")
         }
     }
 

@@ -1,0 +1,34 @@
+mutation UploadPhotoFile($file: Upload!, $reach_id: AWID!, $type: PhotoSectionsType!, $photo: PhotoInput) {
+    photoFileCreate(fileinput: {
+      file: $file,
+      section: $type,
+      section_id: $reach_id
+    },
+      photo: $photo) {
+        id
+        post_id
+        post {
+          id
+          title
+          detail
+          post_type
+        }
+        image {
+          uri {
+            thumb
+            medium
+            big
+          }
+        }
+    }
+}
+
+mutation PostPhoto($id: ID!, $post: PostInput!) {
+  postUpdate(id: $id, post: $post) {
+    id
+    reach_id
+    title
+    post_type
+  }
+}
+

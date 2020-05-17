@@ -8,6 +8,8 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var createAccountButton: UIButton!
     @IBOutlet var cancelButton: UIView!
     
+    static let AuthKeychainToken = "ios-aw-auth-key"
+    
     var oauthswift: OAuthSwift?
     
     var referenceViewController: UIViewController?
@@ -40,8 +42,8 @@ class SignInViewController: UIViewController {
         let oauth = OAuth2Swift(
             consumerKey: "6",
             consumerSecret: "p8tvXvxBvRMA6xjcPe3prXLGG9mtAck9qcVUSHex",
-            authorizeUrl: "http://aw.local/oauth/authorize",
-            accessTokenUrl: "http://aw.local/oauth/token",
+            authorizeUrl: "\(AWGC.AW_BASE_URL)/oauth/authorize",
+            accessTokenUrl: "\(AWGC.AW_BASE_URL)/oauth/token",
             responseType: "token"
         )
 
@@ -61,7 +63,7 @@ class SignInViewController: UIViewController {
                                         
                     // Save token to local app keychain for security
                     let keychain = KeychainSwift();
-                    keychain.set(credential.oauthToken, forKey: "ios-aw-auth-key")
+                    keychain.set(credential.oauthToken, forKey: SignInViewController.AuthKeychainToken)
                     //keychain.delete("ios-aw-auth-key") // for sign out
                     //print("Keychain auth key is: ", keychain.get("ios-aw-auth-key"))
                     

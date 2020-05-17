@@ -15,8 +15,12 @@ class RunDetailTableViewController: UITableViewController {
     @IBOutlet weak var runUnitsLabel: UILabel!
     @IBOutlet weak var runGaugeDeltaLabel: UILabel!
     
+    @IBOutlet weak var runBannerImageCell: UITableViewCell!
+    @IBOutlet weak var runBannerImageView: UIImageView!
+    
+    
     @IBOutlet weak var runSectionInfoLabel: UILabel!
-    @IBOutlet weak var runDetailInfoLabel: UILabel!
+    @IBOutlet weak var runDetailInfoTextView: UITextView!
     
     @IBOutlet weak var runClassLabel: UILabel!
     @IBOutlet weak var runLengthLabel: UILabel!
@@ -24,18 +28,19 @@ class RunDetailTableViewController: UITableViewController {
     
     @IBOutlet weak var viewSegmentControl: UISegmentedControl!
     
-    @IBOutlet weak var readAllButton: UIButton!
-    
     @IBOutlet weak var seeGaugeInfoCell: UITableViewCell!
     
     @IBOutlet weak var addPhotoButton: UIButton!
-    @IBOutlet weak var viewAllPhotosButton: UIButton!
-    @IBOutlet weak var imagePreview1Button: UIButton!
-    @IBOutlet weak var imagePreview2Button: UIButton!
+    @IBOutlet weak var preview1ImageView: UIImageView!
+    @IBOutlet weak var preview2ImageView: UIImageView!
+    @IBOutlet weak var preview3ImageView: UIImageView!
+    
     
     var awImagePicker: AWImagePicker!
     
     let dateFormatter = DateFormatter()
+    
+    var imageLinks = [ [String:String?] ]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,11 +53,6 @@ class RunDetailTableViewController: UITableViewController {
         viewSegmentControl.setTitleTextAttributes(selectedSegTitle, for: .selected)
         
         awImagePicker = AWImagePicker(presentationController: self, delegate: self)
-        imagePreview1Button?.setTitle("", for: .normal)
-        imagePreview2Button?.setTitle("", for: .normal)
-        
-        readAllButton.layer.cornerRadius = readAllButton.frame.height/2
-        readAllButton.clipsToBounds = true
         
         dateFormatter.dateFormat = "MMM dd, yyyy h:mm:ss a"
         
@@ -89,6 +89,13 @@ class RunDetailTableViewController: UITableViewController {
         } else {
             seeGaugeInfoCell.isHidden = false
         }
+        
+        if let photoUrlString = selectedRun?.photoUrl, let photoUrl = URL(string: photoUrlString) {
+            runBannerImageCell.isHidden = false
+            runBannerImageView.load(url: photoUrl)
+        } else {
+            runBannerImageCell.isHidden = true
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -103,6 +110,69 @@ class RunDetailTableViewController: UITableViewController {
                 print("Error: \(error?.localizedDescription ?? "?")")
             }
         }
+        
+        // update photos listing
+        self.queryPhotos()
+    }
+    
+    func queryPhotos() {
+        
+        guard let selectedRun = selectedRun else { print("selected run is nil"); return }
+                
+        AWGQLApiHelper.shared.getPhotosForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 10, callback: { (photoResults) in
+            if let photoResults = photoResults {
+                print("Photo Posts count: \(photoResults.count)")
+                for result in photoResults {
+                    let photos = result.photos
+                    for photo in photos {
+                        if let image = photo.image, let uri = image.uri,
+                           let thumb = uri.thumb, let medium = uri.medium, let big = uri.big {
+                            
+                            var uri = [String:String?]()
+                            uri["thumb"] = thumb
+                            uri["med"] = medium
+                            uri["big"] = big
+                            self.imageLinks.append(uri)
+                        }
+                    }
+                }
+                
+                self.updateImagePreviews()
+                
+            } else {
+                print("No photos returned")
+            }
+
+            //self.tableView.reloadData()
+        }) { (error) in
+            print("Photos GraphQL Error: \(error.localizedDescription)")
+            //self.tableView.reloadData()
+        }
+    }
+    
+    func updateImagePreviews() {
+        
+        if imageLinks.count >= 3 {
+            if let thumb = imageLinks[2]["thumb"] as? String, let url = URL(string: "\(AWGC.AW_BASE_URL)\(thumb)") {
+                preview3ImageView.load(url: url)
+            }
+        }
+        
+        if imageLinks.count >= 2 {
+            if let thumb = imageLinks[1]["thumb"] as? String, let url = URL(string: "\(AWGC.AW_BASE_URL)\(thumb)") {
+                preview2ImageView.load(url: url)
+            }
+        }
+
+        if imageLinks.count > 0 {
+            if let thumb = imageLinks[0]["thumb"] as? String, let url = URL(string: "\(AWGC.AW_BASE_URL)\(thumb)") {
+                preview1ImageView.load(url: url)
+            }
+        }
+    }
+    
+    @IBAction func photoGalleryButtonPressed(_ sender: Any) {
+        self.performSegue(withIdentifier: Segue.gallerySeg.rawValue, sender: nil)
     }
     
     
@@ -120,46 +190,19 @@ class RunDetailTableViewController: UITableViewController {
         self.runLengthLabel.text = fetchedReach.length ?? "n/a"
         self.runGradientLabel.text = fetchedReach.avgGradient == 0 ? "\(fetchedReach.avgGradient) fpm" : "n/a fpm"
         if let details = fetchedReach.longDescription {
-            var cleanedDetails = stripHTML(string: details)
-            if cleanedDetails.count == 0 {
-                cleanedDetails = "No additional details available"
-            }
-            
-            runDetailInfoLabel.text = cleanedDetails
-        }
-    
-        self.tableView.reloadData()
-    }
-    
-    
-    private func stripHTML(string: String?) -> String {
-        if let string = string {
-            
-            var strippedString = string.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
-            if let removedEncodingString = strippedString.removingPercentEncoding {
-                strippedString = removedEncodingString
-            }
-            strippedString = strippedString.replacingOccurrences(of: "&nbsp;", with: "")
-            strippedString = strippedString.replacingOccurrences(of: "&#39;", with: "")
-            strippedString = strippedString.replacingOccurrences(of: "&quot;", with: "\"")
-            strippedString = strippedString.trimmingCharacters(in: .whitespaces)
-            
-            //^[\r\n\t ]|[\r\n\t ]*$ -- no idea why not working doing ugly hack instead
-            //strippedString = strippedString.replacingOccurrences(of: "^[\r\n\t ]*|[\r\n\t ]*$", with: "", options: .regularExpression)
-            //print(strippedString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")
-            let urlEncoded = strippedString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? strippedString
-            strippedString = urlEncoded.replacingOccurrences(of: "%09", with: "")
-            strippedString = strippedString.removingPercentEncoding ?? strippedString
-            
-            return strippedString
+            runDetailInfoTextView.set(html: details)
         } else {
-            return ""
+            runDetailInfoTextView.set(html: "<h3>No additional details provided</h3>")
         }
+        
+        self.tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10
     }
+    
+    
     
     /*
      This is a static table view but we're still using didSelectAt to handle when the user
@@ -172,14 +215,12 @@ class RunDetailTableViewController: UITableViewController {
             
             // check what option the user selected
             if indexPath.row == 0 {
-                self.performSegue(withIdentifier: Segue.riverAlertsSeg.rawValue, sender: selectedRun)
+                self.performSegue(withIdentifier: Segue.riverAlertsSeg.rawValue, sender: nil)
             } else if indexPath.row == 1 {
-                self.performSegue(withIdentifier: Segue.riverAccidentsSeg.rawValue, sender: selectedRun)
+                self.performSegue(withIdentifier: Segue.riverAccidentsSeg.rawValue, sender: nil)
             } else if indexPath.row == 2 {
                 // Handle 'See Gauge Info'
-                if let selectedRun = selectedRun {
-                    self.performSegue(withIdentifier: Segue.gaugeDetail.rawValue, sender: selectedRun)
-                }
+                self.performSegue(withIdentifier: Segue.gaugeDetail.rawValue, sender: nil)
             } else if indexPath.row == 3 {
                 
                 // Handle go to website view
@@ -204,33 +245,29 @@ class RunDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        if cell == runBannerImageCell {
+            if runBannerImageCell.isHidden {
+                return 0
+            } else {
+                return 150
+            }
+        }
+        
         return UITableView.automaticDimension
     }
     
-    
-    @IBAction func readAllButtonPressed(_ sender: Any) {
-        
-        runDetailInfoLabel.numberOfLines = 0
-        readAllButton.isHidden = true
-        
-        self.tableView.reloadData()
-    }
     
     @IBAction func addPhotoButtonPressed(_ sender: UIButton) {
         print("Photo button pressed")
         awImagePicker.present(from: sender)
     }
     
-    @IBAction func viewAllPhotosButtonPressed(_ sender: Any) {
-        
-    }
     
     
     @IBAction func detailViewSegmentChanged(_ segmentControl: UISegmentedControl) {
-        
-        if let selectedRun = selectedRun {
-            performSegue(withIdentifier: Segue.reachMapEmbed.rawValue, sender: selectedRun)
-        }
+        performSegue(withIdentifier: Segue.reachMapEmbed.rawValue, sender: nil)
     }
     
     
@@ -240,36 +277,55 @@ class RunDetailTableViewController: UITableViewController {
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let selectedRun = sender as? Reach {
-            if segue.identifier == Segue.gaugeDetail.rawValue {
-                let gaugeVC = segue.destination as? GaugeDetailViewController
-                gaugeVC?.selectedRun = selectedRun
-                
-            } else if segue.identifier == Segue.reachMapEmbed.rawValue {
-                let mapVC = segue.destination as? RunMapViewController
-                mapVC?.selectedRun = selectedRun
-            } else if segue.identifier == Segue.riverAlertsSeg.rawValue {
-                let alertsVC = segue.destination as? RunAlertsViewController
-                alertsVC?.selectedRun = selectedRun
-            } else if segue.identifier == Segue.riverAccidentsSeg.rawValue {
-                let accidentsVC = segue.destination as? RunAccidentsViewController
-                accidentsVC?.selectedRun = selectedRun
-            }
+        if segue.identifier == Segue.gaugeDetail.rawValue {
+            let gaugeVC = segue.destination as? GaugeDetailViewController
+            gaugeVC?.selectedRun = selectedRun
+            
+        } else if segue.identifier == Segue.reachMapEmbed.rawValue {
+            let mapVC = segue.destination as? RunMapViewController
+            mapVC?.selectedRun = selectedRun
+        } else if segue.identifier == Segue.riverAlertsSeg.rawValue {
+            let alertsVC = segue.destination as? RunAlertsViewController
+            alertsVC?.selectedRun = selectedRun
+        } else if segue.identifier == Segue.riverAccidentsSeg.rawValue {
+            let accidentsVC = segue.destination as? RunAccidentsViewController
+            accidentsVC?.selectedRun = selectedRun
+        } else if segue.identifier == Segue.gallerySeg.rawValue {
+            let galleryVC = segue.destination as? GalleryViewController
+            galleryVC?.selectedRun = selectedRun
+            galleryVC?.imageLinks = self.imageLinks
         }
-
     }
 }
 
 extension RunDetailTableViewController: AWImagePickerDelegate {
-    
+
+    // show the users photo in the preview listing
     func didSelect(image: UIImage?) {
-        if self.imagePreview1Button.backgroundImage(for: .normal) == nil {
-            self.imagePreview1Button.setBackgroundImage(image, for: .normal)
+        if preview1ImageView.image == nil {
+            preview1ImageView.image = image
+        } else if preview2ImageView.image == nil {
+            preview2ImageView.image = image
+        } else if preview3ImageView.image == nil {
+            preview3ImageView.image = image
         } else {
-            self.imagePreview2Button.setBackgroundImage(image, for: .normal)
+            preview1ImageView.image = image
         }
         
-        // AWTODO: add push to save photos to GraphQL Backend
+        // GraphQL Photo Upload
+        // AWTODO: Add captioning and input to photo
+        if let image = image, let selectedRun = selectedRun {
+            
+            AWGQLApiHelper.shared.postPhotoFor(reach_id: Int(selectedRun.id), image: image, caption: "RunDetailVC \(NanoID.new(6))", callback: { (photoResult) in
+                if let imageResult = photoResult.image, let uri = imageResult.uri {
+                    print("Photo Link: ", uri.thumb ?? "no thumb")
+                }
+            }) { (error) in
+                print("Error uploading photo: ", error)
+            }
+            
+        }
+
     }
     
 }

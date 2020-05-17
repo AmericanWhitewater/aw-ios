@@ -1,0 +1,41 @@
+query Photos($page_size: Int!, $reach_id: AWID!, $page: Int!, $gauge_id: AWID, $post_types: [PostType])
+{
+    posts(post_types: $post_types, reach_id: $reach_id, gauge_id: $gauge_id, first: $page_size, page: $page, orderBy: [{field: REVISION, order: DESC}]) {
+        paginatorInfo {
+            lastPage,
+            currentPage,
+            total,
+        },
+        data {
+            id,
+            title,
+            post_type,
+            post_date,
+            reach_id,
+            gauge_id,
+            detail,
+            user {
+                uname
+            },
+            photos {
+                id,
+                caption,
+                post_id,
+                description,
+                subject,
+                photo_date,
+                author,
+                poi_name,
+                poi_id,
+                image {
+                    ext,
+                    uri {
+                        thumb,
+                        medium,
+                        big
+                    }
+                }
+            }
+        }
+    }
+}

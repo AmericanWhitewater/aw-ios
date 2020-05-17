@@ -19,8 +19,8 @@ class AWApiArticleHelper {
     
     func fetchArticles(callback: @escaping ArticlesFetchedCallback, callbackError: @escaping ArticlesErrorCallback) {
         print("Fetching articles from server...")
-        
-        Alamofire.request(articleURL).responseJSON { (response) in
+                
+        AF.request(articleURL).responseJSON { (response) in
             switch response.result {
                 case .success(let value):
                     let json = JSON(value)

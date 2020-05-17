@@ -37,6 +37,26 @@ class DuffekDialog {
         }
     }
     
+    func showOkDialog(title: String, message: String, completion: (()->Void)?) {
+        
+        // setup standard alert dialog
+        alertViewController = styledAlert()
+        
+        if let alertViewController = alertViewController {
+            alertViewController.title = title
+            alertViewController.message = "\n\(message)\n"
+            alertViewController.swipeDismissalGestureEnabled = true
+            alertViewController.backgroundTapDismissalGestureEnabled = true
+            
+            let okAction = NYAlertAction(title: "Ok", style: UIAlertAction.Style.default) { (action) in
+                alertViewController.dismiss(animated: true, completion: completion)
+            }
+            
+            alertViewController.addAction(okAction)
+            
+            self.displayAlert(alertController: alertViewController)
+        }
+    }
     
     
     /// Shows a basic alert and the user can specify standard and cancel buttons

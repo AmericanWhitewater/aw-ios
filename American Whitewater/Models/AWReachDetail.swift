@@ -18,6 +18,7 @@ class AWReachDetail {
     var detailRapidsListString: String?
     var detailRapidsList: [JSON]?
     var detailPhotoId: Int?
+    var detailPhotoUrl: String?
     var detailMaxGradient: Int?
     var detailGageName: String?
     
@@ -29,7 +30,6 @@ class AWReachDetail {
         if let CContainerViewJSON_view = detailsJson["CContainerViewJSON_view"].dictionary,
            let CRiverMainGadgetJSON_main = CContainerViewJSON_view["CRiverMainGadgetJSON_main"]?.dictionary,
            let info = CRiverMainGadgetJSON_main["info"]?.dictionary {
-
             detailDescription = info["description"]?.string
             detailShuttleDescription = info["shuttledetails"]?.string
             detailLength = info["length"]?.string
@@ -37,6 +37,7 @@ class AWReachDetail {
             detailAverageGradient = info["avggradient"]?.int
             detailMaxGradient = info["maxgradient"]?.int
             detailPhotoId = info["photoid"]?.int
+            detailPhotoUrl = info["photourl"]?.string
             
             
             if let gadgetSummary = CRiverMainGadgetJSON_main["guagesummary"] {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class RunAccidentsViewController: UIViewController {
 
@@ -18,6 +19,7 @@ class RunAccidentsViewController: UIViewController {
 
     @IBOutlet weak var riverTitleLabel: UILabel!
     @IBOutlet weak var riverSectionLabel: UILabel!
+    @IBOutlet weak var reportAccidentButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -26,6 +28,8 @@ class RunAccidentsViewController: UIViewController {
         // set the river title and label
         riverTitleLabel.text = selectedRun?.name ?? "Unknown River"
         riverSectionLabel.text = selectedRun?.section ?? "Unknown Section"
+        
+        reportAccidentButton.layer.cornerRadius = reportAccidentButton.bounds.height / 2
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 70
@@ -45,7 +49,9 @@ class RunAccidentsViewController: UIViewController {
     @objc func refreshAccidents() {
         print("Refreshing Accidents...")
         
-        AWGQLApiHelper.shared.getAccidentsForReach(reach_id: 476, first: 2, page: 1, callback: { (accidentResults) in
+        guard let reach = selectedRun else { print("can't get reach id on accidents list"); return }
+        
+        AWGQLApiHelper.shared.getAccidentsForReach(reach_id: Int(reach.id), first: 2, page: 1, callback: { (accidentResults) in
             self.accidentsList.removeAll()
             
             // handle server sending back multiple of the same results
@@ -58,7 +64,6 @@ class RunAccidentsViewController: UIViewController {
                         self.accidentsList.append(item)
                     }
                 }
-                self.accidentsList.reversed() // show latest accidents first
                 print("AccidentsList count: \(self.accidentsList.count)")
             }
             
@@ -71,7 +76,14 @@ class RunAccidentsViewController: UIViewController {
         self.refreshControl.endRefreshing()
     }
     
-
+    @IBAction func reportAccidentButtonPressed(_ sender: Any) {
+        if let url = URL(string: "https://www.americanwhitewater.org/content/Accident/report/") {
+            let safariVC = SFSafariViewController(url: url, configuration: SFSafariViewController.Configuration())
+            self.present(safariVC, animated: true)
+        }
+    }
+    
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

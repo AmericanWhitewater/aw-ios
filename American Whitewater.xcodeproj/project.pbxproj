@@ -11,6 +11,14 @@
 		630586642350428800A436BE /* RunRapidDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */; };
 		63081BF8236B2EDE00FC3823 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63081BF7236B2EDE00FC3823 /* GoogleService-Info.plist */; };
 		63081BFA236B2F8500FC3823 /* OpenTerminal.sh in Resources */ = {isa = PBXBuildFile; fileRef = 63081BF9236B2F8500FC3823 /* OpenTerminal.sh */; };
+		630F3D222465F4160077130D /* NanoID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630F3D212465F4160077130D /* NanoID.swift */; };
+		63164494246C07C700807E19 /* UIRefreshControl+ManualRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63164493246C07C700807E19 /* UIRefreshControl+ManualRefresh.swift */; };
+		63164496246C08AA00807E19 /* AWProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63164495246C08AA00807E19 /* AWProgress.swift */; };
+		63164498246C1C6D00807E19 /* UITextView+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63164497246C1C6D00807E19 /* UITextView+HTML.swift */; };
+		6316449C246CAAD200807E19 /* awLocal.png in Resources */ = {isa = PBXBuildFile; fileRef = 6316449B246CAAD100807E19 /* awLocal.png */; };
+		6316449E246CAE3C00807E19 /* awLocal2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6316449D246CAE3A00807E19 /* awLocal2.jpg */; };
+		631644A0246ED6B100807E19 /* UIImage+AsyncURLLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316449F246ED6B100807E19 /* UIImage+AsyncURLLoad.swift */; };
+		631644A2246ED80C00807E19 /* UIButton+UrlImageLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631644A1246ED80B00807E19 /* UIButton+UrlImageLoad.swift */; };
 		631B3573237C722200738889 /* OpenSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 631B3572237C722200738889 /* OpenSans-ExtraBoldItalic.ttf */; };
 		631EFF9923677C4000BA17F7 /* Article+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFF9723677C4000BA17F7 /* Article+CoreDataClass.swift */; };
 		631EFF9A23677C4000BA17F7 /* Article+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFF9823677C4000BA17F7 /* Article+CoreDataProperties.swift */; };
@@ -46,12 +54,18 @@
 		63491B11232933370036A906 /* RunDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B10232933370036A906 /* RunDetailTableViewController.swift */; };
 		63491B1323294CC80036A906 /* GaugeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B1223294CC80036A906 /* GaugeDetailViewController.swift */; };
 		63491B16232952E30036A906 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B15232952E30036A906 /* FavoritesViewController.swift */; };
+		635141FB2460947A00B4F974 /* AddAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635141FA2460947A00B4F974 /* AddAlertTableViewController.swift */; };
 		637D0737236B541000BE90D0 /* UISearchBar+BGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637D0736236B541000BE90D0 /* UISearchBar+BGColor.swift */; };
 		637FF784236B33F300F18400 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637FF783236B33F300F18400 /* NotificationService.swift */; };
 		637FF788236B33F300F18400 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 637FF781236B33F300F18400 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		638811CC23EE09780068D2A0 /* Upload-dSyms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 638811CB23EE09780068D2A0 /* Upload-dSyms.txt */; };
 		6389BFAE234CC59E00DE7D6C /* RunMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389BFAD234CC59E00DE7D6C /* RunMapViewController.swift */; };
 		6389BFB0234E311500DE7D6C /* RunMapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389BFAF234E311500DE7D6C /* RunMapAnnotation.swift */; };
+		63949955246F0DD40061552C /* AwImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63949954246F0DD40061552C /* AwImageCell.swift */; };
+		63949957246F107A0061552C /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63949956246F107A0061552C /* GalleryViewController.swift */; };
+		63949959246F15C10061552C /* AddButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63949958246F15C10061552C /* AddButtonCell.swift */; };
+		6394995B246F6EA70061552C /* GlobalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394995A246F6EA70061552C /* GlobalConfig.swift */; };
+		6394995D246F82F70061552C /* ReviewPhotoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394995C246F82F60061552C /* ReviewPhotoTableViewController.swift */; };
 		63A276D4242961A400EDAD69 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A276D3242961A400EDAD69 /* SignInViewController.swift */; };
 		63A6FD672363EEA200148231 /* AWApiArticleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */; };
 		63A6FD692367730C00148231 /* AWApiReachHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD682367730C00148231 /* AWApiReachHelper.swift */; };
@@ -117,6 +131,16 @@
 		63081BF6236B2E7500FC3823 /* AW.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AW.entitlements; sourceTree = "<group>"; };
 		63081BF7236B2EDE00FC3823 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		63081BF9236B2F8500FC3823 /* OpenTerminal.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = OpenTerminal.sh; sourceTree = "<group>"; };
+		630F3D212465F4160077130D /* NanoID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanoID.swift; sourceTree = "<group>"; };
+		63164493246C07C700807E19 /* UIRefreshControl+ManualRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+ManualRefresh.swift"; sourceTree = "<group>"; };
+		63164495246C08AA00807E19 /* AWProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWProgress.swift; sourceTree = "<group>"; };
+		63164497246C1C6D00807E19 /* UITextView+HTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+HTML.swift"; sourceTree = "<group>"; };
+		63164499246C29A600807E19 /* photos.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = photos.graphql; sourceTree = "<group>"; };
+		6316449A246C422100807E19 /* createPhotos.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = createPhotos.graphql; sourceTree = "<group>"; };
+		6316449B246CAAD100807E19 /* awLocal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = awLocal.png; sourceTree = "<group>"; };
+		6316449D246CAE3A00807E19 /* awLocal2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = awLocal2.jpg; sourceTree = "<group>"; };
+		6316449F246ED6B100807E19 /* UIImage+AsyncURLLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+AsyncURLLoad.swift"; sourceTree = "<group>"; };
+		631644A1246ED80B00807E19 /* UIButton+UrlImageLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+UrlImageLoad.swift"; sourceTree = "<group>"; };
 		631B3572237C722200738889 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		631EFF9723677C4000BA17F7 /* Article+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Article+CoreDataClass.swift"; sourceTree = "<group>"; };
 		631EFF9823677C4000BA17F7 /* Article+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Article+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -154,6 +178,7 @@
 		63491B10232933370036A906 /* RunDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDetailTableViewController.swift; sourceTree = "<group>"; };
 		63491B1223294CC80036A906 /* GaugeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeDetailViewController.swift; sourceTree = "<group>"; };
 		63491B15232952E30036A906 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		635141FA2460947A00B4F974 /* AddAlertTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlertTableViewController.swift; sourceTree = "<group>"; };
 		637D0736236B541000BE90D0 /* UISearchBar+BGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+BGColor.swift"; sourceTree = "<group>"; };
 		637FF781236B33F300F18400 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		637FF783236B33F300F18400 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -162,6 +187,11 @@
 		638811CB23EE09780068D2A0 /* Upload-dSyms.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Upload-dSyms.txt"; sourceTree = "<group>"; };
 		6389BFAD234CC59E00DE7D6C /* RunMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunMapViewController.swift; sourceTree = "<group>"; };
 		6389BFAF234E311500DE7D6C /* RunMapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunMapAnnotation.swift; sourceTree = "<group>"; };
+		63949954246F0DD40061552C /* AwImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwImageCell.swift; sourceTree = "<group>"; };
+		63949956246F107A0061552C /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
+		63949958246F15C10061552C /* AddButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButtonCell.swift; sourceTree = "<group>"; };
+		6394995A246F6EA70061552C /* GlobalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConfig.swift; sourceTree = "<group>"; };
+		6394995C246F82F60061552C /* ReviewPhotoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPhotoTableViewController.swift; sourceTree = "<group>"; };
 		63A276D3242961A400EDAD69 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiArticleHelper.swift; sourceTree = "<group>"; };
 		63A6FD682367730C00148231 /* AWApiReachHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiReachHelper.swift; sourceTree = "<group>"; };
@@ -285,6 +315,8 @@
 		63387B6122CDBFFC0089BAA8 /* American Whitewater */ = {
 			isa = PBXGroup;
 			children = (
+				6316449B246CAAD100807E19 /* awLocal.png */,
+				6316449D246CAE3A00807E19 /* awLocal2.jpg */,
 				63E90EAE22EAA28900C8DAA3 /* Etc */,
 				63E90EB022EAA31300C8DAA3 /* Protocols */,
 				63E90EB122EAA32300C8DAA3 /* Models */,
@@ -327,6 +359,8 @@
 				63B5B49F2457B2750062F54B /* AWGQLApiHelper.swift */,
 				63B5B4A1245872550062F54B /* reach-accidents.graphql */,
 				63B5B4AA245939650062F54B /* alerts.graphql */,
+				63164499246C29A600807E19 /* photos.graphql */,
+				6316449A246C422100807E19 /* createPhotos.graphql */,
 				63B5B49D2457B2270062F54B /* AwGraphQLAPI.swift */,
 			);
 			path = GraphQL;
@@ -349,6 +383,7 @@
 				63E90EC222EAB5D100C8DAA3 /* fonts */,
 				63E90EB922EAAF2700C8DAA3 /* Fonts.swift */,
 				63E90EBA22EAAF2700C8DAA3 /* Segues.swift */,
+				6394995A246F6EA70061552C /* GlobalConfig.swift */,
 			);
 			path = Etc;
 			sourceTree = "<group>";
@@ -365,7 +400,10 @@
 				63081BF9236B2F8500FC3823 /* OpenTerminal.sh */,
 				63F712E1238869A50047C8F0 /* UIImage+Color.swift */,
 				63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */,
+				63164497246C1C6D00807E19 /* UITextView+HTML.swift */,
 				63B5B4A82459298F0062F54B /* UILabel+HTML.swift */,
+				631644A1246ED80B00807E19 /* UIButton+UrlImageLoad.swift */,
+				6316449F246ED6B100807E19 /* UIImage+AsyncURLLoad.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -451,9 +489,14 @@
 				63491B1223294CC80036A906 /* GaugeDetailViewController.swift */,
 				63DEF1B02450A7BF0034E3CF /* RunAlertsViewController.swift */,
 				63B5B48E245756D40062F54B /* AlertTableViewCell.swift */,
+				635141FA2460947A00B4F974 /* AddAlertTableViewController.swift */,
 				63B5B4A224589EAB0062F54B /* RunAccidentsViewController.swift */,
 				63B5B4A424589EC40062F54B /* AccidentTableViewCell.swift */,
 				63B5B4A624591A460062F54B /* RunAccidentDetailsTableViewController.swift */,
+				63949954246F0DD40061552C /* AwImageCell.swift */,
+				63949956246F107A0061552C /* GalleryViewController.swift */,
+				63949958246F15C10061552C /* AddButtonCell.swift */,
+				6394995C246F82F60061552C /* ReviewPhotoTableViewController.swift */,
 			);
 			path = Reaches;
 			sourceTree = "<group>";
@@ -471,6 +514,9 @@
 				63D7BD1823199D1900935693 /* DuffekDialog.swift */,
 				631EFFA32367842300BA17F7 /* DifficultyHelper.swift */,
 				638811CB23EE09780068D2A0 /* Upload-dSyms.txt */,
+				630F3D212465F4160077130D /* NanoID.swift */,
+				63164493246C07C700807E19 /* UIRefreshControl+ManualRefresh.swift */,
+				63164495246C08AA00807E19 /* AWProgress.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -579,6 +625,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6316449E246CAE3C00807E19 /* awLocal2.jpg in Resources */,
 				63387B6D22CDBFFE0089BAA8 /* LaunchScreen.storyboard in Resources */,
 				63387B6A22CDBFFE0089BAA8 /* Assets.xcassets in Resources */,
 				638811CC23EE09780068D2A0 /* Upload-dSyms.txt in Resources */,
@@ -586,6 +633,7 @@
 				63081BFA236B2F8500FC3823 /* OpenTerminal.sh in Resources */,
 				63E90EC022EAB5CC00C8DAA3 /* OpenSans-Regular.ttf in Resources */,
 				63387B6822CDBFFC0089BAA8 /* Main.storyboard in Resources */,
+				6316449C246CAAD200807E19 /* awLocal.png in Resources */,
 				63081BF8236B2EDE00FC3823 /* GoogleService-Info.plist in Resources */,
 				631B3573237C722200738889 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
 			);
@@ -724,10 +772,12 @@
 			files = (
 				63E90EBD22EAAF2700C8DAA3 /* Segues.swift in Sources */,
 				63A6FD6B2367748F00148231 /* AWApiLinks.swift in Sources */,
+				6394995D246F82F70061552C /* ReviewPhotoTableViewController.swift in Sources */,
 				63F87AD5236A923D0005AA0B /* AWReachDetail.swift in Sources */,
 				63491B03232882170036A906 /* NewsTableViewCell.swift in Sources */,
 				63491B0F2328D72D0036A906 /* UIColor+Hex.swift in Sources */,
 				633117092373172100D5EEFB /* AWRapid.swift in Sources */,
+				630F3D222465F4160077130D /* NanoID.swift in Sources */,
 				63D7BD172319980600935693 /* OnboardLocationViewController.swift in Sources */,
 				63B5B48F245756D40062F54B /* AlertTableViewCell.swift in Sources */,
 				63E90EBC22EAAF2700C8DAA3 /* Fonts.swift in Sources */,
@@ -736,6 +786,7 @@
 				63387B6322CDBFFC0089BAA8 /* AppDelegate.swift in Sources */,
 				63309E3D233E739C00E6DBC4 /* MapViewController.swift in Sources */,
 				63E32B1D2357F3260057DE34 /* FilterClassCollectionViewCell.swift in Sources */,
+				63949955246F0DD40061552C /* AwImageCell.swift in Sources */,
 				631EFF9A23677C4000BA17F7 /* Article+CoreDataProperties.swift in Sources */,
 				6342A3E92385A3A400B54365 /* UISearchBar+UITextFieldColor.swift in Sources */,
 				631EFFA42367842300BA17F7 /* DifficultyHelper.swift in Sources */,
@@ -751,6 +802,7 @@
 				63B5B4A324589EAB0062F54B /* RunAccidentsViewController.swift in Sources */,
 				63B5B49E2457B2270062F54B /* AwGraphQLAPI.swift in Sources */,
 				63D7BD1F231A205500935693 /* NewsTableViewController.swift in Sources */,
+				6394995B246F6EA70061552C /* GlobalConfig.swift in Sources */,
 				6389BFAE234CC59E00DE7D6C /* RunMapViewController.swift in Sources */,
 				63491B11232933370036A906 /* RunDetailTableViewController.swift in Sources */,
 				63C1DAC1235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld in Sources */,
@@ -759,27 +811,35 @@
 				6389BFB0234E311500DE7D6C /* RunMapAnnotation.swift in Sources */,
 				63B5B4A724591A460062F54B /* RunAccidentDetailsTableViewController.swift in Sources */,
 				63F712E4238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift in Sources */,
+				635141FB2460947A00B4F974 /* AddAlertTableViewController.swift in Sources */,
 				63309E36233DA29000E6DBC4 /* MoreTableViewController.swift in Sources */,
 				63B5B4A92459298F0062F54B /* UILabel+HTML.swift in Sources */,
+				63949957246F107A0061552C /* GalleryViewController.swift in Sources */,
 				631EFF9923677C4000BA17F7 /* Article+CoreDataClass.swift in Sources */,
 				63491B0D2328A2800036A906 /* RunsListTableViewCell.swift in Sources */,
+				63164494246C07C700807E19 /* UIRefreshControl+ManualRefresh.swift in Sources */,
 				631EFF9D23677C8900BA17F7 /* Reach+CoreDataClass.swift in Sources */,
 				63E32B1A2357F2A40057DE34 /* FilterRegionCollectionViewCell.swift in Sources */,
 				63309E43234166BB00E6DBC4 /* FilterViewController.swift in Sources */,
 				63E32B1F2357F3350057DE34 /* FilterDistanceCollectionViewCell.swift in Sources */,
 				63309E32233D965500E6DBC4 /* AboutAWViewController.swift in Sources */,
 				63491B0B2328A2250036A906 /* RunsListViewController.swift in Sources */,
+				631644A0246ED6B100807E19 /* UIImage+AsyncURLLoad.swift in Sources */,
 				631EFFA123677CB600BA17F7 /* Rapid+CoreDataClass.swift in Sources */,
 				63B5B4A02457B2750062F54B /* AWGQLApiHelper.swift in Sources */,
 				63B5B4A524589EC40062F54B /* AccidentTableViewCell.swift in Sources */,
 				63DEF1B12450A7BF0034E3CF /* RunAlertsViewController.swift in Sources */,
 				63A276D4242961A400EDAD69 /* SignInViewController.swift in Sources */,
+				63164496246C08AA00807E19 /* AWProgress.swift in Sources */,
 				63491B16232952E30036A906 /* FavoritesViewController.swift in Sources */,
 				63203C1023694C59006A4148 /* Runnable.swift in Sources */,
 				630586642350428800A436BE /* RunRapidDetailsTableViewController.swift in Sources */,
 				63491B092328A1DF0036A906 /* AWReach.swift in Sources */,
+				63164498246C1C6D00807E19 /* UITextView+HTML.swift in Sources */,
 				63F712E2238869A50047C8F0 /* UIImage+Color.swift in Sources */,
+				63949959246F15C10061552C /* AddButtonCell.swift in Sources */,
 				63A6FD692367730C00148231 /* AWApiReachHelper.swift in Sources */,
+				631644A2246ED80C00807E19 /* UIButton+UrlImageLoad.swift in Sources */,
 				63E0B22C23A3EDDE00A348FC /* MKMapView+FitAll.swift in Sources */,
 				63B5B4AC2459CB3B0062F54B /* AWImagePicker.swift in Sources */,
 			);

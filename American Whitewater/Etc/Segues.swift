@@ -14,4 +14,7 @@ enum Segue: String {
     case riverAlertsSeg
     case riverAccidentsSeg
     case accidentDetailsSeg
+    case postAlertSeg
+    case gallerySeg
+    case reviewPhotoSeg
 }

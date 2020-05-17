@@ -1,5 +1,6 @@
 import Foundation
 import SwiftyJSON
+import KeychainSwift
 
 class DefaultsManager {
     
@@ -203,6 +204,7 @@ class DefaultsManager {
             UserDefaults.standard.set(newValue, forKey: fetchingReachesKey)
         }
     }
+    
     
     // for now we'll store all the users favorites in the preferences
     // eventually we'll move it back over to CoreData

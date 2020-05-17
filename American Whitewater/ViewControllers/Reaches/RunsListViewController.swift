@@ -3,6 +3,7 @@ import CoreData
 import OneSignal
 import SwiftyJSON
 import CoreLocation
+import KeychainSwift
 
 class RunsListViewController: UIViewController {
     
@@ -101,9 +102,16 @@ class RunsListViewController: UIViewController {
            DefaultsManager.legendFirstRun = true
         }
 
-        
-        /* Debug Only */
-        self.showLoginScreen()
+
+        // check if user is logged in
+        let keychain = KeychainSwift();
+        //keychain.set(credential.oauthToken, forKey: "ios-aw-auth-key")
+        //keychain.delete("ios-aw-auth-key") // for sign out
+        if keychain.get(SignInViewController.AuthKeychainToken) == nil {
+            self.showLoginScreen()
+        } else {
+            print("Session authenticated")
+        }        
     }
     
     override func viewWillDisappear(_ animated: Bool) {

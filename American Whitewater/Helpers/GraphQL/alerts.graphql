@@ -10,53 +10,26 @@ query Alerts($page_size: Int!, $reach_id: AWID!, $page: Int!, $gauge_id: AWID, $
             id,
             title,
             post_type,
-            reading,
             post_date,
-            metric_id,
             reach_id,
-            gauge_id,
-            gauge {
-                name,
-                id
-            },
             reach {
                 id,
                 river,
                 section
             },
             detail,
-            permissions {
-                permission,
-                result
-            },
             user {
                 uname,
-                image {
-                    uri {
-                        medium,
-                        thumb
-                    }
-                }
-            },
-            photos {
-                id,
-                caption,
-                post_id,
-                description,
-                subject,
-                photo_date,
-                author,
-                poi_name,
-                poi_id,
-                image {
-                    ext,
-                    uri {
-                        thumb,
-                        medium,
-                        big
-                    }
-                }
             }
         }
     }
+}
+
+mutation PostAlert($id: ID!, $post: PostInput!) {
+  postUpdate(id: $id, post: $post) {
+    id
+    reach_id
+    title
+    post_type
+  }
 }

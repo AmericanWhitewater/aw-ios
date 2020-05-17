@@ -29,7 +29,7 @@ class AWApiReachHelper {
         print("Fetching Reaches by Region: \(regionCode)")
         let urlString = riverURL + "?state=\(regionCode)"
         
-        Alamofire.request(urlString).responseJSON { (response) in
+        AF.request(urlString).responseJSON { (response) in
             
             switch response.result {
                 case .success(let value):
@@ -80,7 +80,7 @@ class AWApiReachHelper {
         let urlString = riverURL + "?state=\(nextRegionCode)"
         print("Downloading Region at: \(urlString)")
         
-        Alamofire.request(urlString).responseJSON { (response) in
+        AF.request(urlString).responseJSON { (response) in
             
             switch response.result {
                 case .success(let value):
@@ -131,7 +131,7 @@ class AWApiReachHelper {
         
         let urlString = baseURL + "River/list/list/\(reachIds.joined(separator: ":"))/.json"
         
-        Alamofire.request(urlString).responseJSON { (response) in
+        AF.request(urlString).responseJSON { (response) in
             
             switch response.result {
                 case .success(let value):
@@ -436,7 +436,7 @@ class AWApiReachHelper {
                           callback: @escaping ReachDetailCallback, callbackError: @escaping ReachErrorCallback) {
         let urlString = "\(baseGaugeDetailURL)\(reachId)/.json"
         
-        Alamofire.request(urlString).responseJSON { (response) in
+        AF.request(urlString).responseJSON { (response) in
             
             switch response.result {
                 case .success(let value):
