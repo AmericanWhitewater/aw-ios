@@ -137,7 +137,6 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
             if annotation.title?.lowercased().contains("Put-In".lowercased()) == true ||
                annotation.title?.lowercased().contains("Take-Out".lowercased()) == true {
                 
-                print("opening in maps")
                 DuffekDialog.shared.showStandardDialog(title: "Open in Maps?", message: "Would you like directions to the \(annotation.title ?? "River")", buttonTitle: "Get Directions", buttonFunction: {
                     // take them to Apple Maps
                     let url = "http://maps.apple.com/maps?saddr=\(DefaultsManager.latitude),\(DefaultsManager.longitude)&daddr=\(annotation.coordinate.latitude),\(annotation.coordinate.longitude)"

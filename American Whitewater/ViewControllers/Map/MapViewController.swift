@@ -20,6 +20,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     var lastLocation: CLLocation? = nil
     
+    public static var userChangedMap = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -95,7 +97,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             print("mapView annotations: \(mapView.annotations.count)")
             // some reaches may have invalid coordinates (i.e. -180) we need to skip those
             let cleanedAnnotations = mapView.annotations.filter { $0.coordinate.latitude > 0 && $0.coordinate.longitude > -170 }
-            mapView.fitAll(in: cleanedAnnotations, andShow: true)
+            if MapViewController.userChangedMap == false {
+                mapView.fitAll(in: cleanedAnnotations, andShow: true)
+            } else {
+                mapView.addAnnotations(cleanedAnnotations)
+            }
         }
         
         self.lastLocation = userLocation.location!
@@ -148,11 +154,39 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             // update the zoom if we're not using location
             if DefaultsManager.showDistanceFilter == false {
                 let cleanedAnnotations = mapView.annotations.filter { $0.coordinate.latitude > 0 && $0.coordinate.longitude > -170 }
-               mapView.fitAll(in: cleanedAnnotations, andShow: true)
+                if MapViewController.userChangedMap == false {
+                    mapView.fitAll(in: cleanedAnnotations, andShow: true)
+                } else {
+                    mapView.addAnnotations(cleanedAnnotations)
+                }
             }
         }
     }
 
+    func mapViewChangedFromUserInteraction() -> Bool {
+        if let view = self.mapView.subviews.first, let gestureRecogs = view.gestureRecognizers {
+            for recog in gestureRecogs {
+                if recog.state == UIGestureRecognizer.State.began || recog.state == UIGestureRecognizer.State.ended {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        if mapViewChangedFromUserInteraction() {
+            MapViewController.userChangedMap = true
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+        if mapViewChangedFromUserInteraction() {
+            MapViewController.userChangedMap = true
+        }
+    }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? Reach else { return nil }
                 
@@ -192,6 +226,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             mapView.showsUserLocation = false
         } else {
             mapView.showsUserLocation = true
+            MapViewController.userChangedMap = false
         }
     }
     

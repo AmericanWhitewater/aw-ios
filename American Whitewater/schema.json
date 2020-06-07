@@ -436,16 +436,6 @@
                 "defaultValue": null
               },
               {
-                "name": "reach_id",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "AWID",
-                  "ofType": null
-                },
-                "defaultValue": null
-              },
-              {
                 "name": "first",
                 "description": "Limits number of fetched elements. Maximum allowed value: 2500.",
                 "type": {

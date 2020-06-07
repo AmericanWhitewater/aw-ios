@@ -26,10 +26,20 @@ query Alerts($page_size: Int!, $reach_id: AWID!, $page: Int!, $gauge_id: AWID, $
 }
 
 mutation PostAlert($id: ID!, $post: PostInput!) {
-  postUpdate(id: $id, post: $post) {
-    id
-    reach_id
-    title
-    post_type
-  }
+    postUpdate(id: $id, post: $post) {
+        id,
+        title,
+        post_type,
+        post_date,
+        reach_id,
+        reach {
+            id,
+            river,
+            section
+        },
+        detail,
+        user {
+            uname,
+        }
+    }
 }

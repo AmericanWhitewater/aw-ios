@@ -57,20 +57,18 @@ class RunAccidentsViewController: UIViewController {
             // handle server sending back multiple of the same results
             // server issue but needs client side handling for now
             if let accidentResults = accidentResults {
-                print("AccidentResults count: \(accidentResults.count)")
                 for item in accidentResults {
                     let accidentIds = self.accidentsList.map { $0.id }
                     if !accidentIds.contains(item.id) {
                         self.accidentsList.append(item)
                     }
                 }
-                print("AccidentsList count: \(self.accidentsList.count)")
             }
             
             //self.accidentsList = accidentResults
             self.tableView.reloadData()
-        }) { (error) in
-            print("Accidents Query Error: \(error.localizedDescription)")
+        }) { (error, message) in
+            print("Accidents Query Error: \(GQLError.handleGQLError(error: error, altMessage: message))")
         }
         
         self.refreshControl.endRefreshing()
@@ -101,12 +99,19 @@ extension RunAccidentsViewController: UITableViewDelegate, UITableViewDataSource
     // MARK: - Table view data source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return accidentsList.count
+        return accidentsList.count == 0 ? 1 : accidentsList.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        // no accident reports available
+        if accidentsList.count == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "noAccidentCell", for: indexPath)
+            return cell
+        }
+        
+        // show accident report cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "accidentCell", for: indexPath) as! AccidentTableViewCell
         
         let accident = accidentsList[indexPath.row]

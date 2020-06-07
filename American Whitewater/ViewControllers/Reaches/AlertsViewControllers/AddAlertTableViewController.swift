@@ -6,6 +6,8 @@ class AddAlertTableViewController: UITableViewController {
     
     @IBOutlet weak var riverTitleLabel: UILabel!
     @IBOutlet weak var riverSectionLabel: UILabel!
+    @IBOutlet weak var alertTextViewContainer: UIView!
+    @IBOutlet weak var alertTextViewBacking: UIView!
     @IBOutlet weak var alertTextView: UITextView!
     @IBOutlet weak var submitButton: UIButton!
     
@@ -16,9 +18,8 @@ class AddAlertTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        alertTextView.layer.cornerRadius = 15
-        alertTextView.layer.borderColor = UIColor.lightGray.cgColor
-        alertTextView.layer.borderWidth = 1
+        alertTextViewContainer.layer.cornerRadius = 15
+        alertTextViewBacking.layer.cornerRadius = alertTextViewContainer.layer.cornerRadius
         alertTextView.delegate = self
         alertTextView?.text = PLACEHOLDER_ALERT
         
@@ -28,6 +29,10 @@ class AddAlertTableViewController: UITableViewController {
             riverTitleLabel.text = selectedRun.title
             riverSectionLabel.text = selectedRun.section
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     @IBAction func submitButtonPressed(_ sender: Any) {
@@ -40,27 +45,54 @@ class AddAlertTableViewController: UITableViewController {
         
         // post the alert with GraphQL
         guard let selectedRun = self.selectedRun else { return }
-        
-        AWProgress.shared.show()
+                
+        AWProgressModal.shared.show(fromViewController: self, message: "Saving...")
         
         let dateString = dateFormatter.string(from: Date())
         print("Date using: \(dateString)")
         print("Selected Run Id: \(Int(selectedRun.id))")
-        
+
         AWGQLApiHelper.shared.postAlertFor(reach_id: Int(selectedRun.id), message: alertTextView.text, callback: { (postUpdate) in
             print("Success - PostUpdate: \(postUpdate?.id ?? "no detail") -reach_id: \(postUpdate?.reachId ?? "no reach id")")
-            AWProgress.shared.hide();
+
+            // convert postUpdate response to alert object
+            var newAlert = [String:String]()
+            newAlert["postDate"] = postUpdate?.postDate ?? ""
+            newAlert["message"] = postUpdate?.detail ?? ""
+            newAlert["poster"] = postUpdate?.user?.uname ?? ""
+
+            // save the alert to local storage in case GQL is slow
+            // this gets loaded first in the AlertsView while GQL call
+            // happens in background
+            var storedAlerts = DefaultsManager.reachAlerts
+            print("Total Stored Alerts:", storedAlerts.count)
+            if var reachAlerts = storedAlerts["\(selectedRun.id)"] {
+                reachAlerts.insert(newAlert, at: 0)
+                storedAlerts["\(selectedRun.id)"] = reachAlerts
+                DefaultsManager.reachAlerts = storedAlerts
+            } else {
+                // no alerts have been stored for this group yet
+                var alertsList = [ [String: String] ]()
+                alertsList.append(newAlert)
+                storedAlerts["\(selectedRun.id)"] = alertsList
+                DefaultsManager.reachAlerts = storedAlerts
+            }
+            
+            
+            AWProgressModal.shared.hide()
             self.successAndDismissView()
-        }) { (error) in
-            print("Error:", error.localizedDescription)
+        }) { (error, message) in
+            AWProgressModal.shared.hide()
+            print("Error:", GQLError.handleGQLError(error: error, altMessage: message))
         }
     }
 
+    
     func successAndDismissView() {
-        DuffekDialog.shared.showOkDialog(title: "Alert Posted", message: "Your alert has been added. Thank you for providing valuable information to the river community.\nRiver karma granted!") {
+        DuffekDialog.shared.showOkDialog(title: "Alert Posted", message: "Your alert has been added. Thank you for providing valuable information to the river community.\n\nRiver Karma Granted!") {
             //self.navigationController?.popViewController(animated: true)
             DispatchQueue.main.async {
-                self.dismiss(animated: true, completion: nil)
+                self.navigationController?.popViewController(animated: true)
             }
         }
     }

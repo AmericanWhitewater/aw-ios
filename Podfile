@@ -30,6 +30,8 @@ target 'American Whitewater' do
   pod 'Crashlytics', '~> 3.14.0'
   pod 'Firebase/Analytics', '~> 6.22.0'
   
+  # Advanced debugging - only loads in debug
+  pod 'netfox'
 end
 
 # Push Notification system implementation

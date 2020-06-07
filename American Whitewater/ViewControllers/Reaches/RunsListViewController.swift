@@ -17,9 +17,6 @@ class RunsListViewController: UIViewController {
     @IBOutlet weak var mainLegendBackgroundView: UIView!
     @IBOutlet weak var legendCloseButton: UIButton!
     
-    @IBOutlet weak var searchBackroundView: UIView!
-    @IBOutlet weak var searchTextField: UITextField!
-    
     var predicates: [NSPredicate] = []
     
     var lastUpdatedDate:Date?
@@ -59,6 +56,7 @@ class RunsListViewController: UIViewController {
     }
     
     @objc func dismissKeyboard() {
+        self.searchBar.textField?.resignFirstResponder()
         self.searchBar.textField?.endEditing(true)
     }
         
@@ -107,7 +105,7 @@ class RunsListViewController: UIViewController {
         let keychain = KeychainSwift();
         //keychain.set(credential.oauthToken, forKey: "ios-aw-auth-key")
         //keychain.delete("ios-aw-auth-key") // for sign out
-        if keychain.get(SignInViewController.AuthKeychainToken) == nil {
+        if keychain.get(AWGC.AuthKeychainToken) == nil {
             self.showLoginScreen()
         } else {
             print("Session authenticated")
@@ -119,8 +117,8 @@ class RunsListViewController: UIViewController {
         
         fetchedResultsController?.delegate = nil
         fetchedResultsController = nil
-        
     }
+    
     
     func updateFilterButton() {
         navigationItem.rightBarButtonItem?.title = ""
@@ -165,7 +163,7 @@ class RunsListViewController: UIViewController {
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
                                                               managedObjectContext: managedObjectContext,
                                                               sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultsController?.delegate = self
+//drn        fetchedResultsController?.delegate = self
         
         do {
             try fetchedResultsController?.performFetch()
@@ -281,7 +279,7 @@ class RunsListViewController: UIViewController {
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
                                                              managedObjectContext: managedObjectContext,
                                                              sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultsController?.delegate = self
+//drn        fetchedResultsController?.delegate = self
        
         do {
             try fetchedResultsController?.performFetch()
@@ -290,6 +288,8 @@ class RunsListViewController: UIViewController {
             print("Error fetching reaches from coredata: \(error), \(error.userInfo)")
             DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.userInfo.description)
         }
+
+        tableView.reloadData() // drn
         
         // update those reaches
         if let results = fetchedResultsController?.fetchedObjects {
@@ -405,7 +405,7 @@ class RunsListViewController: UIViewController {
     
     
     func searchPredicate() -> NSPredicate? {
-        guard let searchText = searchBar.text, searchText.count > 0 else { return nil }
+        guard let searchText = searchBar.textField?.text, searchText.count > 0 else { return nil }
         
         let searchName = NSPredicate(format: "name contains[cd] %@", searchText)
         let searchSection = NSPredicate(format: "section contains[cd] %@", searchText)
@@ -629,52 +629,52 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
 
 
 
-extension RunsListViewController: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        
-        if fetchedResultsController == nil {
-            print("FetchedResultsController is nil... ignoring update")
-            return
-        } else if tableView == nil {
-            print("tableView is nil... ignoring update of table")
-            return
-        }
-        
-        
-        tableView.endUpdates()
-    }
-
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-
-        switch type {
-            case .insert:
-                guard let insertIndex = newIndexPath else { return }
-                tableView.insertRows(at: [insertIndex], with: .automatic)
-            case .delete:
-                guard let deleteIndex = indexPath else { return }
-                tableView.deleteRows(at: [deleteIndex], with: .automatic)
-            case .move:
-                guard let fromIndex = indexPath, let toIndex = newIndexPath else { return }
-                tableView.moveRow(at: fromIndex, to: toIndex)
-            case .update:
-                guard let updateIndex = indexPath else { return }
-                tableView.reloadRows(at: [updateIndex], with: .automatic)
-            default:
-                break
-        }
-    }
-}
+//extension RunsListViewController: NSFetchedResultsControllerDelegate {
+//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//        tableView.beginUpdates()
+//    }
+//
+//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//
+//        if fetchedResultsController == nil {
+//            print("FetchedResultsController is nil... ignoring update")
+//            return
+//        } else if tableView == nil {
+//            print("tableView is nil... ignoring update of table")
+//            return
+//        }
+//
+//
+//        tableView.endUpdates()
+//    }
+//
+//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+//                    didChange anObject: Any,
+//                    at indexPath: IndexPath?,
+//                    for type: NSFetchedResultsChangeType,
+//                    newIndexPath: IndexPath?) {
+//
+//        switch type {
+//            case .insert:
+//                guard let insertIndex = newIndexPath else { return }
+//                tableView.insertRows(at: [insertIndex], with: .automatic)
+//            case .delete:
+//                guard let deleteIndex = indexPath else { return }
+//                tableView.deleteRows(at: [deleteIndex], with: .automatic)
+//            case .move:
+//                guard let fromIndex = indexPath, let toIndex = newIndexPath else { return }
+//                tableView.moveRow(at: fromIndex, to: toIndex)
+//            case .update:
+//                guard let updateIndex = indexPath else { return }
+//                tableView.reloadRows(at: [updateIndex], with: .automatic)
+//            default:
+//                break
+//        }
+//    }
+//}
 
 extension RunsListViewController: UISearchBarDelegate {
-    
+
     func setupSearchBar() {
         searchBar.delegate = self
         searchBar.isTranslucent = true
@@ -687,21 +687,30 @@ extension RunsListViewController: UISearchBarDelegate {
         let searchBarContainer = SearchBarContainerView(customSearchBar: searchBar)
         searchBarContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 44)
         navigationItem.titleView = searchBarContainer
+        
+        if let searchTextField = searchBar.value(forKey: "searchField") as? UITextField , let clearButton = searchTextField.value(forKey: "_clearButton")as? UIButton {
+            clearButton.addTarget(self, action: #selector(self.clearButtonPressed), for: .touchUpInside)
+        }
     }
     
+    @objc func clearButtonPressed() {
+        searchBar.textField?.resignFirstResponder()
+        fetchRiversFromCoreData()
+    }
+
     // hide keyboard on search press
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        
+
         fetchRiversFromCoreData()
     }
-    
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count > 1 {
             fetchRiversFromCoreData()
         }
     }
-    
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
@@ -733,6 +742,3 @@ class SearchBarContainerView: UIView {
         searchBar.frame = bounds
     }
 }
-
-
-

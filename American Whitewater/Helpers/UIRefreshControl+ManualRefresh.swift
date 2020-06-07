@@ -16,7 +16,7 @@ extension UIRefreshControl {
             scrollView.setContentOffset(CGPoint(x: 0, y: scrollView.contentOffset.y - frame.height), animated: false)
         }
         beginRefreshing()
-        sendActions(for: .valueChanged)
+        //sendActions(for: .valueChanged)
     }
     
 }

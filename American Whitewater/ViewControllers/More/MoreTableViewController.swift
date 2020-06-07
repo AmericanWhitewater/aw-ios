@@ -76,8 +76,8 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
             
             // Sign out button pressed
             let keychain = KeychainSwift()
-            if keychain.get(SignInViewController.AuthKeychainToken) != nil {
-                keychain.delete(SignInViewController.AuthKeychainToken)
+            if keychain.get(AWGC.AuthKeychainToken) != nil {
+                keychain.delete(AWGC.AuthKeychainToken)
             }
             
             DuffekDialog.shared.showOkDialog(title: "Signed Out", message: "You are now signed out.")

@@ -1,14 +1,14 @@
 {
   "images" : [
     {
-      "filename" : "tmpImageGray~universal@1x.png",
       "scale" : "1x",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "filename" : "tmpImageGray~universal@1x.png"
     },
     {
+      "idiom" : "universal",
       "filename" : "tmpImageGray~universal@2x.png",
-      "scale" : "2x",
-      "idiom" : "universal"
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",

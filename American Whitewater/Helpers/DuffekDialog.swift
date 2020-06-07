@@ -195,6 +195,48 @@ class DuffekDialog {
         }
     }
     
+    
+    
+    func showPickerDialog(pickerDataSource:UIPickerViewDataSource, pickerDelegate: UIPickerViewDelegate, title: String, message: String, selectedActionPressed: @escaping ()->Void) {
+        
+        alertViewController = styledAlert()
+        guard let alertViewController = alertViewController else {
+            print("Error creating alertViewController");
+            return;
+        }
+        
+        alertViewController.title = title
+        alertViewController.message = "\n\(message)\n"
+        
+        let selectAction = NYAlertAction(title: "Select", style: .default) { (_) in
+            self.alertViewController?.dismiss(animated: true, completion: nil)
+            
+            // Send selected option from picker view
+            selectedActionPressed()
+        }
+        
+        alertViewController.addAction(selectAction)
+        
+        // setup contact picker view
+        let picker = UIPickerView()
+        picker.dataSource = pickerDataSource
+        picker.delegate = pickerDelegate
+        
+        // add picker view to alertViewControllers content view
+        alertViewController.alertViewContentView = picker
+        
+        // show the alert
+        self.displayAlert(alertController: alertViewController)
+        
+        // select the first row in case the user hasn't already chosen an item by default
+        picker.selectRow(0, inComponent: 0, animated: false)
+        if let delegate = picker.delegate {
+            delegate.pickerView?(picker, didSelectRow: 0, inComponent: 0)
+        }
+    }
+    
+    
+    
     /// A direct way to hide the alert at any time
     func hideAlert() {
         alertViewController?.dismiss(animated: true, completion: nil)

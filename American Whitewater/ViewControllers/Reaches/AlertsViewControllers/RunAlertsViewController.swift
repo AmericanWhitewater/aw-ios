@@ -11,7 +11,8 @@ import UIKit
 class RunAlertsViewController: UIViewController {
 
     var selectedRun: Reach?
-    var alertsList = [AlertsQuery.Data.Post.Datum]()
+    var alertsList = [ [String: String] ]()
+    //var alertsList = [AlertsQuery.Data.Post.Datum]()
     var loadingAlerts = true
     
     @IBOutlet weak var riverTitleLabel: UILabel!
@@ -43,10 +44,21 @@ class RunAlertsViewController: UIViewController {
         tableView.refreshControl = refreshControl
         
         addAlertButton.layer.cornerRadius = addAlertButton.bounds.height/2
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        // show tableView refresh control while requesting alerts from server
-        loadingAlerts = true
+        // if locally saved alerts exist load and display
+        print("alertsList Count: ", alertsList.count)
+        print("Loading Alerts")
+        loadAlerts()
+
+        refreshControl.tintColor = UIColor(named: "primary")
+        
+        // load alerts from server
         refreshControl.beginRefreshingManually()
+        refreshAlerts()
     }
     
     @objc func refreshAlerts() {
@@ -55,30 +67,69 @@ class RunAlertsViewController: UIViewController {
         guard let selectedRun = selectedRun else { refreshControl.endRefreshing(); return }
         print(selectedRun.id)
                 
-        loadingAlerts = true
         AWGQLApiHelper.shared.getAlertsForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 50, callback: { (alertResults) in
              
             if let alertResults = alertResults {
                 print("Alert Results count: \(alertResults.count)")
+                // if the server is returning less alerts than we have we
+                // display the alerts we already have (likely slow server response to add)
+                if alertResults.count < self.alertsList.count { return; }
+                
                 self.alertsList.removeAll()
-                self.alertsList = alertResults
+                self.convertAlertsResponse(alertResults: alertResults)
+                self.saveAlerts()
             } else {
                 print("No alerts returned")
             }
 
-            self.loadingAlerts = false
-            self.refreshControl.endRefreshing()
             self.tableView.reloadData()
-        }) { (error) in
-            print("Alert GraphQL Error: \(error.localizedDescription)")
-            self.loadingAlerts = false
+        }) { (error, message) in
+            print("Alert GraphQL Error: \(GQLError.handleGQLError(error: error, altMessage: message))")
             self.refreshControl.endRefreshing()
             self.tableView.reloadData()
         }
     }
     
+    
+    
     @IBAction func addAlertPressed(_ sender: Any) {
         self.performSegue(withIdentifier: Segue.postAlertSeg.rawValue, sender: nil)
+    }
+    
+    
+    
+    func saveAlerts() {
+        var storedAlerts = DefaultsManager.reachAlerts
+        
+        if let selectedRun = selectedRun, selectedRun.id != 0 {
+            storedAlerts["\(selectedRun.id)"] = alertsList
+            DefaultsManager.reachAlerts = storedAlerts
+        }
+    }
+    
+    func loadAlerts() {
+        if let selectedRun = selectedRun, selectedRun.id != 0 {
+            let storedAlerts = DefaultsManager.reachAlerts
+            if let reachAlerts = storedAlerts["\(selectedRun.id)"], reachAlerts.count > 0 {
+                alertsList.removeAll()
+                alertsList = reachAlerts
+                tableView.reloadData()
+            }
+        }
+    }
+    
+    func convertAlertsResponse(alertResults: [AlertsQuery.Data.Post.Datum]) {
+        if alertResults.count > 0 {
+            alertsList.removeAll()
+            
+            for alert in alertResults {
+                var newAlert = [String:String]()
+                newAlert["postDate"] = alert.postDate ?? ""
+                newAlert["message"] = alert.detail ?? ""
+                newAlert["poster"] = alert.user?.uname ?? ""
+                alertsList.append(newAlert)
+            }
+        }
     }
     
     // MARK: - Navigation
@@ -98,21 +149,14 @@ extension RunAlertsViewController: UITableViewDelegate, UITableViewDataSource {
     // MARK: - Table view data source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.alertsList.count == 0 {
-            return 1
-        } else {
-            return self.alertsList.count
-        }
+        return alertsList.count == 0 ? 1 : alertsList.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
          
         // load a loading cell or a no alerts available cell
-        if self.alertsList.count == 0 && loadingAlerts {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "loadingAlertCell", for: indexPath)
-            return cell
-        } else if self.alertsList.count == 0 && !loadingAlerts {
+        if self.alertsList.count == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "noAlertCell", for: indexPath)
             return cell
         }
@@ -123,19 +167,19 @@ extension RunAlertsViewController: UITableViewDelegate, UITableViewDataSource {
         let alert = self.alertsList[indexPath.row]
         
         cell.alertMessageLabel.set(html: "<h3>No details provided</h3>")
-        if let detail = alert.detail {
+        if let detail = alert["message"] {
             if detail.count > 1 {
                 cell.alertMessageLabel.set(html: detail)
             }
         }
         
         cell.alertPosterLabel.text = ""
-        if let user = alert.user {
-            cell.alertPosterLabel.text = user.uname.count > 0 ? "by \(user.uname)" : ""
+        if let user = alert["poster"] {
+            cell.alertPosterLabel.text = user.count > 0 ? "by \(user)" : ""
         }
         
         cell.alertDateTimeLabel.text = ""
-        if let dateString = alert.postDate, let date = inputDateFormatter.date(from: dateString) {
+        if let dateString = alert["postDate"], let date = inputDateFormatter.date(from: dateString) {
             cell.alertDateTimeLabel.text = outDateFormatter.string(from: date)
         }
         

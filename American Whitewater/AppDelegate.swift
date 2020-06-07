@@ -1,4 +1,5 @@
 import UIKit
+import netfox
 import CoreData
 import Firebase
 import OneSignal
@@ -67,6 +68,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: "primary")!], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
+
+        // setup network debugging for debug only
+        #if DEBUG
+            NFX.sharedInstance().start()
+        #endif
 
         return true
     }

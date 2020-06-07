@@ -74,6 +74,7 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - netfox (1.19.0)
   - NYAlertViewController (1.3.0)
   - OAuthSwift (2.1.0)
   - OneSignal (2.11.2)
@@ -89,6 +90,7 @@ DEPENDENCIES:
   - Firebase/Analytics (~> 6.22.0)
   - IQKeyboardManagerSwift (~> 6.5.5)
   - KeychainSwift (~> 19.0)
+  - netfox
   - NYAlertViewController (~> 1.3.0)
   - OAuthSwift (~> 2.1.0)
   - OneSignal (~> 2.11.2)
@@ -114,6 +116,7 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - KeychainSwift
     - nanopb
+    - netfox
     - NYAlertViewController
     - OAuthSwift
     - OneSignal
@@ -139,12 +142,13 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
   KeychainSwift: a06190cf933ad46b1e0abc3d77d29c06331715c7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  netfox: efeec1d23406df6cd605212f09a40957bb5654eb
   NYAlertViewController: b93f82e2c1fc6d5e9485512ddbe7b481f463a074
   OAuthSwift: ab1675598273e04355e0282459c328e65c9ddacd
   OneSignal: 4e3e68bb6c29975286a2fa910cb49132bc6e20bb
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 859a4059eda38c581f684bea00ecb49104748bee
+PODFILE CHECKSUM: 89aa0c50e86616299290d48526e921e1e14fb261
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1

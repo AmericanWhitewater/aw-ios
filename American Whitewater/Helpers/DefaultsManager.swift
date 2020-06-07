@@ -205,6 +205,15 @@ class DefaultsManager {
         }
     }
     
+    private static let reachAlertsKey = "reachAlertsKey"
+    static var reachAlerts: [String: [ [String: String]] ] {
+        get {
+            return UserDefaults.standard.dictionary(forKey: reachAlertsKey) as? [String: [ [String:String]] ] ?? [String: [ [String:String]] ]()
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: reachAlertsKey)
+        }
+    }
     
     // for now we'll store all the users favorites in the preferences
     // eventually we'll move it back over to CoreData

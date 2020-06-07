@@ -16,7 +16,7 @@ class NewsTableViewController: UITableViewController {
         donateButton.layer.cornerRadius = 22.5
      
         self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 120
+        self.tableView.estimatedRowHeight = 241
         
         // setup pull to refresh
         let refreshControl = UIRefreshControl()
@@ -170,7 +170,7 @@ extension NewsTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as! NewsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell2", for: indexPath) as! NewsTableViewCell
 
         guard let awArticle = fetchedResultsController?.object(at: indexPath) else { return cell }
         
@@ -187,7 +187,8 @@ extension NewsTableViewController {
                 releaseDatePretty = simpleDateFormat.string(from: date!)
             }
         }
-        
+        print(awArticle.abstractPhoto ?? "n/a")
+        cell.articleImageView.isHidden = true
         cell.articleTitleLabel.text = (awArticle.title ?? "")
         cell.articleAuthorAndDateLabel.text = "By: " + (awArticle.author ?? "") + ((releaseDatePretty.count > 0) ? " - \(releaseDatePretty)" : "")
         cell.articleAbstractLabel.text = stripHTML(string: awArticle.abstract)

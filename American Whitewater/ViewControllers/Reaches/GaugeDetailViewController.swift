@@ -30,8 +30,6 @@ class GaugeDetailViewController: UIViewController, WKNavigationDelegate {
             
             let urlString = "https://www.americanwhitewater.org/content/Gauge2/graph/id/\(gaugeId)/metric/\(gaugeMetric)/.raw"
             
-            print("URL String: ---===[ \(urlString)")
-            
             let url = URL(string: urlString)
             webView.load(URLRequest(url: url!))
 

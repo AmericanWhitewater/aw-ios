@@ -55,12 +55,16 @@
 		63491B1323294CC80036A906 /* GaugeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B1223294CC80036A906 /* GaugeDetailViewController.swift */; };
 		63491B16232952E30036A906 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B15232952E30036A906 /* FavoritesViewController.swift */; };
 		635141FB2460947A00B4F974 /* AddAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635141FA2460947A00B4F974 /* AddAlertTableViewController.swift */; };
+		635490F2247FED730082270E /* GQLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635490F1247FED720082270E /* GQLError.swift */; };
+		6376508B2487E15100DD0FCE /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6376508A2487E15100DD0FCE /* ProgressViewController.swift */; };
+		6376508D2487E8AB00DD0FCE /* AWProgressModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6376508C2487E8AB00DD0FCE /* AWProgressModal.swift */; };
 		637D0737236B541000BE90D0 /* UISearchBar+BGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637D0736236B541000BE90D0 /* UISearchBar+BGColor.swift */; };
 		637FF784236B33F300F18400 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637FF783236B33F300F18400 /* NotificationService.swift */; };
 		637FF788236B33F300F18400 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 637FF781236B33F300F18400 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		638811CC23EE09780068D2A0 /* Upload-dSyms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 638811CB23EE09780068D2A0 /* Upload-dSyms.txt */; };
 		6389BFAE234CC59E00DE7D6C /* RunMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389BFAD234CC59E00DE7D6C /* RunMapViewController.swift */; };
 		6389BFB0234E311500DE7D6C /* RunMapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389BFAF234E311500DE7D6C /* RunMapAnnotation.swift */; };
+		639350C22475929900577027 /* AddRiverFlowTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639350C12475929900577027 /* AddRiverFlowTableViewController.swift */; };
 		63949955246F0DD40061552C /* AwImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63949954246F0DD40061552C /* AwImageCell.swift */; };
 		63949957246F107A0061552C /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63949956246F107A0061552C /* GalleryViewController.swift */; };
 		63949959246F15C10061552C /* AddButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63949958246F15C10061552C /* AddButtonCell.swift */; };
@@ -179,6 +183,9 @@
 		63491B1223294CC80036A906 /* GaugeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeDetailViewController.swift; sourceTree = "<group>"; };
 		63491B15232952E30036A906 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		635141FA2460947A00B4F974 /* AddAlertTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlertTableViewController.swift; sourceTree = "<group>"; };
+		635490F1247FED720082270E /* GQLError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GQLError.swift; sourceTree = "<group>"; };
+		6376508A2487E15100DD0FCE /* ProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
+		6376508C2487E8AB00DD0FCE /* AWProgressModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWProgressModal.swift; sourceTree = "<group>"; };
 		637D0736236B541000BE90D0 /* UISearchBar+BGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+BGColor.swift"; sourceTree = "<group>"; };
 		637FF781236B33F300F18400 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		637FF783236B33F300F18400 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -187,6 +194,7 @@
 		638811CB23EE09780068D2A0 /* Upload-dSyms.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Upload-dSyms.txt"; sourceTree = "<group>"; };
 		6389BFAD234CC59E00DE7D6C /* RunMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunMapViewController.swift; sourceTree = "<group>"; };
 		6389BFAF234E311500DE7D6C /* RunMapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunMapAnnotation.swift; sourceTree = "<group>"; };
+		639350C12475929900577027 /* AddRiverFlowTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRiverFlowTableViewController.swift; sourceTree = "<group>"; };
 		63949954246F0DD40061552C /* AwImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwImageCell.swift; sourceTree = "<group>"; };
 		63949956246F107A0061552C /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		63949958246F15C10061552C /* AddButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButtonCell.swift; sourceTree = "<group>"; };
@@ -318,7 +326,6 @@
 				6316449B246CAAD100807E19 /* awLocal.png */,
 				6316449D246CAE3A00807E19 /* awLocal2.jpg */,
 				63E90EAE22EAA28900C8DAA3 /* Etc */,
-				63E90EB022EAA31300C8DAA3 /* Protocols */,
 				63E90EB122EAA32300C8DAA3 /* Models */,
 				63E90EB222EAA33100C8DAA3 /* ViewControllers */,
 				63E90EB722EAA3D500C8DAA3 /* Helpers */,
@@ -357,6 +364,7 @@
 			isa = PBXGroup;
 			children = (
 				63B5B49F2457B2750062F54B /* AWGQLApiHelper.swift */,
+				635490F1247FED720082270E /* GQLError.swift */,
 				63B5B4A1245872550062F54B /* reach-accidents.graphql */,
 				63B5B4AA245939650062F54B /* alerts.graphql */,
 				63164499246C29A600807E19 /* photos.graphql */,
@@ -364,6 +372,37 @@
 				63B5B49D2457B2270062F54B /* AwGraphQLAPI.swift */,
 			);
 			path = GraphQL;
+			sourceTree = "<group>";
+		};
+		63D4FEBE2474DD2B0065E216 /* GalleryViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				63949956246F107A0061552C /* GalleryViewController.swift */,
+				6394995C246F82F60061552C /* ReviewPhotoTableViewController.swift */,
+				63949954246F0DD40061552C /* AwImageCell.swift */,
+				63949958246F15C10061552C /* AddButtonCell.swift */,
+			);
+			path = GalleryViewControllers;
+			sourceTree = "<group>";
+		};
+		63D4FEBF2474DD4E0065E216 /* AccidentsViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				63B5B4A224589EAB0062F54B /* RunAccidentsViewController.swift */,
+				63B5B4A424589EC40062F54B /* AccidentTableViewCell.swift */,
+				63B5B4A624591A460062F54B /* RunAccidentDetailsTableViewController.swift */,
+			);
+			path = AccidentsViewControllers;
+			sourceTree = "<group>";
+		};
+		63D4FEC02474DD730065E216 /* AlertsViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				63DEF1B02450A7BF0034E3CF /* RunAlertsViewController.swift */,
+				63B5B48E245756D40062F54B /* AlertTableViewCell.swift */,
+				635141FA2460947A00B4F974 /* AddAlertTableViewController.swift */,
+			);
+			path = AlertsViewControllers;
 			sourceTree = "<group>";
 		};
 		63E32B1B2357F2B80057DE34 /* Filtering */ = {
@@ -408,13 +447,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		63E90EB022EAA31300C8DAA3 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
 		63E90EB122EAA32300C8DAA3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -444,6 +476,7 @@
 				63309E3B233E738A00E6DBC4 /* Map */,
 				63E90EB522EAA36A00C8DAA3 /* More */,
 				63E32B1B2357F2B80057DE34 /* Filtering */,
+				6376508A2487E15100DD0FCE /* ProgressViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -487,16 +520,10 @@
 				6389BFAF234E311500DE7D6C /* RunMapAnnotation.swift */,
 				630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */,
 				63491B1223294CC80036A906 /* GaugeDetailViewController.swift */,
-				63DEF1B02450A7BF0034E3CF /* RunAlertsViewController.swift */,
-				63B5B48E245756D40062F54B /* AlertTableViewCell.swift */,
-				635141FA2460947A00B4F974 /* AddAlertTableViewController.swift */,
-				63B5B4A224589EAB0062F54B /* RunAccidentsViewController.swift */,
-				63B5B4A424589EC40062F54B /* AccidentTableViewCell.swift */,
-				63B5B4A624591A460062F54B /* RunAccidentDetailsTableViewController.swift */,
-				63949954246F0DD40061552C /* AwImageCell.swift */,
-				63949956246F107A0061552C /* GalleryViewController.swift */,
-				63949958246F15C10061552C /* AddButtonCell.swift */,
-				6394995C246F82F60061552C /* ReviewPhotoTableViewController.swift */,
+				639350C12475929900577027 /* AddRiverFlowTableViewController.swift */,
+				63D4FEC02474DD730065E216 /* AlertsViewControllers */,
+				63D4FEBF2474DD4E0065E216 /* AccidentsViewControllers */,
+				63D4FEBE2474DD2B0065E216 /* GalleryViewControllers */,
 			);
 			path = Reaches;
 			sourceTree = "<group>";
@@ -517,6 +544,7 @@
 				630F3D212465F4160077130D /* NanoID.swift */,
 				63164493246C07C700807E19 /* UIRefreshControl+ManualRefresh.swift */,
 				63164495246C08AA00807E19 /* AWProgress.swift */,
+				6376508C2487E8AB00DD0FCE /* AWProgressModal.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -722,7 +750,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Go to the build root and search up the chain to find the Derived Data Path where the source packages are checked out.\nDERIVED_DATA_CANDIDATE=\"${BUILD_ROOT}\"\n\nwhile ! [ -d \"${DERIVED_DATA_CANDIDATE}/SourcePackages\" ]; do\n  if [ \"${DERIVED_DATA_CANDIDATE}\" = / ]; then\n    echo >&2 \"error: Unable to locate SourcePackages directory from BUILD_ROOT: '${BUILD_ROOT}'\"\n    exit 1\n  fi\n\n  DERIVED_DATA_CANDIDATE=\"$(dirname \"${DERIVED_DATA_CANDIDATE}\")\"\ndone\n\n# Grab a reference to the directory where scripts are checked out\nSCRIPT_PATH=\"${DERIVED_DATA_CANDIDATE}/SourcePackages/checkouts/apollo-ios/scripts\"\n\nif [ -z \"${SCRIPT_PATH}\" ]; then\n    echo >&2 \"error: Couldn't find the CLI script in your checked out SPM packages; make sure to add the framework to your project.\"\n    exit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\n# Creates API.swift file for accessing GraphQL from Swift\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"schema.json\" AwGraphQLAPI.swift\n\n# Used to download an updated schema.json\n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"http://aw.local/graphql/\"\n";
+			shellScript = "# Go to the build root and search up the chain to find the Derived Data Path where the source packages are checked out.\nDERIVED_DATA_CANDIDATE=\"${BUILD_ROOT}\"\n\nwhile ! [ -d \"${DERIVED_DATA_CANDIDATE}/SourcePackages\" ]; do\n  if [ \"${DERIVED_DATA_CANDIDATE}\" = / ]; then\n    echo >&2 \"error: Unable to locate SourcePackages directory from BUILD_ROOT: '${BUILD_ROOT}'\"\n    exit 1\n  fi\n\n  DERIVED_DATA_CANDIDATE=\"$(dirname \"${DERIVED_DATA_CANDIDATE}\")\"\ndone\n\n# Grab a reference to the directory where scripts are checked out\nSCRIPT_PATH=\"${DERIVED_DATA_CANDIDATE}/SourcePackages/checkouts/apollo-ios/scripts\"\n\nif [ -z \"${SCRIPT_PATH}\" ]; then\n    echo >&2 \"error: Couldn't find the CLI script in your checked out SPM packages; make sure to add the framework to your project.\"\n    exit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\n# Creates API.swift file for accessing GraphQL from Swift\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"schema.json\" AwGraphQLAPI.swift\n\n# Used to download an updated schema.json\n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"http://aw.local/graphql/\"\n# Beta Site: https://beta.americanwhitewater.org/graphql/ \n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"https://beta.americanwhitewater.org/graphql/\"\n";
 		};
 		C5A3EE7F12EB780BAA720589 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -770,6 +798,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6376508B2487E15100DD0FCE /* ProgressViewController.swift in Sources */,
 				63E90EBD22EAAF2700C8DAA3 /* Segues.swift in Sources */,
 				63A6FD6B2367748F00148231 /* AWApiLinks.swift in Sources */,
 				6394995D246F82F70061552C /* ReviewPhotoTableViewController.swift in Sources */,
@@ -780,12 +809,14 @@
 				630F3D222465F4160077130D /* NanoID.swift in Sources */,
 				63D7BD172319980600935693 /* OnboardLocationViewController.swift in Sources */,
 				63B5B48F245756D40062F54B /* AlertTableViewCell.swift in Sources */,
+				635490F2247FED730082270E /* GQLError.swift in Sources */,
 				63E90EBC22EAAF2700C8DAA3 /* Fonts.swift in Sources */,
 				63491B05232897BE0036A906 /* SingleArticleViewController.swift in Sources */,
 				63203C0E23694BFF006A4148 /* Reach.swift in Sources */,
 				63387B6322CDBFFC0089BAA8 /* AppDelegate.swift in Sources */,
 				63309E3D233E739C00E6DBC4 /* MapViewController.swift in Sources */,
 				63E32B1D2357F3260057DE34 /* FilterClassCollectionViewCell.swift in Sources */,
+				639350C22475929900577027 /* AddRiverFlowTableViewController.swift in Sources */,
 				63949955246F0DD40061552C /* AwImageCell.swift in Sources */,
 				631EFF9A23677C4000BA17F7 /* Article+CoreDataProperties.swift in Sources */,
 				6342A3E92385A3A400B54365 /* UISearchBar+UITextFieldColor.swift in Sources */,
@@ -797,6 +828,7 @@
 				63E90EAD22EAA14700C8DAA3 /* DefaultsManager.swift in Sources */,
 				6342A3EB2385AD3500B54365 /* MKMapView+FitAnnotations.swift in Sources */,
 				63D7BD1923199D1900935693 /* DuffekDialog.swift in Sources */,
+				6376508D2487E8AB00DD0FCE /* AWProgressModal.swift in Sources */,
 				63309E452343D9B500E6DBC4 /* NoRiversTableViewCell.swift in Sources */,
 				631EFFA223677CB600BA17F7 /* Rapid+CoreDataProperties.swift in Sources */,
 				63B5B4A324589EAB0062F54B /* RunAccidentsViewController.swift in Sources */,
@@ -1015,7 +1047,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw;
 				PRODUCT_NAME = AW;
 				SWIFT_VERSION = 5.0;
@@ -1039,7 +1071,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw;
 				PRODUCT_NAME = AW;
 				SWIFT_VERSION = 5.0;
@@ -1063,7 +1095,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1087,7 +1119,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = org.americanwhitewater.aw.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

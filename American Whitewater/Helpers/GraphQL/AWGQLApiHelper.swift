@@ -18,12 +18,13 @@ class AWGQLApiHelper
     typealias AlertPostCallback = (PostAlertMutation.Data.PostUpdate?) -> Void
     typealias PhotosCallback = ([PhotosQuery.Data.Post.Datum]?) -> Void
     typealias PhotoUploadCallback = (UploadPhotoFileMutation.Data.PhotoFileCreate) -> Void
-    typealias AWGraphQLError = (Error) -> Void
+    typealias AWGraphQLError = (Error?, String?) -> Void
     
     static let shared = AWGQLApiHelper()
     
     private(set) lazy var apollo: ApolloClient = {
         let httpNetworkTransport = HTTPNetworkTransport(url: URL(string: "\(AWGC.AW_BASE_URL)/graphql")!)
+        print("Using URL:", "\(AWGC.AW_BASE_URL)/graphql")
         httpNetworkTransport.delegate = self
         return ApolloClient(networkTransport: httpNetworkTransport)
     }()
@@ -48,7 +49,7 @@ class AWGQLApiHelper
                 case.failure(let error):
                     
                     print("GraphQL Error: \(error)")
-                    errorCallback(error)
+                    errorCallback(error, nil)
             }
                 
         }
@@ -71,7 +72,7 @@ class AWGQLApiHelper
                 
                 case .failure(let error):
                     print("GraphQL Error: \(error)")
-                    errorCallback(error)
+                    errorCallback(error, nil)
             }
         }
     }
@@ -95,7 +96,7 @@ class AWGQLApiHelper
                                reading: nil)
         
         
-        if keychain.get(SignInViewController.AuthKeychainToken) != nil {
+        if keychain.get(AWGC.AuthKeychainToken) != nil {
             apollo.perform(mutation: PostAlertMutation(id: newID, post: newAlert)) { result in
                 print("Posting alert with gql...")
                 switch result {
@@ -108,7 +109,7 @@ class AWGQLApiHelper
                         }
                     case .failure(let error):
                         print("GraphQL Error: \(error)")
-                        errorCallback(error)
+                        errorCallback(error, nil)
                 }
             }
         } else {
@@ -142,7 +143,7 @@ class AWGQLApiHelper
                 
                 case .failure(let error):
                     print("GraphQL Error: \(error)")
-                    errorCallback(error)
+                    errorCallback(error, nil)
             }
         }
     }
@@ -166,7 +167,7 @@ class AWGQLApiHelper
                                    reading: nil)
         
         
-        if keychain.get(SignInViewController.AuthKeychainToken) != nil {
+        if keychain.get(AWGC.AuthKeychainToken) != nil {
             apollo.perform(mutation: PostPhotoMutation(id: newID, post: newPhotoPost)) { result in
                 switch result {
                     case .success(let graphQLResult):
@@ -180,13 +181,13 @@ class AWGQLApiHelper
                             } else {
                                 print("Unable to get newly created post id")
                             }
-                            
                         } else {
                             print("nil response: \(graphQLResult)")
+                            errorCallback(nil, "PhotoPost: Invalid Data Returned")
                         }
                     case .failure(let error):
                         print("GraphQL Error: \(error)")
-                        errorCallback(error)
+                        errorCallback(error, nil)
                 }
             }
         } else {
@@ -217,7 +218,7 @@ class AWGQLApiHelper
             
             switch result {
                 case .success(let graphQLResult):
-
+                    print("Success called")
                     if let photoResult = graphQLResult.data?.photoFileCreate {
                         print("Photo Result id: \(photoResult.id ?? "no id")")
                         if let image = photoResult.image, let uri = image.uri {
@@ -227,82 +228,18 @@ class AWGQLApiHelper
                         }
                         
                         callback(photoResult)
+                    } else {
+                        print("Error with data returned")
+                        errorCallback(nil, "Photo Result: Invalid Data Returned")
                     }
-                
                     
                 case .failure(let error):
-                    print("Error: ", error.localizedDescription)
+                    print("UploadPhotoFileMutation Error: ", error.localizedDescription)
+                    errorCallback(error, nil)
             }
         }
-
-        // ----------
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        if let image = UIImage(named: "awLocal"), let imgData = image.jpegData(compressionQuality: 1) {
-//            print("Creating awLocal photo file on server")
-//
-//            //let fileURL = Bundle.main.url(forResource: "awLocal", withExtension: "png")
-//            let file = GraphQLFile(fieldName: "photo", originalName: "asdf1", data: imgData)
-//
-//            let photoInput = PhotoInput(caption: "Awesome Caption", description: "This is the description", postId: nil, subject: "This is the subject", author: "Brown Claw", poiName: "BA Falls", poiId: nil, photoDate: "2020-5-13 00:00:00")
-//
-//            let opUpload = UploadPhotoFileMutation(file: file, type: PhotoSectionsType.gallery, photo: photoInput)
-//
-//            apollo.upload(operation: opUpload, files: [file]) { result in
-//
-//                switch result {
-//                    case .success(let graphQLResult):
-//                        print("create file result: ", graphQLResult)
-//
-//                        if let data = graphQLResult.data {
-//                            print("Data: ", data)
-//                        }
-//
-//                        if let photoResult = graphQLResult.data?.photoFileCreate {
-//                            print("Photo Result: \(photoResult.id ?? "no id")")
-//                            if let image = photoResult.image, let uri = image.uri {
-//                                print("URI: \(uri.thumb ?? "no thumb") ")
-//                                print("URI: \(uri.medium ?? "no medium") ")
-//                                print("URI: \(uri.big ?? "no big") ")
-//                            }
-//                        }
-//
-//                    case .failure(let error):
-//                        print("Error: ", error.localizedDescription)
-//                }
-//
-//            }
-            
-            //apollo.perform(mutation: UploadPhotoFileMutation(fileInput: fileInput, photo: photoInput)) { result in
-//                print("Posting alert with gql...")
-//                switch result {
-//                    case .success(let graphQLResult):
-//                        if let data = graphQLResult.data {
-//                            print("File created: ", data.jsonObject)
-////                                callback(postUpdate)
-//                        } else {
-//                            print("nil response: \(graphQLResult)")
-//                        }
-//                    case .failure(let error):
-//                        print("GraphQL Error: \(error)")
-////                            errorCallback(error)
-//                }
-//            }
-//        }
     }
 }
-
-
-
-
 
 
 extension AWGQLApiHelper: HTTPNetworkTransportPreflightDelegate {
@@ -311,13 +248,8 @@ extension AWGQLApiHelper: HTTPNetworkTransportPreflightDelegate {
     }
     
     func networkTransport(_ networkTransport: HTTPNetworkTransport, willSend request: inout URLRequest) {
-        if let token = keychain.get(SignInViewController.AuthKeychainToken) {
+        if let token = keychain.get(AWGC.AuthKeychainToken) {
             request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
     }
 }
-
-
-//extension UploadPhotoFileMutation {
-//    public typealias Upload = GraphQLFile
-//}

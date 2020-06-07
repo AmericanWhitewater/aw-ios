@@ -727,9 +727,21 @@ public final class PostAlertMutation: GraphQLMutation {
       postUpdate(id: $id, post: $post) {
         __typename
         id
-        reach_id
         title
         post_type
+        post_date
+        reach_id
+        reach {
+          __typename
+          id
+          river
+          section
+        }
+        detail
+        user {
+          __typename
+          uname
+        }
       }
     }
     """
@@ -780,9 +792,13 @@ public final class PostAlertMutation: GraphQLMutation {
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("id", type: .scalar(GraphQLID.self)),
-        GraphQLField("reach_id", type: .scalar(String.self)),
         GraphQLField("title", type: .scalar(String.self)),
         GraphQLField("post_type", type: .nonNull(.scalar(PostType.self))),
+        GraphQLField("post_date", type: .scalar(String.self)),
+        GraphQLField("reach_id", type: .scalar(String.self)),
+        GraphQLField("reach", type: .object(Reach.selections)),
+        GraphQLField("detail", type: .scalar(String.self)),
+        GraphQLField("user", type: .object(User.selections)),
       ]
 
       public private(set) var resultMap: ResultMap
@@ -791,8 +807,8 @@ public final class PostAlertMutation: GraphQLMutation {
         self.resultMap = unsafeResultMap
       }
 
-      public init(id: GraphQLID? = nil, reachId: String? = nil, title: String? = nil, postType: PostType) {
-        self.init(unsafeResultMap: ["__typename": "Post", "id": id, "reach_id": reachId, "title": title, "post_type": postType])
+      public init(id: GraphQLID? = nil, title: String? = nil, postType: PostType, postDate: String? = nil, reachId: String? = nil, reach: Reach? = nil, detail: String? = nil, user: User? = nil) {
+        self.init(unsafeResultMap: ["__typename": "Post", "id": id, "title": title, "post_type": postType, "post_date": postDate, "reach_id": reachId, "reach": reach.flatMap { (value: Reach) -> ResultMap in value.resultMap }, "detail": detail, "user": user.flatMap { (value: User) -> ResultMap in value.resultMap }])
       }
 
       public var __typename: String {
@@ -813,15 +829,6 @@ public final class PostAlertMutation: GraphQLMutation {
         }
       }
 
-      public var reachId: String? {
-        get {
-          return resultMap["reach_id"] as? String
-        }
-        set {
-          resultMap.updateValue(newValue, forKey: "reach_id")
-        }
-      }
-
       public var title: String? {
         get {
           return resultMap["title"] as? String
@@ -837,6 +844,145 @@ public final class PostAlertMutation: GraphQLMutation {
         }
         set {
           resultMap.updateValue(newValue, forKey: "post_type")
+        }
+      }
+
+      public var postDate: String? {
+        get {
+          return resultMap["post_date"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "post_date")
+        }
+      }
+
+      public var reachId: String? {
+        get {
+          return resultMap["reach_id"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "reach_id")
+        }
+      }
+
+      public var reach: Reach? {
+        get {
+          return (resultMap["reach"] as? ResultMap).flatMap { Reach(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "reach")
+        }
+      }
+
+      public var detail: String? {
+        get {
+          return resultMap["detail"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "detail")
+        }
+      }
+
+      public var user: User? {
+        get {
+          return (resultMap["user"] as? ResultMap).flatMap { User(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "user")
+        }
+      }
+
+      public struct Reach: GraphQLSelectionSet {
+        public static let possibleTypes: [String] = ["Reach"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .scalar(Int.self)),
+          GraphQLField("river", type: .scalar(String.self)),
+          GraphQLField("section", type: .scalar(String.self)),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(id: Int? = nil, river: String? = nil, section: String? = nil) {
+          self.init(unsafeResultMap: ["__typename": "Reach", "id": id, "river": river, "section": section])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: Int? {
+          get {
+            return resultMap["id"] as? Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var river: String? {
+          get {
+            return resultMap["river"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "river")
+          }
+        }
+
+        public var section: String? {
+          get {
+            return resultMap["section"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "section")
+          }
+        }
+      }
+
+      public struct User: GraphQLSelectionSet {
+        public static let possibleTypes: [String] = ["User"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("uname", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(uname: String) {
+          self.init(unsafeResultMap: ["__typename": "User", "uname": uname])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var uname: String {
+          get {
+            return resultMap["uname"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "uname")
+          }
         }
       }
     }

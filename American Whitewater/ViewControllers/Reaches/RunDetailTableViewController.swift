@@ -47,6 +47,8 @@ class RunDetailTableViewController: UITableViewController {
         
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 120
+
+        self.runBannerImageCell.isHidden = true
         
         let selectedSegTitle = [NSAttributedString.Key.foregroundColor: UIColor(named: "primary") ?? UIColor.black]
                                 as [NSAttributedString.Key : Any]
@@ -89,13 +91,6 @@ class RunDetailTableViewController: UITableViewController {
         } else {
             seeGaugeInfoCell.isHidden = false
         }
-        
-        if let photoUrlString = selectedRun?.photoUrl, let photoUrl = URL(string: photoUrlString) {
-            runBannerImageCell.isHidden = false
-            runBannerImageView.load(url: photoUrl)
-        } else {
-            runBannerImageCell.isHidden = true
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -113,6 +108,8 @@ class RunDetailTableViewController: UITableViewController {
         
         // update photos listing
         self.queryPhotos()
+       
+        checkBannerImages()
     }
     
     func queryPhotos() {
@@ -122,6 +119,7 @@ class RunDetailTableViewController: UITableViewController {
         AWGQLApiHelper.shared.getPhotosForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 10, callback: { (photoResults) in
             if let photoResults = photoResults {
                 print("Photo Posts count: \(photoResults.count)")
+                self.imageLinks.removeAll()
                 for result in photoResults {
                     let photos = result.photos
                     for photo in photos {
@@ -144,9 +142,35 @@ class RunDetailTableViewController: UITableViewController {
             }
 
             //self.tableView.reloadData()
-        }) { (error) in
-            print("Photos GraphQL Error: \(error.localizedDescription)")
-            //self.tableView.reloadData()
+        }) { (error, message) in
+            print("Photos Error: ", GQLError.handleGQLError(error: error, altMessage: message))
+        }
+    }
+    
+    func checkBannerImages() {
+        if let selectedRun = selectedRun {
+            print("selectedRun: \(selectedRun.photoUrl ?? "n/a")")
+            if let photoUrlString = selectedRun.photoUrl, let photoUrl = URL(string: photoUrlString) {
+                runBannerImageCell.isHidden = false
+                runBannerImageView.load(url: photoUrl, success: {
+                    print("-=-=-=-=-=[ Loaded Banner Image")
+                    DispatchQueue.main.async {
+                        self.runBannerImageCell.isHidden = false
+                        self.tableView.reloadData()
+                    }
+                }) {
+                    print("-=-=-=-=-=[ Unable to load Banner Image")
+                    DispatchQueue.main.async {
+                        self.runBannerImageCell.isHidden = true
+                        self.tableView.reloadData()
+                    }
+                }
+            } else {
+                print("-=-=-=-=-=[ Bad Banner image")
+                print("selectedRun?.photoUrl:", selectedRun.photoUrl ?? "n/a")
+                self.runBannerImageCell.isHidden = true
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -195,6 +219,7 @@ class RunDetailTableViewController: UITableViewController {
             runDetailInfoTextView.set(html: "<h3>No additional details provided</h3>")
         }
         
+        checkBannerImages()
         self.tableView.reloadData()
     }
     
@@ -251,7 +276,7 @@ class RunDetailTableViewController: UITableViewController {
             if runBannerImageCell.isHidden {
                 return 0
             } else {
-                return 150
+                return 180
             }
         }
         
@@ -294,6 +319,10 @@ class RunDetailTableViewController: UITableViewController {
             let galleryVC = segue.destination as? GalleryViewController
             galleryVC?.selectedRun = selectedRun
             galleryVC?.imageLinks = self.imageLinks
+        } else if segue.identifier == Segue.addRiverFlowSeg.rawValue {
+            let addFlowVC = segue.destination as? AddRiverFlowTableViewController
+            addFlowVC?.selectedRun = self.selectedRun
+            print("Called")
         }
     }
 }
@@ -320,8 +349,8 @@ extension RunDetailTableViewController: AWImagePickerDelegate {
                 if let imageResult = photoResult.image, let uri = imageResult.uri {
                     print("Photo Link: ", uri.thumb ?? "no thumb")
                 }
-            }) { (error) in
-                print("Error uploading photo: ", error)
+            }) { (error, message) in
+                print("Error uploading photo: ", GQLError.handleGQLError(error: error, altMessage: message))
             }
             
         }

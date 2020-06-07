@@ -7,9 +7,7 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var createAccountButton: UIButton!
     @IBOutlet var cancelButton: UIView!
-    
-    static let AuthKeychainToken = "ios-aw-auth-key"
-    
+        
     var oauthswift: OAuthSwift?
     
     var referenceViewController: UIViewController?
@@ -40,8 +38,8 @@ class SignInViewController: UIViewController {
 
     func attemptAWOAuth() {
         let oauth = OAuth2Swift(
-            consumerKey: "6",
-            consumerSecret: "p8tvXvxBvRMA6xjcPe3prXLGG9mtAck9qcVUSHex",
+            consumerKey: AWGC.AWConsumerKey,
+            consumerSecret: AWGC.AWConsumerSecret,
             authorizeUrl: "\(AWGC.AW_BASE_URL)/oauth/authorize",
             accessTokenUrl: "\(AWGC.AW_BASE_URL)/oauth/token",
             responseType: "token"
@@ -53,7 +51,7 @@ class SignInViewController: UIViewController {
         oauth.authorizeURLHandler = SafariURLHandler(viewController: self, oauthSwift: self.oauthswift!)
 
         let _ = oauth.authorize(
-            withCallbackURL: URL(string: "aw://oauth-callback/aw")!,
+            withCallbackURL: URL(string: AWGC.AWCallbackUrl)!,
             scope: "",
             state: "") { result in
                 switch result {
@@ -63,7 +61,7 @@ class SignInViewController: UIViewController {
                                         
                     // Save token to local app keychain for security
                     let keychain = KeychainSwift();
-                    keychain.set(credential.oauthToken, forKey: SignInViewController.AuthKeychainToken)
+                    keychain.set(credential.oauthToken, forKey: AWGC.AuthKeychainToken)
                     //keychain.delete("ios-aw-auth-key") // for sign out
                     //print("Keychain auth key is: ", keychain.get("ios-aw-auth-key"))
                     
