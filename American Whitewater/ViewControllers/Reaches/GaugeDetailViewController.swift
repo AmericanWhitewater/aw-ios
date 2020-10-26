@@ -25,10 +25,13 @@ class GaugeDetailViewController: UIViewController, WKNavigationDelegate {
                 self.navigationItem.title = title
             }
             
-            let gaugeMetric = selectedRun.gageMetric
-            let gaugeId = selectedRun.gageId
+            //let gaugeMetric = selectedRun.gageMetric
+            //let gaugeId = selectedRun.gageId
+            let reachId = selectedRun.id
             
-            let urlString = "https://www.americanwhitewater.org/content/Gauge2/graph/id/\(gaugeId)/metric/\(gaugeMetric)/.raw"
+            //let urlString = "https://www.americanwhitewater.org/content/Gauge2/graph/id/\(gaugeId)/metric/\(gaugeMetric)/.raw"
+            let urlString = "https://www.americanwhitewater.org/content/River/view?#/river-detail/\(reachId)/flow"
+            print(urlString)
             
             let url = URL(string: urlString)
             webView.load(URLRequest(url: url!))

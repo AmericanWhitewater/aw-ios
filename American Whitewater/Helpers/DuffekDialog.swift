@@ -9,6 +9,7 @@ class DuffekDialog {
     private init() {} //This prevents others from using the default '()' initializer for this class.
     
     private var alertViewController: NYAlertViewController?
+    private var datePicker: UIDatePicker?
     
     /// Shows a simple Alert Dialog with an Ok Button added
     /// Auto closes and allows for tap and swipe to close gestures
@@ -236,6 +237,37 @@ class DuffekDialog {
     }
     
     
+    func showDatePickerDialog(title: String, message: String, showTime: Bool? = nil, selectedActionPressed: @escaping (Date?)->Void) {
+        
+        alertViewController = styledAlert()
+        guard let alertViewController = alertViewController else {
+            print("Error creating alertViewController");
+            return;
+        }
+        
+        alertViewController.title = title
+        alertViewController.message = "\n\(message)\n"
+        
+        let selectAction = NYAlertAction(title: "Select", style: .default) { (_) in
+            self.alertViewController?.dismiss(animated: true, completion: nil)
+            
+            // Send selected option from picker view
+            selectedActionPressed(self.datePicker?.date ?? nil)
+        }
+        
+        alertViewController.addAction(selectAction)
+        
+        if self.datePicker == nil {
+            self.datePicker = UIDatePicker()
+            self.datePicker?.datePickerMode = .dateAndTime
+        }
+        
+        // add picker view to alertViewControllers content view
+        alertViewController.alertViewContentView = self.datePicker
+        
+        // show the alert
+        self.displayAlert(alertController: alertViewController)
+    }
     
     /// A direct way to hide the alert at any time
     func hideAlert() {

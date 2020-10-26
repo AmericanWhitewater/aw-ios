@@ -24,15 +24,15 @@ class AWApiArticleHelper {
             switch response.result {
                 case .success(let value):
                     let json = JSON(value)
-                    
+                    //print(json.debugDescription)
                     var articlesList:[AWArticle] = []
                     
                     if let articles = json["articles"].dictionary {
                         
                         // first get heading article
-                        if let mainArticle = articles["CArticleGadgetJSON_view"] {
+                        if let mainArticle = articles["CArticleGadgetJSON_view"] {                            
                             let awTopArticle = AWArticle.init(json: mainArticle)
-                            articlesList.append(awTopArticle)
+                            articlesList.insert(awTopArticle, at: 0)
                         }
 
                         
@@ -77,11 +77,11 @@ class AWApiArticleHelper {
 
         //print("Updating/adding article data")
         article.abstract = newArticle.abstract
-        article.abstractPhoto = newArticle.abstractphoto
+        article.abstractPhoto = newArticle.abstractPhoto
         article.author = newArticle.author
         article.contact = newArticle.contact
         article.contents = newArticle.contents
-        article.contentsPhoto = newArticle.contentsphoto
+        article.contentsPhoto = newArticle.contentsPhoto
         article.posted = newArticle.posted
         article.title = newArticle.title
     }
@@ -95,7 +95,7 @@ class AWApiArticleHelper {
         fetchArticles(callback: { (articles) in
             
             //print("Articles fetched... updating context")
-            
+                        
             let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
             context.parent = managedObjectContext
             

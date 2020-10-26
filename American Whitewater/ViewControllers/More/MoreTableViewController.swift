@@ -21,7 +21,8 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
         super.viewWillAppear(animated)
         
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        lastUpdatedAndVersionLabel.text = "App Version: \(appVersion ?? "n/a")"
+        let appBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0"
+        lastUpdatedAndVersionLabel.text = "App Version: \(appVersion ?? "n/a") (\(appBuild))"
         
         if DefaultsManager.shouldAutoRefresh == true {
             autoRefreshSwitch.setOn(true, animated: false)

@@ -33,7 +33,7 @@ class RunAlertsViewController: UIViewController {
         riverSectionLabel.text = selectedRun?.section ?? "Unknown Section"
         
         // setup dateFormatters for converting graphql date formats
-        inputDateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        inputDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         outDateFormatter.dateFormat = "MMM d, yyyy"
         
         tableView.rowHeight = UITableView.automaticDimension
@@ -68,7 +68,8 @@ class RunAlertsViewController: UIViewController {
         print(selectedRun.id)
                 
         AWGQLApiHelper.shared.getAlertsForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 50, callback: { (alertResults) in
-             
+            self.refreshControl.endRefreshing()
+            
             if let alertResults = alertResults {
                 print("Alert Results count: \(alertResults.count)")
                 // if the server is returning less alerts than we have we
@@ -123,12 +124,29 @@ class RunAlertsViewController: UIViewController {
             alertsList.removeAll()
             
             for alert in alertResults {
+                //print("Alert: \(alert.postDate ?? "na") - \(alert.detail ?? "na") - \(alert.user?.uname ?? "")")
+                
                 var newAlert = [String:String]()
                 newAlert["postDate"] = alert.postDate ?? ""
                 newAlert["message"] = alert.detail ?? ""
                 newAlert["poster"] = alert.user?.uname ?? ""
                 alertsList.append(newAlert)
             }
+            
+            // sort the alerts list by postDate
+            alertsList = alertsList.sorted(by: { (first, second) -> Bool in
+                let firstDateString = first["postDate"] ?? ""
+                let secondDateString = second["postDate"] ?? ""
+                
+                if let date1 = inputDateFormatter.date(from: firstDateString),
+                    let date2 = inputDateFormatter.date(from: secondDateString) {
+                    return date1 > date2
+                }
+                
+                return false
+            })
+                        
+            tableView.reloadData()
         }
     }
     
@@ -179,8 +197,11 @@ extension RunAlertsViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         cell.alertDateTimeLabel.text = ""
-        if let dateString = alert["postDate"], let date = inputDateFormatter.date(from: dateString) {
-            cell.alertDateTimeLabel.text = outDateFormatter.string(from: date)
+        if let dateString = alert["postDate"] {
+            if let date = inputDateFormatter.date(from: dateString) { //yyyy-MM-dd hh:mm:ss
+                let outString = outDateFormatter.string(from: date)
+                cell.alertDateTimeLabel.text = outString
+            }
         }
         
         return cell

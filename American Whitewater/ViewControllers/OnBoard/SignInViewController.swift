@@ -33,7 +33,11 @@ class SignInViewController: UIViewController {
     
     
     @IBAction func createAccountButtonPressed(_ sender: Any) {
-        
+        if let url = URL(string: "https://www.americanwhitewater.org/content/User/login") {
+            UIApplication.shared.open(url)
+        } else {
+            DuffekDialog.shared.showOkDialog(title: "Unable to Create Account", message: "Please visit: https://americanwhitewater.org to create an account.")
+        }
     }
 
     func attemptAWOAuth() {

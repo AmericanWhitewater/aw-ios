@@ -38,7 +38,7 @@ class AWApiReachHelper {
                                         
                     let json = JSON(value)
                     print("Total JSON Reaches from server: \(json.count)")
-                                        
+                    
                     if let riversArray = json.array {
                         for riverJSON in riversArray {
                             let reach = AWReach(json: riverJSON)
@@ -319,8 +319,8 @@ class AWApiReachHelper {
                 }
             }
             
-            DefaultsManager.lastUpdated = Date()
-            DefaultsManager.favoritesLastUpdated = Date()
+//            DefaultsManager.lastUpdated = Date()
+//            DefaultsManager.favoritesLastUpdated = Date()
             DefaultsManager.fetchingreaches = false
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }

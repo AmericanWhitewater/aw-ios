@@ -15,6 +15,40 @@ class DefaultsManager {
         }
     }
 
+    private static let userAccountIdKey = "userAccountId"
+    static var userAccountId: String? {
+        get {
+            return UserDefaults.standard.string(forKey: userAccountIdKey)
+        }
+        
+        set {
+            UserDefaults.standard.set(newValue, forKey: userAccountIdKey)
+        }
+    }
+    
+    private static let unameIdKey = "uname"
+    static var uname: String? {
+        get {
+            return UserDefaults.standard.string(forKey: unameIdKey)
+        }
+        
+        set {
+            UserDefaults.standard.set(newValue, forKey: unameIdKey)
+        }
+    }
+    
+    
+    private static let whatsNewKey = "whatsNewKey"
+    static var whatsNew: String? {
+        get {
+            return UserDefaults.standard.string(forKey: whatsNewKey)
+        }
+        
+        set {
+            UserDefaults.standard.set(newValue, forKey: whatsNewKey)
+        }
+    }
+    
     private static let completedFirstRunKey = "completedFirstRunKey"
     static var completedFirstRun: Bool {
         get {

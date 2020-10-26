@@ -1,0 +1,173 @@
+query Observations($page_size: Int!, $reach_id: AWID!, $page: Int!, $gauge_id: AWID, $post_types: [PostType])
+{
+    posts(post_types: $post_types, reach_id: $reach_id, gauge_id: $gauge_id, first: $page_size, page: $page, orderBy: [{field: REVISION, order: ASC}]) {
+        paginatorInfo {
+            lastPage,
+            currentPage,
+            total,
+        },
+        data {
+            id,
+            title,
+            detail,
+            uid,
+            user {
+                uname,
+            }
+            post_date,
+            post_type,
+            revision,
+            reach {
+                id,
+                river,
+                section
+            },
+            reach_id,
+            gauge_id,
+            metric_id,
+            metric {
+                shortkey,
+                unit,
+                name
+            },
+            reading,
+            photos {
+                id,
+                post_id,
+                photo_date,
+                image {
+                    ext,
+                    uri {
+                        thumb,
+                        medium,
+                        big
+                    }
+                }
+            }
+        }
+    }
+}
+
+query Observations2($page_size: Int!, $reach_id: AWID!, $page: Int!,  $post_types: [PostType])
+{
+    posts(post_types: $post_types, reach_id: $reach_id, first: $page_size, page: $page, orderBy: [{field: REVISION, order: ASC}]) {
+        paginatorInfo {
+            lastPage,
+            currentPage,
+            total,
+        },
+        data {
+            id,
+            title,
+            detail,
+            uid,
+            user {
+                uname,
+            }
+            post_date,
+            post_type,
+            revision,
+            reach {
+                id,
+                river,
+                section
+            },
+            reach_id,
+            gauge_id,
+            metric_id,
+            metric {
+                shortkey,
+                unit,
+                name
+            },
+            reading,
+            photos {
+                id,
+                post_id,
+                photo_date,
+                image {
+                    ext,
+                    uri {
+                        thumb,
+                        medium,
+                        big
+                    }
+                }
+            }
+        }
+    }
+}
+
+mutation PostObservationPhoto($id: ID!, $file: Upload, $type: PhotoSectionsType, $reach_id: AWID, $photo: PhotoInput) {
+    photoFileUpdate(id: $id, fileinput: {
+        file: $file,
+        section: $type,
+        section_id: $reach_id
+    }, photo: $photo) {
+        id,
+        post_id,
+        post {
+            id,
+            title,
+            detail,
+            uid,
+            post_date,
+            post_type,
+            revision,
+            reach_id,
+            gauge_id,
+            metric_id,
+            reading
+        },
+        image {
+            uri {
+                thumb,
+                medium,
+                big,
+            }
+        }
+    }
+}
+
+mutation PostObservation($id: ID!, $post: PostInput!) {
+    postUpdate(id: $id, post: $post) {
+        id,
+        title,
+        detail,
+        uid,
+        user {
+            uname
+        },
+        post_date,
+        post_type,
+        revision,
+        reach_id,
+        gauge_id,
+        metric_id,
+        metric {
+            shortkey,
+            unit,
+            name
+        },
+        reading,
+        photos {
+            id,
+            caption,
+            post_id,
+            description,
+            subject,
+            photo_date,
+            author,
+            poi_name,
+            poi_id,
+            image {
+                ext,
+                uri {
+                    thumb,
+                    medium,
+                    big,
+                }
+            }
+        }
+    }
+}

@@ -257,7 +257,7 @@ UIView hierarchy category.
         }
         
         if IQcanBecomeFirstResponder == true {
-            IQcanBecomeFirstResponder = isUserInteractionEnabled == true && isHidden == false && alpha != 0.0 && isAlertViewTextField() == false && textFieldSearchBar() == nil
+            IQcanBecomeFirstResponder = isUserInteractionEnabled == true && isHidden == false && alpha != 0.0 && isAlertViewTextField() == false// && textFieldSearchBar() == nil
         }
 
         return IQcanBecomeFirstResponder

@@ -5,9 +5,12 @@ target 'American Whitewater' do
 
   use_frameworks!
 
-  # Handles issues with Keyboard covering UI elements
-  # automatically
-  pod 'IQKeyboardManagerSwift', '~> 6.5.5'
+  # Handles issues with Keyboard covering UI elements automatically
+  # Note: This is a Fork of the main repo - this allows UISearchBars
+  # to be included in the functionality - this will need to be updated
+  # or reverted back - but Search on RunsListViewController will not
+  # work correctly if you do not use this Fork
+  pod 'IQKeyboardManagerSwift', :git => 'https://github.com/duffek/IQKeyboardManager.git'  
   
   # Push Notification System
   pod 'OneSignal', '~> 2.11.2'
@@ -29,6 +32,9 @@ target 'American Whitewater' do
   pod 'Fabric', '~> 1.10.2'
   pod 'Crashlytics', '~> 3.14.0'
   pod 'Firebase/Analytics', '~> 6.22.0'
+  
+  # Pod Charts
+  pod 'Charts', '~> 3.6.0'
   
   # Advanced debugging - only loads in debug
   pod 'netfox'

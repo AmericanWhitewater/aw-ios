@@ -52,7 +52,20 @@ class RunsListViewController: UIViewController {
         legendCloseButton.layer.cornerRadius = legendCloseButton.frame.height / 2
         legendCloseButton.clipsToBounds = true
         
-        runnableSwitch.isOn = DefaultsManager.runnableFilter        
+        runnableSwitch.isOn = DefaultsManager.runnableFilter
+        
+        // set this view to listen for application resuming from background
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive),
+                                                 name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    fileprivate  func removeObservers() {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+
+    @objc fileprivate func applicationDidBecomeActive() {
+        print("Application resumed")
+        viewWillAppear(true)
     }
     
     @objc func dismissKeyboard() {
@@ -62,6 +75,15 @@ class RunsListViewController: UIViewController {
         
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+// DRN - temp fix to hide distanceFilter
+DefaultsManager.distanceFilter = 0.0
+DefaultsManager.showDistanceFilter = false
+DefaultsManager.showRegionFilter = true
+
+        // get and store the user's uname and id in local storage
+        AWGQLApiHelper.shared.getAccountInfo()
+        
         // set the right nav button based on chosen filters
         // needed due to a visual bug in XCode 11 when
         // manually setting the image
@@ -70,22 +92,24 @@ class RunsListViewController: UIViewController {
         // first fetch the rivers we have stored locally
         fetchRiversFromCoreData();
         
+        print("Check if onboarding needed")
         if checkIfOnboardingNeeded() == false {
             print("Onboading needed == false")
             
-            if let date = DefaultsManager.lastUpdated {
-                if let diff = Calendar.current.dateComponents([.minute], from: date, to: Date()).minute, diff > 2 {
-                    
-                    print("2 mins has passed so update is needed")
-                    self.refresh()
-                } else {
-                    print("2 mins has not passed yet")
-                }
-                
-            } else { // if we haven't set a date yet just refresh
-                print("no first lastUpdated")
+//            if let date = DefaultsManager.lastUpdated {
+//                print("Checking diff in time")
+//                if let diff = Calendar.current.dateComponents([.minute], from: date, to: Date()).minute, diff > 2 {
+//
+//                    print("2 mins has passed so update is needed")
+//                    self.refresh()
+//                } else {
+//                    print("2 mins has not passed yet")
+//                }
+//
+//            } else { // if we haven't set a date yet just refresh
+//                print("no first lastUpdated")
                 self.refresh()
-            }
+//            }
             
             // if regions fitler has changed then refresh
             if DefaultsManager.regionsUpdated {
@@ -132,8 +156,23 @@ class RunsListViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+// DRN - temp fix to hide distanceFilter
+DefaultsManager.distanceFilter = 0.0
+DefaultsManager.showDistanceFilter = false
+DefaultsManager.showRegionFilter = true
+
+// We use this for TestFlight testing to highlight what has changed
+// if we design it better we can include it in the main app
+//        if (DefaultsManager.whatsNew == nil || DefaultsManager.whatsNew != "whatsNew\(DefaultsManager.appVersion ?? -1)") {
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let newVC = storyboard.instantiateViewController(withIdentifier: "WhatsNewView") as? WhatsNewViewController
+//            if let newVC = newVC {
+//                self.present(newVC, animated: true, completion: nil)
+//            }
+//        }
     }
 
+    
     func fetchRiversFromCoreData() {
         
         print("Fetching rivers from core data")
@@ -221,12 +260,14 @@ class RunsListViewController: UIViewController {
     func refresh(regions: [Region] = Region.all) {
         
         // don't update if the tableView is already updating
-        if tableView.hasUncommittedUpdates {
-            print("already updating")
-            refreshControl.endRefreshing()
-            return
-        }
+//        if tableView.hasUncommittedUpdates {
+//            print("already updating")
+//            refreshControl.endRefreshing()
+//            return
+//        }
     
+        self.refreshControl.beginRefreshingManually()
+        
         if DefaultsManager.showRegionFilter {
             print("Updating reaches by region")
             var codes: [String] = []
@@ -246,8 +287,9 @@ class RunsListViewController: UIViewController {
             // Check if we're pulling ALL data - if so let the user know
             // a full refresh takes 30-60 seconds to complete
             if codes.count == Region.all.count {
-                DuffekDialog.shared.showStandardDialog(title: "Pull All Data?", message: "No regions selected. All river data will be updated. This will take a few minutes.\n\nYou can set filters to speed this up.", buttonTitle: "Continue", buttonFunction: {
+                DuffekDialog.shared.showStandardDialog(title: "Pull All Data?", message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.", buttonTitle: "Continue", buttonFunction: {
                     // User wants to continue
+                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
                     self.refreshData(with: codes)
                 }, cancelFunction: {
                     // cancelled so end refresh
@@ -289,17 +331,20 @@ class RunsListViewController: UIViewController {
             DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.userInfo.description)
         }
 
-        tableView.reloadData() // drn
+        tableView.reloadData() 
         
         // update those reaches
         if let results = fetchedResultsController?.fetchedObjects {
             let reachIds = results.map{ "\($0.id)" }
+            self.refreshControl.beginRefreshingManually()
             AWApiReachHelper.shared.updateReaches(reachIds: reachIds, callback: {
+                print("1")
                 self.refreshControl.endRefreshing()
                 // finished - load the data again for display
                 self.fetchRiversFromCoreData()
                 
             }) { (error) in
+                print("2")
                 self.refreshControl.endRefreshing()
                 
                 if let error = error {
@@ -314,18 +359,26 @@ class RunsListViewController: UIViewController {
     }
     
     func refreshData(with codes: [String]) {
-
+        print("RefreshData called!")
+        
+        self.refreshControl.beginRefreshingManually()
         AWApiReachHelper.shared.updateRegionalReaches(regionCodes: codes, callback: {
             // handle success
+            print("3")
             self.refreshControl.endRefreshing()
             print("Fetched Regions From Server")
             
             self.fetchRiversFromCoreData()
 
+            DefaultsManager.lastUpdated = Date()
+            DefaultsManager.favoritesLastUpdated = Date()
+
             // we need this to update section headers
             self.tableView.reloadSections([0], with: .automatic)
             
+            
         }) { (error) in
+            print("4")
             self.refreshControl.endRefreshing()
             
             if let error = error {
@@ -387,7 +440,7 @@ class RunsListViewController: UIViewController {
     
     @objc func favoriteButtonPressed(_ sender: UIButton?) {
         if let button = sender {
-            
+                                    
             // This is a good time to ask for permissions!
             OneSignal.promptForPushNotifications(userResponse: { accepted in
                 print("User accepted notifications: \(accepted)")
@@ -398,8 +451,12 @@ class RunsListViewController: UIViewController {
             reach.favorite = !reach.favorite
             
             do {
+                defer { self.tableView.reloadData(); }
+                
                 try managedObjectContext.save()
-            } catch { print("Unable to save context after save button pressed") }
+            } catch {
+                print("Unable to save context after save button pressed")
+            }
         }
     }
     
@@ -492,8 +549,7 @@ class RunsListViewController: UIViewController {
                 let detailVC = segue.destination as! RunDetailTableViewController
                 detailVC.selectedRun = reach
             }
-        }
-        
+        }        
     }
 }
 
@@ -534,7 +590,7 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
         
         var level = reach.currentGageReading ?? "n/a"
         level = level.trimmingCharacters(in: .whitespacesAndNewlines)
-        cell.runLevelAndClassLabel.text = "Level: \(level) Class: \(reach.difficulty ?? "n/a")"
+        cell.runLevelAndClassLabel.text = "Level: \(level)\(reach.unit ?? "") Class: \(reach.difficulty ?? "n/a")"
         
         // set highlight color
         if let status = reach.condition {
@@ -573,10 +629,10 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.runDistanceAwayLabel.isHidden = true
         if reach.distance == 999999 || reach.distance == 0.0 {
             cell.runDistanceAwayLabel.text = "n/a miles"
-            cell.runDistanceAwayLabel.isHidden = false
+            cell.runDistanceAwayLabel.isHidden = true
         } else if reach.distance > 0.0 {
             cell.runDistanceAwayLabel.text = String(format: "%.1f miles", reach.distance)
-            cell.runDistanceAwayLabel.isHidden = false
+            cell.runDistanceAwayLabel.isHidden = true
         }
             
         // set index on button for later lookup
@@ -701,19 +757,18 @@ extension RunsListViewController: UISearchBarDelegate {
     // hide keyboard on search press
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-
         fetchRiversFromCoreData()
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.count > 1 {
-            fetchRiversFromCoreData()
-        }
+        fetchRiversFromCoreData()
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
+        searchBar.endEditing(true)
+        fetchRiversFromCoreData()
     }
 }
 

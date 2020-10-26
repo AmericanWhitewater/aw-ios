@@ -11,6 +11,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
+    var runsListViewController: RunsListViewController? = nil
+    
     // setup CoreData functions and properties
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "AmericanWhitewaterV2")

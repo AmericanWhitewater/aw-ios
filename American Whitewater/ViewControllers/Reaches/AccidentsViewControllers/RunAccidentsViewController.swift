@@ -35,14 +35,20 @@ class RunAccidentsViewController: UIViewController {
         tableView.estimatedRowHeight = 70
         
         // setup pull to refresh
+        refreshControl.tintColor = UIColor(named: "primary")
         refreshControl.addTarget(self, action: #selector(refreshAccidents), for: .valueChanged)
         tableView.refreshControl = refreshControl
         
         // setup dateFormatter
         inputDateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
         outDateFormatter.dateFormat = "MMM d, yyyy"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        self.refreshControl.beginRefreshing()
+        // load alerts from server
+        refreshControl.beginRefreshingManually()
         self.refreshAccidents()
     }
     
@@ -51,7 +57,7 @@ class RunAccidentsViewController: UIViewController {
         
         guard let reach = selectedRun else { print("can't get reach id on accidents list"); return }
         
-        AWGQLApiHelper.shared.getAccidentsForReach(reach_id: Int(reach.id), first: 2, page: 1, callback: { (accidentResults) in
+        AWGQLApiHelper.shared.getAccidentsForReach(reach_id: Int(reach.id), first: 100, page: 1, callback: { (accidentResults) in
             self.accidentsList.removeAll()
             
             // handle server sending back multiple of the same results
@@ -63,15 +69,28 @@ class RunAccidentsViewController: UIViewController {
                         self.accidentsList.append(item)
                     }
                 }
+                
+                // sort the alerts list by postDate
+                self.accidentsList = self.accidentsList.sorted(by: { (first, second) -> Bool in
+                    let firstDateString = first.accidentDate ?? ""
+                    let secondDateString = second.accidentDate ?? ""
+                    
+                    if let date1 = self.inputDateFormatter.date(from: firstDateString),
+                        let date2 = self.inputDateFormatter.date(from: secondDateString) {
+                        return date1 > date2
+                    }
+                    
+                    return false
+                })
             }
             
             //self.accidentsList = accidentResults
             self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
         }) { (error, message) in
+            self.refreshControl.endRefreshing()
             print("Accidents Query Error: \(GQLError.handleGQLError(error: error, altMessage: message))")
         }
-        
-        self.refreshControl.endRefreshing()
     }
     
     @IBAction func reportAccidentButtonPressed(_ sender: Any) {
@@ -116,7 +135,7 @@ extension RunAccidentsViewController: UITableViewDelegate, UITableViewDataSource
         
         let accident = accidentsList[indexPath.row]
         
-        let date = inputDateFormatter.date(from: accident.accidentdate ?? "")
+        let date = inputDateFormatter.date(from: accident.accidentDate ?? "")
         if let date = date {
             cell.accidentDateTimeLabel.text = outDateFormatter.string(from: date)
         } else {

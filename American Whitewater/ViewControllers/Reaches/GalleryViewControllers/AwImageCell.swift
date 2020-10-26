@@ -11,4 +11,6 @@ import UIKit
 class AwImageCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var postedDateLabel: UILabel!
+    
 }

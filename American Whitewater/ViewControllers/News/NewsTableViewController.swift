@@ -8,15 +8,17 @@ class NewsTableViewController: UITableViewController {
 
     // CoreData properties we use for managing the context and fetched results
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    private var fetchedResultsController: NSFetchedResultsController<Article>?
+    private var fetchedResultsController: NSFetchedResultsController<NewsArticle>?
         
+    private var selectedImage: UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         donateButton.layer.cornerRadius = 22.5
      
         self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 241
+        self.tableView.estimatedRowHeight = 280
         
         // setup pull to refresh
         let refreshControl = UIRefreshControl()
@@ -32,7 +34,7 @@ class NewsTableViewController: UITableViewController {
         // check how long it's been since we updated from the server
         // if it's too long we just update
         if let lastUpdated = DefaultsManager.articlesLastUpdated {
-            if lastUpdated < Date(timeIntervalSinceNow: -600) { //60s * 10m == 600s
+            if lastUpdated < Date(timeIntervalSinceNow: -120) { //60s * 10m == 600s
                 self.refresh()
             }
         } else {
@@ -65,7 +67,8 @@ class NewsTableViewController: UITableViewController {
      fetch the results and reload
     */
     func refresh() {
-        AWApiArticleHelper.shared.updateArticles(callback: {
+        //AWApiArticleHelper.shared.updateArticles(callback: {
+        AWGQLArticleApiHelper.shared.updateArticles(callback: {
             self.refreshControl?.endRefreshing()
             
             print("Articles fetched and updated!")
@@ -89,10 +92,11 @@ class NewsTableViewController: UITableViewController {
     func fetchArticlesFromCoreData() {
         // setup fetched results controller
         //let request = NSFetchRequest<Article>(entityName: "Article")
-        let request = Article.fetchRequest() as NSFetchRequest<Article>
-        request.sortDescriptors = [NSSortDescriptor(key: "posted", ascending: false)]
+        let request = NewsArticle.fetchRequest() as NSFetchRequest<NewsArticle>
+        request.sortDescriptors = [NSSortDescriptor(key: "postedDate", ascending: false)]
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        print("Fetched results: \(fetchedResultsController?.fetchedObjects?.count ?? -1)")
         fetchedResultsController?.delegate = self
         
         do {
@@ -110,10 +114,11 @@ class NewsTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if let article = sender as? Article {
+        if let article = sender as? NewsArticle {
             if segue.identifier == Segue.articleDetail.rawValue {
                 let detailVC = segue.destination as! SingleArticleViewController
                 detailVC.selectedArticle = article
+                detailVC.selectedImage = self.selectedImage
             }
         }
 
@@ -165,7 +170,9 @@ extension NewsTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         // AWTODO: add place holder cell if no objects are returned
-        return fetchedResultsController?.fetchedObjects?.count ?? 0
+        let count = fetchedResultsController?.fetchedObjects?.count ?? 0
+        print("Count:", count)
+        return count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -175,22 +182,35 @@ extension NewsTableViewController {
         guard let awArticle = fetchedResultsController?.object(at: indexPath) else { return cell }
         
         // get the date into a sexy format
-        var releaseDatePretty = ""
+        var releasedDatePretty = ""
         if let releaseDate = awArticle.releaseDate {
+            //print("Posted Date: \(releaseDate)")
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-mm-dd hh:mm:ssZ"
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let date = dateFormatter.date(from: releaseDate)
             let simpleDateFormat = DateFormatter()
-            simpleDateFormat.dateFormat = "MMM dd, yyyy"
+            simpleDateFormat.dateFormat = "MMM dd, yyyy h:mm a"
             
             if date != nil {
-                releaseDatePretty = simpleDateFormat.string(from: date!)
+                releasedDatePretty = simpleDateFormat.string(from: date!)
             }
         }
-        print(awArticle.abstractPhoto ?? "n/a")
-        cell.articleImageView.isHidden = true
+        print(awArticle.abstractImage ?? "no abstract photo")
+        cell.articleImageView.image = nil
+        
+        if let abstractPhoto = awArticle.abstractImage, abstractPhoto.count > 0 {
+            let url = !abstractPhoto.contains("http") ? "\(AWGC.AW_BASE_URL)\(abstractPhoto)" : "\(abstractPhoto)"
+            cell.activityIndicator.startAnimating()
+            cell.articleImageView.load(url: URL(string: url)!) {
+                cell.activityIndicator.stopAnimating()
+            } failed: {
+                cell.activityIndicator.stopAnimating()
+                print("image failed to load: \(url)")
+            }
+        }
+        
         cell.articleTitleLabel.text = (awArticle.title ?? "")
-        cell.articleAuthorAndDateLabel.text = "By: " + (awArticle.author ?? "") + ((releaseDatePretty.count > 0) ? " - \(releaseDatePretty)" : "")
+        cell.articleAuthorAndDateLabel.text = "By: " + (awArticle.author ?? "") + ((releasedDatePretty.count > 0) ? " - \(releasedDatePretty)" : "")
         cell.articleAbstractLabel.text = stripHTML(string: awArticle.abstract)
         
         return cell
@@ -199,6 +219,10 @@ extension NewsTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard let selectedArticle = fetchedResultsController?.object(at: indexPath) else { return }
+        
+        if let cell = tableView.cellForRow(at: indexPath) as? NewsTableViewCell, let img = cell.articleImageView.image {
+            self.selectedImage = img
+        }
         
         performSegue(withIdentifier: Segue.articleDetail.rawValue, sender: selectedArticle)
     }

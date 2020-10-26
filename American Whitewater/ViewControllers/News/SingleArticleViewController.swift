@@ -5,10 +5,12 @@ class SingleArticleViewController: UIViewController, WKNavigationDelegate  {
 
     @IBOutlet weak var webView: WKWebView!
     
+    @IBOutlet weak var articleImageView: UIImageView!
     @IBOutlet weak var articleTitleLabel: UILabel!
     @IBOutlet weak var articleAuthorDateLabel: UILabel!
     
-    var selectedArticle: Article?
+    var selectedArticle: NewsArticle?
+    var selectedImage: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,6 +19,16 @@ class SingleArticleViewController: UIViewController, WKNavigationDelegate  {
         
         // Do any additional setup after loading the view.
         if let article = selectedArticle {
+            
+            if let selectedImage = selectedImage {
+                articleImageView.image = selectedImage
+            } else {
+                if let photo = article.abstractImage {
+                    let url = !photo.contains("http") ? "\(AWGC.AW_BASE_URL)\(photo)" : "\(photo)"
+                    print("url: \(url)")
+                    articleImageView.load(url: URL(string: url)!)
+                }
+            }
             
             if let title = article.title {
                 articleTitleLabel.text = title
@@ -30,7 +42,7 @@ class SingleArticleViewController: UIViewController, WKNavigationDelegate  {
                 articleAuthorDateLabel.text = ""
             }
             
-            if let postedDate = article.posted {
+            if let postedDate = article.postedDate {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-mm-dd hh:mm:ssZ"
                 let date = dateFormatter.date(from: postedDate)
@@ -49,6 +61,7 @@ class SingleArticleViewController: UIViewController, WKNavigationDelegate  {
                 articleAuthorDateLabel.text = ""
             }
             
+            print("Contents: ", article.contents)
             if let content = article.contents {
                 var headerString = "<header><meta name='viewport' content='width=device-width, initial-scale=2.0, maximum-scale=1.0, minimum-scale=1.0'></header>"
                 headerString.append(content)

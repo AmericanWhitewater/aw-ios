@@ -18,4 +18,5 @@ enum Segue: String {
     case gallerySeg
     case reviewPhotoSeg
     case addRiverFlowSeg
+    case showFlowsSeg
 }

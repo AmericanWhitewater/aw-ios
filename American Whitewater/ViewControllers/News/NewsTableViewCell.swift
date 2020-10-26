@@ -10,6 +10,7 @@ class NewsTableViewCell: UITableViewCell {
     @IBOutlet weak var articleAuthorAndDateLabel: UILabel!
     @IBOutlet weak var articleAbstractLabel: UILabel!
     @IBOutlet weak var articleImageView: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

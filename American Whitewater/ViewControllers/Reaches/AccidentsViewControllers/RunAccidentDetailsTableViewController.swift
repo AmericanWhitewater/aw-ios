@@ -33,7 +33,7 @@ class RunAccidentDetailsTableViewController: UITableViewController {
             runTitleLabel.text = selectedAccident.river ?? "Unknown River"
             runSectionLabel.text = selectedAccident.section ?? "Unknown Section"
             runLocationLabel.text = selectedAccident.location ?? "Location n/a"
-            runWaterLevelLabel.text = selectedAccident.waterlevel ?? "N/A"
+            runWaterLevelLabel.text = selectedAccident.waterLevel ?? "N/A"
             runAgeLabel.text = selectedAccident.age == 0 ? "N/A" : "\(selectedAccident.age ?? 0)"
             runDifficultyLabel.text = selectedAccident.difficulty ?? "N/A"
             runDescriptionLabel.set(html: selectedAccident.description ?? "<h3>No Description Available</h3>")

@@ -21,6 +21,7 @@ class RunDetailTableViewController: UITableViewController {
     
     @IBOutlet weak var runSectionInfoLabel: UILabel!
     @IBOutlet weak var runDetailInfoTextView: UITextView!
+    @IBOutlet weak var tapForMoreButton: UIButton!
     
     @IBOutlet weak var runClassLabel: UILabel!
     @IBOutlet weak var runLengthLabel: UILabel!
@@ -35,12 +36,12 @@ class RunDetailTableViewController: UITableViewController {
     @IBOutlet weak var preview2ImageView: UIImageView!
     @IBOutlet weak var preview3ImageView: UIImageView!
     
-    
-    var awImagePicker: AWImagePicker!
-    
     let dateFormatter = DateFormatter()
     
     var imageLinks = [ [String:String?] ]()
+    
+    var detailTextMaxCount = 400
+    var originalDetailsDescription = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +55,6 @@ class RunDetailTableViewController: UITableViewController {
                                 as [NSAttributedString.Key : Any]
         viewSegmentControl.setTitleTextAttributes(selectedSegTitle, for: .selected)
         
-        awImagePicker = AWImagePicker(presentationController: self, delegate: self)
         
         dateFormatter.dateFormat = "MMM dd, yyyy h:mm:ss a"
         
@@ -96,6 +96,8 @@ class RunDetailTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        tapForMoreButton.isHidden = false
+        
         viewSegmentControl.selectedSegmentIndex = 0
         
         if let selectedRun = selectedRun {
@@ -112,11 +114,19 @@ class RunDetailTableViewController: UITableViewController {
         checkBannerImages()
     }
     
+    
+    @IBAction func tapForMoreButtonPressed(_ sender: Any) {
+        runDetailInfoTextView.set(html: originalDetailsDescription)
+        tapForMoreButton.isHidden = true
+        self.tableView.reloadData()
+    }
+    
+    
     func queryPhotos() {
         
         guard let selectedRun = selectedRun else { print("selected run is nil"); return }
                 
-        AWGQLApiHelper.shared.getPhotosForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 10, callback: { (photoResults) in
+        AWGQLApiHelper.shared.getPhotosForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 100 , callback: { (photoResults) in
             if let photoResults = photoResults {
                 print("Photo Posts count: \(photoResults.count)")
                 self.imageLinks.removeAll()
@@ -130,6 +140,9 @@ class RunDetailTableViewController: UITableViewController {
                             uri["thumb"] = thumb
                             uri["med"] = medium
                             uri["big"] = big
+                            uri["caption"] = photo.caption ?? ""
+                            uri["author"] = photo.author ?? ""
+                            uri["photoDate"] = photo.photoDate ?? ""
                             self.imageLinks.append(uri)
                         }
                     }
@@ -153,20 +166,17 @@ class RunDetailTableViewController: UITableViewController {
             if let photoUrlString = selectedRun.photoUrl, let photoUrl = URL(string: photoUrlString) {
                 runBannerImageCell.isHidden = false
                 runBannerImageView.load(url: photoUrl, success: {
-                    print("-=-=-=-=-=[ Loaded Banner Image")
                     DispatchQueue.main.async {
                         self.runBannerImageCell.isHidden = false
                         self.tableView.reloadData()
                     }
                 }) {
-                    print("-=-=-=-=-=[ Unable to load Banner Image")
                     DispatchQueue.main.async {
                         self.runBannerImageCell.isHidden = true
                         self.tableView.reloadData()
                     }
                 }
             } else {
-                print("-=-=-=-=-=[ Bad Banner image")
                 print("selectedRun?.photoUrl:", selectedRun.photoUrl ?? "n/a")
                 self.runBannerImageCell.isHidden = true
                 self.tableView.reloadData()
@@ -213,8 +223,13 @@ class RunDetailTableViewController: UITableViewController {
         
         self.runLengthLabel.text = fetchedReach.length ?? "n/a"
         self.runGradientLabel.text = fetchedReach.avgGradient == 0 ? "\(fetchedReach.avgGradient) fpm" : "n/a fpm"
-        if let details = fetchedReach.longDescription {
+        if var details = fetchedReach.longDescription {
+            originalDetailsDescription = details
+            
+            let maxCount = detailTextMaxCount > details.count ? details.count : detailTextMaxCount
+            details = String(details.prefix(maxCount))
             runDetailInfoTextView.set(html: details)
+            
         } else {
             runDetailInfoTextView.set(html: "<h3>No additional details provided</h3>")
         }
@@ -223,11 +238,11 @@ class RunDetailTableViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
+    
+    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10
     }
-    
-    
     
     /*
      This is a static table view but we're still using didSelectAt to handle when the user
@@ -284,13 +299,6 @@ class RunDetailTableViewController: UITableViewController {
     }
     
     
-    @IBAction func addPhotoButtonPressed(_ sender: UIButton) {
-        print("Photo button pressed")
-        awImagePicker.present(from: sender)
-    }
-    
-    
-    
     @IBAction func detailViewSegmentChanged(_ segmentControl: UISegmentedControl) {
         performSegue(withIdentifier: Segue.reachMapEmbed.rawValue, sender: nil)
     }
@@ -305,7 +313,6 @@ class RunDetailTableViewController: UITableViewController {
         if segue.identifier == Segue.gaugeDetail.rawValue {
             let gaugeVC = segue.destination as? GaugeDetailViewController
             gaugeVC?.selectedRun = selectedRun
-            
         } else if segue.identifier == Segue.reachMapEmbed.rawValue {
             let mapVC = segue.destination as? RunMapViewController
             mapVC?.selectedRun = selectedRun
@@ -319,42 +326,10 @@ class RunDetailTableViewController: UITableViewController {
             let galleryVC = segue.destination as? GalleryViewController
             galleryVC?.selectedRun = selectedRun
             galleryVC?.imageLinks = self.imageLinks
-        } else if segue.identifier == Segue.addRiverFlowSeg.rawValue {
-            let addFlowVC = segue.destination as? AddRiverFlowTableViewController
+        } else if segue.identifier == Segue.showFlowsSeg.rawValue {
+            let addFlowVC = segue.destination as? RiverFlowsViewController
             addFlowVC?.selectedRun = self.selectedRun
-            print("Called")
         }
     }
 }
 
-extension RunDetailTableViewController: AWImagePickerDelegate {
-
-    // show the users photo in the preview listing
-    func didSelect(image: UIImage?) {
-        if preview1ImageView.image == nil {
-            preview1ImageView.image = image
-        } else if preview2ImageView.image == nil {
-            preview2ImageView.image = image
-        } else if preview3ImageView.image == nil {
-            preview3ImageView.image = image
-        } else {
-            preview1ImageView.image = image
-        }
-        
-        // GraphQL Photo Upload
-        // AWTODO: Add captioning and input to photo
-        if let image = image, let selectedRun = selectedRun {
-            
-            AWGQLApiHelper.shared.postPhotoFor(reach_id: Int(selectedRun.id), image: image, caption: "RunDetailVC \(NanoID.new(6))", callback: { (photoResult) in
-                if let imageResult = photoResult.image, let uri = imageResult.uri {
-                    print("Photo Link: ", uri.thumb ?? "no thumb")
-                }
-            }) { (error, message) in
-                print("Error uploading photo: ", GQLError.handleGQLError(error: error, altMessage: message))
-            }
-            
-        }
-
-    }
-    
-}

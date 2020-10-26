@@ -55,6 +55,8 @@ class AddAlertTableViewController: UITableViewController {
         AWGQLApiHelper.shared.postAlertFor(reach_id: Int(selectedRun.id), message: alertTextView.text, callback: { (postUpdate) in
             print("Success - PostUpdate: \(postUpdate?.id ?? "no detail") -reach_id: \(postUpdate?.reachId ?? "no reach id")")
 
+            AWProgressModal.shared.hide()
+            
             // convert postUpdate response to alert object
             var newAlert = [String:String]()
             newAlert["postDate"] = postUpdate?.postDate ?? ""
@@ -78,12 +80,14 @@ class AddAlertTableViewController: UITableViewController {
                 DefaultsManager.reachAlerts = storedAlerts
             }
             
-            
-            AWProgressModal.shared.hide()
             self.successAndDismissView()
+            
         }) { (error, message) in
-            AWProgressModal.shared.hide()
-            print("Error:", GQLError.handleGQLError(error: error, altMessage: message))
+            AWProgressModal.shared.hideWith {
+                let errorMessage = GQLError.handleGQLError(error: error, altMessage: message)
+                print("Error:", errorMessage)
+                DuffekDialog.shared.showOkDialog(title: "Connection Issue", message: "We were unable to connect to the server due to: \(errorMessage)")
+            }
         }
     }
 

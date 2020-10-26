@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 import SafariServices
 
 class GalleryViewController: UIViewController {
@@ -19,7 +20,11 @@ class GalleryViewController: UIViewController {
     @IBOutlet weak var runSectionLabel: UILabel!
     @IBOutlet weak var selectedImageView: UIImageView!
     @IBOutlet weak var galleryCollectionView: UICollectionView!
-       
+    @IBOutlet weak var postedByLabel: UILabel!
+    @IBOutlet weak var postedDateLabel: UILabel!
+    @IBOutlet weak var captionLabel: UILabel!
+    @IBOutlet weak var riverObservationLabel: UILabel!
+    
     var awImagePicker: AWImagePicker!
     
     var refreshControl = UIRefreshControl()
@@ -37,6 +42,7 @@ class GalleryViewController: UIViewController {
             selectedImageView.load(url: url)
             selectedImageUrl = photoUrl
         }
+
         
         // setup pull to refresh
         refreshControl.addTarget(self, action: #selector(refreshPictures), for: .valueChanged)
@@ -46,6 +52,22 @@ class GalleryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // if nothing is selected we try and load one
+        if let selectedRun = selectedRun, selectedRun.photoUrl == nil, imageLinks.count > 0 {
+            if let firstImage = imageLinks.first, let imgLink = firstImage["med"] as? String {
+                selectedImageUrl = "\(AWGC.AW_BASE_URL)\(imgLink)"
+                print("Trying to load url: \(selectedImageUrl)")
+                if let firstUrl = URL(string: selectedImageUrl) {
+                    selectedImageView.load(url: firstUrl)
+                }
+            }
+        }
+        
+        // reload local data while we wait for
+        // API data
+        galleryCollectionView.reloadData()
+        
+        // query api
         self.refreshPictures()
     }
 
@@ -56,7 +78,6 @@ class GalleryViewController: UIViewController {
         
         if !selectedImageUrl.contains("https://") && !selectedImageUrl.contains("http://") {
             DuffekDialog.shared.showOkDialog(title: errorTitle, message: errorMessage)
-            print("selectedImageUrl: ", selectedImageUrl)
             return
         }
         
@@ -66,18 +87,29 @@ class GalleryViewController: UIViewController {
             present(vc, animated: true)
         } else {
             DuffekDialog.shared.showOkDialog(title: errorTitle, message: errorMessage)
-            print("2selectedImageUrl: ", selectedImageUrl)
         }
     }
     
     @objc @IBAction func addPhotoButtonPressed(_ sender: UIButton) {
-        awImagePicker.present(from: sender)
+        if AVCaptureDevice.authorizationStatus(for: .video) !=  .authorized {
+            // user rejected the ask
+            DuffekDialog.shared.showStandardDialog(title: "Access Denied", message: "Hey, it looks like you rejected our access to your camera... We can't enable your camera to take pictures without it.", buttonTitle: "Let's Fix It!") {
+                // user wants to fix the issue
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                
+            } cancelFunction: {
+                // user doens't want to fix it.
+            }
+
+        } else {
+            awImagePicker.present(from: sender)
+        }
     }
     
     @objc func refreshPictures() {
         guard let selectedRun = selectedRun else { print("selected run is nil"); return }
                 
-        AWGQLApiHelper.shared.getPhotosForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 10, callback: { (photoResults) in
+        AWGQLApiHelper.shared.getPhotosForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 100, callback: { (photoResults) in
             
             self.refreshControl.endRefreshing()
             
@@ -89,13 +121,27 @@ class GalleryViewController: UIViewController {
                         if let image = photo.image, let uri = image.uri,
                            let thumb = uri.thumb, let medium = uri.medium, let big = uri.big {
                             
+                            //print("PhotoDate: \(photo.photoDate ?? "no photo date") - author: \(photo.author ?? "no author") - caption \(photo.caption ?? "no caption")")
+                            
+                            let dateString = photo.photoDate ?? result.postDate ?? ""
+                            let author = photo.author ?? result.user?.uname ?? ""
+                            let reading = result.reading ?? 0.0
+                            
                             // only add the new photo if we already have it
                             if !self.alreadyHavePhoto(thumb: thumb) {
-                                var uri = [String:String?]()
-                                uri["thumb"] = thumb
-                                uri["med"] = medium
-                                uri["big"] = big
-                                self.imageLinks.insert(uri, at: 0)
+                                var newUri = [String:String?]()
+                                newUri["thumb"] = thumb
+                                newUri["med"] = medium
+                                newUri["big"] = big
+                                newUri["caption"] = photo.caption ?? ""
+                                newUri["description"] = photo.description ?? result.detail ?? ""
+                                newUri["author"] = author
+                                newUri["photoDate"] = dateString
+                                if reading > 0.001 {
+                                    newUri["reading"] = "\(reading)"
+                                }
+                                print("New URI:", newUri)
+                                self.imageLinks.insert(newUri, at: 0)
                             }
                         }
                     }
@@ -128,9 +174,9 @@ class GalleryViewController: UIViewController {
             if let image = sender as? UIImage {
                 reviewVC?.takenImage = image
                 reviewVC?.selectedRun = selectedRun
+                reviewVC?.senderVC = self
             }
         }
-        
     }
 }
 
@@ -176,7 +222,11 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         // else show image's from server
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "awImageCell", for: indexPath) as! AwImageCell
-        if let imageUrlString = imageLinks[indexPath.row]["med"] as? String,
+        cell.imageView.image = nil
+        
+        let imageLink = imageLinks[indexPath.row]
+        
+        if let imageUrlString = imageLink["med"] as? String,
             let url = URL(string: "\(AWGC.AW_BASE_URL)\(imageUrlString)") {
             cell.imageView.load(url: url)
         }
@@ -186,8 +236,39 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        // ignore first section events
+        // ignore first section events on non-action views
         if indexPath.section == 0 { return }
+        if indexPath.section == 1 && imageLinks.count == 0 { return }
+        
+        let image = imageLinks[indexPath.row]
+        
+        if let author = image["author"] as? String {
+            self.postedByLabel.text = "Posted by: \(author.count > 0 ? author : "n/a")"
+        } else {
+            self.postedByLabel.text = ""
+        }
+        
+        if let postedDate = image["photoDate"] as? String {
+            self.postedDateLabel.text = "Date: \(postedDate.count > 0 ? postedDate : "n/a")"
+        } else {
+            self.postedDateLabel.text = ""
+        }
+        
+        if let caption = image["caption"] as? String {
+            self.captionLabel.text = caption.count > 0 ? caption : "No Caption Available"
+        } else {
+            self.captionLabel.text = "No Caption Available"
+        }
+        
+        if let description = image["description"] as? String {
+            self.captionLabel.text = "\(self.captionLabel.text ?? "")\n\(description)"
+        }
+        
+        if let reading = image["reading"] as? String {
+            self.riverObservationLabel.text = reading.count > 0 ? reading : ""
+        } else {
+            self.riverObservationLabel.text = ""
+        }
         
         selectedImageUrl = "\(AWGC.AW_BASE_URL)\(imageLinks[indexPath.row]["med"] as? String ?? "")"
         

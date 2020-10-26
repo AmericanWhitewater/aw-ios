@@ -1,34 +1,78 @@
-mutation UploadPhotoFile($file: Upload!, $reach_id: AWID!, $type: PhotoSectionsType!, $photo: PhotoInput) {
-    photoFileCreate(fileinput: {
-      file: $file,
-      section: $type,
-      section_id: $reach_id
-    },
-      photo: $photo) {
+mutation PhotoUploadWithProps($id: ID!, $file: Upload, $photoSectionType: PhotoSectionsType, $photoTypeId: AWID, $photoInput: PhotoInput) {
+
+    photoFileUpdate(id: $id, fileinput: {
+        file: $file,
+        section: $photoSectionType,
+        section_id: $photoTypeId
+    }, photo: $photoInput) {
         id
-        post_id
-        post {
-          id
-          title
-          detail
-          post_type
-        }
+        url
+        caption
+        description
+        geom
         image {
-          uri {
-            thumb
-            medium
-            big
-          }
+            uri {
+                medium
+                big
+                thumb
+            }
         }
+        post {
+            id
+            title
+            detail
+            uid
+            post_date
+            revision
+            reach_id
+            gauge_id
+            metric_id
+            reading
+        }
+        poi {
+            id
+            name
+            difficulty
+            distance
+            description
+        }
+        author
+        subject
+        revision
+        poi_name
+        poi_id
+        post_id
+        photo_date
+
     }
 }
 
-mutation PostPhoto($id: ID!, $post: PostInput!) {
-  postUpdate(id: $id, post: $post) {
-    id
-    reach_id
-    title
-    post_type
-  }
+
+mutation PhotoPostUpdate($id: ID!, $post: PostInput!) {
+    postUpdate(id: $id, post: $post) {
+        id,
+        title,
+        detail,
+        post_type,
+        post_date,
+        revision,
+        metric_id,
+        metric {
+            shortkey,
+            unit,
+            name
+        },
+        reading,
+        reach_id,
+        reach {
+            id,
+            river,
+            section
+        },
+        user {
+            uname,
+        }
+
+    }
 }
 

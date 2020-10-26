@@ -1,6 +1,6 @@
 query Alerts($page_size: Int!, $reach_id: AWID!, $page: Int!, $gauge_id: AWID, $post_types: [PostType])
 {
-    posts(post_types: $post_types, reach_id: $reach_id, gauge_id: $gauge_id, first: $page_size, page: $page, orderBy: [{field: REVISION, order: DESC}]) {
+    posts(post_types: $post_types, reach_id: $reach_id, gauge_id: $gauge_id, first: $page_size, page: $page, orderBy: [{field: POST_DATE, order: ASC}]) {
         paginatorInfo {
             lastPage,
             currentPage,
@@ -12,6 +12,7 @@ query Alerts($page_size: Int!, $reach_id: AWID!, $page: Int!, $gauge_id: AWID, $
             post_type,
             post_date,
             reach_id,
+            revision,
             reach {
                 id,
                 river,

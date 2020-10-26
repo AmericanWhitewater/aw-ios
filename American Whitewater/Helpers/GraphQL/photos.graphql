@@ -9,11 +9,12 @@ query Photos($page_size: Int!, $reach_id: AWID!, $page: Int!, $gauge_id: AWID, $
         data {
             id,
             title,
+            detail,
             post_type,
             post_date,
             reach_id,
             gauge_id,
-            detail,
+            reading,
             user {
                 uname
             },

@@ -15,7 +15,7 @@
         "fields": [
           {
             "name": "states",
-            "description": null,
+            "description": " retrieve the states the system knows about ",
             "args": [
               {
                 "name": "aw_only",
@@ -145,7 +145,7 @@
           },
           {
             "name": "metrics",
-            "description": null,
+            "description": " retrieve the metrics the system knows about ",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -191,8 +191,177 @@
             "deprecationReason": null
           },
           {
+            "name": "article",
+            "description": " grabs a singular article ",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Article",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "articles",
+            "description": " search endpoint for articles ",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "orderBy",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "ArticlesOrderByOrderByClause",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "first",
+                "description": "Limits number of fetched elements. Maximum allowed value: 2500.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "page",
+                "description": "The offset from which elements are returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ArticlePaginator",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "events",
+            "description": " Query events as a search endpoint ",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "event_categories",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "EventCategoryType",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "reach_id",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "AWID",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "gauge_id",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "AWID",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "first",
+                "description": "Limits number of fetched elements. Maximum allowed value: 2500.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "page",
+                "description": "The offset from which elements are returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "EventPaginator",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "me",
-            "description": null,
+            "description": " Queries the system's idea of the current logged in user ",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -208,7 +377,7 @@
           },
           {
             "name": "userPermission",
-            "description": null,
+            "description": " query a permission object, these are listed in @useSecurity in the schema or are CRUD operations on an object ",
             "args": [
               {
                 "name": "domain",
@@ -259,7 +428,7 @@
           },
           {
             "name": "photos",
-            "description": null,
+            "description": " retrieves photos ",
             "args": [
               {
                 "name": "id",
@@ -324,7 +493,7 @@
           },
           {
             "name": "posts",
-            "description": null,
+            "description": " get posts by id,post_types,reach_id or all three, intended as a search endpoint ",
             "args": [
               {
                 "name": "id",
@@ -422,8 +591,102 @@
             "deprecationReason": null
           },
           {
+            "name": "lastWarnings",
+            "description": " last warnings across all reaches with a last updated discriminator ",
+            "args": [
+              {
+                "name": "post_date",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "DateTimeISO8601",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "first",
+                "description": "Limits number of fetched elements. Maximum allowed value: 2500.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "page",
+                "description": "The offset from which elements are returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "PostPaginator",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lastObservations",
+            "description": " last gauge observations across all reaches with a last updated discriminator ",
+            "args": [
+              {
+                "name": "post_date",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "DateTimeISO8601",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "first",
+                "description": "Limits number of fetched elements. Maximum allowed value: 2500.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "page",
+                "description": "The offset from which elements are returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "PostPaginator",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "accidents",
-            "description": null,
+            "description": " search endpoint for accidents ",
             "args": [
               {
                 "name": "id",
@@ -432,6 +695,24 @@
                   "kind": "SCALAR",
                   "name": "ID",
                   "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "orderBy",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "AccidentsOrderByOrderByClause",
+                      "ofType": null
+                    }
+                  }
                 },
                 "defaultValue": null
               },
@@ -469,8 +750,31 @@
             "deprecationReason": null
           },
           {
+            "name": "accident",
+            "description": " query an accident by ID ",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Accident",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "reaches",
-            "description": null,
+            "description": " structures a reach query in a way that makes sense for a search endpoint ",
             "args": [
               {
                 "name": "id",
@@ -527,7 +831,7 @@
           },
           {
             "name": "reach",
-            "description": null,
+            "description": " single reach query ",
             "args": [
               {
                 "name": "id",
@@ -554,7 +858,7 @@
           },
           {
             "name": "reachmap",
-            "description": null,
+            "description": " structures a reach query in a way that might make sense for a mapping endpoint ",
             "args": [
               {
                 "name": "box",
@@ -562,6 +866,26 @@
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "geobox",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "fuzzy_match",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "match",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
                   "ofType": null
                 },
                 "defaultValue": null
@@ -601,7 +925,7 @@
           },
           {
             "name": "gauge",
-            "description": null,
+            "description": " single gauge query ",
             "args": [
               {
                 "name": "id",
@@ -628,7 +952,7 @@
           },
           {
             "name": "gauges",
-            "description": null,
+            "description": " gauge query structured for a search endpoint ",
             "args": [
               {
                 "name": "id",
@@ -662,8 +986,20 @@
             "deprecationReason": null
           },
           {
+            "name": "nextReachID",
+            "description": " reaches depend on a reach id generated by the system rather than using a UUID ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "getRiverArticles",
-            "description": null,
+            "description": "Will grab all articles that have been associated with a reach",
             "args": [
               {
                 "name": "id",
@@ -686,7 +1022,7 @@
           },
           {
             "name": "getGaugeInformationForReachID",
-            "description": null,
+            "description": "Gets a deep representation of a river and its connection to gauges",
             "args": [
               {
                 "name": "id",
@@ -702,6 +1038,243 @@
             "type": {
               "kind": "OBJECT",
               "name": "GaugeInformationForReach",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "document",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Document",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "documents",
+            "description": null,
+            "args": [
+              {
+                "name": "first",
+                "description": "Limits number of fetched elements. Maximum allowed value: 2500.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "page",
+                "description": "The offset from which elements are returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "DocumentPaginator",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "project",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Project",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "projects",
+            "description": null,
+            "args": [
+              {
+                "name": "first",
+                "description": "Limits number of fetched elements. Maximum allowed value: 2500.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "page",
+                "description": "The offset from which elements are returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ProjectPaginator",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "linker",
+            "description": null,
+            "args": [
+              {
+                "name": "source",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "LinkerSourceType",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "AWID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "LinkedResource",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "affiliate",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Affiliate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "affiliates",
+            "description": null,
+            "args": [
+              {
+                "name": "first",
+                "description": "Limits number of fetched elements. Maximum allowed value: 2500.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "page",
+                "description": "The offset from which elements are returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AffiliatePaginator",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1003,6 +1576,30 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "num_rivers",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "num_gauges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -1133,11 +1730,11 @@
       {
         "kind": "OBJECT",
         "name": "User",
-        "description": null,
+        "description": "Represents a user",
         "fields": [
           {
             "name": "uid",
-            "description": null,
+            "description": " Effective user ID ",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1153,7 +1750,7 @@
           },
           {
             "name": "uname",
-            "description": null,
+            "description": " User's login name ",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1169,7 +1766,7 @@
           },
           {
             "name": "email",
-            "description": null,
+            "description": " associated email ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -1181,7 +1778,7 @@
           },
           {
             "name": "image",
-            "description": null,
+            "description": " profile picture ",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -1192,8 +1789,20 @@
             "deprecationReason": null
           },
           {
+            "name": "contact",
+            "description": " contact info, public and set by user ",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Contact",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "mobile_profile",
-            "description": null,
+            "description": " JSON object representing the User's mobile profile ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -1253,7 +1862,7 @@
           },
           {
             "name": "permissions",
-            "description": null,
+            "description": " permissions represent the groups and keys the user possesses ",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -1318,7 +1927,7 @@
       {
         "kind": "OBJECT",
         "name": "ImageInfo",
-        "description": null,
+        "description": " meta information on an image ",
         "fields": [
           {
             "name": "uri",
@@ -1355,6 +1964,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "file_size",
+            "description": " filesize in bytes ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -1365,11 +1986,11 @@
       {
         "kind": "OBJECT",
         "name": "ImageURI",
-        "description": null,
+        "description": " urls to locate the three types of image ",
         "fields": [
           {
             "name": "medium",
-            "description": null,
+            "description": " typically around 800x600 ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -1381,7 +2002,7 @@
           },
           {
             "name": "big",
-            "description": null,
+            "description": " unconstrained 1-2 MB per load ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -1393,6 +2014,125 @@
           },
           {
             "name": "thumb",
+            "description": " typically 100x200 ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Contact",
+        "description": "Represents a contact, a user that can't login",
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "AWID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "email",
+            "description": " associated email ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "image",
+            "description": " profile picture ",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ImageInfo",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "city",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "address",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "state",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "zip",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "phone",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
             "description": null,
             "args": [],
             "type": {
@@ -1411,6 +2151,16 @@
       },
       {
         "kind": "SCALAR",
+        "name": "AWID",
+        "description": " A type that allows a longish integer and a semi-numberic [A-Z][a-z][0-9] id ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
         "name": "ArbitraryJSON",
         "description": " A type that allows a JSON in the definition. We use this for mobile profile, but will formalize it  ",
         "fields": null,
@@ -1422,7 +2172,7 @@
       {
         "kind": "OBJECT",
         "name": "EventNotification",
-        "description": null,
+        "description": "Useful to retrieve the list of events the user has subscribed to",
         "fields": [
           {
             "name": "event_id",
@@ -1455,20 +2205,22 @@
         "possibleTypes": null
       },
       {
-        "kind": "SCALAR",
-        "name": "AWID",
-        "description": " A type that allows a longish integer and a semi-numberic [A-Z][a-z][0-9] id ",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "Event",
         "description": null,
         "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "title",
             "description": null,
@@ -1494,12 +2246,443 @@
             "deprecationReason": null
           },
           {
-            "name": "desciption",
+            "name": "description",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "category",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "uid",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "state",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "url",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "orgname",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "orgaddress",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "orgphone",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "orgfax",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "orgemail",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "site",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "reach_id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "expectpart",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "expectspec",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issue",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "media",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "contact_id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTimeISO8601",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "html_description",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "gauge_id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "loc",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Point",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "tz",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "dates",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "EventDate",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "DateTimeISO8601",
+        "description": "A ISO DateTimeISO8601 string with format `Y-m-d H:i:s` e.g. `2018-01-01T13:00:00Z`.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "Point",
+        "description": " Point which looks like two numbers 33.1 226.1 ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "EventDate",
+        "description": null,
+        "fields": [
+          {
+            "name": "event_id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "event_date",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTimeISO8601",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "detail_description",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "batch_id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "start_time",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "end_time",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "min",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "max",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metric_id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "uid",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1514,7 +2697,7 @@
       {
         "kind": "OBJECT",
         "name": "GaugeNotification",
-        "description": null,
+        "description": "Useful to retrieve a list of gauges the user has subscribed to.",
         "fields": [
           {
             "name": "gauge_id",
@@ -1688,7 +2871,7 @@
         "fields": [
           {
             "name": "metric",
-            "description": "",
+            "description": " metric structure ",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -1945,16 +3128,6 @@
       },
       {
         "kind": "SCALAR",
-        "name": "DateTimeISO8601",
-        "description": "A ISO DateTimeISO8601 string with format `Y-m-d H:i:s` e.g. `2018-01-01T13:00:00Z`.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "SCALAR",
         "name": "Float",
         "description": "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).",
         "fields": null,
@@ -1966,7 +3139,7 @@
       {
         "kind": "OBJECT",
         "name": "ReachNotification",
-        "description": null,
+        "description": "Useful to retrieve the list of reaches the user has subscribed to",
         "fields": [
           {
             "name": "reach_id",
@@ -1976,6 +3149,401 @@
               "kind": "SCALAR",
               "name": "AWID",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Article",
+        "description": " Represents an article in the system ",
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "title",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "author",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "abstract",
+            "description": " short intro to the article",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "abstractimage",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ImageInfo",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "icon",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "contents",
+            "description": " contents of the article ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "image",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ImageInfo",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "contact",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "posted_date",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTimeISO8601",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "short_name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "uid",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "AWID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "release_date",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTimeISO8601",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "ArticlesOrderByOrderByClause",
+        "description": "Order by clause for the `orderBy` argument on the query `articles`.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "field",
+            "description": "The column that is used for ordering.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "ArticlesOrderByColumn",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "order",
+            "description": "The direction that is used for ordering.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "SortOrder",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "ArticlesOrderByColumn",
+        "description": "Allowed column names for the `orderBy` argument on the query `articles`.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "REVISION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "POSTED_DATE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "SortOrder",
+        "description": "The available directions for ordering a list of records.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ASC",
+            "description": "Sort records in ascending order.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DESC",
+            "description": "Sort records in descending order.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ArticlePaginator",
+        "description": "A paginated list of Article items.",
+        "fields": [
+          {
+            "name": "paginatorInfo",
+            "description": "Pagination information about the list of items.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PaginatorInfo",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "data",
+            "description": "A list of Article items.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Article",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "EventCategoryType",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "CAT_RELEASE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CAT_EVENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CAT_OTHER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CAT_FESTIVAL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CAT_PREDICTED_FLOW_SOURCE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "EventPaginator",
+        "description": "A paginated list of Event items.",
+        "fields": [
+          {
+            "name": "paginatorInfo",
+            "description": "Pagination information about the list of items.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PaginatorInfo",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "data",
+            "description": "A list of Event items.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Event",
+                    "ofType": null
+                  }
+                }
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2055,31 +3623,31 @@
         "enumValues": [
           {
             "name": "ALLOW",
-            "description": null,
+            "description": " only permission that indicates a call will not get shut down ",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "DENY_URL_ERROR",
-            "description": null,
+            "description": " invalid permission request ",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "DENY_LOGIN",
-            "description": null,
+            "description": " requires a login to continue ",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "DENY_BLANK",
-            "description": null,
+            "description": " silently declien to show UI element ",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "DENY_DEFAULT",
-            "description": null,
+            "description": " no specific denial reason given ",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -2138,27 +3706,10 @@
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "SortOrder",
-        "description": "The available directions for ordering a list of records.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "ASC",
-            "description": "Sort records in ascending order.",
-            "isDeprecated": false,
-            "deprecationReason": null
           },
           {
-            "name": "DESC",
-            "description": "Sort records in descending order.",
+            "name": "PHOTO_DATE",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -2226,9 +3777,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "ID",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2410,7 +3965,7 @@
       {
         "kind": "OBJECT",
         "name": "Post",
-        "description": null,
+        "description": " Post, see https://github.com/AmericanWhitewater/wh2o/wiki/Post-Types ",
         "fields": [
           {
             "name": "id",
@@ -2646,7 +4201,7 @@
           },
           {
             "name": "permissions",
-            "description": null,
+            "description": " applies to the logged in user ",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2690,7 +4245,7 @@
           },
           {
             "name": "PHOTO_POST",
-            "description": null,
+            "description": " single photo post ",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -2740,7 +4295,7 @@
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": " ID of reach (see getNextReachID query) ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2752,7 +4307,7 @@
           },
           {
             "name": "river",
-            "description": null,
+            "description": " Name of the river ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2764,7 +4319,7 @@
           },
           {
             "name": "section",
-            "description": null,
+            "description": " Name of the section ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2776,7 +4331,7 @@
           },
           {
             "name": "altname",
-            "description": null,
+            "description": " Common name of the section ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2788,7 +4343,7 @@
           },
           {
             "name": "county",
-            "description": null,
+            "description": " county name -- optional ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2800,7 +4355,7 @@
           },
           {
             "name": "zipcode",
-            "description": null,
+            "description": " zip  -- optional ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2812,7 +4367,7 @@
           },
           {
             "name": "length",
-            "description": null,
+            "description": " length in miles with fraction, mostly reported  ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2824,7 +4379,7 @@
           },
           {
             "name": "avggradient",
-            "description": null,
+            "description": " gradient in ft/mile, reported ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2836,7 +4391,7 @@
           },
           {
             "name": "maxgradient",
-            "description": null,
+            "description": " max gradient in ft/mile, reported ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2848,7 +4403,7 @@
           },
           {
             "name": "agency",
-            "description": null,
+            "description": " land agency name (if any) for adminstration of permits and land ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2860,7 +4415,7 @@
           },
           {
             "name": "gaugeinfo",
-            "description": null,
+            "description": " paragraph explaining the gauges  ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2872,7 +4427,7 @@
           },
           {
             "name": "description",
-            "description": null,
+            "description": " multi paragraph explaining the section  ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2884,7 +4439,7 @@
           },
           {
             "name": "photo_id",
-            "description": null,
+            "description": " banner photo ID  ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2896,7 +4451,7 @@
           },
           {
             "name": "permitid",
-            "description": null,
+            "description": " permit id lookup ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2908,7 +4463,7 @@
           },
           {
             "name": "huc",
-            "description": null,
+            "description": " HUC code drainage, will be assigned with proper location ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2920,7 +4475,7 @@
           },
           {
             "name": "plat",
-            "description": null,
+            "description": " these are the calculated start and finish points of the reach, ploc and tloc are better ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2992,7 +4547,7 @@
           },
           {
             "name": "skid",
-            "description": null,
+            "description": " last editor's ID ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -3004,7 +4559,7 @@
           },
           {
             "name": "status",
-            "description": null,
+            "description": " verfified (v) unverified (u) and \"r\" removed ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -3040,7 +4595,7 @@
           },
           {
             "name": "revision",
-            "description": null,
+            "description": " revision id ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -3052,7 +4607,7 @@
           },
           {
             "name": "class",
-            "description": null,
+            "description": " class of the river I-VI",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -3068,7 +4623,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Point",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3080,7 +4635,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Point",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3172,7 +4727,7 @@
           },
           {
             "name": "permiturl",
-            "description": null,
+            "description": " URL for signing up for a permit ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -3184,7 +4739,7 @@
           },
           {
             "name": "permitinfo",
-            "description": null,
+            "description": " paragraph on how to permit ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -3196,7 +4751,7 @@
           },
           {
             "name": "image_override",
-            "description": null,
+            "description": " when set to a non-zero indicates that the image should be used without scaling in the banner, may include a transform such as a zoom or crop in css transition tag format ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -3208,11 +4763,11 @@
           },
           {
             "name": "geom",
-            "description": null,
+            "description": " the actual linestring of the reach ",
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "LineString",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3232,7 +4787,7 @@
           },
           {
             "name": "revisions",
-            "description": null,
+            "description": " all other reaches that came before, a list of prior versions of reach records ",
             "args": [
               {
                 "name": "first",
@@ -3372,7 +4927,7 @@
           },
           {
             "name": "pois",
-            "description": null,
+            "description": " list of rapids and other points of interest on the reach ",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -3388,7 +4943,7 @@
           },
           {
             "name": "photos",
-            "description": null,
+            "description": " all photos attached to a reach (note that this will bypass posts, so the complete context neeeds to be gotten by querying the attached post) ",
             "args": [
               {
                 "name": "first",
@@ -3461,8 +5016,44 @@
             "deprecationReason": null
           },
           {
-            "name": "photo",
+            "name": "user",
             "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "last_warning",
+            "description": " last warning post on thre reach ",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Post",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "last_observation",
+            "description": " last gauge observation on the reach ",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Post",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "photo",
+            "description": " actual banner photo object of the reach ",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -3471,10 +5062,56 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "sk",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "permissions",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PermissionReturn",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "LineString",
+        "description": " LineString looks like two numbers seperated by a space, and the tupels are seperated by comma so 10 30, 30 20, 10 -20.1 ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -3497,7 +5134,7 @@
           },
           {
             "name": "gauge_reading",
-            "description": " gauge reading ",
+            "description": " gauge reading -- e.g. 88 of 88 cfs ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -3557,7 +5194,7 @@
           },
           {
             "name": "updated",
-            "description": "date of update ",
+            "description": "number of seconds since we have seen an update ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -3569,7 +5206,7 @@
           },
           {
             "name": "reading",
-            "description": "actual reading recorded",
+            "description": "\t\t actual reading recorded\n\t\t  - <0 too low\n\t\t  - 0-1 runnable\n\t\t  - >1 too high",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -3581,7 +5218,7 @@
           },
           {
             "name": "gauge_metric",
-            "description": "metric id for the gauge",
+            "description": "metric id for the gauge (e.g. 2=flow) ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -3694,6 +5331,30 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "rank",
+            "description": " order to consider this gauge in ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "delay_update",
+            "description": " number of seconds to wait until we give up on this ranked gauge and display the next one down ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3971,6 +5632,30 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "permissions",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PermissionReturn",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -4104,7 +5789,7 @@
             "deprecationReason": null
           },
           {
-            "name": "accidentdate",
+            "name": "accident_date",
             "description": null,
             "args": [],
             "type": {
@@ -4116,7 +5801,7 @@
             "deprecationReason": null
           },
           {
-            "name": "victimname",
+            "name": "victim_name",
             "description": null,
             "args": [],
             "type": {
@@ -4140,7 +5825,7 @@
             "deprecationReason": null
           },
           {
-            "name": "countryabbr",
+            "name": "country_id",
             "description": null,
             "args": [],
             "type": {
@@ -4200,7 +5885,7 @@
             "deprecationReason": null
           },
           {
-            "name": "waterlevel",
+            "name": "water_level",
             "description": null,
             "args": [],
             "type": {
@@ -4212,7 +5897,7 @@
             "deprecationReason": null
           },
           {
-            "name": "rellevel",
+            "name": "relative_level",
             "description": null,
             "args": [],
             "type": {
@@ -4272,7 +5957,7 @@
             "deprecationReason": null
           },
           {
-            "name": "boattype",
+            "name": "boat_type",
             "description": null,
             "args": [],
             "type": {
@@ -4284,7 +5969,7 @@
             "deprecationReason": null
           },
           {
-            "name": "groupinfo",
+            "name": "group_info",
             "description": null,
             "args": [],
             "type": {
@@ -4308,7 +5993,7 @@
             "deprecationReason": null
           },
           {
-            "name": "othervictimnames",
+            "name": "other_victim_names",
             "description": null,
             "args": [],
             "type": {
@@ -4356,7 +6041,7 @@
             "deprecationReason": null
           },
           {
-            "name": "contactname",
+            "name": "contact_name",
             "description": null,
             "args": [],
             "type": {
@@ -4368,7 +6053,7 @@
             "deprecationReason": null
           },
           {
-            "name": "contactphone",
+            "name": "contact_phone",
             "description": null,
             "args": [],
             "type": {
@@ -4380,7 +6065,7 @@
             "deprecationReason": null
           },
           {
-            "name": "contactemail",
+            "name": "contact_email",
             "description": null,
             "args": [],
             "type": {
@@ -4669,6 +6354,74 @@
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "POST_DATE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "AccidentsOrderByOrderByClause",
+        "description": "Order by clause for the `orderBy` argument on the query `accidents`.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "field",
+            "description": "The column that is used for ordering.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "AccidentsOrderByColumn",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "order",
+            "description": "The direction that is used for ordering.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "SortOrder",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "AccidentsOrderByColumn",
+        "description": "Allowed column names for the `orderBy` argument on the query `accidents`.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ACCIDENT_DATE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REVISION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "possibleTypes": null
@@ -4918,185 +6671,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "DateTimeISO8601",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "Article",
-        "description": null,
-        "fields": [
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "title",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "author",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "abstract",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "abstractimage",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "ImageInfo",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "icon",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "contents",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "image",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "ImageInfo",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "contact",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "posted",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "DateTimeISO8601",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "shortname",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "uid",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "releasedate",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "DateTimeISO8601",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "deleted",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
               "ofType": null
             },
             "isDeprecated": false,
@@ -6162,6 +7736,737 @@
       },
       {
         "kind": "OBJECT",
+        "name": "Document",
+        "description": null,
+        "fields": [
+          {
+            "name": "short_name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "abstract",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "document",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "document_size",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "description",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "uri",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "keywords",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "edit_date",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTimeISO8601",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Contact",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "author",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Contact",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "DocumentPaginator",
+        "description": "A paginated list of Document items.",
+        "fields": [
+          {
+            "name": "paginatorInfo",
+            "description": "Pagination information about the list of items.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PaginatorInfo",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "data",
+            "description": "A list of Document items.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Document",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Project",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "description",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "short_name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "edit_date",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTimeISO8601",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ProjectPaginator",
+        "description": "A paginated list of Project items.",
+        "fields": [
+          {
+            "name": "paginatorInfo",
+            "description": "Pagination information about the list of items.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PaginatorInfo",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "data",
+            "description": "A list of Project items.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Project",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "LinkerSourceType",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "USER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MEMBER_GENERNAL_MESSAGE",
+            "description": "general message shown to a member",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NONMEMBER_GENERAL_MESSAGE",
+            "description": "general message shown to a non-member",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MEMBER_MESSAGE",
+            "description": "message or a resource shown to a member",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NONMEMBER_MESSAGE",
+            "description": "message for a nonmember",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "BLACKOUT_MESSAGE",
+            "description": "message shown to a non-member with emphasis on a particular volunteer drive",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "RIVER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GAUGE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EVENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "WIKI",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PROJECT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ARTICLE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CLUB",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REGION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DOCUMENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LISTING_GROUP",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "LinkedResource",
+        "description": null,
+        "fields": [
+          {
+            "name": "type",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "LinkerSourceType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "data",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "UNION",
+                "name": "LinkedData",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "UNION",
+        "name": "LinkedData",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "Article",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "User",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "Gauge",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "Reach",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "Project",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "Document",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "Event",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "Affiliate",
+            "ofType": null
+          }
+        ]
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Affiliate",
+        "description": "These are clubs that are associated with AW",
+        "fields": [
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "url",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "email",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "members",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "contact",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "abstract",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "description",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "volunteer",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "city",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "state",
+            "description": "2-Letter State Code",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "expiration",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTimeISO8601",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AffiliatePaginator",
+        "description": "A paginated list of Affiliate items.",
+        "fields": [
+          {
+            "name": "paginatorInfo",
+            "description": "Pagination information about the list of items.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PaginatorInfo",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "data",
+            "description": "A list of Affiliate items.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Affiliate",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "Mutation",
         "description": null,
         "fields": [
@@ -6189,8 +8494,76 @@
             "deprecationReason": null
           },
           {
-            "name": "userUpdate",
+            "name": "articleUpdate",
+            "description": " write an article ",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "article",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "ArticleInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Article",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "articleDelete",
             "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Article",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "userUpdate",
+            "description": " updates a user record, at this point to attach mobile information (see UserInput) ",
             "args": [
               {
                 "name": "id",
@@ -6227,7 +8600,7 @@
           },
           {
             "name": "directoryContactUpdate",
-            "description": null,
+            "description": " add a user id (ID) to a listing, listings will allow users to sign up to certain groups, this will fail if the non-admin to a non-public group ",
             "args": [
               {
                 "name": "id",
@@ -6260,7 +8633,7 @@
           },
           {
             "name": "directoryContactDelete",
-            "description": null,
+            "description": " remove a user id from a listing and area (e.g. \"sk\",\"123\" to remove stream team privs) ",
             "args": [
               {
                 "name": "id",
@@ -6311,7 +8684,7 @@
           },
           {
             "name": "postUpdate",
-            "description": null,
+            "description": " send a post up with a UUID ",
             "args": [
               {
                 "name": "id",
@@ -6379,7 +8752,7 @@
           },
           {
             "name": "photoUpdate",
-            "description": null,
+            "description": " send a photo record up record, file is sent with photoFileUpdate with appropriate section and section_id ",
             "args": [
               {
                 "name": "id",
@@ -6419,49 +8792,12 @@
             "deprecationReason": null
           },
           {
-            "name": "photoFileCreate",
-            "description": null,
-            "args": [
-              {
-                "name": "fileinput",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "PhotoFileInput",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null
-              },
-              {
-                "name": "photo",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "PhotoInput",
-                  "ofType": null
-                },
-                "defaultValue": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "Photo",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "photoFileUpdate",
-            "description": null,
+            "description": " associate a photo with a section and section ID, typically this will be a POST with a post id of the container ",
             "args": [
               {
                 "name": "id",
-                "description": null,
+                "description": " UUID of existing or new photo file ",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -6507,8 +8843,49 @@
             "deprecationReason": null
           },
           {
+            "name": "poiUpdate",
+            "description": " updates or creates a rapid with a UUID given ",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "poi",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "POIInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "POI",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "reachUpdate",
-            "description": null,
+            "description": " updates or creates a reach with a ID (from nextReachID) given ",
             "args": [
               {
                 "name": "id",
@@ -6533,6 +8910,60 @@
                   "ofType": {
                     "kind": "INPUT_OBJECT",
                     "name": "ReachInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Reach",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "poiDelete",
+            "description": " removes a POI ",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "POI",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "reachDelete",
+            "description": " remove/delist a reach ",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
                     "ofType": null
                   }
                 },
@@ -6710,8 +9141,119 @@
       },
       {
         "kind": "INPUT_OBJECT",
+        "name": "ArticleInput",
+        "description": " Represents an incoming article in the system ",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "title",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "author",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "abstract",
+            "description": " short intro to the article",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "icon",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "contents",
+            "description": " contents of the article ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "contact",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "posted_date",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTimeISO8601",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "short_name",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "uid",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "AWID",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "release_date",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTimeISO8601",
+              "ofType": null
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
         "name": "UserInput",
-        "description": null,
+        "description": "Attaches an arbitrary JSON object to a user\nWill be expanded to include other relevant writable fields",
         "fields": null,
         "inputFields": [
           {
@@ -6774,7 +9316,7 @@
             "defaultValue": null
           },
           {
-            "name": "mailingexempt",
+            "name": "mailing_exempt",
             "description": " don't notify user on updates ",
             "type": {
               "kind": "SCALAR",
@@ -6794,7 +9336,7 @@
             "defaultValue": null
           },
           {
-            "name": "candisplay",
+            "name": "can_display",
             "description": " can this user be displayed in this group ",
             "type": {
               "kind": "SCALAR",
@@ -6804,7 +9346,7 @@
             "defaultValue": null
           },
           {
-            "name": "sortid",
+            "name": "sort_id",
             "description": " sort order for display ",
             "type": {
               "kind": "SCALAR",
@@ -6868,7 +9410,7 @@
             "deprecationReason": null
           },
           {
-            "name": "mailingexempt",
+            "name": "mailing_exempt",
             "description": null,
             "args": [],
             "type": {
@@ -6892,7 +9434,7 @@
             "deprecationReason": null
           },
           {
-            "name": "candisplay",
+            "name": "can_display",
             "description": null,
             "args": [],
             "type": {
@@ -6904,7 +9446,7 @@
             "deprecationReason": null
           },
           {
-            "name": "sortid",
+            "name": "sort_id",
             "description": null,
             "args": [],
             "type": {
@@ -6929,7 +9471,7 @@
         "inputFields": [
           {
             "name": "title",
-            "description": null,
+            "description": " short caption of what is going on ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -6939,7 +9481,7 @@
           },
           {
             "name": "detail",
-            "description": null,
+            "description": " paragraph description ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -6949,7 +9491,7 @@
           },
           {
             "name": "post_type",
-            "description": null,
+            "description": " post types see https://github.com/AmericanWhitewater/wh2o/wiki/Post-Types",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -6963,17 +9505,21 @@
           },
           {
             "name": "post_date",
-            "description": null,
+            "description": " date of the post ",
             "type": {
-              "kind": "SCALAR",
-              "name": "DateTimeISO8601",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTimeISO8601",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
           {
             "name": "reach_id",
-            "description": null,
+            "description": " reach we are attaching the post to",
             "type": {
               "kind": "SCALAR",
               "name": "AWID",
@@ -6983,7 +9529,7 @@
           },
           {
             "name": "gauge_id",
-            "description": null,
+            "description": " gauge we attaching thie post to ",
             "type": {
               "kind": "SCALAR",
               "name": "AWID",
@@ -6993,7 +9539,7 @@
           },
           {
             "name": "user_id",
-            "description": null,
+            "description": " who is making the post ",
             "type": {
               "kind": "SCALAR",
               "name": "AWID",
@@ -7003,7 +9549,7 @@
           },
           {
             "name": "metric_id",
-            "description": null,
+            "description": " how is flow estimated, stage? relative can be simply ",
             "type": {
               "kind": "SCALAR",
               "name": "Int",
@@ -7013,7 +9559,17 @@
           },
           {
             "name": "reading",
-            "description": null,
+            "description": " actual numerical reading ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "observation",
+            "description": " relative flow if used with reach_id - too high > 1.0, flowing 0-1, low <0, consider -0.5,.5,1.5 for too low,flowing,too high ",
             "type": {
               "kind": "SCALAR",
               "name": "Float",
@@ -7145,7 +9701,7 @@
           },
           {
             "name": "section_id",
-            "description": null,
+            "description": " UUID of new or existing \"section\" ",
             "type": {
               "kind": "SCALAR",
               "name": "AWID",
@@ -7161,7 +9717,7 @@
       {
         "kind": "SCALAR",
         "name": "Upload",
-        "description": "Can be used as an argument to upload files using https://github.com/jaydenseric/graphql-multipart-request-spec",
+        "description": "Can be used as an argument to upload files using https://github.com/jayccdenseric/graphql-multipart-request-spec",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -7178,25 +9734,25 @@
         "enumValues": [
           {
             "name": "POST",
-            "description": " Rougly a post ",
+            "description": " Rougly a post, section_id refers to a POST ID ",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "RAPID",
-            "description": " attach to a rapid ",
+            "description": " attach to a rapid, section_id is a rapid ID ",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "REACH",
-            "description": " attach as the header image of a reach",
+            "description": " attach as the header image of a reach, section ID refers to the reach id",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "GALLERY",
-            "description": " attach to a reach as a new photo upload ",
+            "description": " attach to a reach as a new photo upload, section ID refers to a reach_id ",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -7205,8 +9761,107 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "ReachInput",
+        "name": "POIInput",
         "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "name",
+            "description": " name of the fature ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "character",
+            "description": " feature type attributes ",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "POIAttributes",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "distance",
+            "description": " distance from putin ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "difficulty",
+            "description": " difficulty -- I,II,III,IV,V,VI -- ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "description",
+            "description": " description of the POI ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "approximate",
+            "description": " sets if it is a guess as to the location ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "rloc",
+            "description": " point the location is ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Point",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "reach_id",
+            "description": " what reach is it associted with ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "AWID",
+              "ofType": null
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "ReachInput",
+        "description": " see above reach fields ",
         "fields": null,
         "inputFields": [
           {
@@ -7454,7 +10109,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Point",
               "ofType": null
             },
             "defaultValue": null
@@ -7464,7 +10119,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Point",
               "ofType": null
             },
             "defaultValue": null
@@ -7564,7 +10219,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "LineString",
               "ofType": null
             },
             "defaultValue": null
@@ -8848,8 +11503,28 @@
         "possibleTypes": null
       },
       {
+        "kind": "SCALAR",
+        "name": "Date",
+        "description": "A ISO DateTimeISO8601 string with format `Y-m-d H:i:s` e.g. `2018-01-01T13:00:00Z`.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "Time",
+        "description": "A ISO DateTimeISO8601 string with format `Y-m-d H:i:s` e.g. `2018-01-01T13:00:00Z`.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
-        "name": "Contact",
+        "name": "Region",
         "description": null,
         "fields": [
           {
@@ -8859,6 +11534,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -8986,35 +11673,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "ENUM",
-        "name": "Trashed",
-        "description": "Specify if you want to include or exclude trashed results from a query.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "ONLY",
-            "description": "Only return trashed results.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "WITH",
-            "description": "Return both trashed and non-trashed results.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "WITHOUT",
-            "description": "Only return non-trashed results.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
         "kind": "INPUT_OBJECT",
         "name": "OrderByClause",
         "description": "Allows ordering a list of records.",
@@ -9051,6 +11709,35 @@
         ],
         "interfaces": null,
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "Trashed",
+        "description": "Specify if you want to include or exclude trashed results from a query.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ONLY",
+            "description": "Only return trashed results.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "WITH",
+            "description": "Return both trashed and non-trashed results.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "WITHOUT",
+            "description": "Only return non-trashed results.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       }
     ],
