@@ -10,13 +10,14 @@ target 'American Whitewater' do
   # to be included in the functionality - this will need to be updated
   # or reverted back - but Search on RunsListViewController will not
   # work correctly if you do not use this Fork
-  pod 'IQKeyboardManagerSwift', :git => 'https://github.com/duffek/IQKeyboardManager.git'  
+  pod 'IQKeyboardManagerSwift', :git => 'https://github.com/duffek/IQKeyboardManager.git'
   
   # Push Notification System
-  pod 'OneSignal', '~> 2.11.2'
+  pod 'OneSignal', '~> 3.0.0-beta3'
   
   # Best HTTP Request Handling
-  pod 'Alamofire', '~> 5.1.0'
+  # - Used for reach API / rivers listing
+  pod 'Alamofire', '~> 5.4.0'
   pod 'AlamofireImage', '~> 4.1'
   pod 'AlamofireNetworkActivityIndicator', '~> 3.1.0'
   pod 'SwiftyJSON', '~> 5.0.0'
@@ -29,8 +30,8 @@ target 'American Whitewater' do
   pod 'NYAlertViewController', '~> 1.3.0'
   
   # Firebase added for analytics and Crashlytics
-  pod 'Firebase/Analytics', '~> 6.32.2'
-  pod 'Firebase/Crashlytics', '~> 6.32.2'
+  pod 'Firebase/Analytics', '~> 7.1.0'
+  pod 'Firebase/Crashlytics', '~> 7.1.0'
   pod 'Fabric', '~> 1.10.2'
   
   # Pod Charts
@@ -44,6 +45,6 @@ end
 target 'OneSignalNotificationServiceExtension' do
   use_frameworks!
 
-  pod 'OneSignal', '~> 2.11.2'
+  pod 'OneSignal', '~> 3.0.0-beta3'
   
 end
