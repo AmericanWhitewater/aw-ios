@@ -1,7 +1,9 @@
 import UIKit
+import WebKit
 import StoreKit
 import MessageUI
 import KeychainSwift
+import SafariServices
 
 class MoreTableViewController: UITableViewController, MFMailComposeViewControllerDelegate {
 
@@ -80,8 +82,20 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
             if keychain.get(AWGC.AuthKeychainToken) != nil {
                 keychain.delete(AWGC.AuthKeychainToken)
             }
+
+            HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
             
-            DuffekDialog.shared.showOkDialog(title: "Signed Out", message: "You are now signed out.")
+            // clear cookies
+            let dataTypes = Set([WKWebsiteDataTypeCookies, WKWebsiteDataTypeLocalStorage, WKWebsiteDataTypeSessionStorage,
+                                 WKWebsiteDataTypeWebSQLDatabases, WKWebsiteDataTypeIndexedDBDatabases])
+            WKWebsiteDataStore.default().removeData(ofTypes: dataTypes, modifiedSince: NSDate.distantPast, completionHandler: {})
+            
+            // load safari logout page
+            let config = SFSafariViewController.Configuration()
+            let vc = SFSafariViewController(url: URL(string: AWGC.AW_BASE_URL + "/logout")!, configuration: config)
+            present(vc, animated: true)
+            
+            //DuffekDialog.shared.showOkDialog(title: "Signed Out", message: "You are now signed out.")
         }
     }
 

@@ -76,10 +76,6 @@ class RunsListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-// DRN - temp fix to hide distanceFilter
-DefaultsManager.distanceFilter = 0.0
-DefaultsManager.showDistanceFilter = false
-DefaultsManager.showRegionFilter = true
 
         // get and store the user's uname and id in local storage
         AWGQLApiHelper.shared.getAccountInfo()
@@ -94,28 +90,13 @@ DefaultsManager.showRegionFilter = true
         
         print("Check if onboarding needed")
         if checkIfOnboardingNeeded() == false {
-            print("Onboading needed == false")
-            
-//            if let date = DefaultsManager.lastUpdated {
-//                print("Checking diff in time")
-//                if let diff = Calendar.current.dateComponents([.minute], from: date, to: Date()).minute, diff > 2 {
-//
-//                    print("2 mins has passed so update is needed")
-//                    self.refresh()
-//                } else {
-//                    print("2 mins has not passed yet")
-//                }
-//
-//            } else { // if we haven't set a date yet just refresh
-//                print("no first lastUpdated")
-                self.refresh()
+             self.refresh()
+//            
+//            // if regions fitler has changed then refresh
+//            if DefaultsManager.regionsUpdated {
+//                DefaultsManager.regionsUpdated = false
+//                self.refresh();
 //            }
-            
-            // if regions fitler has changed then refresh
-            if DefaultsManager.regionsUpdated {
-                DefaultsManager.regionsUpdated = false
-                self.refresh();
-            }
         }
         
         // show the ugly legend until we design a better one
@@ -142,8 +123,7 @@ DefaultsManager.showRegionFilter = true
         fetchedResultsController?.delegate = nil
         fetchedResultsController = nil
     }
-    
-    
+        
     func updateFilterButton() {
         navigationItem.rightBarButtonItem?.title = ""
         if DefaultsManager.classFilter.count < 5 || DefaultsManager.showDistanceFilter == true || DefaultsManager.showRegionFilter == true {
@@ -156,10 +136,6 @@ DefaultsManager.showRegionFilter = true
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-// DRN - temp fix to hide distanceFilter
-DefaultsManager.distanceFilter = 0.0
-DefaultsManager.showDistanceFilter = false
-DefaultsManager.showRegionFilter = true
 
 // We use this for TestFlight testing to highlight what has changed
 // if we design it better we can include it in the main app
@@ -258,7 +234,7 @@ DefaultsManager.showRegionFilter = true
     
     
     func refresh(regions: [Region] = Region.all) {
-        
+        print("Refresh called")
         // don't update if the tableView is already updating
 //        if tableView.hasUncommittedUpdates {
 //            print("already updating")
@@ -287,6 +263,7 @@ DefaultsManager.showRegionFilter = true
             // Check if we're pulling ALL data - if so let the user know
             // a full refresh takes 30-60 seconds to complete
             if codes.count == Region.all.count {
+                print("Showing pull all data message")
                 DuffekDialog.shared.showStandardDialog(title: "Pull All Data?", message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.", buttonTitle: "Continue", buttonFunction: {
                     // User wants to continue
                     self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
@@ -348,7 +325,7 @@ DefaultsManager.showRegionFilter = true
                 self.refreshControl.endRefreshing()
                 
                 if let error = error {
-                    print("Error updating reaches: \(error.localizedDescription)")
+                    print("1 Error updating reaches: \(error.localizedDescription)")
                     DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.localizedDescription)
                 } else {
                     print("Error updating reaches: Unknown why")
@@ -382,7 +359,7 @@ DefaultsManager.showRegionFilter = true
             self.refreshControl.endRefreshing()
             
             if let error = error {
-                print("Error updating reaches: \(error.localizedDescription)")
+                print("2 Error updating reaches: \(error.localizedDescription)")
                 DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.localizedDescription)
             } else {
                 print("Error updating reaches: Unknown why")
@@ -402,6 +379,7 @@ DefaultsManager.showRegionFilter = true
     
     
     @objc func refreshRiverData(refreshControl: UIRefreshControl) {
+        print("Refresh called from refresh control")
         self.refresh()
     }
     

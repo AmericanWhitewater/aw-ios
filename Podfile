@@ -29,9 +29,9 @@ target 'American Whitewater' do
   pod 'NYAlertViewController', '~> 1.3.0'
   
   # Firebase added for analytics and Crashlytics
+  pod 'Firebase/Analytics', '~> 6.32.2'
+  pod 'Firebase/Crashlytics', '~> 6.32.2'
   pod 'Fabric', '~> 1.10.2'
-  pod 'Crashlytics', '~> 3.14.0'
-  pod 'Firebase/Analytics', '~> 6.22.0'
   
   # Pod Charts
   pod 'Charts', '~> 3.6.0'

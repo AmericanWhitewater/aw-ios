@@ -7,81 +7,85 @@ PODS:
   - Charts (3.6.0):
     - Charts/Core (= 3.6.0)
   - Charts/Core (3.6.0)
-  - Crashlytics (3.14.0):
-    - Fabric (~> 1.10.2)
   - Fabric (1.10.2)
-  - Firebase/Analytics (6.22.0):
+  - Firebase/Analytics (6.32.2):
     - Firebase/Core
-  - Firebase/Core (6.22.0):
+  - Firebase/Core (6.32.2):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 6.4.1)
-  - Firebase/CoreOnly (6.22.0):
-    - FirebaseCore (= 6.6.6)
-  - FirebaseAnalytics (6.4.1):
-    - FirebaseCore (~> 6.6)
-    - FirebaseInstallations (~> 1.1)
-    - GoogleAppMeasurement (= 6.4.1)
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
-    - GoogleUtilities/MethodSwizzler (~> 6.0)
-    - GoogleUtilities/Network (~> 6.0)
-    - "GoogleUtilities/NSData+zlib (~> 6.0)"
-    - nanopb (= 0.3.9011)
-  - FirebaseCore (6.6.6):
-    - FirebaseCoreDiagnostics (~> 1.2)
-    - FirebaseCoreDiagnosticsInterop (~> 1.2)
-    - GoogleUtilities/Environment (~> 6.5)
-    - GoogleUtilities/Logger (~> 6.5)
-  - FirebaseCoreDiagnostics (1.2.3):
-    - FirebaseCoreDiagnosticsInterop (~> 1.2)
-    - GoogleDataTransportCCTSupport (~> 2.0)
-    - GoogleUtilities/Environment (~> 6.5)
-    - GoogleUtilities/Logger (~> 6.5)
-    - nanopb (~> 0.3.901)
-  - FirebaseCoreDiagnosticsInterop (1.2.0)
-  - FirebaseInstallations (1.1.1):
-    - FirebaseCore (~> 6.6)
-    - GoogleUtilities/UserDefaults (~> 6.5)
+    - FirebaseAnalytics (= 6.8.2)
+  - Firebase/CoreOnly (6.32.2):
+    - FirebaseCore (= 6.10.2)
+  - Firebase/Crashlytics (6.32.2):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 4.6.0)
+  - FirebaseAnalytics (6.8.2):
+    - FirebaseCore (~> 6.10)
+    - FirebaseInstallations (~> 1.6)
+    - GoogleAppMeasurement (= 6.8.2)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
+    - GoogleUtilities/MethodSwizzler (~> 6.7)
+    - GoogleUtilities/Network (~> 6.7)
+    - "GoogleUtilities/NSData+zlib (~> 6.7)"
+    - nanopb (~> 1.30906.0)
+  - FirebaseCore (6.10.2):
+    - FirebaseCoreDiagnostics (~> 1.6)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/Logger (~> 6.7)
+  - FirebaseCoreDiagnostics (1.6.0):
+    - GoogleDataTransport (~> 7.2)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/Logger (~> 6.7)
+    - nanopb (~> 1.30906.0)
+  - FirebaseCrashlytics (4.6.2):
+    - FirebaseCore (~> 6.10)
+    - FirebaseInstallations (~> 1.6)
+    - GoogleDataTransport (~> 7.2)
+    - nanopb (~> 1.30906.0)
     - PromisesObjC (~> 1.2)
-  - GoogleAppMeasurement (6.4.1):
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
-    - GoogleUtilities/MethodSwizzler (~> 6.0)
-    - GoogleUtilities/Network (~> 6.0)
-    - "GoogleUtilities/NSData+zlib (~> 6.0)"
-    - nanopb (= 0.3.9011)
-  - GoogleDataTransport (5.1.1)
-  - GoogleDataTransportCCTSupport (2.0.3):
-    - GoogleDataTransport (~> 5.1)
-    - nanopb (~> 0.3.901)
-  - GoogleUtilities/AppDelegateSwizzler (6.5.2):
+  - FirebaseInstallations (1.7.0):
+    - FirebaseCore (~> 6.10)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/UserDefaults (~> 6.7)
+    - PromisesObjC (~> 1.2)
+  - GoogleAppMeasurement (6.8.2):
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
+    - GoogleUtilities/MethodSwizzler (~> 6.7)
+    - GoogleUtilities/Network (~> 6.7)
+    - "GoogleUtilities/NSData+zlib (~> 6.7)"
+    - nanopb (~> 1.30906.0)
+  - GoogleDataTransport (7.3.0):
+    - nanopb (~> 1.30906.0)
+  - GoogleUtilities/AppDelegateSwizzler (6.7.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (6.5.2)
-  - GoogleUtilities/Logger (6.5.2):
+  - GoogleUtilities/Environment (6.7.2):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (6.7.2):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (6.5.2):
+  - GoogleUtilities/MethodSwizzler (6.7.2):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (6.5.2):
+  - GoogleUtilities/Network (6.7.2):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (6.5.2)"
-  - GoogleUtilities/Reachability (6.5.2):
+  - "GoogleUtilities/NSData+zlib (6.7.2)"
+  - GoogleUtilities/Reachability (6.7.2):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (6.5.2):
+  - GoogleUtilities/UserDefaults (6.7.2):
     - GoogleUtilities/Logger
   - IQKeyboardManagerSwift (6.5.5)
   - KeychainSwift (19.0.0)
-  - nanopb (0.3.9011):
-    - nanopb/decode (= 0.3.9011)
-    - nanopb/encode (= 0.3.9011)
-  - nanopb/decode (0.3.9011)
-  - nanopb/encode (0.3.9011)
+  - nanopb (1.30906.0):
+    - nanopb/decode (= 1.30906.0)
+    - nanopb/encode (= 1.30906.0)
+  - nanopb/decode (1.30906.0)
+  - nanopb/encode (1.30906.0)
   - netfox (1.19.0)
   - NYAlertViewController (1.3.0)
   - OAuthSwift (2.1.0)
   - OneSignal (2.11.2)
-  - PromisesObjC (1.2.8)
+  - PromisesObjC (1.2.10)
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
@@ -89,9 +93,9 @@ DEPENDENCIES:
   - AlamofireImage (~> 4.1)
   - AlamofireNetworkActivityIndicator (~> 3.1.0)
   - Charts (~> 3.6.0)
-  - Crashlytics (~> 3.14.0)
   - Fabric (~> 1.10.2)
-  - Firebase/Analytics (~> 6.22.0)
+  - Firebase/Analytics (~> 6.32.2)
+  - Firebase/Crashlytics (~> 6.32.2)
   - IQKeyboardManagerSwift (from `https://github.com/duffek/IQKeyboardManager.git`)
   - KeychainSwift (~> 19.0)
   - netfox
@@ -106,17 +110,15 @@ SPEC REPOS:
     - AlamofireImage
     - AlamofireNetworkActivityIndicator
     - Charts
-    - Crashlytics
     - Fabric
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseCoreDiagnostics
-    - FirebaseCoreDiagnosticsInterop
+    - FirebaseCrashlytics
     - FirebaseInstallations
     - GoogleAppMeasurement
     - GoogleDataTransport
-    - GoogleDataTransportCCTSupport
     - GoogleUtilities
     - KeychainSwift
     - nanopb
@@ -141,28 +143,26 @@ SPEC CHECKSUMS:
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
   AlamofireNetworkActivityIndicator: 6564782bd7b9e6c430ae67d9277af01907b01ca4
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
-  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
-  Firebase: 32f9520684e87c7af3f0704f7f88042626d6b536
-  FirebaseAnalytics: 83f822fd0d33a46f49f89b8c3ab16ab4d89df08a
-  FirebaseCore: 9aca0f1fffb405176ba15311a5621fcde4106fcf
-  FirebaseCoreDiagnostics: 13a6564cd6d5375066bbc8940cc1753af24497f3
-  FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
-  FirebaseInstallations: acb3216eb9784d3b1d2d2d635ff74fa892cc0c44
-  GoogleAppMeasurement: e49be3954045b17d046f271b9cc1ec052bad9702
-  GoogleDataTransport: 6ffa4dd0b6d547f8d27b91bd92fa9e197a3f5f1f
-  GoogleDataTransportCCTSupport: 2d7e609f8c5af1a33d7d59053e6f8cba59365df5
-  GoogleUtilities: ad0f3b691c67909d03a3327cc205222ab8f42e0e
+  Firebase: 47176280bfba198e531f909cfb1612dad216cb96
+  FirebaseAnalytics: 3c2fee6a922023ccfda7af87e4e641bad1fc11ba
+  FirebaseCore: 1d697bb944bf2af5fc248f1a66e165c9dd88bf97
+  FirebaseCoreDiagnostics: 7415bfb3883b3500c5a95c42b6ba66baae78f600
+  FirebaseCrashlytics: 1a747c9cc084a24dc6d9511c991db1cd078154eb
+  FirebaseInstallations: 466c7b4d1f58fe16707693091da253726a731ed2
+  GoogleAppMeasurement: 1a66f478c68ecd6c16ee63ee60c7c3a648e6b337
+  GoogleDataTransport: e85fb700c9b027079ce182c3d08e12e0f9618bb4
+  GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
   KeychainSwift: a06190cf933ad46b1e0abc3d77d29c06331715c7
-  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   netfox: efeec1d23406df6cd605212f09a40957bb5654eb
   NYAlertViewController: b93f82e2c1fc6d5e9485512ddbe7b481f463a074
   OAuthSwift: ab1675598273e04355e0282459c328e65c9ddacd
   OneSignal: 4e3e68bb6c29975286a2fa910cb49132bc6e20bb
-  PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 0a18c872a1c910e3ba5a2d224adac88f3bdc691a
+PODFILE CHECKSUM: a228b6fb101d82cffcae37f95c6419f59e4b1c74
 
 COCOAPODS: 1.9.3

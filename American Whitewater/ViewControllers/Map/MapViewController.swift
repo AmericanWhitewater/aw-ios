@@ -24,10 +24,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-// DRN - temp fix to hide distanceFilter
-DefaultsManager.distanceFilter = 0.0
-DefaultsManager.showDistanceFilter = false
-DefaultsManager.showRegionFilter = true
         
         legendContainerView.layer.cornerRadius = legendContainerView.frame.height / 2
         legendContainerView.clipsToBounds = true
@@ -41,10 +37,6 @@ DefaultsManager.showRegionFilter = true
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-// DRN - temp fix to hide distanceFilter
-DefaultsManager.distanceFilter = 0.0
-DefaultsManager.showDistanceFilter = false
-DefaultsManager.showRegionFilter = true
         
         updateFilterButton();
         checkLocationAuthorizationStatus()

@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #if DEBUG
             NFX.sharedInstance().start()
         #endif
-
+        
         return true
     }
     

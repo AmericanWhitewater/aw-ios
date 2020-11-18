@@ -197,7 +197,9 @@ class AddRiverFlowTableViewController: UITableViewController {
     
     @objc @IBAction func addPhotoButtonPressed(_ sender: UIButton) {
         
-        if AVCaptureDevice.authorizationStatus(for: .video) !=  .authorized {
+        let authStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        if authStatus == .denied || authStatus == .restricted {
             // user rejected the ask
             DuffekDialog.shared.showStandardDialog(title: "Access Denied", message: "Hey, it looks like you rejected our access to your camera... We can't enable your camera to take pictures without it.", buttonTitle: "Let's Fix It!") {
                 // user wants to fix the issue
@@ -206,7 +208,6 @@ class AddRiverFlowTableViewController: UITableViewController {
             } cancelFunction: {
                 // user doens't want to fix it.
             }
-
         } else {
             awImagePicker.present(from: sender)
         }

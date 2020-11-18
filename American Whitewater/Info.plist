@@ -48,6 +48,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>We need permission to bring up your phots so you can upload sweet pictures of the gnar.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need permission to bring up the camera so you can take sweet pictures of the gnar.</string>
 	<key>NSLocationAlwaysUsageDescription</key>

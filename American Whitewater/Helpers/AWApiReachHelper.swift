@@ -276,6 +276,7 @@ class AWApiReachHelper {
         DefaultsManager.fetchingreaches = true
         let dispatchGroup = DispatchGroup()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        print("Dispatch group enter")
         dispatchGroup.enter()
         
         fetchReachesRecursively(currentIndex: 0, allRegionCodes: regionCodes, allRiverJSONdata: [], successCallback: { (reaches) in
@@ -396,7 +397,6 @@ class AWApiReachHelper {
             context.parent = managedObjectContext
 
             context.perform {
-                print("AW reaches \(reachIds) decoded")
                 //for reach in reaches {
                 self.createOrUpdateReaches(newReaches: reaches, context: context)
                 //}
@@ -414,7 +414,6 @@ class AWApiReachHelper {
             callbackError(error)
         }
         dispatchGroup.notify(queue: .main) {
-            print("Update reaches \(reachIds) complete")
             managedObjectContext.perform {
                 managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 do {

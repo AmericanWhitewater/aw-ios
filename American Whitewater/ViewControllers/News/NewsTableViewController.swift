@@ -1,6 +1,5 @@
 import UIKit
 import CoreData
-import Crashlytics
 
 class NewsTableViewController: UITableViewController {
 

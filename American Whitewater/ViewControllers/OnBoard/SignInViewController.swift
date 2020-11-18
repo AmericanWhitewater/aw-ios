@@ -48,12 +48,13 @@ class SignInViewController: UIViewController {
             accessTokenUrl: "\(AWGC.AW_BASE_URL)/oauth/token",
             responseType: "token"
         )
-
+    
         self.oauthswift = oauth
         oauth.encodeCallbackURL = true
         oauth.encodeCallbackURLQuery = false
+        //oauth.authorizeURLHandler = OAuthSwiftOpenURLExternally.sharedInstance
         oauth.authorizeURLHandler = SafariURLHandler(viewController: self, oauthSwift: self.oauthswift!)
-
+        
         let _ = oauth.authorize(
             withCallbackURL: URL(string: AWGC.AWCallbackUrl)!,
             scope: "",
@@ -61,13 +62,14 @@ class SignInViewController: UIViewController {
                 switch result {
                 case .success(let (credential, _, _)):
                     
-                    print(credential.oauthToken)
-                                        
+                    //print(credential.oauthToken)
+                    
                     // Save token to local app keychain for security
                     let keychain = KeychainSwift();
                     keychain.set(credential.oauthToken, forKey: AWGC.AuthKeychainToken)
                     //keychain.delete("ios-aw-auth-key") // for sign out
                     //print("Keychain auth key is: ", keychain.get("ios-aw-auth-key"))
+                    
                     
                     // Dismiss login box
                     self.dismiss(animated: true, completion: nil)
