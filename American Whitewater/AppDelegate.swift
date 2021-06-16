@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // setup OneSignal for push notifications (only works on actual devices)
         let oneSignalInitSettings = [kOSSettingsKeyAutoPrompt: false]
         
-        OneSignal.initWithLaunchOptions(launchOptions, appId: "fd159b28-68c6-465e-9301-1bf712f6c435",
+        OneSignal.initWithLaunchOptions(launchOptions, appId: AWGC.AWOneSignalKey,
                                         handleNotificationAction: nil, settings: oneSignalInitSettings)
         OneSignal.inFocusDisplayType = OSNotificationDisplayType.notification;
 

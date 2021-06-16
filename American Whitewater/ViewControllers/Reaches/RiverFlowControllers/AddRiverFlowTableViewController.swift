@@ -94,11 +94,6 @@ class AddRiverFlowTableViewController: UITableViewController {
             return
         }
 
-        if let levelText = observedGaugeLevelTextField.text, levelText.count < 1 {
-            DuffekDialog.shared.showOkDialog(title: "Level Required", message: "Please enter a gauge level or estimate and try again!")
-            return
-        }
-
         AWProgressModal.shared.show(fromViewController: self, message: "Posting...");
         
         // send value to server

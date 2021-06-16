@@ -9,7 +9,8 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
 
     
     @IBOutlet weak var lastUpdatedAndVersionLabel: UILabel!
-    @IBOutlet weak var autoRefreshSwitch: UISwitch!
+    @IBOutlet weak var signInOutLabel: UILabel!
+    @IBOutlet weak var signInOutCell: UITableViewCell!
     
     let dateFormatter = DateFormatter()
     
@@ -25,17 +26,24 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let appBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0"
         lastUpdatedAndVersionLabel.text = "App Version: \(appVersion ?? "n/a") (\(appBuild))"
+                
+        signInOutCell.imageView?.image = UIImage(named: "aboutSignIn")
         
-        if DefaultsManager.shouldAutoRefresh == true {
-            autoRefreshSwitch.setOn(true, animated: false)
+        if DefaultsManager.signedInAuth == nil {
+            signInOutLabel?.text = "Sign In"
         } else {
-            autoRefreshSwitch.setOn(false, animated: false)
+            signInOutLabel?.text = "Sign Out"
         }
     }
     
-    @IBAction func autoRefreshChanged(_ refreshSwitch: UISwitch) {
-        DefaultsManager.shouldAutoRefresh = refreshSwitch.isOn
+    func showLoginScreen() {
+        if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
+            modalSignInVC.modalPresentationStyle = .overCurrentContext
+            modalSignInVC.referenceViewController = self
+            tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+        }
     }
+
     
     // MARK: - Table view data source
 
@@ -77,25 +85,31 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
             
         } else if indexPath.row == 5 {
             
-            // Sign out button pressed
-            let keychain = KeychainSwift()
-            if keychain.get(AWGC.AuthKeychainToken) != nil {
-                keychain.delete(AWGC.AuthKeychainToken)
-            }
+            if signInOutLabel?.text == "Sign In" {
+                print("Clicked show login screen")
+                self.showLoginScreen()
+            } else {
+                // Sign out button pressed
+                let keychain = KeychainSwift()
+                if keychain.get(AWGC.AuthKeychainToken) != nil {
+                    keychain.delete(AWGC.AuthKeychainToken)
+                }
 
-            HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
-            
-            // clear cookies
-            let dataTypes = Set([WKWebsiteDataTypeCookies, WKWebsiteDataTypeLocalStorage, WKWebsiteDataTypeSessionStorage,
-                                 WKWebsiteDataTypeWebSQLDatabases, WKWebsiteDataTypeIndexedDBDatabases])
-            WKWebsiteDataStore.default().removeData(ofTypes: dataTypes, modifiedSince: NSDate.distantPast, completionHandler: {})
-            
-            // load safari logout page
-            let config = SFSafariViewController.Configuration()
-            let vc = SFSafariViewController(url: URL(string: AWGC.AW_BASE_URL + "/logout")!, configuration: config)
-            present(vc, animated: true)
-            
-            //DuffekDialog.shared.showOkDialog(title: "Signed Out", message: "You are now signed out.")
+                HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
+                
+                // clear cookies
+                let dataTypes = Set([WKWebsiteDataTypeCookies, WKWebsiteDataTypeLocalStorage, WKWebsiteDataTypeSessionStorage,
+                                     WKWebsiteDataTypeWebSQLDatabases, WKWebsiteDataTypeIndexedDBDatabases])
+                WKWebsiteDataStore.default().removeData(ofTypes: dataTypes, modifiedSince: NSDate.distantPast, completionHandler: {})
+                
+                // load safari logout page
+                let config = SFSafariViewController.Configuration()
+                let vc = SFSafariViewController(url: URL(string: AWGC.AW_BASE_URL + "/logout")!, configuration: config)
+                present(vc, animated: true)
+                
+                DefaultsManager.signedInAuth = nil
+                signInOutLabel?.text = "Sign In"
+            }
         }
     }
 

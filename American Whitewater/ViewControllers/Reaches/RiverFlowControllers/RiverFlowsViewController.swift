@@ -159,7 +159,19 @@ class RiverFlowsViewController: UIViewController {
     
     
     @IBAction func reportAFlowButtonPressed(_ sender: Any) {
-        self.performSegue(withIdentifier: Segue.addRiverFlowSeg.rawValue, sender: nil)
+        if DefaultsManager.signedInAuth == nil {
+            self.showLoginScreen()
+        } else {
+            self.performSegue(withIdentifier: Segue.addRiverFlowSeg.rawValue, sender: nil)
+        }
+    }
+    
+    func showLoginScreen() {
+        if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
+            modalSignInVC.modalPresentationStyle = .overCurrentContext
+            modalSignInVC.referenceViewController = self
+            tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+        }
     }
     
     // MARK: - Navigation

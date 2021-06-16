@@ -16,6 +16,7 @@ class AWGQLApiHelper
     typealias PostObservationsCallback = (PostObservationMutation.Data.PostUpdate?) -> Void
     typealias PostPhotoObservationCallback = (PostObservationPhotoMutation.Data.PhotoFileUpdate, PostObservationMutation.Data) -> Void
     typealias AWMetricsCallback = ([String:String]) -> Void
+    typealias AWGaugesListCallback = ([ [String : String] ]) -> Void
     typealias AWGraphQLError = (Error?, String?) -> Void
     
     static let shared = AWGQLApiHelper()
@@ -307,7 +308,7 @@ class AWGQLApiHelper
                         print(gauge.id ?? "no id")
                         print(gauge.name ?? "no name")
                         print(gauge.source ?? "no source")
-                     
+                        
                         var availableMetrics = [String:String]()
                         if let updates = gauge.updates {
                             for update in updates {
@@ -329,6 +330,54 @@ class AWGQLApiHelper
                     //errorCallback(error, nil)
             }
         }
+    }
+    
+    func getGagesForReach(id: String, gagesInfoCallback: @escaping AWGaugesListCallback) {
+        
+        apollo.fetch(query: GagesForReachQuery(reach_id: id)) { result in
+            switch result {
+                case .success(let graphQLResult):
+                    print(graphQLResult)
+                    
+                    if let data = graphQLResult.data, let outerGages = data.gauges, let gagesList = outerGages.gauges {
+                        
+                        var newGageInfoList = [ [String : String] ]()
+                        
+                        for gage in gagesList {
+                            let gageInfo = gage?.gauge
+                            let metricInfo = gage?.metric
+                            
+                            var gageToAdd = [String: String]()
+                            
+                            gageToAdd["targetid"] = "\(gage?.targetid ?? 0)"
+                            
+                            if let gageInfo = gageInfo {
+                                gageToAdd["gageName"] = gageInfo.name ?? ""
+                                gageToAdd["id"] = gageInfo.id ?? ""
+                                gageToAdd["source"] = gageInfo.source ?? ""
+                                gageToAdd["source_id"] = gageInfo.sourceId ?? ""
+                            }
+                            
+                            if let metricInfo = metricInfo {
+                                gageToAdd["metric_id"] = metricInfo.id ?? ""
+                                gageToAdd["unit"] = metricInfo.unit ?? ""
+                                gageToAdd["metricName"] = metricInfo.name ?? ""
+                            }
+                            
+                            newGageInfoList.append(gageToAdd);
+                        }
+
+                        // send callback the gage info list
+                        gagesInfoCallback(newGageInfoList)
+                    }
+                    
+                case .failure(let error):
+                    print("GraphQL Error: \(error)")
+                    // TODO: call awerror callback
+            }
+        }
+        
+        
     }
     
 }

@@ -52,7 +52,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         loadRegions()
 
         contentCollectionView.reloadData()
-        
+
+        // gets location and also triggers request if needed
+        getUsersLocation()
     }
     
     
@@ -399,6 +401,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.locationManager.delegate = self
 
         let authStatus = CLLocationManager.authorizationStatus()
+        print("Auth Status:", authStatus)
         
         switch authStatus {
             case .notDetermined:
@@ -455,6 +458,17 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse || status == .authorizedAlways {
             locationManager.startUpdatingLocation()
+        } else if status == .denied || status == .restricted {
+
+            DuffekDialog.shared.showStandardDialog(title: "Location Access Denied", message: "We are unable to use distance filtering becuase access to your location was not granted.", buttonTitle: "Fix Access") {
+                // fix access
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                
+            } cancelFunction: {
+                // do nothing
+            }
+        } else if status == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
         }
     }
 

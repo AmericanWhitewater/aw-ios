@@ -24,6 +24,8 @@ class AWGC {
     
     static let AWCallbackUrl = "aw://oauth-callback/aw"
     static let AuthKeychainToken = "ios-aw-auth-key"
+    
+    static let AWOneSignalKey = "fd159b28-68c6-465e-9301-1bf712f6c435"
 }
 
 

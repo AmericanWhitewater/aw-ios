@@ -1,0 +1,20 @@
+query GagesForReach($reach_id: ID!) {
+    gauges:getGaugeInformationForReachID(id:$reach_id) {
+        gauges {
+            targetid,
+            metric
+            {
+                id,
+                unit,
+                name
+            },
+            gauge
+            {
+                name,
+                id,
+                source,
+                source_id
+            }
+        }
+    }
+}

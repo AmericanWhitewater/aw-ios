@@ -279,6 +279,71 @@
             "deprecationReason": null
           },
           {
+            "name": "news",
+            "description": null,
+            "args": [
+              {
+                "name": "search",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "NewsSearch",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "orderBy",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "NewsOrderByOrderByClause",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "first",
+                "description": "Limits number of fetched elements. Maximum allowed value: 2500.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "page",
+                "description": "The offset from which elements are returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ArticlePaginator",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "events",
             "description": " Query events as a search endpoint ",
             "args": [
@@ -355,6 +420,47 @@
               "kind": "OBJECT",
               "name": "EventPaginator",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "nextEvents",
+            "description": null,
+            "args": [
+              {
+                "name": "event_categories",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "EventCategoryType",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "reach_id",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Event",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -857,6 +963,22 @@
             "deprecationReason": null
           },
           {
+            "name": "gauge_sources",
+            "description": " retrieves all valid gauge sources ",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "GaugeSource",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "reachmap",
             "description": " structures a reach query in a way that might make sense for a mapping endpoint ",
             "args": [
@@ -929,15 +1051,31 @@
             "args": [
               {
                 "name": "id",
-                "description": null,
+                "description": "id unique to AW",
                 "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "source",
+                "description": "source like 'usgs', 'noaa', etc.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "source_id",
+                "description": "source id is the id the source uses like USGS 1003030 would be 1003030 in this field",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "AWID",
+                  "ofType": null
                 },
                 "defaultValue": null
               }
@@ -952,35 +1090,57 @@
           },
           {
             "name": "gauges",
-            "description": " gauge query structured for a search endpoint ",
+            "description": " gauge query structured for a search endpoint, paginates ",
             "args": [
               {
                 "name": "id",
                 "description": null,
                 "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "source",
+                "description": "source like 'usgs', 'noaa', etc. ",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "first",
+                "description": "Limits number of fetched elements. Maximum allowed value: 2500.",
+                "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
                     "kind": "SCALAR",
-                    "name": "ID",
+                    "name": "Int",
                     "ofType": null
                   }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "page",
+                "description": "The offset from which elements are returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
                 },
                 "defaultValue": null
               }
             ],
             "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Gauge",
-                  "ofType": null
-                }
-              }
+              "kind": "OBJECT",
+              "name": "GaugePaginator",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1039,6 +1199,66 @@
               "kind": "OBJECT",
               "name": "GaugeInformationForReach",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "gaugeCorrelation",
+            "description": "gauge correlation header",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "GaugeCorrelation",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "gaugeCorrelations",
+            "description": "gauge correlations by target or source id",
+            "args": [
+              {
+                "name": "targetid",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "sourceid",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "GaugeCorrelation",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1173,7 +1393,7 @@
           },
           {
             "name": "linker",
-            "description": null,
+            "description": " queries the linker.\nlinker source is one of the LinkerSourceTypes,\nid is the ID specific to the linked source\n\nexclude is a list of resources you don't want returned in the response.\nonly is to include only one type of resource (should not conflict with exclude)",
             "args": [
               {
                 "name": "source",
@@ -1198,6 +1418,34 @@
                   "ofType": {
                     "kind": "SCALAR",
                     "name": "AWID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "exclude",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "LinkerSourceType",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "include",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "LinkerSourceType",
                     "ofType": null
                   }
                 },
@@ -1620,7 +1868,7 @@
       {
         "kind": "ENUM",
         "name": "AWRegion",
-        "description": null,
+        "description": "AW Maintain several regions. These are the abbreviations for them",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2262,8 +2510,8 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "Int",
+              "kind": "ENUM",
+              "name": "EventCategoryType",
               "ofType": null
             },
             "isDeprecated": false,
@@ -2512,7 +2760,18 @@
           {
             "name": "dates",
             "description": null,
-            "args": [],
+            "args": [
+              {
+                "name": "event_date",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "DateRange",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "LIST",
               "name": null,
@@ -2524,6 +2783,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "next_date",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "EventDate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -2532,9 +2803,50 @@
         "possibleTypes": null
       },
       {
+        "kind": "ENUM",
+        "name": "EventCategoryType",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "CAT_RELEASE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CAT_EVENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CAT_OTHER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CAT_FESTIVAL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CAT_PREDICTED_FLOW_SOURCE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "SCALAR",
         "name": "DateTimeISO8601",
-        "description": "A ISO DateTimeISO8601 string with format `Y-m-d H:i:s` e.g. `2018-01-01T13:00:00Z`.",
+        "description": " A ISO DateTimeISO8601 string with format `Y-m-d H:i:s` e.g. `2018-01-01T13:00:00Z`. ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2545,6 +2857,55 @@
         "kind": "SCALAR",
         "name": "Point",
         "description": " Point which looks like two numbers 33.1 226.1 ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "DateRange",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "from",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Date",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "to",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Date",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "Date",
+        "description": " A ISO Date string with format `Y-m-d` e.g. `2018-01-01`. ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2594,7 +2955,7 @@
           },
           {
             "name": "batch_id",
-            "description": null,
+            "description": "Batch ID represents one of a type -- like releases that are 600-800 cfs vs 800-1200 cfs, calendar displaying a\nsingle event can color code based on batch_id",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -2732,7 +3093,7 @@
       {
         "kind": "OBJECT",
         "name": "Gauge",
-        "description": null,
+        "description": "This describes a Gauge",
         "fields": [
           {
             "name": "id",
@@ -2867,7 +3228,7 @@
       {
         "kind": "OBJECT",
         "name": "GaugeUpdate",
-        "description": null,
+        "description": "This describes a gauge update, a reading and when the reading was made",
         "fields": [
           {
             "name": "metric",
@@ -3463,39 +3824,182 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "NewsSearch",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "type",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "NewsSectionType",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "min_expiration",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTimeISO8601",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "value",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "ENUM",
-        "name": "EventCategoryType",
+        "name": "NewsSectionType",
         "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
-            "name": "CAT_RELEASE",
+            "name": "REGIONAL_NEWS",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "CAT_EVENT",
+            "name": "REACH_LINK",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "CAT_OTHER",
+            "name": "STATE_LINK",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "CAT_FESTIVAL",
+            "name": "PROJECT_LINK",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "CAT_PREDICTED_FLOW_SOURCE",
+            "name": "SUCCESS_LINKS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CONSERVATION_LINKS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EVENT_LINKS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SAFETY_LINKS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "VOLUNTEER_LINKS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACTION_ITEMS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FRONTPAGE_NEWS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "NewsOrderByOrderByClause",
+        "description": "Order by clause for the `orderBy` argument on the query `news`.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "field",
+            "description": "The column that is used for ordering.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "NewsOrderByColumn",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "order",
+            "description": "The direction that is used for ordering.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "SortOrder",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "NewsOrderByColumn",
+        "description": "Allowed column names for the `orderBy` argument on the query `news`.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "REVISION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "POSTED_DATE",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -4291,7 +4795,7 @@
       {
         "kind": "OBJECT",
         "name": "Reach",
-        "description": null,
+        "description": "Represents a reach in the database",
         "fields": [
           {
             "name": "id",
@@ -4571,7 +5075,7 @@
           },
           {
             "name": "edited",
-            "description": null,
+            "description": " edited time/date ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -4583,7 +5087,7 @@
           },
           {
             "name": "is_final",
-            "description": null,
+            "description": " is this reach the current finalized reach (others represents prior or pending revisions)",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -4611,7 +5115,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "ReachClass",
               "ofType": null
             },
             "isDeprecated": false,
@@ -4619,7 +5123,7 @@
           },
           {
             "name": "ploc",
-            "description": null,
+            "description": " putin location ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -4631,7 +5135,7 @@
           },
           {
             "name": "tloc",
-            "description": null,
+            "description": " takeout location ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -4643,7 +5147,7 @@
           },
           {
             "name": "was_final",
-            "description": null,
+            "description": " was this revision ever a final version (e.g. could it have been active in the past ) ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -4655,7 +5159,7 @@
           },
           {
             "name": "thumboverride",
-            "description": null,
+            "description": " flag that was used indicate that the index image for the river should not be altered (e.g. use the raw/fullsize image) ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -4667,7 +5171,7 @@
           },
           {
             "name": "shuttledetails",
-            "description": null,
+            "description": " description of how to run the shuttle ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -4679,7 +5183,7 @@
           },
           {
             "name": "abstract",
-            "description": null,
+            "description": " short 1-2 sentence description of the reach used on hover on the map ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -4691,7 +5195,7 @@
           },
           {
             "name": "direction_default",
-            "description": null,
+            "description": " when we had routing, this would indicate the zip to show as the start (e.g. zip of the local town) ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -4703,7 +5207,7 @@
           },
           {
             "name": "custom_destination",
-            "description": null,
+            "description": " destination string when we had routing built into the app ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -4715,7 +5219,7 @@
           },
           {
             "name": "revision_comment",
-            "description": null,
+            "description": " comment left by the SK indicating what changed ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -4980,7 +5484,7 @@
           },
           {
             "name": "accidents",
-            "description": null,
+            "description": " all the accidents that associated with this reach ",
             "args": [
               {
                 "name": "first",
@@ -5017,7 +5521,7 @@
           },
           {
             "name": "user",
-            "description": null,
+            "description": " indicates who was responsible for this revision ",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -5065,7 +5569,7 @@
           },
           {
             "name": "sk",
-            "description": null,
+            "description": " indicates the SK that changd this ",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -5077,7 +5581,7 @@
           },
           {
             "name": "permissions",
-            "description": null,
+            "description": " shows the permissions for the logged in user ",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -5098,10 +5602,40 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "pending_events",
+            "description": " next event by category on the reach ",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Event",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "ReachClass",
+        "description": "RapidClass\nvalid values: \"I\" , \"I(II)\" , \"I(III)\" , \"I(IV)\" , \"I(V)\" , \"I(V+)\" ,\n   \"I-II\" , \"I-II(III)\" , \"I-II(IV)\" , \"I-II(V)\" , \"I-II(V+)\" , \"II\" ,\n   \"II(III)\" , \"II(IV)\" , \"II(V)\" , \"II(V+)\" , \"I-II+(III)\" , \"I-II+(IV)\" , \"I-II+(V)\" , \"I-II+(V+)\" ,\n   \"II+\" , \"II+(III)\" , \"II+(IV)\" , \"II+(V)\" , \"II+(V+)\" , \"I-III\" , \"I-III(IV)\" ,\n   \"I-III(V)\" , \"I-III(V+)\" , \"II-III\" , \"II-III(IV)\" , \"II-III(V)\" , \"II-III(V+)\" , \"III\" ,\n   \"I-III+\" , \"I-III+(IV)\" , \"I-III+(V)\" , \"I-III+(V+)\" , \"II-III+\" , \"II-III+(IV)\" , \"II-III+(V)\" ,\n   \"II-III+(V+)\" , \"III+\" , \"III+(IV)\" , \"III+(V)\" , \"III+(V+)\" , \"I-IV\" , \"I-IV(V)\" ,\n   \"I-IV(V+)\" , \"II-IV\" , \"II-IV(V)\" , \"II-IV(V+)\" , \"III-IV\" , \"III-IV(V)\" , \"III-IV(V+)\" , \"IV\" ,\n   \"IV(V)\" , \"IV(V+)\" , \"I-IV+\" , \"I-IV+(V)\" , \"I-IV+(V+)\" , \"II-IV+\" , \"II-IV+(V)\" ,\n   \"II-IV+(V+)\" , \"III-IV+\" , \"III-IV+(V)\" , \"III-IV+(V+)\" , \"IV+\" , \"I-V\" , \"I-V(V+)\" , \"II-V\" ,\n   \"II-V(V+)\" , \"III-V\" , \"III-V(V+)\" , \"IV-V\" , \"IV-V(V+)\" , \"V\" ,\n   \"II-V+\" , \"III-V+\" , \"IV-V+\" ,    \"V+\"",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -5118,7 +5652,7 @@
       {
         "kind": "OBJECT",
         "name": "ReadingSummary",
-        "description": null,
+        "description": "Reading summary summarizes the running state of a reach,\nit is a combination of a correlation and a physical gauge reading\nwith a gauge range",
         "fields": [
           {
             "name": "id",
@@ -5519,11 +6053,11 @@
       {
         "kind": "OBJECT",
         "name": "POI",
-        "description": null,
+        "description": "POI is a Point-Of-Interest, usually and historically a rapid.\nWe have the idea of expanding this to pretty much any point that might need to be in a guidebook (e.g. putin, waterfall)",
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": " id used for updates ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -5535,7 +6069,7 @@
           },
           {
             "name": "name",
-            "description": null,
+            "description": " name of the feature (e.g. rapid name \"Pillow Rapid\") ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -5547,7 +6081,7 @@
           },
           {
             "name": "photo",
-            "description": null,
+            "description": " photo of the feature ",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -5559,7 +6093,7 @@
           },
           {
             "name": "character",
-            "description": null,
+            "description": " list of attributes that can be used to describe this point ",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -5575,7 +6109,7 @@
           },
           {
             "name": "distance",
-            "description": null,
+            "description": " distance in miles from the start of the river, used for sort ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -5587,11 +6121,11 @@
           },
           {
             "name": "difficulty",
-            "description": null,
+            "description": " difficulty of the rapid,  ",
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "POIClass",
               "ofType": null
             },
             "isDeprecated": false,
@@ -5599,7 +6133,7 @@
           },
           {
             "name": "description",
-            "description": null,
+            "description": " description of the rapid ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -5611,7 +6145,7 @@
           },
           {
             "name": "approximate",
-            "description": null,
+            "description": " approximate flag for distance ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -5623,7 +6157,7 @@
           },
           {
             "name": "rloc",
-            "description": null,
+            "description": " location ",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -5635,7 +6169,7 @@
           },
           {
             "name": "permissions",
-            "description": null,
+            "description": " permissions for modifying by the current user ",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -5712,8 +6246,30 @@
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "rapid",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "other",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "POIClass",
+        "description": "POIClass\nvalid values: 'N/A','I','II','II+','III','III+','IV','IV+','V','5.0','5.1','5.2','5.3','VI'",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -6427,6 +6983,176 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "GaugeSource",
+        "description": "Describes a gauge source",
+        "fields": [
+          {
+            "name": "source",
+            "description": " specifies the source id ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "title",
+            "description": " describes the source ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "url",
+            "description": " references the URL of the source ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "update_type",
+            "description": " update type describes the update strategy ",
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "GaugeUpdateType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "update_frequency",
+            "description": " update frequency in sconds ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "update_start_time",
+            "description": " when updates are supposed to start ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Time",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "data",
+            "description": " Used by the guage driver to store information about the gauge ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ArbitraryJSON",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated",
+            "description": " Last updated timestamp ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTimeISO8601",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "populated",
+            "description": " Last populated, IOW when the gauge checked for new gauges on the source ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTimeISO8601",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "disclaimer",
+            "description": " Disclaimer specific to the gauge source ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "GaugeUpdateType",
+        "description": "Describes an update strategy",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "READING",
+            "description": " Readings are queried periodically ",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "HEADER",
+            "description": " Source askes for all gauges updated since a given time ",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MANUAL",
+            "description": " Source uses a different strategy ",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "Time",
+        "description": " A time string with format `H:i:s` e.g. `13:00:00`. ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
         "name": "geobox",
         "description": " geographic area for a reach ",
@@ -6490,6 +7216,57 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "GaugePaginator",
+        "description": "A paginated list of Gauge items.",
+        "fields": [
+          {
+            "name": "paginatorInfo",
+            "description": "Pagination information about the list of items.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PaginatorInfo",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "data",
+            "description": "A list of Gauge items.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Gauge",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -7736,6 +8513,352 @@
       },
       {
         "kind": "OBJECT",
+        "name": "GaugeCorrelation",
+        "description": null,
+        "fields": [
+          {
+            "name": "source",
+            "description": " the gauge id that gets the update ",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Gauge",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "target",
+            "description": " the gauge id affected by the update ",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Gauge",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "time_adjustment",
+            "description": " when reporting time move the clock up (positive) or down (negative) in seconds. ",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metric",
+            "description": " metric to watch ",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "GaugeReadingMetric",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "estimated",
+            "description": " is the value estimated? indicated in the UI usually with a ~ so like ~7ft. ",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": " id of correlation ",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": " UID that made the correlation ",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "excluded",
+            "description": " exclude from the gauge summary, but shows in detail ",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "delay_update",
+            "description": "\t\twhen reporting a reading, wait this long in seconds before assuming the primary gauge is down.\n\t\tthis is a bit like a rank. 0 is default, but if you have two 0 correlation headers you will get\n\t\ttwo gauges that will report the last-updated, that is fine for two sources for the same reading, but\n\t\tif you have a primary gauge, make it zero, and then a secondary that you want to report if the\n\t\tprimary gauge hasn't reported in 4 hours, set this to 4*60*60. If you have a third gauge that you want\n\t\tto report only after a day then use 24*60*60. The reported value will be the most recent one, so this\n\t\tonly affects ranking.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ranges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "GaugeCorrelationRange",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "permissions",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PermissionReturn",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "GaugeCorrelationRange",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": " ID of this header ",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "min",
+            "description": " min value in range ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "max",
+            "description": " max value in range ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": " user writing this ",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "perfect",
+            "description": " perfect range, marked on ranges where the river is perfect, UI displays thumbs-up ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "important",
+            "description": " important comment on this range, marked for ranges where emphasizing the comment is important ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "range_min",
+            "description": "min range, on a simple gauge R0\ngauge range representing the bottom of this range, example is if a river has a perfect middle range, so\n0-200 is OK, 200-300 is perfect, 300-900 is fine, create three correlation ranges like so:\nR0-R3 0-200, R3-R6 200-300 perfect, R6-R9 300-900 important \"has killed people\"",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "GaugeRange",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "range_max",
+            "description": " range_max, on a simple gauge R9 ",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "GaugeRange",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "adjusted_reach_class",
+            "description": " if the reach class changes, display this as difficulty for the range.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "range_comment",
+            "description": " range comment, to display as info on the range ",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "permissions",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PermissionReturn",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "Document",
         "description": null,
         "fields": [
@@ -8184,7 +9307,7 @@
       {
         "kind": "OBJECT",
         "name": "LinkedResource",
-        "description": null,
+        "description": "this is the wrapper for a linked resource so as to group them in a common structure",
         "fields": [
           {
             "name": "type",
@@ -8690,13 +9813,9 @@
                 "name": "id",
                 "description": null,
                 "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
                 },
                 "defaultValue": null
               },
@@ -8758,13 +9877,9 @@
                 "name": "id",
                 "description": null,
                 "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
                 },
                 "defaultValue": null
               },
@@ -8799,13 +9914,9 @@
                 "name": "id",
                 "description": " UUID of existing or new photo file ",
                 "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
                 },
                 "defaultValue": null
               },
@@ -8848,21 +9959,17 @@
             "args": [
               {
                 "name": "id",
-                "description": null,
+                "description": " when specified id will identify the POI to update, when omitted it will create a POI ",
                 "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
                 },
                 "defaultValue": null
               },
               {
                 "name": "poi",
-                "description": null,
+                "description": " POI, if omitted the field will default to existing ",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -8889,21 +9996,17 @@
             "args": [
               {
                 "name": "id",
-                "description": null,
+                "description": " ID is numeric (nextReachID query), when omitted this will create a reach  ",
                 "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
                 },
                 "defaultValue": null
               },
               {
                 "name": "reach",
-                "description": null,
+                "description": " reach input has fields to update, when omitted they will default in create, or not update in update ",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -8930,7 +10033,7 @@
             "args": [
               {
                 "name": "id",
-                "description": null,
+                "description": " id to update ",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -8957,7 +10060,7 @@
             "args": [
               {
                 "name": "id",
-                "description": null,
+                "description": "id to remove ",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -8973,6 +10076,130 @@
             "type": {
               "kind": "OBJECT",
               "name": "Reach",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "gaugeCorrelationUpdate",
+            "description": " updates or creates a rapid with a UUID given ",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "correlation",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "GaugeCorrelationInput",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "GaugeCorrelation",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "gaugeCorrelationDelete",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "GaugeCorrelation",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "gaugeCorrelationRangeUpdate",
+            "description": " updates or creates a rapid with a UUID given ",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "correlation",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "GaugeCorrelationInput",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "GaugeCorrelationRange",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "gaugeCorrelationRangeDelete",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "GaugeCorrelation",
               "ofType": null
             },
             "isDeprecated": false,
@@ -9762,7 +10989,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "POIInput",
-        "description": null,
+        "description": "POI Input - used for create/update.",
         "fields": null,
         "inputFields": [
           {
@@ -9779,16 +11006,12 @@
             "name": "character",
             "description": " feature type attributes ",
             "type": {
-              "kind": "NON_NULL",
+              "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "POIAttributes",
-                  "ofType": null
-                }
+                "kind": "ENUM",
+                "name": "POIAttributes",
+                "ofType": null
               }
             },
             "defaultValue": null
@@ -9808,7 +11031,7 @@
             "description": " difficulty -- I,II,III,IV,V,VI -- ",
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "POIClass",
               "ofType": null
             },
             "defaultValue": null
@@ -9866,7 +11089,7 @@
         "inputFields": [
           {
             "name": "river",
-            "description": null,
+            "description": " Name of the river ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -9876,7 +11099,7 @@
           },
           {
             "name": "section",
-            "description": null,
+            "description": " Name of the section ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -9886,7 +11109,7 @@
           },
           {
             "name": "altname",
-            "description": null,
+            "description": " Common name of the section ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -9896,7 +11119,7 @@
           },
           {
             "name": "county",
-            "description": null,
+            "description": " county name -- optional ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -9906,7 +11129,7 @@
           },
           {
             "name": "zipcode",
-            "description": null,
+            "description": " zip  -- optional ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -9916,7 +11139,7 @@
           },
           {
             "name": "length",
-            "description": null,
+            "description": " length in miles with fraction, mostly reported  ",
             "type": {
               "kind": "SCALAR",
               "name": "Float",
@@ -9926,7 +11149,7 @@
           },
           {
             "name": "avggradient",
-            "description": null,
+            "description": " gradient in ft/mile, reported ",
             "type": {
               "kind": "SCALAR",
               "name": "Int",
@@ -9936,7 +11159,7 @@
           },
           {
             "name": "maxgradient",
-            "description": null,
+            "description": " max gradient in ft/mile, reported ",
             "type": {
               "kind": "SCALAR",
               "name": "Int",
@@ -9946,7 +11169,7 @@
           },
           {
             "name": "agency",
-            "description": null,
+            "description": " land agency name (if any) for adminstration of permits and land ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -9956,7 +11179,7 @@
           },
           {
             "name": "gaugeinfo",
-            "description": null,
+            "description": " paragraph explaining the gauges  ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -9966,7 +11189,7 @@
           },
           {
             "name": "description",
-            "description": null,
+            "description": " multi paragraph explaining the section  ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -9976,7 +11199,7 @@
           },
           {
             "name": "photo_id",
-            "description": null,
+            "description": " banner photo ID  ",
             "type": {
               "kind": "SCALAR",
               "name": "AWID",
@@ -9986,7 +11209,7 @@
           },
           {
             "name": "permitid",
-            "description": null,
+            "description": " permit id -- from the permit database ",
             "type": {
               "kind": "SCALAR",
               "name": "Int",
@@ -9996,7 +11219,7 @@
           },
           {
             "name": "huc",
-            "description": null,
+            "description": " HUC code drainage, will be assigned with proper location ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -10066,7 +11289,7 @@
           },
           {
             "name": "skid",
-            "description": null,
+            "description": " last editor's ID ",
             "type": {
               "kind": "SCALAR",
               "name": "AWID",
@@ -10076,7 +11299,7 @@
           },
           {
             "name": "status",
-            "description": null,
+            "description": " verfified (v) unverified (u) and \"r\" removed ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -10086,7 +11309,7 @@
           },
           {
             "name": "edited",
-            "description": null,
+            "description": " edited time/date ",
             "type": {
               "kind": "SCALAR",
               "name": "DateTimeISO8601",
@@ -10099,7 +11322,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "ReachClass",
               "ofType": null
             },
             "defaultValue": null
@@ -10146,7 +11369,7 @@
           },
           {
             "name": "abstract",
-            "description": null,
+            "description": " short 1-2 sentence description of the reach used on hover on the map ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -10156,7 +11379,7 @@
           },
           {
             "name": "direction_default",
-            "description": null,
+            "description": " when we had routing, this would indicate the zip to show as the start (e.g. zip of the local town) ",
             "type": {
               "kind": "SCALAR",
               "name": "Int",
@@ -10166,7 +11389,7 @@
           },
           {
             "name": "custom_destination",
-            "description": null,
+            "description": " destination string when we had routing built into the app ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -10176,7 +11399,7 @@
           },
           {
             "name": "revision_comment",
-            "description": null,
+            "description": " comment left by the SK indicating what changed ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -10186,7 +11409,7 @@
           },
           {
             "name": "permiturl",
-            "description": null,
+            "description": " URL for signing up for a permit ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -10196,7 +11419,7 @@
           },
           {
             "name": "permitinfo",
-            "description": null,
+            "description": " paragraph on how to permit ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -10206,7 +11429,7 @@
           },
           {
             "name": "image_override",
-            "description": null,
+            "description": " when set to a non-zero indicates that the image should be used without scaling in the banner, may include a transform such as a zoom or crop in css transition tag format ",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -10216,7 +11439,7 @@
           },
           {
             "name": "geom",
-            "description": null,
+            "description": " this is the geometry for the reach ",
             "type": {
               "kind": "SCALAR",
               "name": "LineString",
@@ -10233,6 +11456,129 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "GaugeCorrelationInput",
+        "description": "By itself, if you add this to target a river gauge,\nyou will get a link between the source id and the river. In that case it should show a listing.\nIf you add ranges then you will get interpretations of the gauge.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "source_id",
+            "description": " the gauge id that gets the update ",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "target_id",
+            "description": " the gauge id affected by the update ",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "time_adjustment",
+            "description": " when reporting time move the clock up (positive) or down (negative) in seconds. ",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "metric_id",
+            "description": " metric to watch ",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "estimated",
+            "description": " is the value estimated? indicated in the UI usually with a ~ so like ~7ft. ",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "uid",
+            "description": " UID that made the correlation ",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "excluded",
+            "description": " exclude from the gauge summary, but shows in detail ",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "delay_update",
+            "description": "\t\twhen reporting a reading, wait this long in seconds before assuming the primary gauge is down.\n\t\tthis is a bit like a rank. 0 is default, but if you have two 0 correlation headers you will get\n\t\ttwo gauges that will report the last-updated, that is fine for two sources for the same reading, but\n\t\tif you have a primary gauge, make it zero, and then a secondary that you want to report if the\n\t\tprimary gauge hasn't reported in 4 hours, set this to 4*60*60. If you have a third gauge that you want\n\t\tto report only after a day then use 24*60*60. The reported value will be the most recent one, so this\n\t\tonly affects ranking.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -11503,29 +12849,9 @@
         "possibleTypes": null
       },
       {
-        "kind": "SCALAR",
-        "name": "Date",
-        "description": "A ISO DateTimeISO8601 string with format `Y-m-d H:i:s` e.g. `2018-01-01T13:00:00Z`.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "SCALAR",
-        "name": "Time",
-        "description": "A ISO DateTimeISO8601 string with format `Y-m-d H:i:s` e.g. `2018-01-01T13:00:00Z`.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "Region",
-        "description": null,
+        "description": "Used to query regions",
         "fields": [
           {
             "name": "id",
@@ -11554,6 +12880,147 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "GaugeCorrelationRangeInput",
+        "description": "Adds a range to interpret running or not running to a correlation",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "id",
+            "description": " ID of this header ",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "min",
+            "description": " min value in range ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "max",
+            "description": " max value in range ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "uid",
+            "description": " user writing this ",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "perfect",
+            "description": " perfect range, marked on ranges where the river is perfect, UI displays thumbs-up ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "important",
+            "description": " important comment on this range, marked for ranges where emphasizing the comment is important ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "range_min",
+            "description": "min range, on a simple gauge R0\ngauge range representing the bottom of this range, example is if a river has a perfect middle range, so\n0-200 is OK, 200-300 is perfect, 300-900 is fine, create three correlation ranges like so:\nR0-R3 0-200, R3-R6 200-300 perfect, R6-R9 300-900 important \"has killed people\"",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "GaugeRange",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "range_max",
+            "description": " range_max, on a simple gauge R9 ",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "GaugeRange",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "adjusted_reach_class",
+            "description": " if the reach class changes, display this as difficulty for the range.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "range_comment",
+            "description": " range comment, to display as info on the range ",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "correlation_id",
+            "description": " ID of the header ",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },

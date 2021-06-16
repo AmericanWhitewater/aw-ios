@@ -22,6 +22,9 @@ class SignInViewController: UIViewController {
     
     @IBAction func cancelButtonPressed(_ sender: Any) {
         
+        let count = DefaultsManager.signInAlertCount
+        DefaultsManager.signInAlertCount = count + 1
+        
         // close the modal view
         self.dismiss(animated: true, completion: nil)
         
@@ -70,6 +73,7 @@ class SignInViewController: UIViewController {
                     //keychain.delete("ios-aw-auth-key") // for sign out
                     //print("Keychain auth key is: ", keychain.get("ios-aw-auth-key"))
                     
+                    DefaultsManager.signedInAuth = "true"
                     
                     // Dismiss login box
                     self.dismiss(animated: true, completion: nil)

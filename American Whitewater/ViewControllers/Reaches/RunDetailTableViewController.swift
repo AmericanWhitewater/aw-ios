@@ -311,7 +311,7 @@ class RunDetailTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Segue.gaugeDetail.rawValue {
-            let gaugeVC = segue.destination as? GaugeDetailViewController
+            let gaugeVC = segue.destination as? GageDetailsTableViewController //GaugeDetailViewController
             gaugeVC?.selectedRun = selectedRun
         } else if segue.identifier == Segue.reachMapEmbed.rawValue {
             let mapVC = segue.destination as? RunMapViewController

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KeychainSwift
 
 class RunAlertsViewController: UIViewController {
 
@@ -94,9 +95,22 @@ class RunAlertsViewController: UIViewController {
     
     
     @IBAction func addAlertPressed(_ sender: Any) {
-        self.performSegue(withIdentifier: Segue.postAlertSeg.rawValue, sender: nil)
+        
+        let keychain = KeychainSwift();
+        if keychain.get(AWGC.AuthKeychainToken) == nil || DefaultsManager.signedInAuth == nil {
+            self.showLoginScreen()
+        } else {
+            self.performSegue(withIdentifier: Segue.postAlertSeg.rawValue, sender: nil)
+        }        
     }
     
+    func showLoginScreen() {
+        if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
+            modalSignInVC.modalPresentationStyle = .overCurrentContext
+            modalSignInVC.referenceViewController = self
+            tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+        }
+    }
     
     
     func saveAlerts() {

@@ -103,9 +103,23 @@ class GalleryViewController: UIViewController {
                 // user doens't want to fix it.
             }
         } else {
-            awImagePicker.present(from: sender)
+            
+            if DefaultsManager.signedInAuth == nil {
+                self.showLoginScreen()
+            } else {
+                awImagePicker.present(from: sender)
+            }
         }
     }
+    
+    func showLoginScreen() {
+        if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
+            modalSignInVC.modalPresentationStyle = .overCurrentContext
+            modalSignInVC.referenceViewController = self
+            tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+        }
+    }
+
     
     @objc func refreshPictures() {
         guard let selectedRun = selectedRun else { print("selected run is nil"); return }

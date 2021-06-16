@@ -84,7 +84,7 @@ PODS:
   - netfox (1.19.0)
   - NYAlertViewController (1.3.0)
   - OAuthSwift (2.1.0)
-  - OneSignal (3.0.0-beta3)
+  - OneSignal (2.15.4)
   - PromisesObjC (1.2.11)
   - SwiftyJSON (5.0.0)
 
@@ -101,7 +101,7 @@ DEPENDENCIES:
   - netfox
   - NYAlertViewController (~> 1.3.0)
   - OAuthSwift (~> 2.1.0)
-  - OneSignal (~> 3.0.0-beta3)
+  - OneSignal (~> 2.15.4)
   - SwiftyJSON (~> 5.0.0)
 
 SPEC REPOS:
@@ -159,10 +159,10 @@ SPEC CHECKSUMS:
   netfox: efeec1d23406df6cd605212f09a40957bb5654eb
   NYAlertViewController: b93f82e2c1fc6d5e9485512ddbe7b481f463a074
   OAuthSwift: ab1675598273e04355e0282459c328e65c9ddacd
-  OneSignal: e0b82aa4e5a38df2bbc203ccc794021ea9832c43
+  OneSignal: 6647275955d0f06d9e17c90dc93af9d85ecfd2b9
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 5417188797ff04448b5003ea8e33248710c18bc4
+PODFILE CHECKSUM: 9eec804555671ccded57d0677c95189739d0a335
 
 COCOAPODS: 1.10.0

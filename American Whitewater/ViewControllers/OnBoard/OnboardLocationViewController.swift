@@ -168,6 +168,8 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
             // store the location for future use
             DefaultsManager.latitude = location.coordinate.latitude
             DefaultsManager.longitude = location.coordinate.longitude
+            DefaultsManager.showRegionFilter = false
+            DefaultsManager.showDistanceFilter = true
             DefaultsManager.distanceFilter = 100
             DefaultsManager.onboardingCompleted = true
             DefaultsManager.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0

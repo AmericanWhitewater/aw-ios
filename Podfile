@@ -13,7 +13,7 @@ target 'American Whitewater' do
   pod 'IQKeyboardManagerSwift', :git => 'https://github.com/duffek/IQKeyboardManager.git'
   
   # Push Notification System
-  pod 'OneSignal', '~> 3.0.0-beta3'
+  pod 'OneSignal', '~> 2.15.4'
   
   # Best HTTP Request Handling
   # - Used for reach API / rivers listing
@@ -45,6 +45,6 @@ end
 target 'OneSignalNotificationServiceExtension' do
   use_frameworks!
 
-  pod 'OneSignal', '~> 3.0.0-beta3'
+  pod 'OneSignal', '~> 2.15.4'
   
 end

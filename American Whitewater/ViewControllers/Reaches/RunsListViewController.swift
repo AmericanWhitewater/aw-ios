@@ -110,7 +110,7 @@ class RunsListViewController: UIViewController {
         let keychain = KeychainSwift();
         //keychain.set(credential.oauthToken, forKey: "ios-aw-auth-key")
         //keychain.delete("ios-aw-auth-key") // for sign out
-        if keychain.get(AWGC.AuthKeychainToken) == nil {
+        if keychain.get(AWGC.AuthKeychainToken) == nil || DefaultsManager.signedInAuth == nil {
             self.showLoginScreen()
         } else {
             print("Session authenticated")
@@ -136,7 +136,7 @@ class RunsListViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-
+// ### TestFlight - What's New View ###
 // We use this for TestFlight testing to highlight what has changed
 // if we design it better we can include it in the main app
 //        if (DefaultsManager.whatsNew == nil || DefaultsManager.whatsNew != "whatsNew\(DefaultsManager.appVersion ?? -1)") {
@@ -178,8 +178,6 @@ class RunsListViewController: UIViewController {
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
                                                               managedObjectContext: managedObjectContext,
                                                               sectionNameKeyPath: nil, cacheName: nil)
-//drn        fetchedResultsController?.delegate = self
-        
         do {
             try fetchedResultsController?.performFetch()
         } catch {
@@ -200,6 +198,7 @@ class RunsListViewController: UIViewController {
             DefaultsManager.completedFirstRun = true
             AWApiReachHelper.shared.downloadAllReachesInBackground {
                 print("Completed downloading all data")
+                self.fetchRiversFromCoreData()
             }
         }
     }
@@ -225,10 +224,16 @@ class RunsListViewController: UIViewController {
 
 /* Debug Screen Only */
     func showLoginScreen() {
-        if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
-            modalSignInVC.modalPresentationStyle = .overCurrentContext
-            modalSignInVC.referenceViewController = self
-            tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+        let count = DefaultsManager.signInAlertCount
+        if count % 5 == 0 {
+            if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
+                modalSignInVC.modalPresentationStyle = .overCurrentContext
+                modalSignInVC.referenceViewController = self
+                tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+            }
+
+        } else {
+            DefaultsManager.signInAlertCount = count + 1
         }
     }
     
@@ -328,8 +333,8 @@ class RunsListViewController: UIViewController {
                     print("1 Error updating reaches: \(error.localizedDescription)")
                     DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.localizedDescription)
                 } else {
-                    print("Error updating reaches: Unknown why")
-                    DuffekDialog.shared.showOkDialog(title: "Connection Error", message: "Unknown Reason")
+                    print("Error updating reaches: Unknown why 2")
+                    //DuffekDialog.shared.showOkDialog(title: "Connection Error", message: "Unknown Reason")
                 }
             }
         }
@@ -363,7 +368,7 @@ class RunsListViewController: UIViewController {
                 DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.localizedDescription)
             } else {
                 print("Error updating reaches: Unknown why")
-                DuffekDialog.shared.showOkDialog(title: "Connection Error", message: "Unknown Reason")
+                //DuffekDialog.shared.showOkDialog(title: "Connection Error", message: "Unknown Reason")
             }
         }
 
@@ -536,90 +541,94 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - Table view data source
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // AWTODO: when 0 items exist we return 1 to show placeholder values
         // i.e. Check your filters before searching
-        return fetchedResultsController?.fetchedObjects?.count ?? 0
+        if section == 0 {
+            return fetchedResultsController?.fetchedObjects?.count ?? 0
+        } else {
+            return (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0 ? 1 : 0
+        }
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // handle the case when a filter shows 0 items
-        if (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0 {
-
-            if isLoadingData {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingRiversCell", for: indexPath)
-                return cell
-
-            } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "NoRiversCell", for: indexPath) as! NoRiversTableViewCell
-                cell.noRiversButton.addTarget(self, action: #selector(changeFiltersPressed), for: .touchUpInside)
-                return cell
-            }
-        }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RunCell", for: indexPath) as! RunsListTableViewCell
-
-        guard let reach = fetchedResultsController?.object(at: indexPath) else { return cell }
-
-        cell.runTitleLabel.text = reach.name ?? "Unknown"
-        cell.runSectionLabel.text = reach.section ?? "Unknown Section"
-        
-        var level = reach.currentGageReading ?? "n/a"
-        level = level.trimmingCharacters(in: .whitespacesAndNewlines)
-        cell.runLevelAndClassLabel.text = "Level: \(level)\(reach.unit ?? "") Class: \(reach.difficulty ?? "n/a")"
-        
-        // set highlight color
-        if let status = reach.condition {
-            if status == "low" {
-                cell.runStatusLeftBar.backgroundColor = UIColor.AW.Low
-                cell.runLevelAndClassLabel.textColor = UIColor.AW.Low
-            } else if status == "med" {
-                cell.runStatusLeftBar.backgroundColor = UIColor.AW.Med
-                cell.runLevelAndClassLabel.textColor = UIColor.AW.Med
-            } else if status == "high" || status == "hi" {
-                cell.runStatusLeftBar.backgroundColor = UIColor.AW.High
-                cell.runLevelAndClassLabel.textColor = UIColor.AW.High
-            } else {
-                cell.runStatusLeftBar.backgroundColor = UIColor.AW.Unknown
-                cell.runLevelAndClassLabel.textColor = UIColor.AW.Unknown
-            }
-        }
-        
-        // show star filled or not filled if it's a favorite
-        if reach.favorite {
-            cell.runFavoritesButton.setImage(UIImage(named: "icon_favorite_selected"), for: .normal)
-        } else {
-            cell.runFavoritesButton.setImage(UIImage(named: "icon_favorite"), for: .normal)
-        }
-        
-// DEBUG ONLY!
-        if let name = reach.name, name.lowercased().contains("watauga") {
-            cell.runAlertsButton.setImage(UIImage(named: "alert-filled"), for: .normal)
-        } else {
-            cell.runAlertsButton.setImage(UIImage(named: "alert-empty"), for: .normal)
-        }
-        
-        // show distance to the river if we have it
-        // this 999999 value is an ugly hack for invalid distance values to prevent
-        // them from showing up first in the listing
-        cell.runDistanceAwayLabel.isHidden = true
-        if reach.distance == 999999 || reach.distance == 0.0 {
-            cell.runDistanceAwayLabel.text = "n/a miles"
-            cell.runDistanceAwayLabel.isHidden = true
-        } else if reach.distance > 0.0 {
-            cell.runDistanceAwayLabel.text = String(format: "%.1f miles", reach.distance)
-            cell.runDistanceAwayLabel.isHidden = true
-        }
+        print("fetchedObjects.count == \(fetchedResultsController?.fetchedObjects?.count ?? 0)")
+        if indexPath.section == 1 && (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingRiversCell", for: indexPath) as! LoadingRiversCell
+            cell.activityIndicator.startAnimating()
+            return cell
             
-        // set index on button for later lookup
-        cell.runFavoritesButton.tag = indexPath.row
+        } else {
         
-        // add click target for the button
-        cell.runFavoritesButton.addTarget(self, action: #selector(favoriteButtonPressed(_:)), for: .touchUpInside)
-        
-        return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RunCell", for: indexPath) as! RunsListTableViewCell
+
+            guard let reach = fetchedResultsController?.object(at: indexPath) else { return cell }
+
+            cell.runTitleLabel.text = reach.name ?? "Unknown"
+            cell.runSectionLabel.text = reach.section ?? "Unknown Section"
+            
+            var level = reach.currentGageReading ?? "n/a"
+            level = level.trimmingCharacters(in: .whitespacesAndNewlines)
+            cell.runLevelAndClassLabel.text = "Level: \(level)\(reach.unit ?? "") Class: \(reach.difficulty ?? "n/a")"
+            
+            // set highlight color
+            if let status = reach.condition {
+                if status == "low" {
+                    cell.runStatusLeftBar.backgroundColor = UIColor.AW.Low
+                    cell.runLevelAndClassLabel.textColor = UIColor.AW.Low
+                } else if status == "med" {
+                    cell.runStatusLeftBar.backgroundColor = UIColor.AW.Med
+                    cell.runLevelAndClassLabel.textColor = UIColor.AW.Med
+                } else if status == "high" || status == "hi" {
+                    cell.runStatusLeftBar.backgroundColor = UIColor.AW.High
+                    cell.runLevelAndClassLabel.textColor = UIColor.AW.High
+                } else {
+                    cell.runStatusLeftBar.backgroundColor = UIColor.AW.Unknown
+                    cell.runLevelAndClassLabel.textColor = UIColor.AW.Unknown
+                }
+            }
+            
+            // show star filled or not filled if it's a favorite
+            if reach.favorite {
+                cell.runFavoritesButton.setImage(UIImage(named: "icon_favorite_selected"), for: .normal)
+            } else {
+                cell.runFavoritesButton.setImage(UIImage(named: "icon_favorite"), for: .normal)
+            }
+            
+    // DEBUG ONLY!
+            if let name = reach.name, name.lowercased().contains("watauga") {
+                cell.runAlertsButton.setImage(UIImage(named: "alert-filled"), for: .normal)
+            } else {
+                cell.runAlertsButton.setImage(UIImage(named: "alert-empty"), for: .normal)
+            }
+            
+            // show distance to the river if we have it
+            // this 999999 value is an ugly hack for invalid distance values to prevent
+            // them from showing up first in the listing
+            cell.runDistanceAwayLabel.isHidden = true
+            if reach.distance == 999999 || reach.distance == 0.0 {
+                cell.runDistanceAwayLabel.text = "n/a miles"
+                cell.runDistanceAwayLabel.isHidden = true
+            } else if reach.distance > 0.0 {
+                cell.runDistanceAwayLabel.text = String(format: "%.1f miles", reach.distance)
+                cell.runDistanceAwayLabel.isHidden = true
+            }
+                
+            // set index on button for later lookup
+            cell.runFavoritesButton.tag = indexPath.row
+            
+            // add click target for the button
+            cell.runFavoritesButton.addTarget(self, action: #selector(favoriteButtonPressed(_:)), for: .touchUpInside)
+            
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -630,34 +639,42 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView()
-        let label = UILabel()
-        
-        var lastUpdatedMessage = "Refreshing..."
-        if let lastUpdatedDate = DefaultsManager.lastUpdated {
-            lastUpdatedMessage = "Last Updated: \(dateFormatter.string(from: lastUpdatedDate))"
-        }
-        
-        view.backgroundColor = UIColor.groupTableViewBackground
-        
-        label.text = lastUpdatedMessage
-        label.textAlignment = .center
-        label.textColor = UIColor.darkGray
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
-        
-        let horizontallayoutContraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-10-[label]-10-|", options: .alignAllCenterY, metrics: nil, views: ["label": label, "view": view])
-        view.addConstraints(horizontallayoutContraints)
+        if section == 0 {
+            let view = UIView()
+            let label = UILabel()
+            
+            var lastUpdatedMessage = "Refreshing..."
+            if let lastUpdatedDate = DefaultsManager.lastUpdated {
+                lastUpdatedMessage = "Last Updated: \(dateFormatter.string(from: lastUpdatedDate))"
+            }
+            
+            view.backgroundColor = UIColor.groupTableViewBackground
+            
+            label.text = lastUpdatedMessage
+            label.textAlignment = .center
+            label.textColor = UIColor.darkGray
+            
+            label.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(label)
+            
+            let horizontallayoutContraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-10-[label]-10-|", options: .alignAllCenterY, metrics: nil, views: ["label": label, "view": view])
+            view.addConstraints(horizontallayoutContraints)
 
-        let verticalLayoutContraint = NSLayoutConstraint(item: label, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0)
-        view.addConstraint(verticalLayoutContraint)
-        
-        return view
+            let verticalLayoutContraint = NSLayoutConstraint(item: label, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0)
+            view.addConstraint(verticalLayoutContraint)
+            
+            return view
+        } else {
+            return nil
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 44
+        if section == 0 {
+            return 44
+        } else {
+            return 0
+        }
     }
 }
 

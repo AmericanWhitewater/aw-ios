@@ -1662,6 +1662,7 @@ public final class PhotoUploadWithPropsMutation: GraphQLMutation {
           }
         }
 
+        /// id used for updates
         public var id: GraphQLID? {
           get {
             return resultMap["id"] as? GraphQLID
@@ -1671,6 +1672,7 @@ public final class PhotoUploadWithPropsMutation: GraphQLMutation {
           }
         }
 
+        /// name of the feature (e.g. rapid name "Pillow Rapid")
         public var name: String? {
           get {
             return resultMap["name"] as? String
@@ -1680,6 +1682,7 @@ public final class PhotoUploadWithPropsMutation: GraphQLMutation {
           }
         }
 
+        /// difficulty of the rapid,
         public var difficulty: String? {
           get {
             return resultMap["difficulty"] as? String
@@ -1689,6 +1692,7 @@ public final class PhotoUploadWithPropsMutation: GraphQLMutation {
           }
         }
 
+        /// distance in miles from the start of the river, used for sort
         public var distance: Double? {
           get {
             return resultMap["distance"] as? Double
@@ -1698,6 +1702,7 @@ public final class PhotoUploadWithPropsMutation: GraphQLMutation {
           }
         }
 
+        /// description of the rapid
         public var description: String? {
           get {
             return resultMap["description"] as? String
@@ -2088,6 +2093,302 @@ public final class PhotoPostUpdateMutation: GraphQLMutation {
           }
           set {
             resultMap.updateValue(newValue, forKey: "uname")
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class GagesForReachQuery: GraphQLQuery {
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition: String =
+    """
+    query GagesForReach($reach_id: ID!) {
+      gauges: getGaugeInformationForReachID(id: $reach_id) {
+        __typename
+        gauges {
+          __typename
+          targetid
+          metric {
+            __typename
+            id
+            unit
+            name
+          }
+          gauge {
+            __typename
+            name
+            id
+            source
+            source_id
+          }
+        }
+      }
+    }
+    """
+
+  public let operationName: String = "GagesForReach"
+
+  public var reach_id: GraphQLID
+
+  public init(reach_id: GraphQLID) {
+    self.reach_id = reach_id
+  }
+
+  public var variables: GraphQLMap? {
+    return ["reach_id": reach_id]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes: [String] = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("getGaugeInformationForReachID", alias: "gauges", arguments: ["id": GraphQLVariable("reach_id")], type: .object(Gauge.selections)),
+    ]
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(gauges: Gauge? = nil) {
+      self.init(unsafeResultMap: ["__typename": "Query", "gauges": gauges.flatMap { (value: Gauge) -> ResultMap in value.resultMap }])
+    }
+
+    /// Gets a deep representation of a river and its connection to gauges
+    public var gauges: Gauge? {
+      get {
+        return (resultMap["gauges"] as? ResultMap).flatMap { Gauge(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "gauges")
+      }
+    }
+
+    public struct Gauge: GraphQLSelectionSet {
+      public static let possibleTypes: [String] = ["GaugeInformationForReach"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("gauges", type: .list(.object(Gauge.selections))),
+      ]
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(gauges: [Gauge?]? = nil) {
+        self.init(unsafeResultMap: ["__typename": "GaugeInformationForReach", "gauges": gauges.flatMap { (value: [Gauge?]) -> [ResultMap?] in value.map { (value: Gauge?) -> ResultMap? in value.flatMap { (value: Gauge) -> ResultMap in value.resultMap } } }])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// intrepretation of the gauge, includes rc
+      public var gauges: [Gauge?]? {
+        get {
+          return (resultMap["gauges"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Gauge?] in value.map { (value: ResultMap?) -> Gauge? in value.flatMap { (value: ResultMap) -> Gauge in Gauge(unsafeResultMap: value) } } }
+        }
+        set {
+          resultMap.updateValue(newValue.flatMap { (value: [Gauge?]) -> [ResultMap?] in value.map { (value: Gauge?) -> ResultMap? in value.flatMap { (value: Gauge) -> ResultMap in value.resultMap } } }, forKey: "gauges")
+        }
+      }
+
+      public struct Gauge: GraphQLSelectionSet {
+        public static let possibleTypes: [String] = ["GaugeInterpretation"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("targetid", type: .scalar(Int.self)),
+          GraphQLField("metric", type: .object(Metric.selections)),
+          GraphQLField("gauge", type: .object(Gauge.selections)),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(targetid: Int? = nil, metric: Metric? = nil, gauge: Gauge? = nil) {
+          self.init(unsafeResultMap: ["__typename": "GaugeInterpretation", "targetid": targetid, "metric": metric.flatMap { (value: Metric) -> ResultMap in value.resultMap }, "gauge": gauge.flatMap { (value: Gauge) -> ResultMap in value.resultMap }])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// target gauge ID -- for a correlation you'll trace a Correlation gauge
+        public var targetid: Int? {
+          get {
+            return resultMap["targetid"] as? Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "targetid")
+          }
+        }
+
+        public var metric: Metric? {
+          get {
+            return (resultMap["metric"] as? ResultMap).flatMap { Metric(unsafeResultMap: $0) }
+          }
+          set {
+            resultMap.updateValue(newValue?.resultMap, forKey: "metric")
+          }
+        }
+
+        public var gauge: Gauge? {
+          get {
+            return (resultMap["gauge"] as? ResultMap).flatMap { Gauge(unsafeResultMap: $0) }
+          }
+          set {
+            resultMap.updateValue(newValue?.resultMap, forKey: "gauge")
+          }
+        }
+
+        public struct Metric: GraphQLSelectionSet {
+          public static let possibleTypes: [String] = ["GaugeReadingMetric"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("id", type: .scalar(GraphQLID.self)),
+            GraphQLField("unit", type: .scalar(String.self)),
+            GraphQLField("name", type: .scalar(String.self)),
+          ]
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(id: GraphQLID? = nil, unit: String? = nil, name: String? = nil) {
+            self.init(unsafeResultMap: ["__typename": "GaugeReadingMetric", "id": id, "unit": unit, "name": name])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// id of the metric, used everywhere you see metric_id
+          public var id: GraphQLID? {
+            get {
+              return resultMap["id"] as? GraphQLID
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          /// abbreviation of unit for humans (e.g. ft)
+          public var unit: String? {
+            get {
+              return resultMap["unit"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "unit")
+            }
+          }
+
+          /// name if you need to describe it to a human (e.g. ft. stage)
+          public var name: String? {
+            get {
+              return resultMap["name"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "name")
+            }
+          }
+        }
+
+        public struct Gauge: GraphQLSelectionSet {
+          public static let possibleTypes: [String] = ["Gauge"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("name", type: .scalar(String.self)),
+            GraphQLField("id", type: .scalar(GraphQLID.self)),
+            GraphQLField("source", type: .scalar(String.self)),
+            GraphQLField("source_id", type: .scalar(String.self)),
+          ]
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(name: String? = nil, id: GraphQLID? = nil, source: String? = nil, sourceId: String? = nil) {
+            self.init(unsafeResultMap: ["__typename": "Gauge", "name": name, "id": id, "source": source, "source_id": sourceId])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// #name of the gauge
+          public var name: String? {
+            get {
+              return resultMap["name"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "name")
+            }
+          }
+
+          /// ID of the gauge, internal
+          public var id: GraphQLID? {
+            get {
+              return resultMap["id"] as? GraphQLID
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          /// #gauge driver
+          public var source: String? {
+            get {
+              return resultMap["source"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "source")
+            }
+          }
+
+          /// #id within the gauge driver.
+          public var sourceId: String? {
+            get {
+              return resultMap["source_id"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "source_id")
+            }
           }
         }
       }
@@ -5969,6 +6270,7 @@ public final class ReachAccidentsQuery: GraphQLQuery {
         }
       }
 
+      /// all the accidents that associated with this reach
       public var accidents: Accident? {
         get {
           return (resultMap["accidents"] as? ResultMap).flatMap { Accident(unsafeResultMap: $0) }

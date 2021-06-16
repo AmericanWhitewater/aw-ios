@@ -249,6 +249,26 @@ class DefaultsManager {
         }
     }
     
+    private static let signedInAuthKey = "signedInUserIdKey"
+    static var signedInAuth: String? {
+        get {
+            return UserDefaults.standard.string(forKey: signedInAuthKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: signedInAuthKey)
+        }
+    }
+    
+    private static let signInAlertCountKey = "signInAlertCountKey"
+    static var signInAlertCount: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: signInAlertCountKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: signInAlertCountKey)
+        }
+    }
+    
     // for now we'll store all the users favorites in the preferences
     // eventually we'll move it back over to CoreData
     private static let userFavoritesKey = "userFavoritesKey"
