@@ -22,3 +22,4 @@ DerivedData
 GlobalConfig.swift
 GoogleService-Info.plist
 
+.DS_Store

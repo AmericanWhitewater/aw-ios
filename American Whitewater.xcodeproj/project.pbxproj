@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4760DD5C0E5548BBA92D25AF /* Pods_American_Whitewater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A750E2F24748D3B54A1DEB84 /* Pods_American_Whitewater.framework */; };
+		4AC4BB5A26A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */; };
+		4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */; };
 		630586642350428800A436BE /* RunRapidDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */; };
 		63081BF8236B2EDE00FC3823 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63081BF7236B2EDE00FC3823 /* GoogleService-Info.plist */; };
 		63081BFA236B2F8500FC3823 /* OpenTerminal.sh in Resources */ = {isa = PBXBuildFile; fileRef = 63081BF9236B2F8500FC3823 /* OpenTerminal.sh */; };
@@ -112,8 +114,6 @@
 		63E90EC122EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63E90EBF22EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf */; };
 		63EDA74F24B3F5AF0020382A /* GaugeMetrics.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 63EDA74E24B3F5AF0020382A /* GaugeMetrics.graphql */; };
 		63EDA75124B4DAF10020382A /* reaches.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 63EDA75024B4DAF10020382A /* reaches.graphql */; };
-		63F59B0B252C1ECB00C171F1 /* NewsArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F59B0A252C1ECB00C171F1 /* NewsArticle+CoreDataProperties.swift */; };
-		63F59B0C252C1ECB00C171F1 /* NewsArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F59B09252C1ECB00C171F1 /* NewsArticle+CoreDataClass.swift */; };
 		63F712E2238869A50047C8F0 /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F712E1238869A50047C8F0 /* UIImage+Color.swift */; };
 		63F712E4238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */; };
 		63F87AD5236A923D0005AA0B /* AWReachDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F87AD4236A923D0005AA0B /* AWReachDetail.swift */; };
@@ -149,6 +149,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunRapidDetailsTableViewController.swift; sourceTree = "<group>"; };
 		63081BF6236B2E7500FC3823 /* AW.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AW.entitlements; sourceTree = "<group>"; };
 		63081BF7236B2EDE00FC3823 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -261,8 +263,6 @@
 		63E90EBF22EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		63EDA74E24B3F5AF0020382A /* GaugeMetrics.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GaugeMetrics.graphql; sourceTree = "<group>"; };
 		63EDA75024B4DAF10020382A /* reaches.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = reaches.graphql; sourceTree = "<group>"; };
-		63F59B09252C1ECB00C171F1 /* NewsArticle+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NewsArticle+CoreDataClass.swift"; path = "/Users/david/Desktop/duffekRepos/aw-ios/American Whitewater/Models/NewsArticle+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		63F59B0A252C1ECB00C171F1 /* NewsArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NewsArticle+CoreDataProperties.swift"; path = "/Users/david/Desktop/duffekRepos/aw-ios/American Whitewater/Models/NewsArticle+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		63F712E1238869A50047C8F0 /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
 		63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentControl+PreiOS13.swift"; sourceTree = "<group>"; };
 		63F87AD4236A923D0005AA0B /* AWReachDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWReachDetail.swift; sourceTree = "<group>"; };
@@ -510,8 +510,8 @@
 				63F87AD4236A923D0005AA0B /* AWReachDetail.swift */,
 				633117082373172100D5EEFB /* AWRapid.swift */,
 				63C1DABF235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld */,
-				63F59B09252C1ECB00C171F1 /* NewsArticle+CoreDataClass.swift */,
-				63F59B0A252C1ECB00C171F1 /* NewsArticle+CoreDataProperties.swift */,
+				4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */,
+				4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */,
 				631EFF9723677C4000BA17F7 /* Article+CoreDataClass.swift */,
 				631EFF9823677C4000BA17F7 /* Article+CoreDataProperties.swift */,
 				631EFF9B23677C8800BA17F7 /* Reach+CoreDataClass.swift */,
@@ -829,7 +829,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		63B5B4952457A7800062F54B /* Apollo CLI */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -902,6 +902,7 @@
 				63F87AD5236A923D0005AA0B /* AWReachDetail.swift in Sources */,
 				63491B03232882170036A906 /* NewsTableViewCell.swift in Sources */,
 				63491B0F2328D72D0036A906 /* UIColor+Hex.swift in Sources */,
+				4AC4BB5A26A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift in Sources */,
 				633117092373172100D5EEFB /* AWRapid.swift in Sources */,
 				630F3D222465F4160077130D /* NanoID.swift in Sources */,
 				63D7BD172319980600935693 /* OnboardLocationViewController.swift in Sources */,
@@ -933,16 +934,15 @@
 				630F7EC825C3439000F17D8A /* LoadingRiversCell.swift in Sources */,
 				631EFFA223677CB600BA17F7 /* Rapid+CoreDataProperties.swift in Sources */,
 				63B5B4A324589EAB0062F54B /* RunAccidentsViewController.swift in Sources */,
+				4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */,
 				63B5B49E2457B2270062F54B /* AwGraphQLAPI.swift in Sources */,
 				63D7BD1F231A205500935693 /* NewsTableViewController.swift in Sources */,
 				6394995B246F6EA70061552C /* GlobalConfig.swift in Sources */,
-				63F59B0B252C1ECB00C171F1 /* NewsArticle+CoreDataProperties.swift in Sources */,
 				6389BFAE234CC59E00DE7D6C /* RunMapViewController.swift in Sources */,
 				63491B11232933370036A906 /* RunDetailTableViewController.swift in Sources */,
 				63C1DAC1235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld in Sources */,
 				63D7BD152319774500935693 /* Regions.swift in Sources */,
 				63A8B17D23281A8A00FD2E00 /* AWArticle.swift in Sources */,
-				63F59B0C252C1ECB00C171F1 /* NewsArticle+CoreDataClass.swift in Sources */,
 				6389BFB0234E311500DE7D6C /* RunMapAnnotation.swift in Sources */,
 				63B5B4A724591A460062F54B /* RunAccidentDetailsTableViewController.swift in Sources */,
 				63F712E4238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift in Sources */,
