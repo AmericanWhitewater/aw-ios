@@ -32,7 +32,6 @@ target 'American Whitewater' do
   # Firebase added for analytics and Crashlytics
   pod 'Firebase/Analytics', '~> 7.1.0'
   pod 'Firebase/Crashlytics', '~> 7.1.0'
-  pod 'Fabric', '~> 1.10.2'
   
   # Pod Charts
   pod 'Charts', '~> 3.6.0'

@@ -7,7 +7,6 @@ PODS:
   - Charts (3.6.0):
     - Charts/Core (= 3.6.0)
   - Charts/Core (3.6.0)
-  - Fabric (1.10.2)
   - Firebase/Analytics (7.1.0):
     - Firebase/Core
   - Firebase/Core (7.1.0):
@@ -93,7 +92,6 @@ DEPENDENCIES:
   - AlamofireImage (~> 4.1)
   - AlamofireNetworkActivityIndicator (~> 3.1.0)
   - Charts (~> 3.6.0)
-  - Fabric (~> 1.10.2)
   - Firebase/Analytics (~> 7.1.0)
   - Firebase/Crashlytics (~> 7.1.0)
   - IQKeyboardManagerSwift (from `https://github.com/duffek/IQKeyboardManager.git`)
@@ -110,7 +108,6 @@ SPEC REPOS:
     - AlamofireImage
     - AlamofireNetworkActivityIndicator
     - Charts
-    - Fabric
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -143,7 +140,6 @@ SPEC CHECKSUMS:
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
   AlamofireNetworkActivityIndicator: 6564782bd7b9e6c430ae67d9277af01907b01ca4
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
-  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   Firebase: 78e8dd2e39d653de6270432ad84fe8b59f7bf4e8
   FirebaseAnalytics: 7f165a56dea86ddd5b8ce02af3bee982c683405c
   FirebaseCore: 20046127eef0fcb8fa25df7fc12f7b97d4e48611
@@ -163,6 +159,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 9eec804555671ccded57d0677c95189739d0a335
+PODFILE CHECKSUM: fffc8a26b8c5b269620a12455bacd52294bab55b
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1
