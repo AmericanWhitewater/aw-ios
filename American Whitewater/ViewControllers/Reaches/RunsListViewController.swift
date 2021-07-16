@@ -271,7 +271,9 @@ class RunsListViewController: UIViewController {
                 print("Showing pull all data message")
                 DuffekDialog.shared.showStandardDialog(title: "Pull All Data?", message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.", buttonTitle: "Continue", buttonFunction: {
                     // User wants to continue
-                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                    if self.tableView.numberOfRows(inSection: 0) > 0 {
+                        self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                    }
                     self.refreshData(with: codes)
                 }, cancelFunction: {
                     // cancelled so end refresh
