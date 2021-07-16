@@ -1,25 +1,164 @@
 PODS:
-  - ActiveLabel (0.8.1)
-  - Crashlytics (3.10.1):
-    - Fabric (~> 1.7.5)
-  - Fabric (1.7.6)
+  - Alamofire (5.4.0)
+  - AlamofireImage (4.1.0):
+    - Alamofire (~> 5.1)
+  - AlamofireNetworkActivityIndicator (3.1.0):
+    - Alamofire (~> 5.1)
+  - Charts (3.6.0):
+    - Charts/Core (= 3.6.0)
+  - Charts/Core (3.6.0)
+  - Firebase/Analytics (7.1.0):
+    - Firebase/Core
+  - Firebase/Core (7.1.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 7.1.0)
+  - Firebase/CoreOnly (7.1.0):
+    - FirebaseCore (= 7.1.0)
+  - Firebase/Crashlytics (7.1.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 7.1.0)
+  - FirebaseAnalytics (7.1.0):
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleAppMeasurement (= 7.1.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30906.0)
+  - FirebaseCore (7.1.0):
+    - FirebaseCoreDiagnostics (~> 7.0)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/Logger (~> 7.0)
+  - FirebaseCoreDiagnostics (7.1.0):
+    - GoogleDataTransport (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/Logger (~> 7.0)
+    - nanopb (~> 2.30906.0)
+  - FirebaseCrashlytics (7.1.0):
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleDataTransport (~> 8.0)
+    - nanopb (~> 2.30906.0)
+    - PromisesObjC (~> 1.2)
+  - FirebaseInstallations (7.1.0):
+    - FirebaseCore (~> 7.0)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/UserDefaults (~> 7.0)
+    - PromisesObjC (~> 1.2)
+  - GoogleAppMeasurement (7.1.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30906.0)
+  - GoogleDataTransport (8.0.1):
+    - nanopb (~> 2.30906.0)
+  - GoogleUtilities/AppDelegateSwizzler (7.1.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (7.1.0):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (7.1.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (7.1.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (7.1.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (7.1.0)"
+  - GoogleUtilities/Reachability (7.1.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (7.1.0):
+    - GoogleUtilities/Logger
+  - IQKeyboardManagerSwift (6.5.5)
+  - KeychainSwift (19.0.0)
+  - nanopb (2.30906.0):
+    - nanopb/decode (= 2.30906.0)
+    - nanopb/encode (= 2.30906.0)
+  - nanopb/decode (2.30906.0)
+  - nanopb/encode (2.30906.0)
+  - netfox (1.19.0)
+  - NYAlertViewController (1.3.0)
+  - OAuthSwift (2.1.0)
+  - OneSignal (2.15.4)
+  - PromisesObjC (1.2.11)
+  - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
-  - ActiveLabel (~> 0.8)
-  - Crashlytics
-  - Fabric
+  - Alamofire (~> 5.4.0)
+  - AlamofireImage (~> 4.1)
+  - AlamofireNetworkActivityIndicator (~> 3.1.0)
+  - Charts (~> 3.6.0)
+  - Firebase/Analytics (~> 7.1.0)
+  - Firebase/Crashlytics (~> 7.1.0)
+  - IQKeyboardManagerSwift (from `https://github.com/duffek/IQKeyboardManager.git`)
+  - KeychainSwift (~> 19.0)
+  - netfox
+  - NYAlertViewController (~> 1.3.0)
+  - OAuthSwift (~> 2.1.0)
+  - OneSignal (~> 2.15.4)
+  - SwiftyJSON (~> 5.0.0)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - ActiveLabel
-    - Crashlytics
-    - Fabric
+  trunk:
+    - Alamofire
+    - AlamofireImage
+    - AlamofireNetworkActivityIndicator
+    - Charts
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCrashlytics
+    - FirebaseInstallations
+    - GoogleAppMeasurement
+    - GoogleDataTransport
+    - GoogleUtilities
+    - KeychainSwift
+    - nanopb
+    - netfox
+    - NYAlertViewController
+    - OAuthSwift
+    - OneSignal
+    - PromisesObjC
+    - SwiftyJSON
+
+EXTERNAL SOURCES:
+  IQKeyboardManagerSwift:
+    :git: https://github.com/duffek/IQKeyboardManager.git
+
+CHECKOUT OPTIONS:
+  IQKeyboardManagerSwift:
+    :commit: b5445050a6ca87e3e025dc0bf29ebd88ee5e6e46
+    :git: https://github.com/duffek/IQKeyboardManager.git
 
 SPEC CHECKSUMS:
-  ActiveLabel: e361127c355b911a467db3d5a897b3d7f902e568
-  Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
-  Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
+  Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
+  AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
+  AlamofireNetworkActivityIndicator: 6564782bd7b9e6c430ae67d9277af01907b01ca4
+  Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
+  Firebase: 78e8dd2e39d653de6270432ad84fe8b59f7bf4e8
+  FirebaseAnalytics: 7f165a56dea86ddd5b8ce02af3bee982c683405c
+  FirebaseCore: 20046127eef0fcb8fa25df7fc12f7b97d4e48611
+  FirebaseCoreDiagnostics: 872cdb9b749b23346dddd5c1014d1babd2257de3
+  FirebaseCrashlytics: c722e4ca283272eb90eb5bc245fdc6588e2f22c2
+  FirebaseInstallations: 3de38553e86171b5f81d83cdeef63473d37bfdb0
+  GoogleAppMeasurement: 89e1a64593f968713b0506ba1b53b38a154bf9a5
+  GoogleDataTransport: e4085e6762f36a6141738f46b0153473ce57fb18
+  GoogleUtilities: f734da554aade8cc7928a31c2f3311897933a1bd
+  IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
+  KeychainSwift: a06190cf933ad46b1e0abc3d77d29c06331715c7
+  nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
+  netfox: efeec1d23406df6cd605212f09a40957bb5654eb
+  NYAlertViewController: b93f82e2c1fc6d5e9485512ddbe7b481f463a074
+  OAuthSwift: ab1675598273e04355e0282459c328e65c9ddacd
+  OneSignal: 6647275955d0f06d9e17c90dc93af9d85ecfd2b9
+  PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 63072274f6b8580b9f9cba57529aa64ce838d9ed
+PODFILE CHECKSUM: fffc8a26b8c5b269620a12455bacd52294bab55b
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.10.1

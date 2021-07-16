@@ -1,0 +1,36 @@
+query ReachAccidents($reach_id:ID!, $first:Int!, $page:Int!) {
+  reach(id: $reach_id) {
+    accidents(first:$first page:$page){
+      paginatorInfo {
+        total,
+        count,
+        currentPage,
+        hasMorePages,
+        lastPage,
+        perPage
+      },
+      data {
+        id,
+        accident_date,
+        reach_id,
+        river,
+        section,
+        location,
+        water_level,
+        difficulty,
+        age,
+        experience,
+        description,
+        factors {
+          factor
+        },
+        injuries {
+          injury
+        },
+        causes {
+          cause
+        }
+      }
+    }
+  }
+}

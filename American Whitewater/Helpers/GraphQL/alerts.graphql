@@ -1,0 +1,46 @@
+query Alerts($page_size: Int!, $reach_id: AWID!, $page: Int!, $gauge_id: AWID, $post_types: [PostType])
+{
+    posts(post_types: $post_types, reach_id: $reach_id, gauge_id: $gauge_id, first: $page_size, page: $page, orderBy: [{field: POST_DATE, order: ASC}]) {
+        paginatorInfo {
+            lastPage,
+            currentPage,
+            total,
+        },
+        data {
+            id,
+            title,
+            post_type,
+            post_date,
+            reach_id,
+            revision,
+            reach {
+                id,
+                river,
+                section
+            },
+            detail,
+            user {
+                uname,
+            }
+        }
+    }
+}
+
+mutation PostAlert($id: ID!, $post: PostInput!) {
+    postUpdate(id: $id, post: $post) {
+        id,
+        title,
+        post_type,
+        post_date,
+        reach_id,
+        reach {
+            id,
+            river,
+            section
+        },
+        detail,
+        user {
+            uname,
+        }
+    }
+}

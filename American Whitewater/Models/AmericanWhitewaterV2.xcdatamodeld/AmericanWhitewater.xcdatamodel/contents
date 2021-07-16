@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Article" representedClassName=".Article" syncable="YES">
+        <attribute name="abstract" optional="YES" attributeType="String"/>
+        <attribute name="abstractPhoto" optional="YES" attributeType="String"/>
+        <attribute name="articleId" optional="YES" attributeType="String"/>
+        <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="contact" optional="YES" attributeType="String"/>
+        <attribute name="contents" optional="YES" attributeType="String"/>
+        <attribute name="contentsPhoto" optional="YES" attributeType="String"/>
+        <attribute name="icon" optional="YES" attributeType="String"/>
+        <attribute name="isFinal" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="posted" optional="YES" attributeType="String"/>
+        <attribute name="postedDate" optional="YES" attributeType="String"/>
+        <attribute name="releaseDate" optional="YES" attributeType="String"/>
+        <attribute name="revision" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="shortname" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="NewsArticle" representedClassName=".NewsArticle" syncable="YES">
+        <attribute name="abstract" optional="YES" attributeType="String"/>
+        <attribute name="abstractImage" optional="YES" attributeType="String"/>
+        <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="contents" optional="YES" attributeType="String"/>
+        <attribute name="icon" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="postedDate" optional="YES" attributeType="String"/>
+        <attribute name="releaseDate" optional="YES" attributeType="String"/>
+        <attribute name="shortName" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="uid" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Rapid" representedClassName=".Rapid" syncable="YES">
+        <attribute name="difficulty" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isHazard" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isPlaySpot" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isPortage" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isPutIn" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isTakeOut" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isWaterfall" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="lon" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="rapidDescription" optional="YES" attributeType="String"/>
+        <relationship name="reach" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Reach" inverseName="rapids" inverseEntity="Reach"/>
+    </entity>
+    <entity name="Reach" representedClassName=".Reach" syncable="YES">
+        <attribute name="altname" optional="YES" attributeType="String"/>
+        <attribute name="avgGradient" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="classRating" optional="YES" attributeType="String"/>
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="county" optional="YES" attributeType="String"/>
+        <attribute name="currentGageReading" optional="YES" attributeType="String"/>
+        <attribute name="delta" optional="YES" attributeType="String"/>
+        <attribute name="detailUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="difficulty" optional="YES" attributeType="String"/>
+        <attribute name="difficulty1" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="difficulty2" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="difficulty3" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="difficulty4" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="difficulty5" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="favorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="gageId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="gageMax" optional="YES" attributeType="String"/>
+        <attribute name="gageMetric" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="gageMin" optional="YES" attributeType="String"/>
+        <attribute name="gageName" optional="YES" attributeType="String"/>
+        <attribute name="gageUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lastGageReading" optional="YES" attributeType="String"/>
+        <attribute name="length" optional="YES" attributeType="String"/>
+        <attribute name="longDescription" optional="YES" attributeType="String"/>
+        <attribute name="maxGradient" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="photoId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="putInLat" optional="YES" attributeType="String"/>
+        <attribute name="putInLon" optional="YES" attributeType="String"/>
+        <attribute name="rc" optional="YES" attributeType="String"/>
+        <attribute name="river" optional="YES" attributeType="String"/>
+        <attribute name="section" optional="YES" attributeType="String"/>
+        <attribute name="shuttleDetails" optional="YES" attributeType="String"/>
+        <attribute name="sortName" optional="YES" attributeType="String"/>
+        <attribute name="state" optional="YES" attributeType="String"/>
+        <attribute name="takeOutLat" optional="YES" attributeType="String"/>
+        <attribute name="takeOutLon" optional="YES" attributeType="String"/>
+        <attribute name="unit" optional="YES" attributeType="String"/>
+        <attribute name="zipcode" optional="YES" attributeType="String"/>
+        <relationship name="rapids" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Rapid" inverseName="reach" inverseEntity="Rapid"/>
+    </entity>
+    <elements>
+        <element name="Article" positionX="-45" positionY="0" width="128" height="268"/>
+        <element name="NewsArticle" positionX="-36" positionY="153" width="128" height="223"/>
+        <element name="Rapid" positionX="-36" positionY="162" width="128" height="238"/>
+        <element name="Reach" positionX="-45" positionY="90" width="128" height="673"/>
+    </elements>
+</model>

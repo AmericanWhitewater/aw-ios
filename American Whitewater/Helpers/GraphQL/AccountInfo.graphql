@@ -1,0 +1,6 @@
+query UserInfo {
+    me {
+        uname
+        uid
+    }
+}

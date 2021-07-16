@@ -1,0 +1,9 @@
+
+# How to upload dSyms for Crashlytics:
+#
+# /path/to/Fabric/upload-symbols -gsp /path/
+#  to/GoogleService-Info.plist -p <platform> /path/to/dSYMs
+
+# Example:
+# Open Organizer, Right Click on Archive, grab path to dSyms and paste it within the "" here
+ /Users/David/Desktop/duffekRepos/aw-ios/Pods/Fabric/upload-symbols -gsp "/Users/David/Desktop/duffekRepos/aw-ios/American Whitewater/GoogleService-Info.plist" -p ios "/Users/David/Library/Developer/Xcode/Archives/2019-12-21/American Whitewater 12-21-19, 1.13 AM.xcarchive/dSYMs"

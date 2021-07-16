@@ -19,3 +19,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 *.xcscmblueprint
+GlobalConfig.swift
+GoogleService-Info.plist
+
+.DS_Store

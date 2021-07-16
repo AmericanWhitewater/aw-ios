@@ -1,0 +1,78 @@
+mutation PhotoUploadWithProps($id: ID!, $file: Upload, $photoSectionType: PhotoSectionsType, $photoTypeId: AWID, $photoInput: PhotoInput) {
+
+    photoFileUpdate(id: $id, fileinput: {
+        file: $file,
+        section: $photoSectionType,
+        section_id: $photoTypeId
+    }, photo: $photoInput) {
+        id
+        url
+        caption
+        description
+        geom
+        image {
+            uri {
+                medium
+                big
+                thumb
+            }
+        }
+        post {
+            id
+            title
+            detail
+            uid
+            post_date
+            revision
+            reach_id
+            gauge_id
+            metric_id
+            reading
+        }
+        poi {
+            id
+            name
+            difficulty
+            distance
+            description
+        }
+        author
+        subject
+        revision
+        poi_name
+        poi_id
+        post_id
+        photo_date
+
+    }
+}
+
+
+mutation PhotoPostUpdate($id: ID!, $post: PostInput!) {
+    postUpdate(id: $id, post: $post) {
+        id,
+        title,
+        detail,
+        post_type,
+        post_date,
+        revision,
+        metric_id,
+        metric {
+            shortkey,
+            unit,
+            name
+        },
+        reading,
+        reach_id,
+        reach {
+            id,
+            river,
+            section
+        },
+        user {
+            uname,
+        }
+
+    }
+}
+

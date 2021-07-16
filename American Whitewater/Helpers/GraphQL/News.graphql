@@ -1,0 +1,29 @@
+query News($page_size: Int!, $page: Int!)
+{
+  articles(orderBy: {field: POSTED_DATE, order: DESC}, first: $page_size, page: $page) {
+    data {
+      posted_date,
+      release_date,
+      id,
+      image {
+        uri {
+          medium,
+          thumb
+        }
+      },
+      title,
+      abstract,
+      abstractimage {
+        uri {
+          medium,
+          thumb
+        }
+      },
+      author,
+      icon,
+      contents,
+      uid,
+      short_name
+    }
+  }
+}
