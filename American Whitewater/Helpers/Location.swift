@@ -1,4 +1,5 @@
 import UIKit
+import MapKit
 import Foundation
 import CoreLocation
 
@@ -43,4 +44,17 @@ class Location {
             
         }, cancelFunction: {})
     }
+    
+    func hasLocation(mapView: MKMapView) -> Bool {
+        return mapView.userLocation.coordinate.latitude != 0 &&
+        mapView.userLocation.coordinate.longitude != 0
+    }
 }
+
+// Flow for a map
+// If user has authorized location ->
+    // mapView.showUserLocation -> will automatically start pulling location
+// If not authorized -> request if appropriate
+    // If request authorized -> goes to didChangeAuthorization delegate
+    // mapView.showUserLocation -> will automatically start pulling location
+// Else do nothing
