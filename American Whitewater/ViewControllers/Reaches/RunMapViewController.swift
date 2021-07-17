@@ -46,7 +46,7 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         super.viewDidAppear(animated)
 
         if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
-            locationManager.startUpdatingLocation()
+            showUserLocation()
         }
         
         // setup all map markers/annotation
@@ -191,17 +191,8 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         
         self.mapView.setVisibleMapRectToFitAllAnnotations(animated: true, shouldIncludeUserAccuracyRange: true, shouldIncludeOverlays: true)
     }
-    
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
-            locationManager.stopUpdatingLocation()
-            showUserLocation()
-        }
-    }
-    
+
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        
         if status == .authorizedWhenInUse || status == .authorizedAlways {
             showUserLocation()
         }
@@ -220,7 +211,9 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
             showUserLocation()
             
             if let mapView = mapView {
-                mapView.setCenter(mapView.userLocation.coordinate, animated: true)
+                if Location.shared.hasLocation(mapView: mapView) {
+                    mapView.setCenter(mapView.userLocation.coordinate, animated: true)
+                }
             }
         }
     }

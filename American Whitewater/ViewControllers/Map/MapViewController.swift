@@ -219,12 +219,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func showUserLocation() {
-        if DefaultsManager.showRegionFilter {
-            mapView.showsUserLocation = false
-        } else {
-            mapView.showsUserLocation = true
-            MapViewController.userChangedMap = false
-        }
+        mapView.showsUserLocation = true
+        MapViewController.userChangedMap = false
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -246,9 +242,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     @IBAction func showUserLocationPressed(_ sender: Any) {
-        if let mapView = mapView {
-            mapView.showsUserLocation = true
-            mapView.setCenter(mapView.userLocation.coordinate, animated: true)
+        if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
+            showUserLocation()
+            
+            if let mapView = mapView {
+                if Location.shared.hasLocation(mapView: mapView) {
+                    mapView.setCenter(mapView.userLocation.coordinate, animated: true)
+                }
+            }
         }
     }
     

@@ -1,4 +1,5 @@
 import UIKit
+import MapKit
 import Foundation
 import CoreLocation
 
@@ -42,5 +43,10 @@ class Location {
             }
             
         }, cancelFunction: {})
+    }
+    
+    func hasLocation(mapView: MKMapView) -> Bool {
+        return mapView.userLocation.coordinate.latitude != 0 &&
+        mapView.userLocation.coordinate.longitude != 0
     }
 }
