@@ -28,6 +28,7 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
         // setup style elements
         nextButton.layer.cornerRadius = 22.5
         
+        self.locationManager.delegate = self
     }
     
     /*
@@ -63,10 +64,9 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
     @IBAction func nextButtonPressed(_ sender: Any) {
         
         if nextButton.titleLabel?.text == "Use Your Current Location" {
-            
-            // check for requesting user location permissions
-            // ask if they don't have it and continue if they do
-            setupLocationUpdates()
+            if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
+                locationManager.startUpdatingLocation()
+            }
             
         } else if nextButton.titleLabel?.text == "Use Entered Zipcode" {
             
@@ -109,46 +109,6 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
                     }
                 })
             }
-        }
-    }
-
-    /*
-     setupLocationUpdates()
-     Check if the user has agreed to accept location permissions
-     IF NOT: we ask them to reconsider and make it easy by taking them
-      to the settings view
-     IF YES: we move on and grab their location as requested
-    */
-    func setupLocationUpdates() {
-        self.locationManager.delegate = self
-
-        let authStatus = CLLocationManager.authorizationStatus()
-        
-        switch authStatus {
-            case .notDetermined:
-                locationManager.requestWhenInUseAuthorization()
-            
-            case .authorizedWhenInUse:
-                print("authorized")
-                // start updating location info
-                if CLLocationManager.locationServicesEnabled() {
-                    print("Starting updating Location")
-                    locationManager.startUpdatingLocation()
-                }
-            
-            case .denied:
-                DuffekDialog.shared.showStandardDialog(title: "Permission Denied", message: "You chose to deny this app location permissions so we are unable to use your current location. Please update your settings and try again.", buttonTitle: "Change Settings", buttonFunction: {
-                    
-                    // take user to change their settings
-                    if let bundleId = Bundle.main.bundleIdentifier,
-                        let url = URL(string: "\(UIApplication.openSettingsURLString)&path=LOCATION/\(bundleId)") {
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                    }
-                    
-                }, cancelFunction: {})
-            
-            default:
-                break
         }
     }
     
@@ -197,10 +157,11 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
         }
     }
     
-    // if the user changed their settings we need to react to this
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse || status == .authorizedAlways {
             locationManager.startUpdatingLocation()
+        } else {
+            Location.shared.showLocationDeniedMessage()
         }
     }
 }

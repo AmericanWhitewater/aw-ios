@@ -38,14 +38,16 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         // setup initial map styling
         mapView.mapType = .hybrid
         mapView.delegate = self
+        
+        self.locationManager.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        // check location permissions so we can show
-        // user location on request
-        checkLocationAuthorizationStatus()
+        if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
+            locationManager.startUpdatingLocation()
+        }
         
         // setup all map markers/annotation
         processMapMarkers()
@@ -166,7 +168,6 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         }
     }
     
-    
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         let userLat = userLocation.coordinate.latitude
         let userLon = userLocation.coordinate.longitude
@@ -185,51 +186,26 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         self.mapView.setVisibleMapRectToFitAllAnnotations(animated: true, shouldIncludeUserAccuracyRange: true, shouldIncludeOverlays: true)
     }
     
-    
     func showUserLocation() {
         mapView.showsUserLocation = true
         
         self.mapView.setVisibleMapRectToFitAllAnnotations(animated: true, shouldIncludeUserAccuracyRange: true, shouldIncludeOverlays: true)
     }
     
-    func checkLocationAuthorizationStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            // it's approved - button will now work
-            return
-        } else if CLLocationManager.authorizationStatus() == .denied {
-            showLocationDeniedMessage()
-        } else {
-            locationManager.requestWhenInUseAuthorization()
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            locationManager.stopUpdatingLocation()
+            showUserLocation()
         }
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-            case .authorizedWhenInUse:
-                //showUserLocation()
-                break
-            case .authorizedAlways:
-                // showUserLocation()
-                break
-            case .denied:
-                showLocationDeniedMessage()
-            default:
-                break
+        
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            showUserLocation()
         }
     }
-    
-    func showLocationDeniedMessage() {
-        DuffekDialog.shared.showStandardDialog(title: "Permission Denied", message: "You chose to deny this app location permissions and we are unable to use your current location for displaying the map. Please update your settings and try again.", buttonTitle: "Change Settings", buttonFunction: {
-            
-            // take user to change their settings
-            if let bundleId = Bundle.main.bundleIdentifier,
-                let url = URL(string: "\(UIApplication.openSettingsURLString)&path=LOCATION/\(bundleId)") {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-            
-        }, cancelFunction: {})
-    }
-    
     
     @IBAction func mapTypeButtonPressed(_ sender: Any) {
         if mapView.mapType == .standard {
@@ -240,10 +216,12 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     }
     
     @IBAction func showUserLocationPressed(_ sender: Any) {
-        showUserLocation()
-        
-        if let mapView = mapView {
-            mapView.setCenter(mapView.userLocation.coordinate, animated: true)
+        if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
+            showUserLocation()
+            
+            if let mapView = mapView {
+                mapView.setCenter(mapView.userLocation.coordinate, animated: true)
+            }
         }
     }
     
@@ -260,7 +238,5 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
             let destVC = segue.destination as! RunRapidDetailsTableViewController
             destVC.selectedRapid = sender as? Rapid
         }
-        
     }
-
 }

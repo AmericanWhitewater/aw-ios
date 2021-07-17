@@ -21,9 +21,10 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     var regionsTableViewRef: UITableView?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.locationManager.delegate = self
              
         filterSegmentControl.fallBackToPreIOS13Layout(using: UIColor.white)
         let selectedSegTitle = [NSAttributedString.Key.foregroundColor: UIColor(named: "primary") ?? UIColor.black]
@@ -52,12 +53,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         loadRegions()
 
         contentCollectionView.reloadData()
-
-        // gets location and also triggers request if needed
-        getUsersLocation()
+        
+        if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
+            locationManager.startUpdatingLocation()
+        }
     }
-    
-    
     
     // Filter Type Changed changes the filter category (region/class/distance)
     // and auto scrolls to the correct view for interaction
@@ -218,8 +218,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                 }                
             } else {
-                print("No geo points so get user location")
-                getUsersLocation()
+                if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
+                    locationManager.startUpdatingLocation()
+                }
             }
 
             DefaultsManager.distanceFilter = Double(cell.distanceFilterSlider.value)
@@ -391,84 +392,28 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //
     // MARK - Distance Filtering
     //
-
-    
     @objc func updateLocationButtonPressed(_ sender: Any) {
-        getUsersLocation()
-    }
-        
-    func getUsersLocation() {
-        self.locationManager.delegate = self
-
-        let authStatus = CLLocationManager.authorizationStatus()
-        print("Auth Status:", authStatus)
-        
-        switch authStatus {
-            case .notDetermined:
-                locationManager.requestWhenInUseAuthorization()
-            
-            case .authorizedWhenInUse:
-                print("authorized")
-                // start updating location info
-                if CLLocationManager.locationServicesEnabled() {
-                    print("Starting updating Location")
-                    locationManager.startUpdatingLocation()
-                }
-            
-            case .denied:
-                //currentLocationActivityIndicator.stopAnimating()
-                contentCollectionView.reloadData()
-                
-                DuffekDialog.shared.showStandardDialog(title: "Permission Denied", message: "You chose to deny this app location permissions so we are unable to use your current location. Please update your settings and try again.", buttonTitle: "Change Settings", buttonFunction: {
-                    
-                    // take user to change their settings
-                    if let bundleId = Bundle.main.bundleIdentifier,
-                        let url = URL(string: "\(UIApplication.openSettingsURLString)&path=LOCATION/\(bundleId)") {
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                    }
-                    
-                }, cancelFunction: {})
-            
-            default:
-                break
+        if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
+            locationManager.startUpdatingLocation()
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
         if let location = locations.last {
-
-            //print("Got the latest location: \(location.debugDescription)")
-
-            // stop updating
             locationManager.stopUpdatingLocation()
 
             // store the location for future use
             DefaultsManager.latitude = location.coordinate.latitude
             DefaultsManager.longitude = location.coordinate.longitude
-            //DefaultsManager.distanceFilter = Double(distanceFilterSlider.value)
 
             // now load the UI info for the distance filter info
-            //loadDistanceFilterLocationInfo()
             contentCollectionView.reloadData()
         }
     }
     
-    // if the user changed their settings we need to react to this
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse || status == .authorizedAlways {
             locationManager.startUpdatingLocation()
-        } else if status == .denied || status == .restricted {
-
-            DuffekDialog.shared.showStandardDialog(title: "Location Access Denied", message: "We are unable to use distance filtering becuase access to your location was not granted.", buttonTitle: "Fix Access") {
-                // fix access
-                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                
-            } cancelFunction: {
-                // do nothing
-            }
-        } else if status == .notDetermined {
-            locationManager.requestWhenInUseAuthorization()
         }
     }
 
