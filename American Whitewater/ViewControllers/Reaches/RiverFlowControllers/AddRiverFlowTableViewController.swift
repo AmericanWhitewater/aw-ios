@@ -88,11 +88,6 @@ class AddRiverFlowTableViewController: UITableViewController {
             DuffekDialog.shared.showOkDialog(title: "Post Observation Error", message: "An error has occured. Please notify us of this problem")
             return
         }
-        
-        if let titleText = observationTitleTextField.text, titleText.count < 1 {
-            DuffekDialog.shared.showOkDialog(title: "Caption Required", message: "Please enter a caption and try again!")
-            return
-        }
 
         AWProgressModal.shared.show(fromViewController: self, message: "Posting...");
         
@@ -141,7 +136,7 @@ class AddRiverFlowTableViewController: UITableViewController {
 
     }
     
-    func postFlowWithPhoto(reachId: Int, gageId: String?, metricId: Int, title: String, dateString: String, reading: Double) {
+    func postFlowWithPhoto(reachId: Int, gageId: String?, metricId: Int, title: String = "", dateString: String, reading: Double) {
         print("GageId:", gageId ?? "n/a")
         
         guard let image = flowImageView.image else {
