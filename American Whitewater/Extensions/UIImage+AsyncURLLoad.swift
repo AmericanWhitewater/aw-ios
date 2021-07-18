@@ -1,11 +1,3 @@
-//
-//  UIImage+AsyncURLLoad.swift
-//  American Whitewater
-//
-//  Created by David Nelson on 5/15/20.
-//  Copyright © 2020 American Whitewater. All rights reserved.
-//
-
 import UIKit
 import Foundation
 import Alamofire

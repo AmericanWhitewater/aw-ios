@@ -191,7 +191,7 @@ class AddRiverFlowTableViewController: UITableViewController {
         
         if authStatus == .denied || authStatus == .restricted {
             // user rejected the ask
-            DuffekDialog.shared.showStandardDialog(title: "Access Denied", message: "Hey, it looks like you rejected our access to your camera... We can't enable your camera to take pictures without it.", buttonTitle: "Let's Fix It!") {
+            DuffekDialog.shared.showStandardDialog(title: "Camera not enabled", message: "Please enable your camera to add a picture.", buttonTitle: "Let's Fix It!") {
                 // user wants to fix the issue
                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                 
