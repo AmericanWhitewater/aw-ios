@@ -140,7 +140,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         } catch {
             let error = error as NSError
             print("Error fetching reaches for map: \(error), \(error.userInfo)")
-            DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.userInfo.description)
+            self.showToast(message: "Connection Error: " + error.userInfo.description)
         }
         
         // add the reaches from core data to the map

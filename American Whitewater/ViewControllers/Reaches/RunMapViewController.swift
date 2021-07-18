@@ -132,7 +132,6 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     // User Clicked on the info of a callout
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
-        //DuffekDialog.shared.showOkDialog(title: "Rapid Info", message: "Info coming soon...")
         if let annotation = view.annotation as? RunMapAnnotation {
 
             // check if put in or take out, if so open in apple maps (ask first?)

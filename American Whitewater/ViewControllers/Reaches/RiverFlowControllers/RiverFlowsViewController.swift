@@ -264,7 +264,7 @@ extension RiverFlowsViewController: UITableViewDataSource, UITableViewDelegate {
             let imagePath = "\(AWGC.AW_BASE_URL)\(imageLink)"
             
             if !imagePath.contains("https://") && !imagePath.contains("http://") {
-                DuffekDialog.shared.showOkDialog(title: errorTitle, message: errorMessage)
+                self.showToast(message: "Connection Error: " + errorMessage)
                 print("imagePath issue: ", imagePath)
                 return
             }
@@ -274,7 +274,7 @@ extension RiverFlowsViewController: UITableViewDataSource, UITableViewDelegate {
                 let vc = SFSafariViewController(url: url, configuration: config)
                 present(vc, animated: true)
             } else {
-                DuffekDialog.shared.showOkDialog(title: errorTitle, message: errorMessage)
+                self.showToast(message: errorTitle + " " + errorMessage)
                 print("imagePath issue: ", imagePath)
             }
         }

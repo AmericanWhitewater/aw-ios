@@ -183,7 +183,7 @@ class RunsListViewController: UIViewController {
         } catch {
             let error = error as NSError
             print("Error fetching reaches from CoreData: \(error), \(error.userInfo)")
-            DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.userInfo.description)
+            self.showToast(message: "Connection Error: " + error.userInfo.description)
         }
         
         tableView.reloadData()
@@ -312,7 +312,7 @@ class RunsListViewController: UIViewController {
         } catch {
             let error = error as NSError
             print("Error fetching reaches from coredata: \(error), \(error.userInfo)")
-            DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.userInfo.description)
+            self.showToast(message: "Connection Error: " + error.userInfo.description)
         }
 
         tableView.reloadData() 
@@ -333,10 +333,9 @@ class RunsListViewController: UIViewController {
                 
                 if let error = error {
                     print("1 Error updating reaches: \(error.localizedDescription)")
-                    DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.localizedDescription)
+                    self.showToast(message: "Connection Error: " + error.localizedDescription)
                 } else {
                     print("Error updating reaches: Unknown why 2")
-                    //DuffekDialog.shared.showOkDialog(title: "Connection Error", message: "Unknown Reason")
                 }
             }
         }
@@ -367,10 +366,9 @@ class RunsListViewController: UIViewController {
             
             if let error = error {
                 print("2 Error updating reaches: \(error.localizedDescription)")
-                DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.localizedDescription)
+                self.showToast(message: "Connection Error: " + error.localizedDescription)
             } else {
                 print("Error updating reaches: Unknown why")
-                //DuffekDialog.shared.showOkDialog(title: "Connection Error", message: "Unknown Reason")
             }
         }
 
