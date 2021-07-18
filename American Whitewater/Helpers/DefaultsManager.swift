@@ -269,6 +269,16 @@ class DefaultsManager {
         }
     }
     
+    private static let signInLastShownKey = "signInLastShownKey"
+    static var signInLastShown: Date? {
+        get {
+            return UserDefaults.standard.object(forKey: signInLastShownKey) as? Date
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: signInLastShownKey)
+        }
+    }
+    
     // for now we'll store all the users favorites in the preferences
     // eventually we'll move it back over to CoreData
     private static let userFavoritesKey = "userFavoritesKey"

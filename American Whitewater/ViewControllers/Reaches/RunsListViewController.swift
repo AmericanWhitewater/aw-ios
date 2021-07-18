@@ -133,22 +133,6 @@ class RunsListViewController: UIViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-// ### TestFlight - What's New View ###
-// We use this for TestFlight testing to highlight what has changed
-// if we design it better we can include it in the main app
-//        if (DefaultsManager.whatsNew == nil || DefaultsManager.whatsNew != "whatsNew\(DefaultsManager.appVersion ?? -1)") {
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let newVC = storyboard.instantiateViewController(withIdentifier: "WhatsNewView") as? WhatsNewViewController
-//            if let newVC = newVC {
-//                self.present(newVC, animated: true, completion: nil)
-//            }
-//        }
-    }
-
-    
     func fetchRiversFromCoreData() {
         
         print("Fetching rivers from core data")
@@ -222,21 +206,18 @@ class RunsListViewController: UIViewController {
         return false
     }
 
-/* Debug Screen Only */
     func showLoginScreen() {
-        let count = DefaultsManager.signInAlertCount
-        if count % 5 == 0 {
-            if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
-                modalSignInVC.modalPresentationStyle = .overCurrentContext
-                modalSignInVC.referenceViewController = self
-                tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+        if let lastShown = DefaultsManager.signInLastShown {
+            // Only show once per day
+            if lastShown < Date(timeIntervalSinceNow: -24 * 60 * 60) {
+                if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
+                    modalSignInVC.modalPresentationStyle = .overCurrentContext
+                    modalSignInVC.referenceViewController = self
+                    tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+                }
             }
-
-        } else {
-            DefaultsManager.signInAlertCount = count + 1
         }
     }
-    
     
     func refresh(regions: [Region] = Region.all) {
         print("Refresh called")
