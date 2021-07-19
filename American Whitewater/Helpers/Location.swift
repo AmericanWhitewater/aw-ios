@@ -9,27 +9,38 @@ class Location {
     
     // User takes an action that requires location, like clicking on the my location button.
     func checkLocationStatusOnUserAction(manager: CLLocationManager) -> Bool {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedAlways, .authorizedWhenInUse:
             return true
+        case .notDetermined:
+            manager.requestWhenInUseAuthorization()
+        case .denied:
+            showLocationDeniedMessage()
+        case .restricted:
+            // TODO: should this also show the location denied message?
+            // (it indicates that location services aren't available, but probably for circumstances the user can't control)
+            break
+        
+        @unknown default:
+            break
         }
         
-        if CLLocationManager.authorizationStatus() == .denied {
-            showLocationDeniedMessage()
-        } else if CLLocationManager.authorizationStatus() == .notDetermined {
-            manager.requestWhenInUseAuthorization()
-        }
         return false
     }
 
     // App needs location data, but not from a direct user action.
     func checkLocationStatusInBackground(manager: CLLocationManager) -> Bool {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse, .authorizedAlways:
             return true
+        case .notDetermined:
+            manager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            break
+        @unknown default:
+            break
         }
         
-        if CLLocationManager.authorizationStatus() == .notDetermined {
-            manager.requestWhenInUseAuthorization()
-        }
         return false
     }
 
