@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2FE342CE26A1FF8100352D1E /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE342CD26A1FF8100352D1E /* UIViewController+Toast.swift */; };
+		2FE342D026A2846100352D1E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE342CF26A2846100352D1E /* Location.swift */; };
 		4760DD5C0E5548BBA92D25AF /* Pods_American_Whitewater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A750E2F24748D3B54A1DEB84 /* Pods_American_Whitewater.framework */; };
 		4AC4BB5A26A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */; };
 		4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */; };
@@ -149,6 +151,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2FE342CD26A1FF8100352D1E /* UIViewController+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Toast.swift"; sourceTree = "<group>"; };
+		2FE342CF26A2846100352D1E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunRapidDetailsTableViewController.swift; sourceTree = "<group>"; };
@@ -497,6 +501,7 @@
 				631644A1246ED80B00807E19 /* UIButton+UrlImageLoad.swift */,
 				6316449F246ED6B100807E19 /* UIImage+AsyncURLLoad.swift */,
 				63432D452540DA340037AA37 /* UISegmentedControl+Colors.swift */,
+				2FE342CD26A1FF8100352D1E /* UIViewController+Toast.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -604,6 +609,7 @@
 				63164495246C08AA00807E19 /* AWProgress.swift */,
 				6376508C2487E8AB00DD0FCE /* AWProgressModal.swift */,
 				63FF68FD25AE249100AF0F37 /* ChartXAxisFormatter.swift */,
+				2FE342CF26A2846100352D1E /* Location.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -917,6 +923,7 @@
 				63309E3D233E739C00E6DBC4 /* MapViewController.swift in Sources */,
 				63E32B1D2357F3260057DE34 /* FilterClassCollectionViewCell.swift in Sources */,
 				639350C22475929900577027 /* AddRiverFlowTableViewController.swift in Sources */,
+				2FE342D026A2846100352D1E /* Location.swift in Sources */,
 				63949955246F0DD40061552C /* AwImageCell.swift in Sources */,
 				63FF68C525ACF2A900AF0F37 /* GageGraphCell.swift in Sources */,
 				631EFF9A23677C4000BA17F7 /* Article+CoreDataProperties.swift in Sources */,
@@ -934,6 +941,7 @@
 				630F7EC825C3439000F17D8A /* LoadingRiversCell.swift in Sources */,
 				631EFFA223677CB600BA17F7 /* Rapid+CoreDataProperties.swift in Sources */,
 				63B5B4A324589EAB0062F54B /* RunAccidentsViewController.swift in Sources */,
+				2FE342CE26A1FF8100352D1E /* UIViewController+Toast.swift in Sources */,
 				4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */,
 				63B5B49E2457B2270062F54B /* AwGraphQLAPI.swift in Sources */,
 				63D7BD1F231A205500935693 /* NewsTableViewController.swift in Sources */,
