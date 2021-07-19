@@ -24,6 +24,9 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // This controller is the presentation context for any further modal presentations, like the location denied alert
+        definesPresentationContext = true
 
         // setup style elements
         nextButton.layer.cornerRadius = 22.5
@@ -67,7 +70,6 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
             if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
                 locationManager.startUpdatingLocation()
             }
-            
         } else if nextButton.titleLabel?.text == "Use Entered Zipcode" {
             
             // Geocode the zip code so we can get the region from the
