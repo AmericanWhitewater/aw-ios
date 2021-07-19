@@ -305,10 +305,7 @@ class AWApiReachHelper {
             }
             
         }) { (error) in
-            // pass error forward to callback so we can
-            // handle errors on ViewController that called this
             callbackError(error)
-            dispatchGroup.leave()
             return
         }
         
@@ -362,10 +359,7 @@ class AWApiReachHelper {
             }
             
         }) { (error) in
-            // pass error forward to callback so we can
-            // handle errors on ViewController that called this
             print("Error with getting all reaches: \(error?.localizedDescription ?? "Unknown error")")
-            dispatchGroup.leave()
         }
         
         dispatchGroup.notify(queue: .main) {
