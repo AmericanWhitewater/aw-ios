@@ -576,13 +576,18 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
         
         // handle the case when a filter shows 0 items
         print("fetchedObjects.count == \(fetchedResultsController?.fetchedObjects?.count ?? 0)")
-        if indexPath.section == 1 && (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingRiversCell", for: indexPath) as! LoadingRiversCell
-            cell.activityIndicator.startAnimating()
-            return cell
-            
+        if indexPath.section == 1, (fetchedResultsController?.fetchedObjects ?? []).isEmpty {
+            if isLoadingData {
+                // The loading state:
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingRiversCell", for: indexPath) as! LoadingRiversCell
+                cell.activityIndicator.startAnimating()
+                return cell
+            } else {
+                // The empty state:
+                return tableView.dequeueReusableCell(withIdentifier: "NoRiversCell", for: indexPath)
+            }
         } else {
-        
             let cell = tableView.dequeueReusableCell(withIdentifier: "RunCell", for: indexPath) as! RunsListTableViewCell
 
             guard let reach = fetchedResultsController?.object(at: indexPath) else { return cell }
