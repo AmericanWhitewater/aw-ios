@@ -87,18 +87,13 @@ class AddRiverFlowTableViewController: UITableViewController {
             DuffekDialog.shared.showOkDialog(title: "Post Observation Error", message: "An error has occured. Please notify us of this problem")
             return
         }
-        
-        if let titleText = observationTitleTextField.text, titleText.count < 1 {
-            DuffekDialog.shared.showOkDialog(title: "Caption Required", message: "Please enter a caption and try again!")
-            return
-        }
 
         AWProgressModal.shared.show(fromViewController: self, message: "Posting...");
         
         // send value to server
         let reachId = Int(selectedRun.id)
         let gageId: String? = selectedRun.gageId == -1 ? nil : "\(selectedRun.gageId)"
-        let title = observationTitleTextField.text ?? "no title available"
+        let title = observationTitleTextField.text ?? ""
         
         let isoDateFormatter = DateFormatter()
         isoDateFormatter.dateFormat = "YYYY-MM-dd h:mm:ss"
@@ -193,7 +188,7 @@ class AddRiverFlowTableViewController: UITableViewController {
         
         if authStatus == .denied || authStatus == .restricted {
             // user rejected the ask
-            DuffekDialog.shared.showStandardDialog(title: "Access Denied", message: "Hey, it looks like you rejected our access to your camera... We can't enable your camera to take pictures without it.", buttonTitle: "Let's Fix It!") {
+            DuffekDialog.shared.showStandardDialog(title: "Camera not enabled", message: "Please enable your camera to add a picture.", buttonTitle: "Let's Fix It!") {
                 // user wants to fix the issue
                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                 
