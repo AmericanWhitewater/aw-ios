@@ -25,9 +25,7 @@ class RunsListViewController: UIViewController {
     let searchBar = UISearchBar()
     let refreshControl = UIRefreshControl()
     
-    var isLoadingData: Bool {
-        refreshControl.isRefreshing
-    }
+    var isLoadingData = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -260,7 +258,6 @@ class RunsListViewController: UIViewController {
                     self.refreshData(with: codes)
                 }, cancelFunction: {
                     // cancelled so end refresh
-                    // AWTODO: this doesn't actually cancel the request, or the processing of its results!
                     self.refreshControl.endRefreshing()
                 });
             } else {
@@ -304,12 +301,9 @@ class RunsListViewController: UIViewController {
         // update those reaches
         if let results = fetchedResultsController?.fetchedObjects {
             let reachIds = results.map{ "\($0.id)" }
-            
             self.refreshControl.beginRefreshingManually()
-            
             AWApiReachHelper.shared.updateReaches(reachIds: reachIds, callback: {
                 print("1")
-                
                 self.refreshControl.endRefreshing()
                 // finished - load the data again for display
                 self.fetchRiversFromCoreData()
@@ -324,7 +318,6 @@ class RunsListViewController: UIViewController {
                 } else {
                     print("Error updating reaches: Unknown why 2")
                 }
-                
             }
         }
     }
@@ -333,7 +326,6 @@ class RunsListViewController: UIViewController {
         print("RefreshData called!")
         
         self.refreshControl.beginRefreshingManually()
-
         AWApiReachHelper.shared.updateRegionalReaches(regionCodes: codes, callback: {
             // handle success
             print("3")
@@ -549,21 +541,13 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
         
         // handle the case when a filter shows 0 items
         print("fetchedObjects.count == \(fetchedResultsController?.fetchedObjects?.count ?? 0)")
-        if indexPath.section == 1, (fetchedResultsController?.fetchedObjects ?? []).isEmpty {
-            if isLoadingData {
-                // The loading state:
-                
-                let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingRiversCell", for: indexPath) as! LoadingRiversCell
-                cell.activityIndicator.startAnimating()
-                return cell
-            } else {
-                // The empty state:
-                
-                let emptyCell = tableView.dequeueReusableCell(withIdentifier: "NoRiversCell", for: indexPath) as! NoRiversTableViewCell
-                emptyCell.noRiversButton.addTarget(self, action: #selector(changeFiltersPressed), for: .touchUpInside)
-                return emptyCell
-            }
+        if indexPath.section == 1 && (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingRiversCell", for: indexPath) as! LoadingRiversCell
+            cell.activityIndicator.startAnimating()
+            return cell
+            
         } else {
+        
             let cell = tableView.dequeueReusableCell(withIdentifier: "RunCell", for: indexPath) as! RunsListTableViewCell
 
             guard let reach = fetchedResultsController?.object(at: indexPath) else { return cell }

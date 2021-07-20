@@ -5,7 +5,11 @@ import SwiftyJSON
 import Foundation
 import CoreLocation
 
-/// The main API helper class for retrieving Reaches and storing them in core data
+/*
+ This is the main API helper class for retrieving
+ Reaches and storing them in core data
+*/
+
 class AWApiReachHelper {
 
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
@@ -56,11 +60,17 @@ class AWApiReachHelper {
         }
     }
 
-    /// This calls each of the regions to be downloaded, then after all are downloaded it
-    /// processes all of them at once which happens very quickly
-    ///
-    /// This is designed to run in the background and update the UI as it goes without delays.
-    /// Users can still pull/refresh individual data while this is happening.
+    /*
+     func fetchReachesRecursively(currentIndex: Int, allRegionCodes: [String],
+                                  allRiverJSONdata: [JSON], successCallback: @escaping ReachCallback,
+                                  callbackError: @escaping ReachErrorCallback)
+     
+     This calls each of the regions to be downloaded, then after all are downloaded it
+     processes all of them at once which happens very quickly
+     
+     This is designed to run in the background and update the UI as it goes without delays.
+     Users can still pull/refresh individual data while this is happening.
+    */
     func fetchReachesRecursively(currentIndex: Int, allRegionCodes: [String], allRiverJSONdata: [JSON], successCallback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
         
         var allRiverJSON = allRiverJSONdata
@@ -111,14 +121,16 @@ class AWApiReachHelper {
         
     }
     
-    /// This updates reaches based on their IDs. This is great for updating the favorites, and groups of reaches
+    /*
+     func fetchReachesByIds(reachIds: [String], callback: @escaping ReachCallback,
+                            callbackError: @escaping ReachErrorCallback)
+     
+     This updates reaches based on their IDs. This is great for updating the favorites, and groups of reaches
+    */
     func fetchReachesByIds(reachIds: [String], callback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
         
         if reachIds.count == 0 {
             print("No reache ids sent");
-            
-            // AWTODO: Not sure what changing this would affect, but: this does not seem like an error.
-            // If fetchReachesByIds is called with no reachIds, why not succeed immediately with `callback([])`
             callbackError(nil)
             return;
         }
