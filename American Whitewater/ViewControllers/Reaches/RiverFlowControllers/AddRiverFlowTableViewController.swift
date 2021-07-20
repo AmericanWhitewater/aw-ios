@@ -94,7 +94,7 @@ class AddRiverFlowTableViewController: UITableViewController {
         // send value to server
         let reachId = Int(selectedRun.id)
         let gageId: String? = selectedRun.gageId == -1 ? nil : "\(selectedRun.gageId)"
-        let title = observationTitleTextField.text ?? "no title available"
+        let title = observationTitleTextField.text ?? ""
         
         let isoDateFormatter = DateFormatter()
         isoDateFormatter.dateFormat = "YYYY-MM-dd h:mm:ss"
@@ -136,7 +136,7 @@ class AddRiverFlowTableViewController: UITableViewController {
 
     }
     
-    func postFlowWithPhoto(reachId: Int, gageId: String?, metricId: Int, title: String = "", dateString: String, reading: Double) {
+    func postFlowWithPhoto(reachId: Int, gageId: String?, metricId: Int, title: String, dateString: String, reading: Double) {
         print("GageId:", gageId ?? "n/a")
         
         guard let image = flowImageView.image else {
