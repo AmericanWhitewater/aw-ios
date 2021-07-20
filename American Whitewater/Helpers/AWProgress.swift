@@ -13,7 +13,7 @@ class AWProgress {
     
     var progressView = AWProgressView();
     
-    // setup propper singleton
+    // setup proper singleton
     private init() {}
        
     

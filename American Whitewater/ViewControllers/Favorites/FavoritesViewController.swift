@@ -81,7 +81,7 @@ class FavoritesViewController: UIViewController {
         } catch {
             let error = error as NSError
             print("Error fetching favorites from core data: \(error), \(error.userInfo)")
-            DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.userInfo.description)
+            self.showToast(message: "Connection Error: " + error.userInfo.description)
         }
     }
 

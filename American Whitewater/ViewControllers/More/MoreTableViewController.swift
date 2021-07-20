@@ -75,7 +75,6 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
                 present(mail, animated: true)
             
             } else {
-               // show failure alert
                 DuffekDialog.shared.showOkDialog(title: "Feedback Issue ", message: "Please setup a valid email account before attempting to contact us.")
             }
         } else if indexPath.row == 4 {
@@ -118,9 +117,9 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
         
         switch result {
             case .sent:
-                DuffekDialog.shared.showOkDialog(title: "Success", message: "Thanks for your feedback!")
+                self.showToast(message: "Thanks for your feedback!")
             case .failed:
-                DuffekDialog.shared.showOkDialog(title: "Sending Failed", message: "We were unable to send the message. Please check your connection and try again.")
+                self.showToast(message: "We were unable to send the message. Please check your connection and try again.")
             default:
                 break
         }

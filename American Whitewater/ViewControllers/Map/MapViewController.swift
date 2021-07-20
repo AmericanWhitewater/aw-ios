@@ -33,19 +33,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         
+        self.locationManager.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         updateFilterButton();
-        checkLocationAuthorizationStatus()
         fetchReachesFromCoreData()
         
-        if DefaultsManager.showRegionFilter {
-            mapView.showsUserLocation = false
-        } else {
-            mapView.showsUserLocation = true
+        if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
+            showUserLocation()
         }
     }
     
@@ -142,7 +140,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         } catch {
             let error = error as NSError
             print("Error fetching reaches for map: \(error), \(error.userInfo)")
-            DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.userInfo.description)
+            self.showToast(message: "Connection Error: " + error.userInfo.description)
         }
         
         // add the reaches from core data to the map
@@ -220,51 +218,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
     }
     
-    
     func showUserLocation() {
-        if DefaultsManager.showRegionFilter {
-            mapView.showsUserLocation = false
-        } else {
-            mapView.showsUserLocation = true
-            MapViewController.userChangedMap = false
-        }
-    }
-    
-    func checkLocationAuthorizationStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            showUserLocation()
-        } else if CLLocationManager.authorizationStatus() == .denied {
-            showLocationDeniedMessage()
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-        }
+        mapView.showsUserLocation = true
+        MapViewController.userChangedMap = false
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-            case .authorizedWhenInUse:
-                showUserLocation()
-            case .authorizedAlways:
-                showUserLocation()
-            case .denied:
-                showLocationDeniedMessage()
-            default:
-                break
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            showUserLocation()
         }
     }
-    
-    func showLocationDeniedMessage() {
-        DuffekDialog.shared.showStandardDialog(title: "Permission Denied", message: "You chose to deny this app location permissions and we are unable to use your current location for displaying the map. Please update your settings and try again.", buttonTitle: "Change Settings", buttonFunction: {
-            
-            // take user to change their settings
-            if let bundleId = Bundle.main.bundleIdentifier,
-                let url = URL(string: "\(UIApplication.openSettingsURLString)&path=LOCATION/\(bundleId)") {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-            
-        }, cancelFunction: {})
-    }
-    
     
     @IBAction func filterButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: Segue.showFiltersMap.rawValue, sender: nil)
@@ -279,9 +242,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     @IBAction func showUserLocationPressed(_ sender: Any) {
-        if let mapView = mapView {
-            mapView.showsUserLocation = true
-            mapView.setCenter(mapView.userLocation.coordinate, animated: true)
+        if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
+            showUserLocation()
+            
+            if let mapView = mapView {
+                if Location.shared.hasLocation(mapView: mapView) {
+                    mapView.setCenter(mapView.userLocation.coordinate, animated: true)
+                }
+            }
         }
     }
     

@@ -112,8 +112,7 @@ class AWGQLArticleApiHelper
 
         } errorCallback: { (error, errorMessage) in
             print("Error with fetching news articles: \(error?.localizedDescription ?? errorMessage ?? "No error message available")")
-            let errorMessage = GQLError.handleGQLError(error: error, altMessage: errorMessage)
-            DuffekDialog.shared.showOkDialog(title: "Connection Issue", message: "We were unable to connect to the server due to: \(errorMessage)")
+            errorCallback(error) // AWTODO is this correct?
         }
     }
 }

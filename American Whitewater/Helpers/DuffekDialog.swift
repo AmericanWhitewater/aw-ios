@@ -291,6 +291,12 @@ class DuffekDialog {
             rootViewController = tabBarController.selectedViewController
         }
         
+        // Whoops, if there's already a presented view controller this won't work
+        // In that case, it's necessary to present on the presented controller (which can define itself as the 'presentation context', which allows nested modal presentation
+        if let presented = rootViewController?.presentedViewController {
+            rootViewController = presented
+        }
+        
         // Display the chosen view
         rootViewController?.present(alertController, animated: true, completion: nil)
     }

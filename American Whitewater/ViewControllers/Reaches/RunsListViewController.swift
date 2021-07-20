@@ -135,22 +135,6 @@ class RunsListViewController: UIViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-// ### TestFlight - What's New View ###
-// We use this for TestFlight testing to highlight what has changed
-// if we design it better we can include it in the main app
-//        if (DefaultsManager.whatsNew == nil || DefaultsManager.whatsNew != "whatsNew\(DefaultsManager.appVersion ?? -1)") {
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let newVC = storyboard.instantiateViewController(withIdentifier: "WhatsNewView") as? WhatsNewViewController
-//            if let newVC = newVC {
-//                self.present(newVC, animated: true, completion: nil)
-//            }
-//        }
-    }
-
-    
     func fetchRiversFromCoreData() {
         
         print("Fetching rivers from core data")
@@ -185,7 +169,7 @@ class RunsListViewController: UIViewController {
         } catch {
             let error = error as NSError
             print("Error fetching reaches from CoreData: \(error), \(error.userInfo)")
-            DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.userInfo.description)
+            self.showToast(message: "Connection Error: " + error.userInfo.description)
         }
         
         tableView.reloadData()
@@ -224,21 +208,18 @@ class RunsListViewController: UIViewController {
         return false
     }
 
-/* Debug Screen Only */
     func showLoginScreen() {
-        let count = DefaultsManager.signInAlertCount
-        if count % 5 == 0 {
-            if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
-                modalSignInVC.modalPresentationStyle = .overCurrentContext
-                modalSignInVC.referenceViewController = self
-                tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+        if let lastShown = DefaultsManager.signInLastShown {
+            // Only show once per day
+            if lastShown < Date(timeIntervalSinceNow: -24 * 60 * 60) {
+                if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
+                    modalSignInVC.modalPresentationStyle = .overCurrentContext
+                    modalSignInVC.referenceViewController = self
+                    tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+                }
             }
-
-        } else {
-            DefaultsManager.signInAlertCount = count + 1
         }
     }
-    
     
     func refresh(regions: [Region] = Region.all) {
         print("Refresh called")
@@ -315,7 +296,7 @@ class RunsListViewController: UIViewController {
         } catch {
             let error = error as NSError
             print("Error fetching reaches from coredata: \(error), \(error.userInfo)")
-            DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.userInfo.description)
+            self.showToast(message: "Connection Error: " + error.userInfo.description)
         }
 
         tableView.reloadData() 
@@ -339,10 +320,9 @@ class RunsListViewController: UIViewController {
                 
                 if let error = error {
                     print("1 Error updating reaches: \(error.localizedDescription)")
-                    DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.localizedDescription)
+                    self.showToast(message: "Connection Error: " + error.localizedDescription)
                 } else {
                     print("Error updating reaches: Unknown why 2")
-                    //DuffekDialog.shared.showOkDialog(title: "Connection Error", message: "Unknown Reason")
                 }
                 
             }
@@ -375,10 +355,9 @@ class RunsListViewController: UIViewController {
             
             if let error = error {
                 print("2 Error updating reaches: \(error.localizedDescription)")
-                DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.localizedDescription)
+                self.showToast(message: "Connection Error: " + error.localizedDescription)
             } else {
                 print("Error updating reaches: Unknown why")
-                //DuffekDialog.shared.showOkDialog(title: "Connection Error", message: "Unknown Reason")
             }
         }
 
