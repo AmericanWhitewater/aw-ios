@@ -485,6 +485,7 @@
 		63E90EAF22EAA30900C8DAA3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */,
 				63203C0D23694BFF006A4148 /* Reach.swift */,
 				63491B0E2328D72D0036A906 /* UIColor+Hex.swift */,
 				637D0736236B541000BE90D0 /* UISearchBar+BGColor.swift */,
@@ -597,7 +598,6 @@
 				63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */,
 				63A6FD6A2367748F00148231 /* AWApiLinks.swift */,
 				63B5B4AB2459CB3B0062F54B /* AWImagePicker.swift */,
-				4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */,
 				63D7BD142319774500935693 /* Regions.swift */,
 				63D7BD1823199D1900935693 /* DuffekDialog.swift */,
 				631EFFA32367842300BA17F7 /* DifficultyHelper.swift */,

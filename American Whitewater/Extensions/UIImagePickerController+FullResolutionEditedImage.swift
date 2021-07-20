@@ -1,11 +1,3 @@
-//
-//  UIImagePickerController+FullResolutionEditedImage.swift
-//  American Whitewater
-//
-//  Created by Phil Kast on 7/19/21.
-//  Copyright © 2021 American Whitewater. All rights reserved.
-//
-
 import UIKit
 import CoreGraphics
 
