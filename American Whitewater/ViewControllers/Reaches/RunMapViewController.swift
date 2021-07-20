@@ -132,7 +132,6 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     // User Clicked on the info of a callout
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
-        //DuffekDialog.shared.showOkDialog(title: "Rapid Info", message: "Info coming soon...")
         if let annotation = view.annotation as? RunMapAnnotation {
 
             // check if put in or take out, if so open in apple maps (ask first?)
@@ -141,7 +140,7 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
                 
                 DuffekDialog.shared.showStandardDialog(title: "Open in Maps?", message: "Would you like directions to the \(annotation.title ?? "River")", buttonTitle: "Get Directions", buttonFunction: {
                     // take them to Apple Maps
-                    let url = "http://maps.apple.com/maps?saddr=\(DefaultsManager.latitude),\(DefaultsManager.longitude)&daddr=\(annotation.coordinate.latitude),\(annotation.coordinate.longitude)"
+                    let url = "http://maps.apple.com/maps?daddr=\(annotation.coordinate.latitude),\(annotation.coordinate.longitude)"
                     UIApplication.shared.open(URL(string: url)!, options: [:], completionHandler: nil)
 
                 }, cancelFunction: {

@@ -79,7 +79,7 @@ class NewsTableViewController: UITableViewController {
             var message = "Unknown Reason"
             if let error = error { message = error.localizedDescription }
             print("Error updating articles: \(message)")
-            DuffekDialog.shared.showOkDialog(title: "Connection Error", message: message)
+            self.showToast(message: "Connection Error: " + message)
         }
     }
     
@@ -103,7 +103,7 @@ class NewsTableViewController: UITableViewController {
         } catch {
             let error = error as NSError
             print("Error fetching articles from coredata: \(error), \(error.userInfo)")
-            DuffekDialog.shared.showOkDialog(title: "Connection Error", message: error.userInfo.description)
+            self.showToast(message: "Connection Error: " + error.userInfo.description)
         }
     }
     

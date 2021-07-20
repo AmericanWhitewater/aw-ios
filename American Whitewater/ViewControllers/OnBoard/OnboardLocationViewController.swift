@@ -31,6 +31,7 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
         // setup style elements
         nextButton.layer.cornerRadius = 22.5
         
+        // For presenting dialogs
         self.locationManager.delegate = self
     }
     
