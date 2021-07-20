@@ -41,11 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         // setup OneSignal for push notifications (only works on actual devices)
-        let oneSignalInitSettings = [kOSSettingsKeyAutoPrompt: false]
-        
-        OneSignal.initWithLaunchOptions(launchOptions, appId: AWGC.AWOneSignalKey,
-                                        handleNotificationAction: nil, settings: oneSignalInitSettings)
-        OneSignal.inFocusDisplayType = OSNotificationDisplayType.notification;
+        OneSignal.initWithLaunchOptions(launchOptions)
+        OneSignal.setAppId(AWGC.AWOneSignalKey)
 
         // Initialize Firebase for crash reporting
         // and analytics of the app
