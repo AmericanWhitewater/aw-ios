@@ -1,4 +1,3 @@
-
 platform :ios, '11.0'
 
 target 'American Whitewater' do
@@ -13,7 +12,7 @@ target 'American Whitewater' do
   pod 'IQKeyboardManagerSwift', :git => 'https://github.com/duffek/IQKeyboardManager.git'
   
   # Push Notification System
-  pod 'OneSignal', '~> 2.15.4'
+  pod 'OneSignalXCFramework'
   
   # Best HTTP Request Handling
   # - Used for reach API / rivers listing
@@ -30,8 +29,8 @@ target 'American Whitewater' do
   pod 'NYAlertViewController', '~> 1.3.0'
   
   # Firebase added for analytics and Crashlytics
-  pod 'Firebase/Analytics', '~> 7.1.0'
-  pod 'Firebase/Crashlytics', '~> 7.1.0'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
   
   # Pod Charts
   pod 'Charts', '~> 3.6.0'
@@ -44,6 +43,6 @@ end
 target 'OneSignalNotificationServiceExtension' do
   use_frameworks!
 
-  pod 'OneSignal', '~> 2.15.4'
+  pod 'OneSignalXCFramework'
   
 end
