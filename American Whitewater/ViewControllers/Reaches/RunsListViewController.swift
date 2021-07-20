@@ -25,7 +25,9 @@ class RunsListViewController: UIViewController {
     let searchBar = UISearchBar()
     let refreshControl = UIRefreshControl()
     
-    var isLoadingData = false
+    var isLoadingData: Bool {
+        refreshControl.isRefreshing
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -248,7 +250,6 @@ class RunsListViewController: UIViewController {
 //        }
     
         self.refreshControl.beginRefreshingManually()
-        self.isLoadingData = true
         
         if DefaultsManager.showRegionFilter {
             print("Updating reaches by region")
@@ -279,7 +280,6 @@ class RunsListViewController: UIViewController {
                 }, cancelFunction: {
                     // cancelled so end refresh
                     // AWTODO: this doesn't actually cancel the request, or the processing of its results!
-                    self.isLoadingData = false
                     self.refreshControl.endRefreshing()
                 });
             } else {
@@ -325,19 +325,16 @@ class RunsListViewController: UIViewController {
             let reachIds = results.map{ "\($0.id)" }
             
             self.refreshControl.beginRefreshingManually()
-            isLoadingData = true
             
             AWApiReachHelper.shared.updateReaches(reachIds: reachIds, callback: {
                 print("1")
                 
-                self.isLoadingData = false
                 self.refreshControl.endRefreshing()
                 // finished - load the data again for display
                 self.fetchRiversFromCoreData()
                 
             }) { (error) in
                 print("2")
-                self.isLoadingData = false
                 self.refreshControl.endRefreshing()
                 
                 if let error = error {
@@ -356,12 +353,10 @@ class RunsListViewController: UIViewController {
         print("RefreshData called!")
         
         self.refreshControl.beginRefreshingManually()
-        self.isLoadingData = true
 
         AWApiReachHelper.shared.updateRegionalReaches(regionCodes: codes, callback: {
             // handle success
             print("3")
-            self.isLoadingData = false
             self.refreshControl.endRefreshing()
             print("Fetched Regions From Server")
             
@@ -376,7 +371,6 @@ class RunsListViewController: UIViewController {
             
         }) { (error) in
             print("4")
-            self.isLoadingData = false
             self.refreshControl.endRefreshing()
             
             if let error = error {
