@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4760DD5C0E5548BBA92D25AF /* Pods_American_Whitewater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A750E2F24748D3B54A1DEB84 /* Pods_American_Whitewater.framework */; };
+		4A36D1E726A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */; };
 		4AC4BB5A26A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */; };
 		4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */; };
 		630586642350428800A436BE /* RunRapidDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */; };
@@ -149,6 +150,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+FullResolutionEditedImage.swift"; sourceTree = "<group>"; };
 		4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunRapidDetailsTableViewController.swift; sourceTree = "<group>"; };
@@ -595,6 +597,7 @@
 				63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */,
 				63A6FD6A2367748F00148231 /* AWApiLinks.swift */,
 				63B5B4AB2459CB3B0062F54B /* AWImagePicker.swift */,
+				4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */,
 				63D7BD142319774500935693 /* Regions.swift */,
 				63D7BD1823199D1900935693 /* DuffekDialog.swift */,
 				631EFFA32367842300BA17F7 /* DifficultyHelper.swift */,
@@ -975,6 +978,7 @@
 				63203C1023694C59006A4148 /* Runnable.swift in Sources */,
 				630586642350428800A436BE /* RunRapidDetailsTableViewController.swift in Sources */,
 				63491B092328A1DF0036A906 /* AWReach.swift in Sources */,
+				4A36D1E726A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift in Sources */,
 				63164498246C1C6D00807E19 /* UITextView+HTML.swift in Sources */,
 				63F712E2238869A50047C8F0 /* UIImage+Color.swift in Sources */,
 				63949959246F15C10061552C /* AddButtonCell.swift in Sources */,
