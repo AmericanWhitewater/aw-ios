@@ -80,7 +80,6 @@ class AddRiverFlowTableViewController: UITableViewController {
     }
     
     @IBAction func submitFlowButtonPressed(_ sender: Any) {
-        //DuffekDialog.shared.showOkDialog(title: "Feature Coming", message: "This feature is being updated and will be available in the next release.")
         observedGaugeLevelTextField.resignFirstResponder()
         observationTitleTextField.resignFirstResponder()
         
@@ -129,9 +128,8 @@ class AddRiverFlowTableViewController: UITableViewController {
                 print("Flow Posted: \(postResult.title ?? "no title") -- \(postResult.postDate ?? "no date")")
             }
             
-            DuffekDialog.shared.showOkDialog(title: "Flow Saved", message: "Your flow observation has been reported and saved.") {
-                self.navigationController?.popViewController(animated: true)
-            }
+            self.showToast(message: "Your flow observation has been reported and saved.")
+            self.navigationController?.popViewController(animated: true)
             
         }) { (error, errorMessage) in
             AWProgressModal.shared.hide()
@@ -158,35 +156,34 @@ class AddRiverFlowTableViewController: UITableViewController {
             print("Photo uploaded - callback returned")
             
             if let imageResult = photoFileUpdate.image, let uri = imageResult.uri {
-                DuffekDialog.shared.showOkDialog(title: "Flow Saved", message: "Your flow observation has been reported and saved.") {
-                    if let _ = self.senderVC {
-                        var newFlow = [String:String?]()
-                        newFlow["thumb"] = uri.thumb
-                        newFlow["med"] = uri.medium
-                        newFlow["big"] = uri.big
-                        
-                        newFlow["id"] = "\(photoPostUpdate.id ?? photoFileUpdate.id)"
-                        newFlow["title"] = photoFileUpdate.caption ?? photoPostUpdate.title ?? ""
-                        newFlow["description"] = photoFileUpdate.description ?? photoPostUpdate.detail ?? ""
-                        newFlow["reading"] = "\(photoPostUpdate.reading != nil ? "\(photoPostUpdate.reading!)" : "n/a")"
-                        newFlow["author"] = photoFileUpdate.author ?? photoPostUpdate.user?.uname ?? "You"
-                        newFlow["postDate"] = photoFileUpdate.photoDate ?? photoPostUpdate.postDate ?? ""
-                        newFlow["metric"] = photoPostUpdate.metric?.unit ?? ""
-                        // TODO: newFlow["observed"] = ????
-                        
-                        self.senderVC?.riverFlows.insert(newFlow, at: 0)
-                    }
-
-                    self.navigationController?.popViewController(animated: true)
+                self.showToast(message: "Your flow observation has been reported and saved.")
+                if let _ = self.senderVC {
+                    var newFlow = [String:String?]()
+                    newFlow["thumb"] = uri.thumb
+                    newFlow["med"] = uri.medium
+                    newFlow["big"] = uri.big
+                    
+                    newFlow["id"] = "\(photoPostUpdate.id ?? photoFileUpdate.id)"
+                    newFlow["title"] = photoFileUpdate.caption ?? photoPostUpdate.title ?? ""
+                    newFlow["description"] = photoFileUpdate.description ?? photoPostUpdate.detail ?? ""
+                    newFlow["reading"] = "\(photoPostUpdate.reading != nil ? "\(photoPostUpdate.reading!)" : "n/a")"
+                    newFlow["author"] = photoFileUpdate.author ?? photoPostUpdate.user?.uname ?? "You"
+                    newFlow["postDate"] = photoFileUpdate.photoDate ?? photoPostUpdate.postDate ?? ""
+                    newFlow["metric"] = photoPostUpdate.metric?.unit ?? ""
+                    // TODO: newFlow["observed"] = ????
+                    
+                    self.senderVC?.riverFlows.insert(newFlow, at: 0)
                 }
+
+                self.navigationController?.popViewController(animated: true)
             } else {
-                DuffekDialog.shared.showOkDialog(title: "Upload Issue", message: "We were unable to save your flow report to the server. Please check your connection and try again.")
+                self.showToast(message: "We were unable to save your flow report to the server. Please check your connection and try again.")
             }
             
         }) { (error, message) in
             AWProgressModal.shared.hide()
             print("Error: \(error?.localizedDescription ?? "no error object") -- \(message ?? "no message")")
-            DuffekDialog.shared.showOkDialog(title: "An Error Occured", message: "\(error?.localizedDescription ?? "")\n\(message ?? "")")
+            self.showToast(message: "An Error Occured: \(error?.localizedDescription ?? "")\n\(message ?? "")")
         }
     }
     

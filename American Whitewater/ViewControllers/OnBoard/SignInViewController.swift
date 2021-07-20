@@ -18,12 +18,11 @@ class SignInViewController: UIViewController {
         // Do any additional setup after loading the view.
         signInButton.layer.cornerRadius = 22.5
         createAccountButton.layer.cornerRadius = 22.5
+        
+        DefaultsManager.signInLastShown = Date()
     }
     
     @IBAction func cancelButtonPressed(_ sender: Any) {
-        
-        let count = DefaultsManager.signInAlertCount
-        DefaultsManager.signInAlertCount = count + 1
         
         // close the modal view
         self.dismiss(animated: true, completion: nil)

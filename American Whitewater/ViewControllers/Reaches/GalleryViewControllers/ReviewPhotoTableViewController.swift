@@ -95,37 +95,36 @@ class ReviewPhotoTableViewController: UITableViewController {
                 print("Photo uploaded - callback returned")
                 
                 if let imageResult = photoFileUpdate.image, let uri = imageResult.uri {
-                    DuffekDialog.shared.showOkDialog(title: "Photo Saved", message: "Your photo has been successfully saved.") {
-                        if let _ = self.senderVC {
-                            var newUri = [String:String?]()
-                            newUri["thumb"] = uri.thumb
-                            newUri["med"] = uri.medium
-                            newUri["big"] = uri.big
-                            newUri["caption"] = self.captionTextField.text ?? ""
-                            if let description = self.descriptionTextView.text {
-                                newUri["description"] = description
-                            }
-                            newUri["author"] = "You"
-                            newUri["photoDate"] = self.approxDateTimeLabel.text ?? ""
-                            if let observed = self.addObservationLabel.text {
-                                if observed != self.OBSERVED_PLACEHOLDER {
-                                    newUri["observed"] = observed
-                                }
-                            }
-                            
-                            self.senderVC?.imageLinks.insert(newUri, at: 0)
+                    self.showToast(message: "Your photo has been successfully saved.")
+                    if let _ = self.senderVC {
+                        var newUri = [String:String?]()
+                        newUri["thumb"] = uri.thumb
+                        newUri["med"] = uri.medium
+                        newUri["big"] = uri.big
+                        newUri["caption"] = self.captionTextField.text ?? ""
+                        if let description = self.descriptionTextView.text {
+                            newUri["description"] = description
                         }
-
-                        self.navigationController?.popViewController(animated: true)
+                        newUri["author"] = "You"
+                        newUri["photoDate"] = self.approxDateTimeLabel.text ?? ""
+                        if let observed = self.addObservationLabel.text {
+                            if observed != self.OBSERVED_PLACEHOLDER {
+                                newUri["observed"] = observed
+                            }
+                        }
+                        
+                        self.senderVC?.imageLinks.insert(newUri, at: 0)
                     }
+
+                    self.navigationController?.popViewController(animated: true)
                 } else {
-                    DuffekDialog.shared.showOkDialog(title: "Upload Issue", message: "We were unable to save your photo to the server. Please try again or try another photo.")
+                    self.showToast(message: "We were unable to save your photo to the server. Please try again or try another photo.")
                 }                
                 
             }) { (error, message) in
                 AWProgressModal.shared.hide()
                 print("Error: \(error?.localizedDescription ?? "no error object") -- \(message ?? "no message")")
-                DuffekDialog.shared.showOkDialog(title: "An Error Occured", message: "\(error?.localizedDescription ?? "")\n\(message ?? "")")
+                self.showToast(message: "An Error Occured: \(error?.localizedDescription ?? "")\n\(message ?? "")")
             }
         }
     }

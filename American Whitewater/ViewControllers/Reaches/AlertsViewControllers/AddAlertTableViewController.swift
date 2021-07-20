@@ -86,18 +86,16 @@ class AddAlertTableViewController: UITableViewController {
             AWProgressModal.shared.hideWith {
                 let errorMessage = GQLError.handleGQLError(error: error, altMessage: message)
                 print("Error:", errorMessage)
-                DuffekDialog.shared.showOkDialog(title: "Connection Issue", message: "We were unable to connect to the server due to: \(errorMessage)")
+                self.showToast(message: "Connection error: \(errorMessage)")
             }
         }
     }
 
     
     func successAndDismissView() {
-        DuffekDialog.shared.showOkDialog(title: "Alert Posted", message: "Your alert has been added. Thank you for providing valuable information to the river community.\n\nRiver Karma Granted!") {
-            //self.navigationController?.popViewController(animated: true)
-            DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
-            }
+        self.showToast(message: "Your alert has been added. Thank you for providing valuable information to the river community.\n\nRiver Karma Granted!")
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
