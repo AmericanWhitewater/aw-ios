@@ -585,7 +585,10 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
                 return cell
             } else {
                 // The empty state:
-                return tableView.dequeueReusableCell(withIdentifier: "NoRiversCell", for: indexPath)
+                
+                let emptyCell = tableView.dequeueReusableCell(withIdentifier: "NoRiversCell", for: indexPath) as! NoRiversTableViewCell
+                emptyCell.noRiversButton.addTarget(self, action: #selector(changeFiltersPressed), for: .touchUpInside)
+                return emptyCell
             }
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "RunCell", for: indexPath) as! RunsListTableViewCell
