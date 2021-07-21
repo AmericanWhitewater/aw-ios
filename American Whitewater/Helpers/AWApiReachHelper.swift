@@ -20,7 +20,7 @@ class AWApiReachHelper {
     
     typealias ReachCallback = ([AWReach]) -> Void
     typealias UpdateCallback = () -> Void
-    typealias ReachErrorCallback = (Error?) -> Void
+    typealias ReachErrorCallback = (Error) -> Void
     typealias UpdateReachesCallback = () -> Void
     typealias ReachDetailCallback = (AWReachDetail) -> Void
         
@@ -358,7 +358,7 @@ class AWApiReachHelper {
             }
             
         }) { (error) in
-            print("Error with getting all reaches: \(error?.localizedDescription ?? "Unknown error")")
+            print("Error with getting all reaches: \(error.localizedDescription)")
         }
         
         dispatchGroup.notify(queue: .main) {

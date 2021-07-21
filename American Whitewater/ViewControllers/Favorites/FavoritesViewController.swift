@@ -106,7 +106,7 @@ class FavoritesViewController: UIViewController {
             
         }) { (error) in
             self.refreshControl.endRefreshing()
-            print("Error fetching by IDs: \(error?.localizedDescription ?? "Unknown Reason")")
+            print("Error fetching by IDs: \(error.localizedDescription)")
         }
     }
     

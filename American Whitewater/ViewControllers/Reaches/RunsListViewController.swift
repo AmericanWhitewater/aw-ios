@@ -234,9 +234,7 @@ class RunsListViewController: UIViewController {
                 
             }) { (error) in
                 print("2")
-                if let error = error {
-                    failure(error)
-                }
+                failure(error)
             }
         }
     }
