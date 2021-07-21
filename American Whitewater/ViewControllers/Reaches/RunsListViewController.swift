@@ -13,21 +13,13 @@ class RunsListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var runnableFilterContainerView: UIView!
     @IBOutlet weak var runnableSwitch: UISwitch!
-    
-    var predicates: [NSPredicate] = []
-    
-    var lastUpdatedDate:Date?
-    let dateFormatter = DateFormatter()
-    
     let searchBar = UISearchBar()
     let refreshControl = UIRefreshControl()
     
-    var isLoadingData = false
+    var predicates: [NSPredicate] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        dateFormatter.dateFormat = "MMM d, h:mm a"
         
         // setup pull to refresh
         refreshControl.addTarget(self, action: #selector(refreshRiverData), for: .valueChanged)
@@ -43,13 +35,12 @@ class RunsListViewController: UIViewController {
         tableView.estimatedRowHeight = 120
         
         runnableSwitch.isOn = DefaultsManager.shared.runnableFilter
+        AWGQLApiHelper.shared.updateAccountInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        AWGQLApiHelper.shared.updateAccountInfo()
-        
         // first fetch the rivers we have stored locally
         fetchRiversFromCoreData();
         
@@ -82,13 +73,7 @@ class RunsListViewController: UIViewController {
     }
     
     func checkIfOnboardingNeeded() -> Bool {
-        let appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
-        print("AppVersion: \(appVersion) - Defaults: \(DefaultsManager.shared.appVersion ?? 0.0)")
-        
-        // This ads version checking and forces users to onboard if their version is less than the current version
-        // we might want to adjust this in the next release
-        if DefaultsManager.shared.appVersion == nil || DefaultsManager.shared.appVersion! < appVersion || !DefaultsManager.shared.onboardingCompleted {
-            
+        if !DefaultsManager.shared.onboardingCompleted {
             if let modalOnboadingVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardingVC") as? OnboardLocationViewController {
                 modalOnboadingVC.modalPresentationStyle = .overCurrentContext
                 modalOnboadingVC.referenceViewController = self
@@ -567,6 +552,8 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
             let label = UILabel()
             
             var lastUpdatedMessage = "Refreshing..."
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM d, h:mm a"
             if let lastUpdatedDate = DefaultsManager.shared.lastUpdated {
                 lastUpdatedMessage = "Last Updated: \(dateFormatter.string(from: lastUpdatedDate))"
             }
