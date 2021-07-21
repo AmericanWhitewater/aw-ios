@@ -129,9 +129,9 @@ class AWApiReachHelper {
     func fetchReachesByIds(reachIds: [String], callback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
         
         if reachIds.count == 0 {
-            print("No reache ids sent");
-            callbackError(nil)
-            return;
+            print("No reach ids sent")
+            callback([])
+            return
         }
         
         let urlString = baseURL + "River/list/list/\(reachIds.joined(separator: ":"))/.json"
