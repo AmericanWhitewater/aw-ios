@@ -3031,7 +3031,7 @@ and check your internet connection.</string>
                                 <action selector="showLegend:" destination="Q0W-x7-WVJ" id="rsR-P7-7km"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="F" style="plain" id="zvs-6E-Syr">
+                        <barButtonItem key="rightBarButtonItem" title="F" image="filter" style="plain" id="zvs-6E-Syr">
                             <connections>
                                 <action selector="selectFiltersPressed:" destination="Q0W-x7-WVJ" id="H1i-Ig-wSg"/>
                             </connections>
@@ -5986,6 +5986,7 @@ Don't worry, you'll be checking levels in no time!</string>
         <image name="donate" width="29" height="29"/>
         <image name="favOutline" width="30" height="20"/>
         <image name="feedback" width="30" height="29"/>
+        <image name="filter" width="23" height="18"/>
         <image name="frozenPin" width="19" height="28"/>
         <image name="heart" width="17" height="14"/>
         <image name="iconExpand" width="171" height="171"/>

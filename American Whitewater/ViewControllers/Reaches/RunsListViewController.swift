@@ -30,60 +30,32 @@ class RunsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // setup our search bar to show correctly
-        setupSearchBar()
-        
         dateFormatter.dateFormat = "MMM d, h:mm a"
-        
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 120
         
         // setup pull to refresh
         refreshControl.addTarget(self, action: #selector(refreshRiverData), for: .valueChanged)
         tableView.refreshControl = refreshControl
         
+        setupSearchBar()
         // add tap-away from search to dismiss keyboard
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false;
         self.view.addGestureRecognizer(tapGesture)
         
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 120
         mainLegendBackgroundView.layer.cornerRadius = 15
         mainLegendBackgroundView.clipsToBounds = true
         legendCloseButton.layer.cornerRadius = legendCloseButton.frame.height / 2
         legendCloseButton.clipsToBounds = true
         
         runnableSwitch.isOn = DefaultsManager.shared.runnableFilter
-        
-        // set this view to listen for application resuming from background
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive),
-                                                 name: UIApplication.didBecomeActiveNotification, object: nil)
     }
-    
-    fileprivate  func removeObservers() {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
-
-    @objc fileprivate func applicationDidBecomeActive() {
-        print("Application resumed")
-        viewWillAppear(true)
-    }
-    
-    @objc func dismissKeyboard() {
-        self.searchBar.textField?.resignFirstResponder()
-        self.searchBar.textField?.endEditing(true)
-    }
-        
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        // get and store the user's uname and id in local storage
-        AWGQLApiHelper.shared.getAccountInfo()
-        
-        // set the right nav button based on chosen filters
-        // needed due to a visual bug in XCode 11 when
-        // manually setting the image
-        updateFilterButton()
+        AWGQLApiHelper.shared.updateAccountInfo()
         
         // first fetch the rivers we have stored locally
         fetchRiversFromCoreData();
@@ -117,13 +89,41 @@ class RunsListViewController: UIViewController {
         fetchedResultsController?.delegate = nil
         fetchedResultsController = nil
     }
+    
+    @objc func dismissKeyboard() {
+        self.searchBar.textField?.resignFirstResponder()
+        self.searchBar.textField?.endEditing(true)
+    }
+    
+    func checkIfOnboardingNeeded() -> Bool {
+        let appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
+        print("AppVersion: \(appVersion) - Defaults: \(DefaultsManager.shared.appVersion ?? 0.0)")
         
-    func updateFilterButton() {
-        navigationItem.rightBarButtonItem?.title = ""
-        if DefaultsManager.shared.classFilter.count < 5 || DefaultsManager.shared.showDistanceFilter == true || DefaultsManager.shared.showRegionFilter == true {
-            navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: "filterOn"), for: .normal, barMetrics: .default)
-        } else {
-            navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: "filterOff"), for: .normal, barMetrics: .default)
+        // This ads version checking and forces users to onboard if their version is less than the current version
+        // we might want to adjust this in the next release
+        if DefaultsManager.shared.appVersion == nil || DefaultsManager.shared.appVersion! < appVersion || !DefaultsManager.shared.onboardingCompleted {
+            
+            if let modalOnboadingVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardingVC") as? OnboardLocationViewController {
+                modalOnboadingVC.modalPresentationStyle = .overCurrentContext
+                modalOnboadingVC.referenceViewController = self
+                tabBarController?.present(modalOnboadingVC, animated: true, completion: nil)
+                return true
+            }
+        }
+        
+        return false
+    }
+
+    func showLoginScreen() {
+        if let lastShown = DefaultsManager.shared.signInLastShown {
+            // Only show once per day
+            if lastShown < Date(timeIntervalSinceNow: -24 * 60 * 60) {
+                if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
+                    modalSignInVC.modalPresentationStyle = .overCurrentContext
+                    modalSignInVC.referenceViewController = self
+                    tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+                }
+            }
         }
     }
     
@@ -177,38 +177,6 @@ class RunsListViewController: UIViewController {
             AWApiReachHelper.shared.downloadAllReachesInBackground {
                 print("Completed downloading all data")
                 self.fetchRiversFromCoreData()
-            }
-        }
-    }
-    
-    func checkIfOnboardingNeeded() -> Bool {
-        let appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
-        print("AppVersion: \(appVersion) - Defaults: \(DefaultsManager.shared.appVersion ?? 0.0)")
-        
-        // This ads version checking and forces users to onboard if their version is less than the current version
-        // we might want to adjust this in the next release
-        if DefaultsManager.shared.appVersion == nil || DefaultsManager.shared.appVersion! < appVersion || !DefaultsManager.shared.onboardingCompleted {
-            
-            if let modalOnboadingVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardingVC") as? OnboardLocationViewController {
-                modalOnboadingVC.modalPresentationStyle = .overCurrentContext
-                modalOnboadingVC.referenceViewController = self
-                tabBarController?.present(modalOnboadingVC, animated: true, completion: nil)
-                return true
-            }
-        }
-        
-        return false
-    }
-
-    func showLoginScreen() {
-        if let lastShown = DefaultsManager.shared.signInLastShown {
-            // Only show once per day
-            if lastShown < Date(timeIntervalSinceNow: -24 * 60 * 60) {
-                if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
-                    modalSignInVC.modalPresentationStyle = .overCurrentContext
-                    modalSignInVC.referenceViewController = self
-                    tabBarController?.present(modalSignInVC, animated: true, completion: nil)
-                }
             }
         }
     }
@@ -655,52 +623,6 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
-
-
-
-//extension RunsListViewController: NSFetchedResultsControllerDelegate {
-//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        tableView.beginUpdates()
-//    }
-//
-//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//
-//        if fetchedResultsController == nil {
-//            print("FetchedResultsController is nil... ignoring update")
-//            return
-//        } else if tableView == nil {
-//            print("tableView is nil... ignoring update of table")
-//            return
-//        }
-//
-//
-//        tableView.endUpdates()
-//    }
-//
-//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-//                    didChange anObject: Any,
-//                    at indexPath: IndexPath?,
-//                    for type: NSFetchedResultsChangeType,
-//                    newIndexPath: IndexPath?) {
-//
-//        switch type {
-//            case .insert:
-//                guard let insertIndex = newIndexPath else { return }
-//                tableView.insertRows(at: [insertIndex], with: .automatic)
-//            case .delete:
-//                guard let deleteIndex = indexPath else { return }
-//                tableView.deleteRows(at: [deleteIndex], with: .automatic)
-//            case .move:
-//                guard let fromIndex = indexPath, let toIndex = newIndexPath else { return }
-//                tableView.moveRow(at: fromIndex, to: toIndex)
-//            case .update:
-//                guard let updateIndex = indexPath else { return }
-//                tableView.reloadRows(at: [updateIndex], with: .automatic)
-//            default:
-//                break
-//        }
-//    }
-//}
 
 extension RunsListViewController: UISearchBarDelegate {
 
