@@ -13,9 +13,6 @@ class RunsListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var runnableFilterContainerView: UIView!
     @IBOutlet weak var runnableSwitch: UISwitch!
-    @IBOutlet weak var legendContainerView: UIView!
-    @IBOutlet weak var mainLegendBackgroundView: UIView!
-    @IBOutlet weak var legendCloseButton: UIButton!
     
     var predicates: [NSPredicate] = []
     
@@ -44,10 +41,6 @@ class RunsListViewController: UIViewController {
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 120
-        mainLegendBackgroundView.layer.cornerRadius = 15
-        mainLegendBackgroundView.clipsToBounds = true
-        legendCloseButton.layer.cornerRadius = legendCloseButton.frame.height / 2
-        legendCloseButton.clipsToBounds = true
         
         runnableSwitch.isOn = DefaultsManager.shared.runnableFilter
     }
@@ -64,13 +57,6 @@ class RunsListViewController: UIViewController {
         if checkIfOnboardingNeeded() == false {
              self.refresh()
         }
-        
-        // show the ugly legend until we design a better one
-        if DefaultsManager.shared.legendFirstRun == false {
-            showLegend([])
-            DefaultsManager.shared.legendFirstRun = true
-        }
-
 
         // check if user is logged in
         let keychain = KeychainSwift();
@@ -320,15 +306,6 @@ class RunsListViewController: UIViewController {
         }
 
     }
-    
-    @IBAction func showLegend(_ sender: Any) {
-        legendContainerView.isHidden = false
-    }
-    
-    @IBAction func hideLegendView(_ sender: Any) {
-        legendContainerView.isHidden = true
-    }
-    
     
     @objc func refreshRiverData(refreshControl: UIRefreshControl) {
         print("Refresh called from refresh control")
