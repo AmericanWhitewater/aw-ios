@@ -201,7 +201,7 @@ class RunsListViewController: UIViewController {
         AWApiReachHelper.shared.updateRegionalReaches(regionCodes: codes, callback: success, callbackError: failure)
     }
     
-    func refreshByDistance(success: () -> Void, failure: (Error) -> Void) {
+    func refreshByDistance(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         // get all the reaches that are within a certain distance
         let request = Reach.fetchRequest() as NSFetchRequest<Reach>
         request.sortDescriptors = [
