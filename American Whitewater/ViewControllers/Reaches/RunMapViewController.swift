@@ -59,28 +59,25 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         mapView.removeAnnotations(mapView.annotations)
         
         if let selectedRun = selectedRun {
-            // add put in marker if we have data for it
             if let putinLat = Double( selectedRun.putInLat ?? "" ), let putinLon = Double( selectedRun.putInLon ?? "")  {
                 let putinCoordinate = CLLocationCoordinate2D(latitude: putinLat, longitude: putinLon)
                 let putinAnnotation = RunMapAnnotation(title: "Put-In", sectionSubtitle: "", coordinate: putinCoordinate, reach: selectedRun)
                 mapView.addAnnotation(putinAnnotation)
             }
             
-            // add take out marker if we have data for it
             if let takeoutLat = Double( selectedRun.takeOutLat ?? "" ), let takeoutLon = Double( selectedRun.takeOutLon ?? "") {
                 let takeoutCoordinate = CLLocationCoordinate2D(latitude: takeoutLat, longitude: takeoutLon)
                 let takeoutAnnotation = RunMapAnnotation(title: "Take-Out", sectionSubtitle: "", coordinate: takeoutCoordinate, reach: selectedRun)
                 mapView.addAnnotation(takeoutAnnotation)
             }
 
-            // Handle rapid annotations - got to get them pulled in the DB first
+            // Handle rapid annotations
             guard let rapids = selectedRun.rapids else { print("no rapids to process"); return }
             
             for rapid in rapids {
-                
                 if let rapid = rapid as? Rapid, rapid.lat != 0, rapid.lon != 0 {
-                    
                     var subtitle = (rapid.difficulty?.count ?? 0) > 0 ? "Class \(rapid.difficulty ?? "n/a"): " : ""
+                    
                     if rapid.isHazard {
                         subtitle = "\(subtitle) - Hazard, Use Caution!"
                     } else {
@@ -99,7 +96,10 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
             }
             
             // set the bounding region to the put in and take out
-            mapView.showAnnotations(mapView.annotations, animated: false)
+            let annotations = mapView.annotations.filter({ annotation in
+                !(annotation is MKUserLocation)
+            })
+            mapView.showAnnotations(annotations, animated: false)
         }
         
     }
@@ -171,24 +171,18 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         let userLat = userLocation.coordinate.latitude
         let userLon = userLocation.coordinate.longitude
         
-        //print("Location difference is: Map: \(userLat) - DefLat: \(DefaultsManager.latitude) = \(abs(userLat - DefaultsManager.latitude)) x \(userLon) - \(DefaultsManager.longitude) = \(abs(userLon - DefaultsManager.longitude))")
-        
         // check if we need to update locations
         if abs(userLat - DefaultsManager.latitude) > 0.01 ||
             abs(userLon - DefaultsManager.longitude) > 0.01 {
             print("Updating distances of reaches")
-            
-            DefaultsManager.latitude = userLat
-            DefaultsManager.longitude = userLon
         }
-
-        self.mapView.setVisibleMapRectToFitAllAnnotations(animated: true, shouldIncludeUserAccuracyRange: true, shouldIncludeOverlays: true)
+        
+        DefaultsManager.latitude = userLat
+        DefaultsManager.longitude = userLon
     }
     
     func showUserLocation() {
         mapView.showsUserLocation = true
-        
-        self.mapView.setVisibleMapRectToFitAllAnnotations(animated: true, shouldIncludeUserAccuracyRange: true, shouldIncludeOverlays: true)
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
