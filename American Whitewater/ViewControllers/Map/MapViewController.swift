@@ -1,4 +1,3 @@
-
 import UIKit
 import MapKit
 import CoreData
@@ -14,13 +13,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
     
-     var predicates: [NSPredicate] = []
-    
+    var predicates: [NSPredicate] = []
     let locationManager = CLLocationManager()
-    
     var lastLocation: CLLocation? = nil
-    
-    public static var userChangedMap = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +55,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let userLat = userLocation.coordinate.latitude
         let userLon = userLocation.coordinate.longitude
         
+        // Do nothing if new location is close to old location
         if lastLocation != nil {
             if let lastLocation = lastLocation, let newLocation = userLocation.location {
                 print("Last Location Distance to new location: \(lastLocation.distance(from: newLocation))")
@@ -69,39 +65,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
            }
         }
         
-        print("Location difference is: Map: \(userLat) - DefLat: \(DefaultsManager.latitude) = \(abs(userLat - DefaultsManager.latitude)) x \(userLon) - \(DefaultsManager.longitude) = \(abs(userLon - DefaultsManager.longitude))")
-        
-        // check if we need to update locations
+        // check if we need to update distances
         if abs(userLat - DefaultsManager.latitude) > 0.01 ||
             abs(userLon - DefaultsManager.longitude) > 0.01 {
             print("Updating distances of reaches")
-            
-            DefaultsManager.latitude = userLat
-            DefaultsManager.longitude = userLon
             
             AWApiReachHelper.shared.updateAllReachDistances(callback: {
                 self.fetchReachesFromCoreData();
             })
         }
         
-        if (DefaultsManager.showDistanceFilter == true) {
-            // this set the map to show the region around the users location
-            let regionRadius: CLLocationDistance = 100000 // this is used to build a bounding box around the users location
-            let coordinateRegion = MKCoordinateRegion(center: self.mapView.userLocation.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
-            self.mapView.setRegion(coordinateRegion, animated: true)
-            
-        } else {
-            // This just shows the region without the users location automatically selected
-            print("mapView annotations: \(mapView.annotations.count)")
-            // some reaches may have invalid coordinates (i.e. -180) we need to skip those
-            let cleanedAnnotations = mapView.annotations.filter { $0.coordinate.latitude > 0 && $0.coordinate.longitude > -170 }
-            if MapViewController.userChangedMap == false {
-                mapView.fitAll(in: cleanedAnnotations, andShow: true)
-            } else {
-                mapView.addAnnotations(cleanedAnnotations)
-            }
-        }
-        
+        DefaultsManager.latitude = userLat
+        DefaultsManager.longitude = userLon
         self.lastLocation = userLocation.location!
     }
     
@@ -146,18 +121,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         // add the reaches from core data to the map
         if let reaches = fetchedResultsController?.fetchedObjects {
             mapView.removeAnnotations(mapView.annotations)
-
             mapView.addAnnotations(reaches)
             
-            // update the zoom if we're not using location
-            if DefaultsManager.showDistanceFilter == false {
-                let cleanedAnnotations = mapView.annotations.filter { $0.coordinate.latitude > 0 && $0.coordinate.longitude > -170 }
-                if MapViewController.userChangedMap == false {
-                    mapView.fitAll(in: cleanedAnnotations, andShow: true)
-                } else {
-                    mapView.addAnnotations(cleanedAnnotations)
-                }
-            }
+            // Zoom to updated coordinates
+            let cleanedAnnotations = mapView.annotations.filter { $0.coordinate.latitude > 0 && $0.coordinate.longitude > -170 }
+            mapView.fitAll(in: cleanedAnnotations, andShow: true)
         }
     }
 
@@ -171,18 +139,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         
         return false
-    }
-    
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        if mapViewChangedFromUserInteraction() {
-            MapViewController.userChangedMap = true
-        }
-    }
-    
-    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-        if mapViewChangedFromUserInteraction() {
-            MapViewController.userChangedMap = true
-        }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -220,7 +176,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func showUserLocation() {
         mapView.showsUserLocation = true
-        MapViewController.userChangedMap = false
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
