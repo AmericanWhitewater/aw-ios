@@ -40,7 +40,7 @@ class RunsListViewController: UIViewController {
             print("downloading all reaches")
             AWApiReachHelper.shared.downloadAllReachesInBackground {
                 print("Completed downloading all data")
-                self.fetchRiversFromCoreData()
+                self.updateFetchedResultsController()
                 DefaultsManager.shared.completedFirstRun = true
             }
         }
@@ -106,7 +106,7 @@ class RunsListViewController: UIViewController {
     // - TableView.reloadData() will be called automatically
     // - LastUpdate will be updated automatically
     func updateData(fromNetwork: Bool = false) {
-        fetchRiversFromCoreData()
+        updateFetchedResultsController()
         
         // Update from network if requested or if data is more than 1 hour old
         let lastUpdate = DefaultsManager.shared.lastUpdated
@@ -136,12 +136,12 @@ class RunsListViewController: UIViewController {
                     refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
                 }
             } else {
-                refreshByDistance(success: onUpdateSuccessful, failure: onUpdateFailed)
+                refreshFetchedReaches(success: onUpdateSuccessful, failure: onUpdateFailed)
             }
         }
     }
     
-    func fetchRiversFromCoreData(success: (() -> Void)? = nil, failure: ((Error) -> Void)? = nil) {
+    func updateFetchedResultsController(success: (() -> Void)? = nil, failure: ((Error) -> Void)? = nil) {
         print("Fetching rivers from core data")
         
         if let fetchedResultsController = fetchedResultsController {
@@ -183,7 +183,7 @@ class RunsListViewController: UIViewController {
         )
     }
     
-    func refreshByDistance(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    func refreshFetchedReaches(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         // update those reaches
         if let results = fetchedResultsController?.fetchedObjects {
             let reachIds = results.map{ "\($0.id)" }
