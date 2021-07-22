@@ -106,7 +106,8 @@ class RunsListViewController: UIViewController {
     // - TableView.reloadData() will be called automatically
     // - LastUpdate will be updated automatically
     func updateData(fromNetwork: Bool = false) {
-        
+        fetchRiversFromCoreData()
+
         refreshControl.beginRefreshing()
         
         // Update from network if requested or if data is more than 1 hour old
@@ -114,7 +115,6 @@ class RunsListViewController: UIViewController {
         let isDataStale = lastUpdate != nil ? lastUpdate! < Date(timeIntervalSinceNow: -60 * 60) : false
         if fromNetwork || isDataStale {
             func onUpdateSuccessful() {
-                fetchRiversFromCoreData()
                 self.refreshControl.endRefreshing()
                 DefaultsManager.shared.lastUpdated = Date()
                 self.tableView.reloadData()
@@ -158,13 +158,26 @@ class RunsListViewController: UIViewController {
     func fetchRiversFromCoreData(success: (() -> Void)? = nil, failure: ((Error) -> Void)? = nil) {
         print("Fetching rivers from core data")
         
-        let request = Reach.fetchRequest()
-        request.sortDescriptors = sortDescriptors
-        request.predicate = combinedFilterPredicate
+        if let fetchedResultsController = fetchedResultsController {
+            // Update sort descriptors and predicate if the controller already exists
+            fetchedResultsController.fetchRequest.sortDescriptors = sortDescriptors
+            fetchedResultsController.fetchRequest.predicate = combinedFilterPredicate
+        } else {
+            // Create the fetched results controller if it doesn't exist
+            let request = Reach.fetchRequest()
+            request.sortDescriptors = sortDescriptors
+            request.predicate = combinedFilterPredicate
+            fetchedResultsController = NSFetchedResultsController(
+                fetchRequest: request,
+                managedObjectContext: managedObjectContext,
+                sectionNameKeyPath: nil,
+                cacheName: nil
+            )
+        }
         
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
-                                                              managedObjectContext: managedObjectContext,
-                                                              sectionNameKeyPath: nil, cacheName: nil)
+        // This is nilled out elsewhere, so make sure it's set before fetching
+        fetchedResultsController?.delegate = self
+        
         do {
             try fetchedResultsController?.performFetch()
             success?()
@@ -279,7 +292,7 @@ class RunsListViewController: UIViewController {
         }
     }
     
-    
+
     private func searchPredicate() -> NSPredicate? {
         guard let searchText = searchBar.textField?.text, searchText.count > 0 else { return nil }
         
@@ -387,6 +400,13 @@ class RunsListViewController: UIViewController {
                 detailVC.selectedRun = reach
             }
         }        
+    }
+}
+
+/// A minimal implementation that reloads the whole tableView every time the fetched results change
+extension RunsListViewController: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.reloadData()
     }
 }
 
