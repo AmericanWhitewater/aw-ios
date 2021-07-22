@@ -158,27 +158,9 @@ class RunsListViewController: UIViewController {
     func fetchRiversFromCoreData(success: (() -> Void)? = nil, failure: ((Error) -> Void)? = nil) {
         print("Fetching rivers from core data")
         
-        let request = Reach.fetchRequest() as NSFetchRequest<Reach>
-
-        // setup sort filters
-        if DefaultsManager.shared.showDistanceFilter && DefaultsManager.shared.distanceFilter > 0 {
-            print("Using distance filter")
-            
-            request.sortDescriptors = [
-                NSSortDescriptor(key: "distance", ascending: true),
-                NSSortDescriptor(key: "name", ascending: true)
-            ]
-        } else {
-            request.sortDescriptors = [
-                NSSortDescriptor(key: "name", ascending: true),
-                NSSortDescriptor(key: "sortName", ascending: true)
-            ]
-        }
-
-        // based on our filtering settings (distance, region, or class) we request Reaches that
-        // match these settings
-        let combinedPredicates: [NSPredicate] = filterPredicates().compactMap { $0 }
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: combinedPredicates)
+        let request = Reach.fetchRequest()
+        request.sortDescriptors = sortDescriptors
+        request.predicate = combinedFilterPredicate
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
                                                               managedObjectContext: managedObjectContext,
@@ -211,8 +193,7 @@ class RunsListViewController: UIViewController {
 
         // based on our filtering settings (distance, region, or class) we request Reaches that
         // match these settings
-        let combinedPredicates: [NSPredicate] = filterPredicates().compactMap { $0 }
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: combinedPredicates)
+        request.predicate = combinedFilterPredicate
 
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
                                                              managedObjectContext: managedObjectContext,
@@ -299,7 +280,7 @@ class RunsListViewController: UIViewController {
     }
     
     
-    func searchPredicate() -> NSPredicate? {
+    private func searchPredicate() -> NSPredicate? {
         guard let searchText = searchBar.textField?.text, searchText.count > 0 else { return nil }
         
         let searchName = NSPredicate(format: "name contains[cd] %@", searchText)
@@ -308,7 +289,7 @@ class RunsListViewController: UIViewController {
         return NSCompoundPredicate(orPredicateWithSubpredicates: [searchName, searchSection])
     }
     
-    func runnablePredicate() -> NSPredicate? {
+    private func runnablePredicate() -> NSPredicate? {
         if DefaultsManager.shared.runnableFilter {
             return NSPredicate(format: "condition == %@ || condition == %@", "med", "high")
         }
@@ -316,7 +297,7 @@ class RunsListViewController: UIViewController {
         return nil
     }
     
-    func difficultiesPredicate() -> NSCompoundPredicate? {
+    private func difficultiesPredicate() -> NSCompoundPredicate? {
     
         var classPredicates: [NSPredicate] = []
 
@@ -331,7 +312,7 @@ class RunsListViewController: UIViewController {
         return NSCompoundPredicate(orPredicateWithSubpredicates: classPredicates)
     }
     
-    func regionsPredicate() -> NSPredicate? {
+    private func regionsPredicate() -> NSPredicate? {
         // if we are filtering by distance then ignore regions
         if DefaultsManager.shared.showDistanceFilter {
             return nil
@@ -351,7 +332,7 @@ class RunsListViewController: UIViewController {
         return NSPredicate(format: "state IN[cd] %@", states)
     }
 
-    func distancePredicate() -> NSPredicate? {
+    private func distancePredicate() -> NSPredicate? {
         // check if user is using the distance filter or if
         // they have turned it off
         if !DefaultsManager.shared.showDistanceFilter { return nil }
@@ -364,16 +345,36 @@ class RunsListViewController: UIViewController {
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
     
-    func filterPredicates() -> [NSPredicate?] {
-        var predis = [searchPredicate(), difficultiesPredicate(), runnablePredicate()]
-        
-        if DefaultsManager.shared.showDistanceFilter {
-            predis = predis + [distancePredicate()]
+    // based on our filtering settings (distance, region, or class) we request Reaches that
+    // match these settings
+    private var filterPredicates: [NSPredicate] {
+        [
+            searchPredicate(),
+            difficultiesPredicate(),
+            runnablePredicate(),
+            DefaultsManager.shared.showDistanceFilter ? distancePredicate() : regionsPredicate()
+        ]
+            .compactMap { $0 }
+    }
+    
+    private var combinedFilterPredicate: NSPredicate {
+        NSCompoundPredicate(andPredicateWithSubpredicates: filterPredicates)
+    }
+    
+    private var sortDescriptors: [NSSortDescriptor] {
+        if DefaultsManager.shared.showDistanceFilter && DefaultsManager.shared.distanceFilter > 0 {
+            print("Using distance filter")
+            
+            return [
+                NSSortDescriptor(key: "distance", ascending: true),
+                NSSortDescriptor(key: "name", ascending: true)
+            ]
         } else {
-            predis = predis + [regionsPredicate()]
+            return [
+                NSSortDescriptor(key: "name", ascending: true),
+                NSSortDescriptor(key: "sortName", ascending: true)
+            ]
         }
-        
-        return predis
     }
     
     
