@@ -71,8 +71,8 @@ class RunsListViewController: UIViewController {
         }        
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         
         fetchedResultsController?.delegate = nil
         fetchedResultsController = nil
@@ -232,12 +232,9 @@ class RunsListViewController: UIViewController {
     }
     
     // MARK: - Get Filter Information
-    @objc func changeFiltersPressed() {
-        performSegue(withIdentifier: Segue.showFilters.rawValue, sender: nil)
-    }
-    
+
     @IBAction func selectFiltersPressed(_ sender: Any) {
-        changeFiltersPressed()
+        performSegue(withIdentifier: Segue.showFilters.rawValue, sender: nil)
     }
     
     @objc func favoriteButtonPressed(_ sender: UIButton?) {
