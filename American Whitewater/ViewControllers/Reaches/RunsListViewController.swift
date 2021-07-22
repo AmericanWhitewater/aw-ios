@@ -184,18 +184,17 @@ class RunsListViewController: UIViewController {
     }
     
     func refreshFetchedReaches(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        // update those reaches
-        if let results = fetchedResultsController?.fetchedObjects {
-            let reachIds = results.map{ "\($0.id)" }
-            AWApiReachHelper.shared.updateReaches(reachIds: reachIds, callback: {
-                print("1")
-                success()
-                
-            }) { (error) in
-                print("2")
-                failure(error)
-            }
+        guard let results = fetchedResultsController?.fetchedObjects else {
+            // FIXME: is this a success or failure?
+            success()
+            return
         }
+        
+        AWApiReachHelper.shared.updateReaches(
+            reachIds: results.map{ "\($0.id)" },
+            callback: success,
+            callbackError: failure
+        )
     }
     
     @objc func didPullRefreshControl(refreshControl: UIRefreshControl) {
