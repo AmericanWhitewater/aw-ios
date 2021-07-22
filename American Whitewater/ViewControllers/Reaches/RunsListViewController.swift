@@ -20,7 +20,7 @@ class RunsListViewController: UIViewController {
         super.viewDidLoad()
         
         // setup pull to refresh
-        refreshControl.addTarget(self, action: #selector(refreshRiverData), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(didPullRefreshControl), for: .valueChanged)
         tableView.refreshControl = refreshControl
         
         setupSearchBar()
@@ -233,7 +233,7 @@ class RunsListViewController: UIViewController {
         }
     }
     
-    @objc func refreshRiverData(refreshControl: UIRefreshControl) {
+    @objc func didPullRefreshControl(refreshControl: UIRefreshControl) {
         print("Refresh called from refresh control")
         self.updateData(fromNetwork: true)
     }
