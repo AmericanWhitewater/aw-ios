@@ -107,13 +107,13 @@ class RunsListViewController: UIViewController {
     // - LastUpdate will be updated automatically
     func updateData(fromNetwork: Bool = false) {
         fetchRiversFromCoreData()
-
-        refreshControl.beginRefreshing()
         
         // Update from network if requested or if data is more than 1 hour old
         let lastUpdate = DefaultsManager.shared.lastUpdated
         let isDataStale = lastUpdate != nil ? lastUpdate! < Date(timeIntervalSinceNow: -60 * 60) : false
         if fromNetwork || isDataStale {
+            refreshControl.beginRefreshing()
+
             func onUpdateSuccessful() {
                 self.refreshControl.endRefreshing()
                 DefaultsManager.shared.lastUpdated = Date()
@@ -138,22 +138,8 @@ class RunsListViewController: UIViewController {
             } else {
                 refreshByDistance(success: onUpdateSuccessful, failure: onUpdateFailed)
             }
-            
-        // Update from local cache
-        } else {
-            func onUpdateSuccessful() {
-                self.refreshControl.endRefreshing()
-                self.tableView.reloadData()
-            }
-            
-            func onUpdateFailed(error: Error) {
-                self.refreshControl.endRefreshing()
-                self.showToast(message: "Error fetching data: " + error.localizedDescription)
-            }
-            fetchRiversFromCoreData(success: onUpdateSuccessful, failure: onUpdateFailed)
         }
     }
-    
     
     func fetchRiversFromCoreData(success: (() -> Void)? = nil, failure: ((Error) -> Void)? = nil) {
         print("Fetching rivers from core data")
@@ -189,36 +175,15 @@ class RunsListViewController: UIViewController {
     
     func refreshByRegion(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         print("Updating reaches by region")
-        let codes: [String] = DefaultsManager.shared.regionsFilter.count > 0 ?
-        DefaultsManager.shared.regionsFilter : Region.all.map { $0.code }
         
-
-        AWApiReachHelper.shared.updateRegionalReaches(regionCodes: codes, callback: success, callbackError: failure)
+        AWApiReachHelper.shared.updateRegionalReaches(
+            regionCodes: DefaultsManager.shared.regionsFilter.count > 0 ? DefaultsManager.shared.regionsFilter : Region.all.map { $0.code },
+            callback: success,
+            callbackError: failure
+        )
     }
     
     func refreshByDistance(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        // get all the reaches that are within a certain distance
-        let request = Reach.fetchRequest() as NSFetchRequest<Reach>
-        request.sortDescriptors = [
-           NSSortDescriptor(key: "distance", ascending: true),
-           NSSortDescriptor(key: "name", ascending: true)
-        ]
-
-        // based on our filtering settings (distance, region, or class) we request Reaches that
-        // match these settings
-        request.predicate = combinedFilterPredicate
-
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
-                                                             managedObjectContext: managedObjectContext,
-                                                             sectionNameKeyPath: nil, cacheName: nil)
-       
-        do {
-            try fetchedResultsController?.performFetch()
-        } catch {
-            let error = error as NSError
-            failure(error)
-        }
-        
         // update those reaches
         if let results = fetchedResultsController?.fetchedObjects {
             let reachIds = results.map{ "\($0.id)" }
@@ -431,9 +396,7 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         // handle the case when a filter shows 0 items
-        print("fetchedObjects.count == \(fetchedResultsController?.fetchedObjects?.count ?? 0)")
         if indexPath.section == 1 && (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingRiversCell", for: indexPath) as! LoadingRiversCell
             cell.activityIndicator.startAnimating()
