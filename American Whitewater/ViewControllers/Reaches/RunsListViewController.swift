@@ -40,7 +40,13 @@ class RunsListViewController: UIViewController {
             print("downloading all reaches")
             AWApiReachHelper.shared.downloadAllReachesInBackground {
                 print("Completed downloading all data")
-                self.updateFetchedResultsController()
+
+                do {
+                    try self.updateFetchedResultsController()
+                } catch {
+                    print("Error in updateFetchedResultsController: \(error)")
+                }
+                
                 DefaultsManager.shared.completedFirstRun = true
             }
         }
@@ -106,7 +112,11 @@ class RunsListViewController: UIViewController {
     // - TableView.reloadData() will be called automatically
     // - LastUpdate will be updated automatically
     func updateData(fromNetwork: Bool = false) {
-        updateFetchedResultsController()
+        do {
+            try updateFetchedResultsController()
+        } catch {
+            print("Error in updateFetchedResultsController: \(error)")
+        }
         
         // Update from network if requested or if data is more than 1 hour old
         let lastUpdate = DefaultsManager.shared.lastUpdated
@@ -141,7 +151,7 @@ class RunsListViewController: UIViewController {
         }
     }
     
-    func updateFetchedResultsController(success: (() -> Void)? = nil, failure: ((Error) -> Void)? = nil) {
+    func updateFetchedResultsController() throws {
         print("Fetching rivers from core data")
         
         if let fetchedResultsController = fetchedResultsController {
@@ -159,18 +169,14 @@ class RunsListViewController: UIViewController {
                 sectionNameKeyPath: nil,
                 cacheName: nil
             )
+            fetchedResultsController?.delegate = self
         }
         
-        // This is nilled out elsewhere, so make sure it's set before fetching
-        fetchedResultsController?.delegate = self
+        try fetchedResultsController?.performFetch()
         
-        do {
-            try fetchedResultsController?.performFetch()
-            success?()
-        } catch {
-            let error = error as NSError
-            failure?(error)
-        }
+        // Still have to update the tableView after the initial fetch
+        // (the delegate will handle further updates)
+        tableView.reloadData()
     }
     
     func refreshByRegion(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
