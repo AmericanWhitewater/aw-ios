@@ -13,7 +13,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
     
-    var predicates: [NSPredicate] = []
     let locationManager = CLLocationManager()
     var lastLocation: CLLocation? = nil
     
@@ -101,7 +100,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         // based on our filtering settings (distance, region, or class) we request Reaches that
         // match these settings
-        let combinedPredicates: [NSPredicate] = filterPredicates().compactMap { $0 } + predicates
+        let combinedPredicates: [NSPredicate] = filterPredicates().compactMap { $0 }
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: combinedPredicates)
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
@@ -125,7 +124,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             
             // Zoom to updated coordinates
             let cleanedAnnotations = mapView.annotations.filter { $0.coordinate.latitude > 0 && $0.coordinate.longitude > -170 }
-            mapView.fitAll(in: cleanedAnnotations, andShow: true)
+            if cleanedAnnotations.count > 0 {
+                mapView.fitAll(in: cleanedAnnotations, andShow: true)
+            }
         }
     }
 
