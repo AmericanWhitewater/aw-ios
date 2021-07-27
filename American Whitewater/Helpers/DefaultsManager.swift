@@ -1,6 +1,7 @@
 import Foundation
 import SwiftyJSON
 import KeychainSwift
+import CoreLocation
 
 class DefaultsManager {
     public static let shared = DefaultsManager()
@@ -15,7 +16,6 @@ class DefaultsManager {
         get { defaults.double(forKey: Keys.appVersion) }
         set { defaults.set(newValue, forKey: Keys.appVersion) }
     }
-
     
     var userAccountId: String? {
         get { defaults.string(forKey: Keys.userAccountId) }
@@ -88,15 +88,39 @@ class DefaultsManager {
         get { defaults.bool(forKey: Keys.showRegionFilter) }
         set { defaults.set(newValue, forKey: Keys.showRegionFilter) }
     }
+    
+    //
+    // MARK: - Location
+    //
+    
+    /// Get the last saved location as a CLLocation for convenience (since that's generally what's wanted)
+    /// this is get only to make it clear that we're not saving any of the other stuff on CLLocation (altitude, heading, etc)
+    /// set coordinate instead
+    public var location: CLLocation {
+        .init(latitude: latitude, longitude: longitude)
+    }
+    
+    public var coordinate: CLLocationCoordinate2D {
+        get { .init(latitude: latitude, longitude: longitude) }
+        set {
+            latitude = newValue.latitude
+            longitude = newValue.longitude
+        }
+    }
 
-    var latitude: Double {
+    private var latitude: Double {
         get { defaults.double(forKey: Keys.latitude) }
         set { defaults.set(newValue, forKey: Keys.latitude) }
     }
-    var longitude: Double {
+    
+    private var longitude: Double {
         get { defaults.double(forKey: Keys.longitude) }
         set { defaults.set(newValue, forKey: Keys.longitude) }
     }
+    
+    //
+    // MARK: -
+    //
     
     var classFilter: [Int] {
         get {

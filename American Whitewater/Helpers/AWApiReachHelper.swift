@@ -232,9 +232,7 @@ class AWApiReachHelper {
             }
             
             // calculate the distance from the user
-            if let distance = newReach.distanceFrom(location:
-                CLLocation(latitude: DefaultsManager.shared.latitude, longitude: DefaultsManager.shared.longitude)) {
-                
+            if let distance = newReach.distanceFrom(location: DefaultsManager.shared.location) {
                 reach.distance = distance / 1609
             } else {
                 reach.distance = 999999
@@ -567,9 +565,11 @@ class AWApiReachHelper {
     
     
     func updateAllReachDistances(callback: @escaping UpdateCallback) {
+        let coord = DefaultsManager.shared.coordinate
         
-        if DefaultsManager.shared.latitude == 0.0 || DefaultsManager.shared.longitude == 0.0 {
-            print("Unable to update distance - user location is \(DefaultsManager.shared.latitude)x\(DefaultsManager.shared.longitude)")
+        // FIXME: probably CLLocationCoordinate2DIsValid() is what's wanted here?
+        if coord.latitude == 0.0 || coord.longitude == 0.0 {
+            print("Unable to update distance - user location is \(coord.latitude)x\(coord.longitude)")
             return
         }
         
@@ -579,16 +579,15 @@ class AWApiReachHelper {
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         
         if let results = try? context.fetch(request), results.count > 0 {
-           
             for reach in results {
                 guard let lat = reach.putInLat, let latitude = Double(lat),
                     let lon = reach.putInLon, let longitude = Double(lon) else { print("Update: Invalid reach: \(reach.name ?? "?")  location \(reach.putInLat ?? "?")x\(reach.putInLat ?? "?")"); continue; }
             
-                let reachCoordinate = CLLocation(latitude: latitude, longitude: longitude)
+                let reachLocation = CLLocation(latitude: latitude, longitude: longitude)
 
-                guard CLLocationCoordinate2DIsValid(reachCoordinate.coordinate) else { continue }
+                guard CLLocationCoordinate2DIsValid(reachLocation.coordinate) else { continue }
 
-                let distance = reachCoordinate.distance(from: CLLocation(latitude: DefaultsManager.shared.latitude, longitude: DefaultsManager.shared.longitude))
+                let distance = reachLocation.distance(from: DefaultsManager.shared.location)
                 print("Distance: \(distance / 1609)")
                 reach.distance = distance / 1609
             }

@@ -13,6 +13,7 @@
 		4A36D1E726A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */; };
 		4AC4BB5A26A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */; };
 		4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */; };
+		4ADE944D26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */; };
 		630586642350428800A436BE /* RunRapidDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */; };
 		63081BF8236B2EDE00FC3823 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63081BF7236B2EDE00FC3823 /* GoogleService-Info.plist */; };
 		63081BFA236B2F8500FC3823 /* OpenTerminal.sh in Resources */ = {isa = PBXBuildFile; fileRef = 63081BF9236B2F8500FC3823 /* OpenTerminal.sh */; };
@@ -157,6 +158,7 @@
 		4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+FullResolutionEditedImage.swift"; sourceTree = "<group>"; };
 		4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+difference.swift"; sourceTree = "<group>"; };
 		630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunRapidDetailsTableViewController.swift; sourceTree = "<group>"; };
 		63081BF6236B2E7500FC3823 /* AW.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AW.entitlements; sourceTree = "<group>"; };
 		63081BF7236B2EDE00FC3823 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 				6316449F246ED6B100807E19 /* UIImage+AsyncURLLoad.swift */,
 				63432D452540DA340037AA37 /* UISegmentedControl+Colors.swift */,
 				2FE342CD26A1FF8100352D1E /* UIViewController+Toast.swift */,
+				4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -922,6 +925,7 @@
 				63203C0E23694BFF006A4148 /* Reach.swift in Sources */,
 				63FF68B925ACEE0700AF0F37 /* GageForRunCell.swift in Sources */,
 				63387B6322CDBFFC0089BAA8 /* AppDelegate.swift in Sources */,
+				4ADE944D26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift in Sources */,
 				634154C5252BDE1A009DD31D /* AWGQLArticleApiHelper.swift in Sources */,
 				63309E3D233E739C00E6DBC4 /* MapViewController.swift in Sources */,
 				63E32B1D2357F3260057DE34 /* FilterClassCollectionViewCell.swift in Sources */,

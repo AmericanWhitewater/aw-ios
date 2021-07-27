@@ -199,13 +199,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.currentLocationActivityIndicator.startAnimating()
             
             // check if we have an existing current location
-            let latitude = DefaultsManager.shared.latitude
-            let longitude = DefaultsManager.shared.longitude
-
-            if latitude > 0.0 && longitude < 0.0 {
-                
+            let location = DefaultsManager.shared.location
+            
+            // FIXME: probably CLLocationCoordinate2DIsValid() is what's wanted here?
+            if location.coordinate.latitude > 0.0 && location.coordinate.longitude < 0.0 {
                 // reverse geocode the location
-                let location = CLLocation(latitude: latitude, longitude: longitude)
                 geoCoder.reverseGeocodeLocation(location) { (placemarks, error) in
                     if error == nil {
                         let placemark = placemarks?.last
@@ -403,8 +401,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             locationManager.stopUpdatingLocation()
 
             // store the location for future use
-            DefaultsManager.shared.latitude = location.coordinate.latitude
-            DefaultsManager.shared.longitude = location.coordinate.longitude
+            DefaultsManager.shared.coordinate = location.coordinate
 
             // now load the UI info for the distance filter info
             contentCollectionView.reloadData()

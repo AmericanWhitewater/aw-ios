@@ -51,22 +51,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
 
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        let userLat = userLocation.coordinate.latitude
-        let userLon = userLocation.coordinate.longitude
+        guard let newLocation = userLocation.location else {
+            return
+        }
         
         // Do nothing if new location is close to old location
-        if lastLocation != nil {
-            if let lastLocation = lastLocation, let newLocation = userLocation.location {
-                print("Last Location Distance to new location: \(lastLocation.distance(from: newLocation))")
-                if (lastLocation.distance(from: newLocation) < 100) {
-                   return
-               }
-           }
+        if let lastLocation = lastLocation, lastLocation.distance(from: newLocation) < 100 {
+            print("Last Location Distance to new location: \(lastLocation.distance(from: newLocation))")
+            return
         }
         
         // check if we need to update distances
-        if abs(userLat - DefaultsManager.shared.latitude) > 0.01 ||
-            abs(userLon - DefaultsManager.shared.longitude) > 0.01 {
+        if newLocation.coordinate.hasChanged(from: DefaultsManager.shared.coordinate, byMoreThan: 0.01) {
             print("Updating distances of reaches")
             
             AWApiReachHelper.shared.updateAllReachDistances(callback: {
@@ -74,9 +70,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             })
         }
         
-        DefaultsManager.shared.latitude = userLat
-        DefaultsManager.shared.longitude = userLon
-        self.lastLocation = userLocation.location!
+        DefaultsManager.shared.coordinate = newLocation.coordinate
+        self.lastLocation = newLocation
     }
     
     func updateFilterButton() {

@@ -80,7 +80,7 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
                 guard error == nil,
                     let placemarks = placemarks,
                     let place = placemarks.first,
-                    let coordinates = place.location?.coordinate else {
+                    let coordinate = place.location?.coordinate else {
                         
                         // some sort of error so show message and reset view
                         DuffekDialog.shared.showOkDialog(title: "Unable to Find Location", message: "We are unable to find that location. Please check your connection or enter a new zip code to try again.")
@@ -90,11 +90,10 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
                         return
                 }
                 
-                print("Location found: \(coordinates.latitude), \(coordinates.longitude)")
+                print("Location found: \(coordinate.latitude), \(coordinate.longitude)")
                 print("Place: \(String(describing: place.administrativeArea))")
                 
-                DefaultsManager.shared.latitude = coordinates.latitude
-                DefaultsManager.shared.longitude = coordinates.longitude
+                DefaultsManager.shared.coordinate = coordinate
                 DefaultsManager.shared.distanceFilter = 100
                 DefaultsManager.shared.onboardingCompleted = true
                 DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
@@ -129,8 +128,7 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
             locationManager.stopUpdatingLocation()
 
             // store the location for future use
-            DefaultsManager.shared.latitude = location.coordinate.latitude
-            DefaultsManager.shared.longitude = location.coordinate.longitude
+            DefaultsManager.shared.coordinate = location.coordinate
             DefaultsManager.shared.showRegionFilter = false
             DefaultsManager.shared.showDistanceFilter = true
             DefaultsManager.shared.distanceFilter = 100

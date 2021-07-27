@@ -168,17 +168,16 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        let userLat = userLocation.coordinate.latitude
-        let userLon = userLocation.coordinate.longitude
+        let userCoord = userLocation.coordinate
         
         // check if we need to update locations
-        if abs(userLat - DefaultsManager.shared.latitude) > 0.01 ||
-            abs(userLon - DefaultsManager.shared.longitude) > 0.01 {
+        if userCoord.hasChanged(from: DefaultsManager.shared.coordinate, byMoreThan: 0.01) {
             print("Updating distances of reaches")
+        
+            // FIXME: this doesn't actually update reach distances. Should it?
         }
         
-        DefaultsManager.shared.latitude = userLat
-        DefaultsManager.shared.longitude = userLon
+        DefaultsManager.shared.coordinate = userCoord
     }
     
     func showUserLocation() {
