@@ -12,102 +12,56 @@ class DefaultsManager {
     }
     
     var appVersion: Double? {
-        get {
-            return defaults.double(forKey: Keys.appVersion)
-        }
-        
-        set {
-            defaults.set(newValue, forKey: Keys.appVersion)
-        }
+        get { defaults.double(forKey: Keys.appVersion) }
+        set { defaults.set(newValue, forKey: Keys.appVersion) }
     }
 
     
     var userAccountId: String? {
-        get {
-            return defaults.string(forKey: Keys.userAccountId)
-        }
-        
-        set {
-            defaults.set(newValue, forKey: Keys.userAccountId)
-        }
+        get { defaults.string(forKey: Keys.userAccountId) }
+        set { defaults.set(newValue, forKey: Keys.userAccountId) }
     }
     var uname: String? {
-        get {
-            return defaults.string(forKey: Keys.unameId)
-        }
-        
-        set {
-            defaults.set(newValue, forKey: Keys.unameId)
-        }
+        get { defaults.string(forKey: Keys.unameId) }
+        set { defaults.set(newValue, forKey: Keys.unameId) }
     }
     
     var whatsNew: String? {
-        get {
-            return defaults.string(forKey: Keys.whatsNew)
-        }
-        
-        set {
-            defaults.set(newValue, forKey: Keys.whatsNew)
-        }
+        get { defaults.string(forKey: Keys.whatsNew) }
+        set { defaults.set(newValue, forKey: Keys.whatsNew) }
     }
     
     var completedFirstRun: Bool {
-        get {
-            return defaults.bool(forKey: Keys.completedFirstRun)
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.completedFirstRun)
-        }
+        get { defaults.bool(forKey: Keys.completedFirstRun) }
+        set { defaults.set(newValue, forKey: Keys.completedFirstRun) }
     }
     
     var legendFirstRun: Bool {
-        get {
-            return defaults.bool(forKey: Keys.legendFirstRun)
-        }
-        
-        set {
-            defaults.set(newValue, forKey: Keys.legendFirstRun)
-        }
+        get { defaults.bool(forKey: Keys.legendFirstRun) }
+        set { defaults.set(newValue, forKey: Keys.legendFirstRun) }
     }
     
     var shouldAutoRefresh: Bool? {
-        get {
-            return defaults.object(forKey: Keys.shouldAutoRefresh) as? Bool
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.shouldAutoRefresh)
-        }
+        get { defaults.object(forKey: Keys.shouldAutoRefresh) as? Bool }
+        set { defaults.set(newValue, forKey: Keys.shouldAutoRefresh) }
     }
     
     var onboardingCompleted: Bool {
-        get {   
-            return defaults.bool(forKey: Keys.onboardingCompleted)
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.onboardingCompleted)
-        }
+        get { defaults.bool(forKey: Keys.onboardingCompleted) }
+        set { defaults.set(newValue, forKey: Keys.onboardingCompleted) }
     }
 
     var regionsFilter: [String] {
         get {
-            if let regions = defaults.array(forKey: Keys.regionsFilter) as? [String] {
-                return regions
-            } else {
-                return []
-            }
+            (defaults.array(forKey: Keys.regionsFilter) as? [String]) ??
+            []
         }
-        set {
-            defaults.set(newValue, forKey: Keys.regionsFilter)
-        }
+        set { defaults.set(newValue, forKey: Keys.regionsFilter) }
     }
 
     var regionsUpdated: Bool {
-        get {
-            return defaults.bool(forKey: Keys.regionsUpdated)
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.regionsUpdated)
-        }
+        get { defaults.bool(forKey: Keys.regionsUpdated) }
+        set { defaults.set(newValue, forKey: Keys.regionsUpdated) }
     }
 
     var distanceFilter: Double {
@@ -126,134 +80,78 @@ class DefaultsManager {
     }
     
     var showDistanceFilter: Bool {
-        get {
-            return defaults.bool(forKey: Keys.showDistanceFilter)
-        }
-        
-        set {
-            defaults.set(newValue, forKey: Keys.showDistanceFilter)
-        }
+        get { defaults.bool(forKey: Keys.showDistanceFilter) }
+        set { defaults.set(newValue, forKey: Keys.showDistanceFilter) }
     }
 
     var showRegionFilter: Bool {
-        get {
-            return defaults.bool(forKey: Keys.showRegionFilter)
-        }
-        
-        set {
-            defaults.set(newValue, forKey: Keys.showRegionFilter)
-        }
+        get { defaults.bool(forKey: Keys.showRegionFilter) }
+        set { defaults.set(newValue, forKey: Keys.showRegionFilter) }
     }
 
     var latitude: Double {
-        get {
-            return defaults.double(forKey: Keys.latitude)
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.latitude)
-        }
+        get { defaults.double(forKey: Keys.latitude) }
+        set { defaults.set(newValue, forKey: Keys.latitude) }
     }
     var longitude: Double {
-        get {
-            return defaults.double(forKey: Keys.longitude)
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.longitude)
-        }
+        get { defaults.double(forKey: Keys.longitude) }
+        set { defaults.set(newValue, forKey: Keys.longitude) }
     }
     
     var classFilter: [Int] {
         get {
-            if let classes = defaults.array(forKey: Keys.classFilter) as? [Int] {
-                return classes
-            } else {
-                return []
-            }
+            (defaults.array(forKey: Keys.classFilter) as? [Int]) ??
+            []
         }
-        set {
-            defaults.set(newValue, forKey: Keys.classFilter)
-        }
+        set { defaults.set(newValue, forKey: Keys.classFilter) }
     }
     
     var runnableFilter: Bool {
-        get {
-            return defaults.bool(forKey: Keys.runnableFilter)
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.runnableFilter)
-        }
+        get { defaults.bool(forKey: Keys.runnableFilter) }
+        set { defaults.set(newValue, forKey: Keys.runnableFilter) }
     }
     
     var lastUpdated: Date? {
-        get {
-            return defaults.object(forKey: Keys.updated) as? Date
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.updated)
-        }
+        get { defaults.object(forKey: Keys.updated) as? Date }
+        set { defaults.set(newValue, forKey: Keys.updated) }
     }
     
     var favoritesLastUpdated: Date? {
-        get {
-            return defaults.object(forKey: Keys.favoritesUpdated) as? Date
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.favoritesUpdated)
-        }
+        get { defaults.object(forKey: Keys.favoritesUpdated) as? Date }
+        set { defaults.set(newValue, forKey: Keys.favoritesUpdated) }
     }
     
     var articlesLastUpdated: Date? {
-        get {
-            return defaults.object(forKey: Keys.articlesUpdated) as? Date
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.articlesUpdated)
-        }
+        get { defaults.object(forKey: Keys.articlesUpdated) as? Date }
+        set { defaults.set(newValue, forKey: Keys.articlesUpdated) }
     }
     
     var fetchingreaches: Bool {
-        get {
-            return defaults.bool(forKey: Keys.fetchingReaches)
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.fetchingReaches)
-        }
+        get { defaults.bool(forKey: Keys.fetchingReaches) }
+        set { defaults.set(newValue, forKey: Keys.fetchingReaches) }
     }
     
     var reachAlerts: [String: [ [String: String]] ] {
         get {
-            return defaults.dictionary(forKey: Keys.reachAlerts) as? [String: [ [String:String]] ] ?? [String: [ [String:String]] ]()
+            (defaults.dictionary(forKey: Keys.reachAlerts) as? [String: [ [String:String]] ]) ??
+            [String: [ [String:String]] ]()
         }
-        set {
-            defaults.set(newValue, forKey: Keys.reachAlerts)
-        }
+        set { defaults.set(newValue, forKey: Keys.reachAlerts) }
     }
     
     var signedInAuth: String? {
-        get {
-            return defaults.string(forKey: Keys.signedInAuth)
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.signedInAuth)
-        }
+        get { defaults.string(forKey: Keys.signedInAuth) }
+        set { defaults.set(newValue, forKey: Keys.signedInAuth) }
     }
     
     var signInAlertCount: Int {
-        get {
-            return defaults.integer(forKey: Keys.signInAlertCount)
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.signInAlertCount)
-        }
+        get { defaults.integer(forKey: Keys.signInAlertCount) }
+        set { defaults.set(newValue, forKey: Keys.signInAlertCount) }
     }
     
     var signInLastShown: Date? {
-        get {
-            return defaults.object(forKey: Keys.signInLastShown) as? Date
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.signInLastShown)
-        }
+        get { defaults.object(forKey: Keys.signInLastShown) as? Date }
+        set { defaults.set(newValue, forKey: Keys.signInLastShown) }
     }
     
     // for now we'll store all the users favorites in the preferences
