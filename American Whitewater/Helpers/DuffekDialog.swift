@@ -8,7 +8,7 @@ class DuffekDialog {
     
     private init() {} //This prevents others from using the default '()' initializer for this class.
     
-    private var alertViewController: NYAlertViewController?
+    var alertViewController: NYAlertViewController?
     private var datePicker: UIDatePicker?
     
     /// Shows a simple Alert Dialog with an Ok Button added
