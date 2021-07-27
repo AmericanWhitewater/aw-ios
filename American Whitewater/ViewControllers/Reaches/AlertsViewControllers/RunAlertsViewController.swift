@@ -97,7 +97,7 @@ class RunAlertsViewController: UIViewController {
     @IBAction func addAlertPressed(_ sender: Any) {
         
         let keychain = KeychainSwift();
-        if keychain.get(AWGC.AuthKeychainToken) == nil || DefaultsManager.signedInAuth == nil {
+        if keychain.get(AWGC.AuthKeychainToken) == nil || DefaultsManager.shared.signedInAuth == nil {
             self.showLoginScreen()
         } else {
             self.performSegue(withIdentifier: Segue.postAlertSeg.rawValue, sender: nil)
@@ -114,17 +114,17 @@ class RunAlertsViewController: UIViewController {
     
     
     func saveAlerts() {
-        var storedAlerts = DefaultsManager.reachAlerts
+        var storedAlerts = DefaultsManager.shared.reachAlerts
         
         if let selectedRun = selectedRun, selectedRun.id != 0 {
             storedAlerts["\(selectedRun.id)"] = alertsList
-            DefaultsManager.reachAlerts = storedAlerts
+            DefaultsManager.shared.reachAlerts = storedAlerts
         }
     }
     
     func loadAlerts() {
         if let selectedRun = selectedRun, selectedRun.id != 0 {
-            let storedAlerts = DefaultsManager.reachAlerts
+            let storedAlerts = DefaultsManager.shared.reachAlerts
             if let reachAlerts = storedAlerts["\(selectedRun.id)"], reachAlerts.count > 0 {
                 alertsList.removeAll()
                 alertsList = reachAlerts

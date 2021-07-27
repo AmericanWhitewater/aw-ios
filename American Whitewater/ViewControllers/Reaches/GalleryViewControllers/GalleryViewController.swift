@@ -104,7 +104,7 @@ class GalleryViewController: UIViewController {
             }
         } else {
             
-            if DefaultsManager.signedInAuth == nil {
+            if DefaultsManager.shared.signedInAuth == nil {
                 self.showLoginScreen()
             } else {
                 awImagePicker.present(from: sender)

@@ -172,13 +172,13 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         let userLon = userLocation.coordinate.longitude
         
         // check if we need to update locations
-        if abs(userLat - DefaultsManager.latitude) > 0.01 ||
-            abs(userLon - DefaultsManager.longitude) > 0.01 {
+        if abs(userLat - DefaultsManager.shared.latitude) > 0.01 ||
+            abs(userLon - DefaultsManager.shared.longitude) > 0.01 {
             print("Updating distances of reaches")
         }
         
-        DefaultsManager.latitude = userLat
-        DefaultsManager.longitude = userLon
+        DefaultsManager.shared.latitude = userLat
+        DefaultsManager.shared.longitude = userLon
     }
     
     func showUserLocation() {

@@ -29,7 +29,7 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
                 
         signInOutCell.imageView?.image = UIImage(named: "aboutSignIn")
         
-        if DefaultsManager.signedInAuth == nil {
+        if DefaultsManager.shared.signedInAuth == nil {
             signInOutLabel?.text = "Sign In"
         } else {
             signInOutLabel?.text = "Sign Out"
@@ -106,7 +106,7 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
                 let vc = SFSafariViewController(url: URL(string: AWGC.AW_BASE_URL + "/logout")!, configuration: config)
                 present(vc, animated: true)
                 
-                DefaultsManager.signedInAuth = nil
+                DefaultsManager.shared.signedInAuth = nil
                 signInOutLabel?.text = "Sign In"
             }
         }

@@ -52,7 +52,7 @@ class RunsListViewController: UIViewController {
         legendCloseButton.layer.cornerRadius = legendCloseButton.frame.height / 2
         legendCloseButton.clipsToBounds = true
         
-        runnableSwitch.isOn = DefaultsManager.runnableFilter
+        runnableSwitch.isOn = DefaultsManager.shared.runnableFilter
         
         // set this view to listen for application resuming from background
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive),
@@ -100,9 +100,9 @@ class RunsListViewController: UIViewController {
         }
         
         // show the ugly legend until we design a better one
-        if DefaultsManager.legendFirstRun == false {
+        if DefaultsManager.shared.legendFirstRun == false {
             showLegend([])
-           DefaultsManager.legendFirstRun = true
+            DefaultsManager.shared.legendFirstRun = true
         }
 
 
@@ -110,7 +110,7 @@ class RunsListViewController: UIViewController {
         let keychain = KeychainSwift();
         //keychain.set(credential.oauthToken, forKey: "ios-aw-auth-key")
         //keychain.delete("ios-aw-auth-key") // for sign out
-        if keychain.get(AWGC.AuthKeychainToken) == nil || DefaultsManager.signedInAuth == nil {
+        if keychain.get(AWGC.AuthKeychainToken) == nil || DefaultsManager.shared.signedInAuth == nil {
             self.showLoginScreen()
         } else {
             print("Session authenticated")
@@ -126,7 +126,7 @@ class RunsListViewController: UIViewController {
         
     func updateFilterButton() {
         navigationItem.rightBarButtonItem?.title = ""
-        if DefaultsManager.classFilter.count < 5 || DefaultsManager.showDistanceFilter == true || DefaultsManager.showRegionFilter == true {
+        if DefaultsManager.shared.classFilter.count < 5 || DefaultsManager.shared.showDistanceFilter == true || DefaultsManager.shared.showRegionFilter == true {
             navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: "filterOn"), for: .normal, barMetrics: .default)
         } else {
             navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: "filterOff"), for: .normal, barMetrics: .default)
@@ -140,7 +140,7 @@ class RunsListViewController: UIViewController {
         let request = Reach.fetchRequest() as NSFetchRequest<Reach>
 
         // setup sort filters
-        if DefaultsManager.showDistanceFilter && DefaultsManager.distanceFilter > 0 {
+        if DefaultsManager.shared.showDistanceFilter && DefaultsManager.shared.distanceFilter > 0 {
             print("Using distance filter")
             
             request.sortDescriptors = [
@@ -177,9 +177,9 @@ class RunsListViewController: UIViewController {
         // all reaches in the background.
         // Since the Onboarding is now modal this may be completely hidden
         // from the user and it wont impact their experience
-        if !DefaultsManager.completedFirstRun {
+        if !DefaultsManager.shared.completedFirstRun {
             print("downloading all reaches")
-            DefaultsManager.completedFirstRun = true
+            DefaultsManager.shared.completedFirstRun = true
             AWApiReachHelper.shared.downloadAllReachesInBackground {
                 print("Completed downloading all data")
                 self.fetchRiversFromCoreData()
@@ -189,11 +189,11 @@ class RunsListViewController: UIViewController {
     
     func checkIfOnboardingNeeded() -> Bool {
         let appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
-        print("AppVersion: \(appVersion) - Defaults: \(DefaultsManager.appVersion ?? 0.0)")
+        print("AppVersion: \(appVersion) - Defaults: \(DefaultsManager.shared.appVersion ?? 0.0)")
         
         // This ads version checking and forces users to onboard if their version is less than the current version
         // we might want to adjust this in the next release
-        if DefaultsManager.appVersion == nil || DefaultsManager.appVersion! < appVersion || !DefaultsManager.onboardingCompleted {
+        if DefaultsManager.shared.appVersion == nil || DefaultsManager.shared.appVersion! < appVersion || !DefaultsManager.shared.onboardingCompleted {
             
             if let modalOnboadingVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardingVC") as? OnboardLocationViewController {
                 modalOnboadingVC.modalPresentationStyle = .overCurrentContext
@@ -207,7 +207,7 @@ class RunsListViewController: UIViewController {
     }
 
     func showLoginScreen() {
-        if let lastShown = DefaultsManager.signInLastShown {
+        if let lastShown = DefaultsManager.shared.signInLastShown {
             // Only show once per day
             if lastShown < Date(timeIntervalSinceNow: -24 * 60 * 60) {
                 if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
@@ -230,7 +230,7 @@ class RunsListViewController: UIViewController {
     
         self.refreshControl.beginRefreshingManually()
         
-        if DefaultsManager.showRegionFilter {
+        if DefaultsManager.shared.showRegionFilter {
             print("Updating reaches by region")
             var codes: [String] = []
                     
@@ -238,8 +238,8 @@ class RunsListViewController: UIViewController {
             //DefaultsManager.regionsFilter = []
         
             // if the regionsFilter is set, only pull those regions
-            if DefaultsManager.regionsFilter.count > 0 {
-                codes = DefaultsManager.regionsFilter
+            if DefaultsManager.shared.regionsFilter.count > 0 {
+                codes = DefaultsManager.shared.regionsFilter
             } else {
                 codes = regions.map { $0.code }
                 print("Refreshing all regions")
@@ -338,8 +338,8 @@ class RunsListViewController: UIViewController {
             
             self.fetchRiversFromCoreData()
 
-            DefaultsManager.lastUpdated = Date()
-            DefaultsManager.favoritesLastUpdated = Date()
+            DefaultsManager.shared.lastUpdated = Date()
+            DefaultsManager.shared.favoritesLastUpdated = Date()
 
             // we need this to update section headers
             self.tableView.reloadSections([0], with: .automatic)
@@ -374,7 +374,7 @@ class RunsListViewController: UIViewController {
     }
     
     @IBAction func runnableFilterChanged(_ runnableSwitch: UISwitch) {
-        DefaultsManager.runnableFilter = runnableSwitch.isOn
+        DefaultsManager.shared.runnableFilter = runnableSwitch.isOn
         fetchRiversFromCoreData()
     }
 
@@ -385,8 +385,8 @@ class RunsListViewController: UIViewController {
         let riverLocation = CLLocation(latitude: riverLat, longitude: riverLon)
         
         // get user location and check it
-        let currentLatitude = DefaultsManager.latitude
-        let currentLongitude = DefaultsManager.longitude
+        let currentLatitude = DefaultsManager.shared.latitude
+        let currentLongitude = DefaultsManager.shared.longitude
         if currentLatitude > 1 && currentLongitude < 0 {
             
             let currentUserLocation = CLLocation(latitude: currentLatitude, longitude: currentLongitude)
@@ -439,7 +439,7 @@ class RunsListViewController: UIViewController {
     }
     
     func runnablePredicate() -> NSPredicate? {
-        if DefaultsManager.runnableFilter {
+        if DefaultsManager.shared.runnableFilter {
             return NSPredicate(format: "condition == %@ || condition == %@", "med", "high")
         }
         
@@ -450,7 +450,7 @@ class RunsListViewController: UIViewController {
     
         var classPredicates: [NSPredicate] = []
 
-        for difficulty in DefaultsManager.classFilter {
+        for difficulty in DefaultsManager.shared.classFilter {
             classPredicates.append(NSPredicate(format: "difficulty\(difficulty) == TRUE"))
         }
 
@@ -463,11 +463,11 @@ class RunsListViewController: UIViewController {
     
     func regionsPredicate() -> NSPredicate? {
         // if we are filtering by distance then ignore regions
-        if DefaultsManager.showDistanceFilter {
+        if DefaultsManager.shared.showDistanceFilter {
             return nil
         }
         
-        let regionCodes = DefaultsManager.regionsFilter
+        let regionCodes = DefaultsManager.shared.regionsFilter
         var states:[String] = []
         for regionCode in regionCodes {
             if let region = Region.regionByCode(code: regionCode) {
@@ -484,9 +484,9 @@ class RunsListViewController: UIViewController {
     func distancePredicate() -> NSPredicate? {
         // check if user is using the distance filter or if
         // they have turned it off
-        if !DefaultsManager.showDistanceFilter { return nil }
+        if !DefaultsManager.shared.showDistanceFilter { return nil }
         
-        let distance = DefaultsManager.distanceFilter
+        let distance = DefaultsManager.shared.distanceFilter
         if distance == 0 { return nil }
         let predicates: [NSPredicate] = [
             NSPredicate(format: "distance <= %lf", distance),
@@ -497,7 +497,7 @@ class RunsListViewController: UIViewController {
     func filterPredicates() -> [NSPredicate?] {
         var predis = [searchPredicate(), difficultiesPredicate(), runnablePredicate()]
         
-        if DefaultsManager.showDistanceFilter {
+        if DefaultsManager.shared.showDistanceFilter {
             predis = predis + [distancePredicate()]
         } else {
             predis = predis + [regionsPredicate()]
@@ -629,7 +629,7 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
             let label = UILabel()
             
             var lastUpdatedMessage = "Refreshing..."
-            if let lastUpdatedDate = DefaultsManager.lastUpdated {
+            if let lastUpdatedDate = DefaultsManager.shared.lastUpdated {
                 lastUpdatedMessage = "Last Updated: \(dateFormatter.string(from: lastUpdatedDate))"
             }
             

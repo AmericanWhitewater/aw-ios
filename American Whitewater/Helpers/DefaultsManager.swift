@@ -3,289 +3,265 @@ import SwiftyJSON
 import KeychainSwift
 
 class DefaultsManager {
+    public static let shared = DefaultsManager()
     
-    private static let appVersionKey = "appVersionKey"
-    static var appVersion: Double? {
+    private let defaults: UserDefaults
+    
+    private init(userDefaults: UserDefaults = .standard) {
+        self.defaults = userDefaults
+    }
+    
+    var appVersion: Double? {
         get {
-            return UserDefaults.standard.double(forKey: appVersionKey)
+            return defaults.double(forKey: Keys.appVersion)
         }
         
         set {
-            UserDefaults.standard.set(newValue, forKey: appVersionKey)
+            defaults.set(newValue, forKey: Keys.appVersion)
         }
     }
 
-    private static let userAccountIdKey = "userAccountId"
-    static var userAccountId: String? {
+    
+    var userAccountId: String? {
         get {
-            return UserDefaults.standard.string(forKey: userAccountIdKey)
+            return defaults.string(forKey: Keys.userAccountId)
         }
         
         set {
-            UserDefaults.standard.set(newValue, forKey: userAccountIdKey)
+            defaults.set(newValue, forKey: Keys.userAccountId)
         }
     }
-    
-    private static let unameIdKey = "uname"
-    static var uname: String? {
+    var uname: String? {
         get {
-            return UserDefaults.standard.string(forKey: unameIdKey)
+            return defaults.string(forKey: Keys.unameId)
         }
         
         set {
-            UserDefaults.standard.set(newValue, forKey: unameIdKey)
+            defaults.set(newValue, forKey: Keys.unameId)
         }
     }
     
-    
-    private static let whatsNewKey = "whatsNewKey"
-    static var whatsNew: String? {
+    var whatsNew: String? {
         get {
-            return UserDefaults.standard.string(forKey: whatsNewKey)
+            return defaults.string(forKey: Keys.whatsNew)
         }
         
         set {
-            UserDefaults.standard.set(newValue, forKey: whatsNewKey)
+            defaults.set(newValue, forKey: Keys.whatsNew)
         }
     }
     
-    private static let completedFirstRunKey = "completedFirstRunKey"
-    static var completedFirstRun: Bool {
+    var completedFirstRun: Bool {
         get {
-            return UserDefaults.standard.bool(forKey: completedFirstRunKey)
+            return defaults.bool(forKey: Keys.completedFirstRun)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: completedFirstRunKey)
+            defaults.set(newValue, forKey: Keys.completedFirstRun)
         }
     }
     
-    private static let legendFirstRunKey = "legendFirstRunKey"
-    static var legendFirstRun: Bool {
+    var legendFirstRun: Bool {
         get {
-            return UserDefaults.standard.bool(forKey: legendFirstRunKey)
+            return defaults.bool(forKey: Keys.legendFirstRun)
         }
         
         set {
-            UserDefaults.standard.set(newValue, forKey: legendFirstRunKey)
+            defaults.set(newValue, forKey: Keys.legendFirstRun)
         }
     }
     
-    private static let shouldAutoRefreshKey = "shouldAutoRefresh"
-    static var shouldAutoRefresh: Bool? {
+    var shouldAutoRefresh: Bool? {
         get {
-            return UserDefaults.standard.object(forKey: shouldAutoRefreshKey) as? Bool
+            return defaults.object(forKey: Keys.shouldAutoRefresh) as? Bool
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: shouldAutoRefreshKey)
+            defaults.set(newValue, forKey: Keys.shouldAutoRefresh)
         }
     }
     
-    private static let onboardingCompletedKey = "onboardingCompletedKey"
-    static var onboardingCompleted: Bool {
+    var onboardingCompleted: Bool {
         get {   
-            return UserDefaults.standard.bool(forKey: onboardingCompletedKey)
+            return defaults.bool(forKey: Keys.onboardingCompleted)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: onboardingCompletedKey)
+            defaults.set(newValue, forKey: Keys.onboardingCompleted)
         }
     }
 
-    
-    
-    private static let regionsFilterKey = "regionsFilterKey"
-    static var regionsFilter: [String] {
+    var regionsFilter: [String] {
         get {
-            if let regions = UserDefaults.standard.array(forKey: regionsFilterKey) as? [String] {
+            if let regions = defaults.array(forKey: Keys.regionsFilter) as? [String] {
                 return regions
             } else {
                 return []
             }
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: regionsFilterKey)
+            defaults.set(newValue, forKey: Keys.regionsFilter)
         }
     }
 
-    private static let regionsUpdatedKey = "regionsUpdatedKey"
-    static var regionsUpdated: Bool {
+    var regionsUpdated: Bool {
         get {
-            return UserDefaults.standard.bool(forKey: regionsUpdatedKey)
+            return defaults.bool(forKey: Keys.regionsUpdated)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: regionsUpdatedKey)
+            defaults.set(newValue, forKey: Keys.regionsUpdated)
         }
     }
 
-    
-    private static let distanceFilterKey = "distanceFilterKey"
-    static var distanceFilter: Double {
+    var distanceFilter: Double {
         get {
-            var distanceFilter = UserDefaults.standard.double(forKey: distanceFilterKey)
+            var distanceFilter = defaults.double(forKey: Keys.distanceFilter)
             if distanceFilter == 0.0 {
                 distanceFilter = 100
-                UserDefaults.standard.set(distanceFilter, forKey: distanceFilterKey)
+                defaults.set(distanceFilter, forKey: Keys.distanceFilter)
             }
             
-            return UserDefaults.standard.double(forKey: distanceFilterKey)
+            return defaults.double(forKey: Keys.distanceFilter)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: distanceFilterKey)
+            defaults.set(newValue, forKey: Keys.distanceFilter)
         }
     }
     
-    private static let showDistanceFilterKey = "showDistanceFilterKey"
-    static var showDistanceFilter: Bool {
+    var showDistanceFilter: Bool {
         get {
-            return UserDefaults.standard.bool(forKey: showDistanceFilterKey)
+            return defaults.bool(forKey: Keys.showDistanceFilter)
         }
         
         set {
-            UserDefaults.standard.set(newValue, forKey: showDistanceFilterKey)
+            defaults.set(newValue, forKey: Keys.showDistanceFilter)
         }
     }
 
-    private static let showRegionFilterKey = "showRegionFilterKey"
-    static var showRegionFilter: Bool {
+    var showRegionFilter: Bool {
         get {
-            return UserDefaults.standard.bool(forKey: showRegionFilterKey)
+            return defaults.bool(forKey: Keys.showRegionFilter)
         }
         
         set {
-            UserDefaults.standard.set(newValue, forKey: showRegionFilterKey)
+            defaults.set(newValue, forKey: Keys.showRegionFilter)
         }
     }
 
-    
-    private static let latitudeKey = "latitudeKey"
-    private static let longitudeKey = "longitudeKey"
-    static var latitude: Double {
+    var latitude: Double {
         get {
-            return UserDefaults.standard.double(forKey: latitudeKey)
+            return defaults.double(forKey: Keys.latitude)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: latitudeKey)
+            defaults.set(newValue, forKey: Keys.latitude)
         }
     }
-    static var longitude: Double {
+    var longitude: Double {
         get {
-            return UserDefaults.standard.double(forKey: longitudeKey)
+            return defaults.double(forKey: Keys.longitude)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: longitudeKey)
+            defaults.set(newValue, forKey: Keys.longitude)
         }
     }
     
-    private static let classFilterKey = "classFilterKey"
-    static var classFilter: [Int] {
+    var classFilter: [Int] {
         get {
-            if let classes = UserDefaults.standard.array(forKey: classFilterKey) as? [Int] {
+            if let classes = defaults.array(forKey: Keys.classFilter) as? [Int] {
                 return classes
             } else {
                 return []
             }
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: classFilterKey)
+            defaults.set(newValue, forKey: Keys.classFilter)
         }
     }
     
-    private static let runnableFilterKey = "runnableFilterKey"
-    static var runnableFilter: Bool {
+    var runnableFilter: Bool {
         get {
-            return UserDefaults.standard.bool(forKey: runnableFilterKey)
+            return defaults.bool(forKey: Keys.runnableFilter)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: runnableFilterKey)
+            defaults.set(newValue, forKey: Keys.runnableFilter)
         }
     }
     
-    private static let updatedKey = "updatedKey"
-    static var lastUpdated: Date? {
+    var lastUpdated: Date? {
         get {
-            return UserDefaults.standard.object(forKey: updatedKey) as? Date
+            return defaults.object(forKey: Keys.updated) as? Date
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: updatedKey)
+            defaults.set(newValue, forKey: Keys.updated)
         }
     }
     
-    private static let favoritesUpdatedKey = "favoritesUpdatedKey"
-    static var favoritesLastUpdated: Date? {
+    var favoritesLastUpdated: Date? {
         get {
-            return UserDefaults.standard.object(forKey: favoritesUpdatedKey) as? Date
+            return defaults.object(forKey: Keys.favoritesUpdated) as? Date
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: favoritesUpdatedKey)
+            defaults.set(newValue, forKey: Keys.favoritesUpdated)
         }
     }
     
-    private static let articlesUpdatedKey = "articlesUpdatedKey"
-    static var articlesLastUpdated: Date? {
+    var articlesLastUpdated: Date? {
         get {
-            return UserDefaults.standard.object(forKey: articlesUpdatedKey) as? Date
+            return defaults.object(forKey: Keys.articlesUpdated) as? Date
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: articlesUpdatedKey)
+            defaults.set(newValue, forKey: Keys.articlesUpdated)
         }
     }
     
-    private static let fetchingReachesKey = "fetchingReachesKey"
-    static var fetchingreaches: Bool {
+    var fetchingreaches: Bool {
         get {
-            return UserDefaults.standard.bool(forKey: fetchingReachesKey)
+            return defaults.bool(forKey: Keys.fetchingReaches)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: fetchingReachesKey)
+            defaults.set(newValue, forKey: Keys.fetchingReaches)
         }
     }
     
-    private static let reachAlertsKey = "reachAlertsKey"
-    static var reachAlerts: [String: [ [String: String]] ] {
+    var reachAlerts: [String: [ [String: String]] ] {
         get {
-            return UserDefaults.standard.dictionary(forKey: reachAlertsKey) as? [String: [ [String:String]] ] ?? [String: [ [String:String]] ]()
+            return defaults.dictionary(forKey: Keys.reachAlerts) as? [String: [ [String:String]] ] ?? [String: [ [String:String]] ]()
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: reachAlertsKey)
+            defaults.set(newValue, forKey: Keys.reachAlerts)
         }
     }
     
-    private static let signedInAuthKey = "signedInUserIdKey"
-    static var signedInAuth: String? {
+    var signedInAuth: String? {
         get {
-            return UserDefaults.standard.string(forKey: signedInAuthKey)
+            return defaults.string(forKey: Keys.signedInAuth)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: signedInAuthKey)
+            defaults.set(newValue, forKey: Keys.signedInAuth)
         }
     }
     
-    private static let signInAlertCountKey = "signInAlertCountKey"
-    static var signInAlertCount: Int {
+    var signInAlertCount: Int {
         get {
-            return UserDefaults.standard.integer(forKey: signInAlertCountKey)
+            return defaults.integer(forKey: Keys.signInAlertCount)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: signInAlertCountKey)
+            defaults.set(newValue, forKey: Keys.signInAlertCount)
         }
     }
     
-    private static let signInLastShownKey = "signInLastShownKey"
-    static var signInLastShown: Date? {
+    var signInLastShown: Date? {
         get {
-            return UserDefaults.standard.object(forKey: signInLastShownKey) as? Date
+            return defaults.object(forKey: Keys.signInLastShown) as? Date
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: signInLastShownKey)
+            defaults.set(newValue, forKey: Keys.signInLastShown)
         }
     }
     
     // for now we'll store all the users favorites in the preferences
     // eventually we'll move it back over to CoreData
-    private static let userFavoritesKey = "userFavoritesKey"
-    static var userFavorites: [AWReach] {
+    var userFavorites: [AWReach] {
         get {
             // grab [String] from user defaults, convert to [AWReach]
-            let favStrings = UserDefaults.standard.array(forKey: userFavoritesKey) as? [String]
+            let favStrings = defaults.array(forKey: Keys.userFavorites) as? [String]
             var favsArray:[AWReach] = []
             
             if let favStrings = favStrings {
@@ -320,9 +296,37 @@ class DefaultsManager {
                 }
             }
             
-            UserDefaults.standard.set(userFavStrings, forKey: userFavoritesKey)
+            defaults.set(userFavStrings, forKey: Keys.userFavorites)
         }
         
     }
     
+    private struct Keys {
+        static let appVersion = "appVersionKey"
+        static let userAccountId = "userAccountId"
+        static let unameId = "uname"
+        static let whatsNew = "whatsNewKey"
+        static let completedFirstRun = "completedFirstRunKey"
+        static let legendFirstRun = "legendFirstRunKey"
+        static let shouldAutoRefresh = "shouldAutoRefresh"
+        static let onboardingCompleted = "onboardingCompletedKey"
+        static let regionsFilter = "regionsFilterKey"
+        static let regionsUpdated = "regionsUpdatedKey"
+        static let distanceFilter = "distanceFilterKey"
+        static let showDistanceFilter = "showDistanceFilterKey"
+        static let showRegionFilter = "showRegionFilterKey"
+        static let latitude = "latitudeKey"
+        static let longitude = "longitudeKey"
+        static let classFilter = "classFilterKey"
+        static let runnableFilter = "runnableFilterKey"
+        static let updated = "updatedKey"
+        static let favoritesUpdated = "favoritesUpdatedKey"
+        static let articlesUpdated = "articlesUpdatedKey"
+        static let fetchingReaches = "fetchingReachesKey"
+        static let reachAlerts = "reachAlertsKey"
+        static let signedInAuth = "signedInUserIdKey"
+        static let signInAlertCount = "signInAlertCountKey"
+        static let signInLastShown = "signInLastShownKey"
+        static let userFavorites = "userFavoritesKey"
+    }
 }

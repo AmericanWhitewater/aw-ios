@@ -36,8 +36,8 @@ class AWGQLApiHelper
             switch result {
                 case .success(let graphQLResult):
                     if let userResult = graphQLResult.data?.me {
-                        DefaultsManager.userAccountId = userResult.uid
-                        DefaultsManager.uname = userResult.uname
+                        DefaultsManager.shared.userAccountId = userResult.uid
+                        DefaultsManager.shared.uname = userResult.uname
                         print("Stored uid: \(userResult.uid) and uname: \(userResult.uname)")
                     }
                 case .failure(let error):
@@ -238,10 +238,10 @@ class AWGQLApiHelper
         let newID = NanoID.new(alphabet: .allLettersAndNumbers, size: 21)
         
         var userId:String? = nil
-        if let usrId = DefaultsManager.userAccountId { userId = usrId }
+        if let usrId = DefaultsManager.shared.userAccountId { userId = usrId }
 
         var author:String? = nil
-        if let authorString = DefaultsManager.uname { author = authorString }
+        if let authorString = DefaultsManager.shared.uname { author = authorString }
                             
         let photoInput = PhotoInput(caption: caption, description: description, postId: newID, subject: caption, author: author, poiName: nil, poiId: nil, photoDate: nowString)
         

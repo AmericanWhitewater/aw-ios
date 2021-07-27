@@ -65,8 +65,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         
         // check if we need to update distances
-        if abs(userLat - DefaultsManager.latitude) > 0.01 ||
-            abs(userLon - DefaultsManager.longitude) > 0.01 {
+        if abs(userLat - DefaultsManager.shared.latitude) > 0.01 ||
+            abs(userLon - DefaultsManager.shared.longitude) > 0.01 {
             print("Updating distances of reaches")
             
             AWApiReachHelper.shared.updateAllReachDistances(callback: {
@@ -74,14 +74,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             })
         }
         
-        DefaultsManager.latitude = userLat
-        DefaultsManager.longitude = userLon
+        DefaultsManager.shared.latitude = userLat
+        DefaultsManager.shared.longitude = userLon
         self.lastLocation = userLocation.location!
     }
     
     func updateFilterButton() {
         navigationItem.rightBarButtonItem?.title = ""
-        if DefaultsManager.classFilter.count < 5 || DefaultsManager.showDistanceFilter == true {
+        if DefaultsManager.shared.classFilter.count < 5 || DefaultsManager.shared.showDistanceFilter == true {
             navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: "filterOn"), for: .normal, barMetrics: .default)
         } else {
             navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: "filterOff"), for: .normal, barMetrics: .default)
@@ -215,7 +215,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
         var classPredicates: [NSPredicate] = []
 
-        for difficulty in DefaultsManager.classFilter {
+        for difficulty in DefaultsManager.shared.classFilter {
             classPredicates.append(NSPredicate(format: "difficulty\(difficulty) == TRUE"))
         }
 
@@ -228,11 +228,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func regionsPredicate() -> NSPredicate? {
         // if we are filtering by distance then ignore regions
-        if DefaultsManager.showDistanceFilter {
+        if DefaultsManager.shared.showDistanceFilter {
             return nil
         }
         
-        let regionCodes = DefaultsManager.regionsFilter
+        let regionCodes = DefaultsManager.shared.regionsFilter
         var states:[String] = []
         for regionCode in regionCodes {
             if let region = Region.regionByCode(code: regionCode) {
@@ -249,9 +249,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func distancePredicate() -> NSPredicate? {
         // check if user is using the distance filter or if
         // they have turned it off
-        if !DefaultsManager.showDistanceFilter { return nil }
+        if !DefaultsManager.shared.showDistanceFilter { return nil }
         
-        let distance = DefaultsManager.distanceFilter
+        let distance = DefaultsManager.shared.distanceFilter
         if distance == 0 { return nil }
         let predicates: [NSPredicate] = [
             NSPredicate(format: "distance <= %lf", distance),
@@ -260,7 +260,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func filterPredicates() -> [NSPredicate?] {
-        if DefaultsManager.showDistanceFilter == true {
+        if DefaultsManager.shared.showDistanceFilter == true {
             return [distancePredicate()]
         } else {
             return [regionsPredicate()]

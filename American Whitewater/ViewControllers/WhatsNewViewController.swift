@@ -25,7 +25,7 @@ class WhatsNewViewController: UIViewController {
     
     @IBAction func dontShowAgainButtonPressed(_ sender: Any) {
         
-        DefaultsManager.whatsNew = "whatsNew\(DefaultsManager.appVersion ?? -1)"
+        DefaultsManager.shared.whatsNew = "whatsNew\(DefaultsManager.shared.appVersion ?? -1)"
         
         self.dismiss(animated: true, completion: nil)
     }

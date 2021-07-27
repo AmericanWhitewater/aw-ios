@@ -32,7 +32,7 @@ class NewsTableViewController: UITableViewController {
         
         // check how long it's been since we updated from the server
         // if it's too long we just update
-        if let lastUpdated = DefaultsManager.articlesLastUpdated {
+        if let lastUpdated = DefaultsManager.shared.articlesLastUpdated {
             if lastUpdated < Date(timeIntervalSinceNow: -120) { //60s * 10m == 600s
                 self.refresh()
             }

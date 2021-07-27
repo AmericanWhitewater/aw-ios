@@ -93,15 +93,15 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
                 print("Location found: \(coordinates.latitude), \(coordinates.longitude)")
                 print("Place: \(String(describing: place.administrativeArea))")
                 
-                DefaultsManager.latitude = coordinates.latitude
-                DefaultsManager.longitude = coordinates.longitude
-                DefaultsManager.distanceFilter = 100
-                DefaultsManager.onboardingCompleted = true
-                DefaultsManager.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
+                DefaultsManager.shared.latitude = coordinates.latitude
+                DefaultsManager.shared.longitude = coordinates.longitude
+                DefaultsManager.shared.distanceFilter = 100
+                DefaultsManager.shared.onboardingCompleted = true
+                DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
                 
                 // grab and store the region code from admin area
                 if let adminArea = place.administrativeArea, let region = Region.regionByCode(code: "st\(adminArea)") {
-                    DefaultsManager.regionsFilter = [region.code]
+                    DefaultsManager.shared.regionsFilter = [region.code]
                 }
                 
                 // dismiss this view controller and tell the referencing ViewController to refresh
@@ -129,13 +129,13 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
             locationManager.stopUpdatingLocation()
 
             // store the location for future use
-            DefaultsManager.latitude = location.coordinate.latitude
-            DefaultsManager.longitude = location.coordinate.longitude
-            DefaultsManager.showRegionFilter = false
-            DefaultsManager.showDistanceFilter = true
-            DefaultsManager.distanceFilter = 100
-            DefaultsManager.onboardingCompleted = true
-            DefaultsManager.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
+            DefaultsManager.shared.latitude = location.coordinate.latitude
+            DefaultsManager.shared.longitude = location.coordinate.longitude
+            DefaultsManager.shared.showRegionFilter = false
+            DefaultsManager.shared.showDistanceFilter = true
+            DefaultsManager.shared.distanceFilter = 100
+            DefaultsManager.shared.onboardingCompleted = true
+            DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
             
             // reverse geocode the users location so we can get the admin area so we can request this location first
             let decoder = CLGeocoder()
@@ -144,7 +144,7 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
                     if let placemark = placemarks?.first {
                         if let adminArea = placemark.administrativeArea, let region = Region.regionByCode(code: "st\(adminArea)") {
 
-                            DefaultsManager.regionsFilter = [region.code]
+                            DefaultsManager.shared.regionsFilter = [region.code]
                         }
                     }
                 }

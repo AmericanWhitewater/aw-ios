@@ -159,7 +159,7 @@ class RiverFlowsViewController: UIViewController {
     
     
     @IBAction func reportAFlowButtonPressed(_ sender: Any) {
-        if DefaultsManager.signedInAuth == nil {
+        if DefaultsManager.shared.signedInAuth == nil {
             self.showLoginScreen()
         } else {
             self.performSegue(withIdentifier: Segue.addRiverFlowSeg.rawValue, sender: nil)

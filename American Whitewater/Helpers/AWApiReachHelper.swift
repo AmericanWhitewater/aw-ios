@@ -233,7 +233,7 @@ class AWApiReachHelper {
             
             // calculate the distance from the user
             if let distance = newReach.distanceFrom(location:
-                CLLocation(latitude: DefaultsManager.latitude, longitude: DefaultsManager.longitude)) {
+                CLLocation(latitude: DefaultsManager.shared.latitude, longitude: DefaultsManager.shared.longitude)) {
                 
                 reach.distance = distance / 1609
             } else {
@@ -271,7 +271,7 @@ class AWApiReachHelper {
     func updateRegionalReaches(regionCodes: [String], callback: @escaping UpdateReachesCallback, callbackError: @escaping ReachErrorCallback) {
         let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
-        guard DefaultsManager.fetchingreaches == false else {
+        guard DefaultsManager.shared.fetchingreaches == false else {
             print("Already fetching reaches...");
             callback()
             return
@@ -279,7 +279,7 @@ class AWApiReachHelper {
         
         print("Fetching region codes: \(regionCodes.description)")
         
-        DefaultsManager.fetchingreaches = true
+        DefaultsManager.shared.fetchingreaches = true
         let dispatchGroup = DispatchGroup()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         print("Dispatch group enter")
@@ -325,7 +325,7 @@ class AWApiReachHelper {
             
 //            DefaultsManager.lastUpdated = Date()
 //            DefaultsManager.favoritesLastUpdated = Date()
-            DefaultsManager.fetchingreaches = false
+            DefaultsManager.shared.fetchingreaches = false
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
@@ -376,8 +376,8 @@ class AWApiReachHelper {
                 }
             }
             
-            DefaultsManager.lastUpdated = Date()
-            DefaultsManager.favoritesLastUpdated = Date()
+            DefaultsManager.shared.lastUpdated = Date()
+            DefaultsManager.shared.favoritesLastUpdated = Date()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
@@ -428,7 +428,7 @@ class AWApiReachHelper {
             callback()
         }
         
-        DefaultsManager.lastUpdated = Date()
+        DefaultsManager.shared.lastUpdated = Date()
     }
     
     func fetchReachDetail(reachId: String,
@@ -568,8 +568,8 @@ class AWApiReachHelper {
     
     func updateAllReachDistances(callback: @escaping UpdateCallback) {
         
-        if DefaultsManager.latitude == 0.0 || DefaultsManager.longitude == 0.0 {
-            print("Unable to update distance - user location is \(DefaultsManager.latitude)x\(DefaultsManager.longitude)")
+        if DefaultsManager.shared.latitude == 0.0 || DefaultsManager.shared.longitude == 0.0 {
+            print("Unable to update distance - user location is \(DefaultsManager.shared.latitude)x\(DefaultsManager.shared.longitude)")
             return
         }
         
@@ -588,7 +588,7 @@ class AWApiReachHelper {
 
                 guard CLLocationCoordinate2DIsValid(reachCoordinate.coordinate) else { continue }
 
-                let distance = reachCoordinate.distance(from: CLLocation(latitude: DefaultsManager.latitude, longitude: DefaultsManager.longitude))
+                let distance = reachCoordinate.distance(from: CLLocation(latitude: DefaultsManager.shared.latitude, longitude: DefaultsManager.shared.longitude))
                 print("Distance: \(distance / 1609)")
                 reach.distance = distance / 1609
             }
@@ -603,7 +603,7 @@ class AWApiReachHelper {
                 print("Unable to save main view context: \(error), \(error.userInfo)")
             }
             
-            DefaultsManager.lastUpdated = Date()
+            DefaultsManager.shared.lastUpdated = Date()
         }
     }
 }

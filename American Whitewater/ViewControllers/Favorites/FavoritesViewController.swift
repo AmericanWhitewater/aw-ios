@@ -35,7 +35,7 @@ class FavoritesViewController: UIViewController {
         if fetchedResultsController?.fetchedObjects?.count ?? 0 > 0 {
             // check how long it's been since we updated from the server
             // if it's too long we just update
-            if let lastUpdated = DefaultsManager.favoritesLastUpdated {
+            if let lastUpdated = DefaultsManager.shared.favoritesLastUpdated {
                 if lastUpdated < Date(timeIntervalSinceNow: -600) { // 10mins (60s*10m)
                     print("Long enough! Fetching rivers!")
                     self.refresh()
@@ -102,7 +102,7 @@ class FavoritesViewController: UIViewController {
             
             print("Fetched favorite rivers")
             self.fetchRiversFromCoreData()
-            DefaultsManager.favoritesLastUpdated = Date()
+            DefaultsManager.shared.favoritesLastUpdated = Date()
             
         }) { (error) in
             self.refreshControl.endRefreshing()
