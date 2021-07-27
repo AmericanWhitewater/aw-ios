@@ -248,7 +248,11 @@ class RunsListViewController: UIViewController {
             
             // Check if we're pulling ALL data - if so let the user know
             // a full refresh takes 30-60 seconds to complete
-            if codes.count == Region.all.count {
+            if codes.count == Region.all.count,
+               // Quick fix: this can get called multiple times resulting in nested broken alerts below
+               // so don't present an alert if there's already an alert being presented
+               DuffekDialog.shared.alertViewController == nil
+            {
                 print("Showing pull all data message")
                 DuffekDialog.shared.showStandardDialog(title: "Pull All Data?", message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.", buttonTitle: "Continue", buttonFunction: {
                     // User wants to continue
