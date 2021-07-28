@@ -98,7 +98,6 @@
 		63B5B4A92459298F0062F54B /* UILabel+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B4A82459298F0062F54B /* UILabel+HTML.swift */; };
 		63B5B4AC2459CB3B0062F54B /* AWImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B4AB2459CB3B0062F54B /* AWImagePicker.swift */; };
 		63C1DAC1235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63C1DABF235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld */; };
-		63CB41C024905B6500CCFFD5 /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CB41BF24905B6500CCFFD5 /* WhatsNewViewController.swift */; };
 		63D7BD152319774500935693 /* Regions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD142319774500935693 /* Regions.swift */; };
 		63D7BD172319980600935693 /* OnboardLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD162319980600935693 /* OnboardLocationViewController.swift */; };
 		63D7BD1923199D1900935693 /* DuffekDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD1823199D1900935693 /* DuffekDialog.swift */; };
@@ -251,7 +250,6 @@
 		63B5B4AA245939650062F54B /* alerts.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = alerts.graphql; sourceTree = "<group>"; };
 		63B5B4AB2459CB3B0062F54B /* AWImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWImagePicker.swift; sourceTree = "<group>"; };
 		63C1DAC0235FEEFA00587A20 /* AmericanWhitewater.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AmericanWhitewater.xcdatamodel; sourceTree = "<group>"; };
-		63CB41BF24905B6500CCFFD5 /* WhatsNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewViewController.swift; sourceTree = "<group>"; };
 		63D7BD142319774500935693 /* Regions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regions.swift; sourceTree = "<group>"; };
 		63D7BD162319980600935693 /* OnboardLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardLocationViewController.swift; sourceTree = "<group>"; };
 		63D7BD1823199D1900935693 /* DuffekDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuffekDialog.swift; sourceTree = "<group>"; };
@@ -544,7 +542,6 @@
 				63E90EB522EAA36A00C8DAA3 /* More */,
 				63E32B1B2357F2B80057DE34 /* Filtering */,
 				6376508A2487E15100DD0FCE /* ProgressViewController.swift */,
-				63CB41BF24905B6500CCFFD5 /* WhatsNewViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -995,7 +992,6 @@
 				63F712E2238869A50047C8F0 /* UIImage+Color.swift in Sources */,
 				63949959246F15C10061552C /* AddButtonCell.swift in Sources */,
 				63A6FD692367730C00148231 /* AWApiReachHelper.swift in Sources */,
-				63CB41C024905B6500CCFFD5 /* WhatsNewViewController.swift in Sources */,
 				631644A2246ED80C00807E19 /* UIButton+UrlImageLoad.swift in Sources */,
 				63E0B22C23A3EDDE00A348FC /* MKMapView+FitAll.swift in Sources */,
 				63B5B4AC2459CB3B0062F54B /* AWImagePicker.swift in Sources */,

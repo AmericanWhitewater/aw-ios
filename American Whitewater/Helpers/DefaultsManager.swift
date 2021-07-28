@@ -26,11 +26,6 @@ class DefaultsManager {
         set { defaults.set(newValue, forKey: Keys.unameId) }
     }
     
-    var whatsNew: String? {
-        get { defaults.string(forKey: Keys.whatsNew) }
-        set { defaults.set(newValue, forKey: Keys.whatsNew) }
-    }
-    
     var completedFirstRun: Bool {
         get { defaults.bool(forKey: Keys.completedFirstRun) }
         set { defaults.set(newValue, forKey: Keys.completedFirstRun) }
@@ -222,7 +217,6 @@ class DefaultsManager {
         static let appVersion = "appVersionKey"
         static let userAccountId = "userAccountId"
         static let unameId = "uname"
-        static let whatsNew = "whatsNewKey"
         static let completedFirstRun = "completedFirstRunKey"
         static let legendFirstRun = "legendFirstRunKey"
         static let onboardingCompleted = "onboardingCompletedKey"
