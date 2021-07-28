@@ -21,11 +21,14 @@ class DefaultsManager {
         get { defaults.string(forKey: Keys.userAccountId) }
         set { defaults.set(newValue, forKey: Keys.userAccountId) }
     }
+    
     var uname: String? {
         get { defaults.string(forKey: Keys.unameId) }
         set { defaults.set(newValue, forKey: Keys.unameId) }
     }
     
+    /// Used for two things: to set default filters (see AppDelegate),
+    /// and to decide whether to request all reaches from the API (see RunsListViewController)
     var completedFirstRun: Bool {
         get { defaults.bool(forKey: Keys.completedFirstRun) }
         set { defaults.set(newValue, forKey: Keys.completedFirstRun) }
@@ -39,34 +42,6 @@ class DefaultsManager {
     var onboardingCompleted: Bool {
         get { defaults.bool(forKey: Keys.onboardingCompleted) }
         set { defaults.set(newValue, forKey: Keys.onboardingCompleted) }
-    }
-
-    var regionsFilter: [String] {
-        get {
-            (defaults.array(forKey: Keys.regionsFilter) as? [String]) ??
-            []
-        }
-        set { defaults.set(newValue, forKey: Keys.regionsFilter) }
-    }
-
-    var distanceFilter: Double {
-        get {
-            (defaults.object(forKey: Keys.distanceFilter) as? Double) ??
-            100
-        }
-        set {
-            defaults.set(newValue, forKey: Keys.distanceFilter)
-        }
-    }
-    
-    var showDistanceFilter: Bool {
-        get { defaults.bool(forKey: Keys.showDistanceFilter) }
-        set { defaults.set(newValue, forKey: Keys.showDistanceFilter) }
-    }
-
-    var showRegionFilter: Bool {
-        get { defaults.bool(forKey: Keys.showRegionFilter) }
-        set { defaults.set(newValue, forKey: Keys.showRegionFilter) }
     }
     
     //
@@ -99,8 +74,36 @@ class DefaultsManager {
     }
     
     //
-    // MARK: -
+    // MARK: - Filters
     //
+    
+    var showDistanceFilter: Bool {
+        get { defaults.bool(forKey: Keys.showDistanceFilter) }
+        set { defaults.set(newValue, forKey: Keys.showDistanceFilter) }
+    }
+
+    var showRegionFilter: Bool {
+        get { defaults.bool(forKey: Keys.showRegionFilter) }
+        set { defaults.set(newValue, forKey: Keys.showRegionFilter) }
+    }
+    
+    var regionsFilter: [String] {
+        get {
+            (defaults.array(forKey: Keys.regionsFilter) as? [String]) ??
+            []
+        }
+        set { defaults.set(newValue, forKey: Keys.regionsFilter) }
+    }
+
+    var distanceFilter: Double {
+        get {
+            (defaults.object(forKey: Keys.distanceFilter) as? Double) ??
+            100
+        }
+        set {
+            defaults.set(newValue, forKey: Keys.distanceFilter)
+        }
+    }
     
     var classFilter: [Int] {
         get {
@@ -114,6 +117,10 @@ class DefaultsManager {
         get { defaults.bool(forKey: Keys.runnableFilter) }
         set { defaults.set(newValue, forKey: Keys.runnableFilter) }
     }
+    
+    //
+    // MARK: -
+    //
     
     var lastUpdated: Date? {
         get { defaults.object(forKey: Keys.updated) as? Date }
@@ -130,6 +137,7 @@ class DefaultsManager {
         set { defaults.set(newValue, forKey: Keys.articlesUpdated) }
     }
     
+    // FIXME: this should not be persisted state!
     var fetchingreaches: Bool {
         get { defaults.bool(forKey: Keys.fetchingReaches) }
         set { defaults.set(newValue, forKey: Keys.fetchingReaches) }
