@@ -80,7 +80,7 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
                 guard error == nil,
                     let placemarks = placemarks,
                     let place = placemarks.first,
-                    let coordinates = place.location?.coordinate else {
+                    let coordinate = place.location?.coordinate else {
                         
                         // some sort of error so show message and reset view
                         DuffekDialog.shared.showOkDialog(title: "Unable to Find Location", message: "We are unable to find that location. Please check your connection or enter a new zip code to try again.")
@@ -90,18 +90,17 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
                         return
                 }
                 
-                print("Location found: \(coordinates.latitude), \(coordinates.longitude)")
+                print("Location found: \(coordinate.latitude), \(coordinate.longitude)")
                 print("Place: \(String(describing: place.administrativeArea))")
                 
-                DefaultsManager.latitude = coordinates.latitude
-                DefaultsManager.longitude = coordinates.longitude
-                DefaultsManager.distanceFilter = 100
-                DefaultsManager.onboardingCompleted = true
-                DefaultsManager.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
+                DefaultsManager.shared.coordinate = coordinate
+                DefaultsManager.shared.distanceFilter = 100
+                DefaultsManager.shared.onboardingCompleted = true
+                DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
                 
                 // grab and store the region code from admin area
                 if let adminArea = place.administrativeArea, let region = Region.regionByCode(code: "st\(adminArea)") {
-                    DefaultsManager.regionsFilter = [region.code]
+                    DefaultsManager.shared.regionsFilter = [region.code]
                 }
                 
                 // dismiss this view controller and tell the referencing ViewController to refresh
@@ -129,13 +128,12 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
             locationManager.stopUpdatingLocation()
 
             // store the location for future use
-            DefaultsManager.latitude = location.coordinate.latitude
-            DefaultsManager.longitude = location.coordinate.longitude
-            DefaultsManager.showRegionFilter = false
-            DefaultsManager.showDistanceFilter = true
-            DefaultsManager.distanceFilter = 100
-            DefaultsManager.onboardingCompleted = true
-            DefaultsManager.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
+            DefaultsManager.shared.coordinate = location.coordinate
+            DefaultsManager.shared.showRegionFilter = false
+            DefaultsManager.shared.showDistanceFilter = true
+            DefaultsManager.shared.distanceFilter = 100
+            DefaultsManager.shared.onboardingCompleted = true
+            DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
             
             // reverse geocode the users location so we can get the admin area so we can request this location first
             let decoder = CLGeocoder()
@@ -144,7 +142,7 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
                     if let placemark = placemarks?.first {
                         if let adminArea = placemark.administrativeArea, let region = Region.regionByCode(code: "st\(adminArea)") {
 
-                            DefaultsManager.regionsFilter = [region.code]
+                            DefaultsManager.shared.regionsFilter = [region.code]
                         }
                     }
                 }

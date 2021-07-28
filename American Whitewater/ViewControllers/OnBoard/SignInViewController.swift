@@ -19,7 +19,7 @@ class SignInViewController: UIViewController {
         signInButton.layer.cornerRadius = 22.5
         createAccountButton.layer.cornerRadius = 22.5
         
-        DefaultsManager.signInLastShown = Date()
+        DefaultsManager.shared.signInLastShown = Date()
     }
     
     @IBAction func cancelButtonPressed(_ sender: Any) {
@@ -72,7 +72,7 @@ class SignInViewController: UIViewController {
                     //keychain.delete("ios-aw-auth-key") // for sign out
                     //print("Keychain auth key is: ", keychain.get("ios-aw-auth-key"))
                     
-                    DefaultsManager.signedInAuth = "true"
+                    DefaultsManager.shared.signedInAuth = "true"
                     
                     // Dismiss login box
                     self.dismiss(animated: true, completion: nil)

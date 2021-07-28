@@ -51,15 +51,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // This nice library moves text fields out of the way of the keyboard automagically
         IQKeyboardManager.shared.enable = true
         
-        // in case of crash reset the flag saying we are finding reaches
-        DefaultsManager.fetchingreaches = false
-
         // setting first values for first run
-        if !DefaultsManager.completedFirstRun {
-            DefaultsManager.showRegionFilter = true
-            DefaultsManager.showDistanceFilter = false
-            DefaultsManager.distanceFilter = 100
-            DefaultsManager.classFilter = [1,2,3,4,5]            
+        if !DefaultsManager.shared.completedFirstRun {
+            DefaultsManager.shared.showRegionFilter = true
+            DefaultsManager.shared.showDistanceFilter = false
+            DefaultsManager.shared.distanceFilter = 100
+            DefaultsManager.shared.classFilter = [1,2,3,4,5]
         }
         
         // make Status Bar white
@@ -83,4 +80,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       return true
     }
 }
-

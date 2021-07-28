@@ -15,7 +15,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var selectedRegionsOrig:[Region] = []
     var usaRegions = Region.states
     var internationalRegions = Region.international
-    var classFilters:[Int] = DefaultsManager.classFilter
+    var classFilters:[Int] = DefaultsManager.shared.classFilter
 
     @IBOutlet weak var regionsContainerView: UIView!
         
@@ -77,7 +77,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @objc func clearRegionsButtonPressed(_ sender: Any) {
         
         selectedRegions.removeAll()
-        DefaultsManager.regionsFilter.removeAll()
+        DefaultsManager.shared.regionsFilter.removeAll()
         
         contentCollectionView.reloadData()
     }
@@ -122,7 +122,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.selectedRegionsLabel.text = "Selected Regions: \(selectedRegionsString)"
 
             // only show region info if we are using region filters
-            cell.showRegionsViewSwitch.isOn = DefaultsManager.showRegionFilter
+            cell.showRegionsViewSwitch.isOn = DefaultsManager.shared.showRegionFilter
             cell.showRegionsViewSwitch.addTarget(self, action: #selector(filterByRegionSwitchChanged(_:)), for: .valueChanged)
             
             if cell.showRegionsViewSwitch.isOn {
@@ -138,7 +138,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         else if indexPath.row == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterClassCell", for: indexPath) as! FilterClassCollectionViewCell
             
-             classFilters = DefaultsManager.classFilter
+             classFilters = DefaultsManager.shared.classFilter
             
              for classFilter in classFilters {
                 if classFilter == 1 {
@@ -180,7 +180,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.currentLocationAddressLabel.text = ""
             
             // setup filter switch and visibility as needed
-            if DefaultsManager.showDistanceFilter == false {
+            if DefaultsManager.shared.showDistanceFilter == false {
                 cell.filterByDistanceSwitch.isOn = false
                 cell.currentLocationViewContainer.isHidden = true
                 cell.filterDistanceSliderViewContainer.isHidden = true
@@ -193,19 +193,17 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
 
             // set the filter to the correct value and show on UI
-            cell.distanceFilterSlider.value = Float(Int(DefaultsManager.distanceFilter))
+            cell.distanceFilterSlider.value = Float(Int(DefaultsManager.shared.distanceFilter))
             
             cell.currentLocationActivityIndicator.isHidden = false
             cell.currentLocationActivityIndicator.startAnimating()
             
             // check if we have an existing current location
-            let latitude = DefaultsManager.latitude
-            let longitude = DefaultsManager.longitude
-
-            if latitude > 0.0 && longitude < 0.0 {
-                
+            let location = DefaultsManager.shared.location
+            
+            // FIXME: probably CLLocationCoordinate2DIsValid() is what's wanted here?
+            if location.coordinate.latitude > 0.0 && location.coordinate.longitude < 0.0 {
                 // reverse geocode the location
-                let location = CLLocation(latitude: latitude, longitude: longitude)
                 geoCoder.reverseGeocodeLocation(location) { (placemarks, error) in
                     if error == nil {
                         let placemark = placemarks?.last
@@ -223,7 +221,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
             }
 
-            DefaultsManager.distanceFilter = Double(cell.distanceFilterSlider.value)
+            DefaultsManager.shared.distanceFilter = Double(cell.distanceFilterSlider.value)
             
             if cell.distanceFilterSlider.value == 0 {
                 cell.distanceFilterLabel.text = "Search Any Distance"
@@ -314,16 +312,16 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             regionCodes.append(item.code)
         }
         
-        DefaultsManager.regionsFilter = regionCodes
-
-        // make it known that the regions have changed
-        DefaultsManager.regionsUpdated = true
+        DefaultsManager.shared.regionsFilter = regionCodes
+        
+        // This used to write to DefaultsManager to try and indicate that the region filter had changed
+        // AWTODO: should this broadcast changes? Use a Notification if so
     }
     
     func loadRegions() {
         selectedRegions.removeAll()
         
-        let regionStrings:[String] = DefaultsManager.regionsFilter
+        let regionStrings:[String] = DefaultsManager.shared.regionsFilter
         for item in regionStrings {
             let region = Region.regionByCode(code: item)
             if let region = region {
@@ -385,7 +383,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         // store any changes in user defaults
-        DefaultsManager.classFilter = classFilters
+        DefaultsManager.shared.classFilter = classFilters
     }
 
     
@@ -403,8 +401,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             locationManager.stopUpdatingLocation()
 
             // store the location for future use
-            DefaultsManager.latitude = location.coordinate.latitude
-            DefaultsManager.longitude = location.coordinate.longitude
+            DefaultsManager.shared.coordinate = location.coordinate
 
             // now load the UI info for the distance filter info
             contentCollectionView.reloadData()
@@ -419,11 +416,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     func updateFilterBy(shouldFilterByRegion: Bool) {
         if shouldFilterByRegion {
-            DefaultsManager.showRegionFilter = true
-            DefaultsManager.showDistanceFilter = false
+            DefaultsManager.shared.showRegionFilter = true
+            DefaultsManager.shared.showDistanceFilter = false
         } else {
-            DefaultsManager.showRegionFilter = false
-            DefaultsManager.showDistanceFilter = true
+            DefaultsManager.shared.showRegionFilter = false
+            DefaultsManager.shared.showDistanceFilter = true
         }
         
         contentCollectionView.reloadData()
@@ -445,7 +442,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @objc func distanceSliderChanged(distanceSlider: UISlider) {
         
-        DefaultsManager.distanceFilter = Double(distanceSlider.value)
+        DefaultsManager.shared.distanceFilter = Double(distanceSlider.value)
         
         contentCollectionView.reloadData()
     }
@@ -456,7 +453,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //
     
     @IBAction func doneButtonPressed(_ sender: Any) {
-        if DefaultsManager.showRegionFilter && DefaultsManager.regionsFilter.count == 0 {
+        if DefaultsManager.shared.showRegionFilter && DefaultsManager.shared.regionsFilter.count == 0 {
             DuffekDialog.shared.showOkDialog(title: "Region Required", message: "Please select a region or choose to filter by Distance before continuing")
         }
         

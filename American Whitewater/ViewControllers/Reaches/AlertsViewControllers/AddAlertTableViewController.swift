@@ -66,18 +66,18 @@ class AddAlertTableViewController: UITableViewController {
             // save the alert to local storage in case GQL is slow
             // this gets loaded first in the AlertsView while GQL call
             // happens in background
-            var storedAlerts = DefaultsManager.reachAlerts
+            var storedAlerts = DefaultsManager.shared.reachAlerts
             print("Total Stored Alerts:", storedAlerts.count)
             if var reachAlerts = storedAlerts["\(selectedRun.id)"] {
                 reachAlerts.insert(newAlert, at: 0)
                 storedAlerts["\(selectedRun.id)"] = reachAlerts
-                DefaultsManager.reachAlerts = storedAlerts
+                DefaultsManager.shared.reachAlerts = storedAlerts
             } else {
                 // no alerts have been stored for this group yet
                 var alertsList = [ [String: String] ]()
                 alertsList.append(newAlert)
                 storedAlerts["\(selectedRun.id)"] = alertsList
-                DefaultsManager.reachAlerts = storedAlerts
+                DefaultsManager.shared.reachAlerts = storedAlerts
             }
             
             self.successAndDismissView()

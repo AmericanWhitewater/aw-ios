@@ -106,7 +106,7 @@ class AWGQLArticleApiHelper
             }
             
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            DefaultsManager.articlesLastUpdated = Date()
+            DefaultsManager.shared.articlesLastUpdated = Date()
             
             callback()
 
