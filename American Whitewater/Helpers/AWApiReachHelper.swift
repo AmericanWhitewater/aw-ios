@@ -11,7 +11,6 @@ import CoreLocation
 */
 
 class AWApiReachHelper {
-
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
     
     // setup our singleton for the api helper class
@@ -24,7 +23,7 @@ class AWApiReachHelper {
     typealias ReachErrorCallback = (Error?) -> Void
     typealias UpdateReachesCallback = () -> Void
     typealias ReachDetailCallback = (AWReachDetail) -> Void
-    
+        
     func fetchReachesByRegion(regionCode: String, callback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
         print("Fetching Reaches by Region: \(regionCode)")
         let urlString = riverURL + "?state=\(regionCode)"
@@ -265,19 +264,21 @@ class AWApiReachHelper {
             print("Unable to save reaches in core data: \(error), \(error.localizedDescription)")
         }
     }
+    
+    private (set) static var isFetchingReaches = false
 
     func updateRegionalReaches(regionCodes: [String], callback: @escaping UpdateReachesCallback, callbackError: @escaping ReachErrorCallback) {
         let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
-        guard DefaultsManager.shared.fetchingreaches == false else {
-            print("Already fetching reaches...");
+        guard Self.isFetchingReaches == false else {
+            print("Already fetching reaches...")
             callback()
             return
         }
         
         print("Fetching region codes: \(regionCodes.description)")
         
-        DefaultsManager.shared.fetchingreaches = true
+        Self.isFetchingReaches = true
         let dispatchGroup = DispatchGroup()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         print("Dispatch group enter")
@@ -323,7 +324,7 @@ class AWApiReachHelper {
             
 //            DefaultsManager.lastUpdated = Date()
 //            DefaultsManager.favoritesLastUpdated = Date()
-            DefaultsManager.shared.fetchingreaches = false
+            Self.isFetchingReaches = false
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }

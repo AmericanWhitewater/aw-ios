@@ -137,12 +137,6 @@ class DefaultsManager {
         set { defaults.set(newValue, forKey: Keys.articlesUpdated) }
     }
     
-    // FIXME: this should not be persisted state!
-    var fetchingreaches: Bool {
-        get { defaults.bool(forKey: Keys.fetchingReaches) }
-        set { defaults.set(newValue, forKey: Keys.fetchingReaches) }
-    }
-    
     var reachAlerts: [String: [ [String: String]] ] {
         get {
             (defaults.dictionary(forKey: Keys.reachAlerts) as? [String: [ [String:String]] ]) ??
@@ -229,7 +223,6 @@ class DefaultsManager {
         static let updated = "updatedKey"
         static let favoritesUpdated = "favoritesUpdatedKey"
         static let articlesUpdated = "articlesUpdatedKey"
-        static let fetchingReaches = "fetchingReachesKey"
         static let reachAlerts = "reachAlertsKey"
         static let signedInAuth = "signedInUserIdKey"
         static let signInAlertCount = "signInAlertCountKey"

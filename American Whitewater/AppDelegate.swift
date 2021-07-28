@@ -51,9 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // This nice library moves text fields out of the way of the keyboard automagically
         IQKeyboardManager.shared.enable = true
         
-        // in case of crash reset the flag saying we are finding reaches
-        DefaultsManager.shared.fetchingreaches = false
-
         // setting first values for first run
         if !DefaultsManager.shared.completedFirstRun {
             DefaultsManager.shared.showRegionFilter = true
@@ -83,4 +80,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       return true
     }
 }
-
