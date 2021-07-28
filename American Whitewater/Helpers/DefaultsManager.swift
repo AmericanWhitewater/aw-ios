@@ -56,13 +56,8 @@ class DefaultsManager {
 
     var distanceFilter: Double {
         get {
-            var distanceFilter = defaults.double(forKey: Keys.distanceFilter)
-            if distanceFilter == 0.0 {
-                distanceFilter = 100
-                defaults.set(distanceFilter, forKey: Keys.distanceFilter)
-            }
-            
-            return defaults.double(forKey: Keys.distanceFilter)
+            (defaults.object(forKey: Keys.distanceFilter) as? Double) ??
+            100
         }
         set {
             defaults.set(newValue, forKey: Keys.distanceFilter)
