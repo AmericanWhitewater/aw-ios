@@ -313,9 +313,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         DefaultsManager.shared.regionsFilter = regionCodes
-
-        // make it known that the regions have changed
-        DefaultsManager.shared.regionsUpdated = true
+        
+        // This used to write to DefaultsManager to try and indicate that the region filter had changed
+        // AWTODO: should this broadcast changes? Use a Notification if so
     }
     
     func loadRegions() {

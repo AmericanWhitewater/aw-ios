@@ -91,12 +91,6 @@ class RunsListViewController: UIViewController {
         print("Check if onboarding needed")
         if checkIfOnboardingNeeded() == false {
              self.refresh()
-//            
-//            // if regions fitler has changed then refresh
-//            if DefaultsManager.regionsUpdated {
-//                DefaultsManager.regionsUpdated = false
-//                self.refresh();
-//            }
         }
         
         // show the ugly legend until we design a better one

@@ -49,11 +49,6 @@ class DefaultsManager {
         set { defaults.set(newValue, forKey: Keys.regionsFilter) }
     }
 
-    var regionsUpdated: Bool {
-        get { defaults.bool(forKey: Keys.regionsUpdated) }
-        set { defaults.set(newValue, forKey: Keys.regionsUpdated) }
-    }
-
     var distanceFilter: Double {
         get {
             (defaults.object(forKey: Keys.distanceFilter) as? Double) ??
@@ -216,7 +211,6 @@ class DefaultsManager {
         static let legendFirstRun = "legendFirstRunKey"
         static let onboardingCompleted = "onboardingCompletedKey"
         static let regionsFilter = "regionsFilterKey"
-        static let regionsUpdated = "regionsUpdatedKey"
         static let distanceFilter = "distanceFilterKey"
         static let showDistanceFilter = "showDistanceFilterKey"
         static let showRegionFilter = "showRegionFilterKey"
