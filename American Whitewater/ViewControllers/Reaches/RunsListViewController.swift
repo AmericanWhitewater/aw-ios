@@ -84,26 +84,31 @@ class RunsListViewController: UIViewController {
     }
     
     func showOnboardingIfNeeded() {
-        if !DefaultsManager.shared.onboardingCompleted {
-            if let modalOnboadingVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardingVC") as? OnboardLocationViewController {
-                modalOnboadingVC.modalPresentationStyle = .overCurrentContext
-                modalOnboadingVC.referenceViewController = self
-                tabBarController?.present(modalOnboadingVC, animated: true, completion: nil)
-            }
+        guard
+            !DefaultsManager.shared.onboardingCompleted,
+            let modalOnboardingVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardingVC") as? OnboardLocationViewController
+        else {
+            return
         }
+ 
+        modalOnboardingVC.modalPresentationStyle = .overCurrentContext
+        modalOnboardingVC.referenceViewController = self
+        tabBarController?.present(modalOnboardingVC, animated: true, completion: nil)
     }
 
     func showLoginScreen() {
-        if let lastShown = DefaultsManager.shared.signInLastShown {
+        guard
+            let lastShown = DefaultsManager.shared.signInLastShown,
             // Only show once per day
-            if lastShown < Date(timeIntervalSinceNow: -24 * 60 * 60) {
-                if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
-                    modalSignInVC.modalPresentationStyle = .overCurrentContext
-                    modalSignInVC.referenceViewController = self
-                    tabBarController?.present(modalSignInVC, animated: true, completion: nil)
-                }
-            }
+            lastShown < Date(timeIntervalSinceNow: -24 * 60 * 60),
+            let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController
+        else {
+            return
         }
+
+        modalSignInVC.modalPresentationStyle = .overCurrentContext
+        modalSignInVC.referenceViewController = self
+        tabBarController?.present(modalSignInVC, animated: true, completion: nil)
     }
     
     // Contract for updating data
@@ -216,7 +221,13 @@ class RunsListViewController: UIViewController {
     /// Returns the distance from the last saved user location to a location given as lat/long strings, in miles (approximately)
     private func calculateDistanceToRiver(riverLatString: String?, riverLonString: String?) -> Double? {
         // get river info
-        guard let riverLat = Double(riverLatString ?? ""), let riverLon = Double(riverLonString ?? "") else { return nil }
+        guard
+            let riverLat = Double(riverLatString ?? ""),
+            let riverLon = Double(riverLonString ?? "")
+        else {
+            return nil
+        }
+        
         let riverLocation = CLLocation(latitude: riverLat, longitude: riverLon)
         
         // get user location and check it
@@ -238,25 +249,29 @@ class RunsListViewController: UIViewController {
     }
     
     @objc func favoriteButtonPressed(_ sender: UIButton?) {
-        if let button = sender {
-                                    
-            // This is a good time to ask for permissions!
-            OneSignal.promptForPushNotifications(userResponse: { accepted in
-                print("User accepted notifications: \(accepted)")
-            })
-
-            
-            guard let reach = fetchedResultsController?.object(at: IndexPath(row: button.tag, section: 0)) else { return }
-            reach.favorite = !reach.favorite
-            
-            do {
-                defer { self.tableView.reloadData(); }
-                
-                try managedObjectContext.save()
-            } catch {
-                print("Unable to save context after save button pressed")
-            }
+        guard let button = sender else {
+            return
         }
+                                    
+        // This is a good time to ask for permissions!
+        OneSignal.promptForPushNotifications(userResponse: { accepted in
+            print("User accepted notifications: \(accepted)")
+        })
+        
+        
+        guard let reach = fetchedResultsController?.object(at: IndexPath(row: button.tag, section: 0)) else {
+            return
+        }
+        
+        reach.favorite.toggle()
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save context after save button pressed")
+        }
+        
+        self.tableView.reloadData()
     }
     
 
@@ -361,12 +376,14 @@ class RunsListViewController: UIViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let reach = sender as? Reach {
-            if segue.identifier == Segue.runDetail.rawValue {
-                let detailVC = segue.destination as! RunDetailTableViewController
-                detailVC.selectedRun = reach
-            }
-        }        
+        guard let reach = sender as? Reach,
+           segue.identifier == Segue.runDetail.rawValue
+        else {
+            return
+        }
+        
+        let detailVC = segue.destination as! RunDetailTableViewController
+        detailVC.selectedRun = reach
     }
 }
 
@@ -389,10 +406,11 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // AWTODO: when 0 items exist we return 1 to show placeholder values
         // i.e. Check your filters before searching
+        let count = fetchedResultsController?.fetchedObjects?.count ?? 0
         if section == 0 {
-            return fetchedResultsController?.fetchedObjects?.count ?? 0
+            return count
         } else {
-            return (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0 ? 1 : 0
+            return count == 0 ? 1 : 0
         }
     }
     
@@ -471,10 +489,11 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        guard let selectedRun = fetchedResultsController?.object(at: indexPath) else { return }
+        guard let selectedRun = fetchedResultsController?.object(at: indexPath) else {
+            return
+        }
+        
         performSegue(withIdentifier: Segue.runDetail.rawValue, sender: selectedRun)
-
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
