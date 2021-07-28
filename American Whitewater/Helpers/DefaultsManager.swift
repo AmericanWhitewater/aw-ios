@@ -41,11 +41,6 @@ class DefaultsManager {
         set { defaults.set(newValue, forKey: Keys.legendFirstRun) }
     }
     
-    var shouldAutoRefresh: Bool? {
-        get { defaults.object(forKey: Keys.shouldAutoRefresh) as? Bool }
-        set { defaults.set(newValue, forKey: Keys.shouldAutoRefresh) }
-    }
-    
     var onboardingCompleted: Bool {
         get { defaults.bool(forKey: Keys.onboardingCompleted) }
         set { defaults.set(newValue, forKey: Keys.onboardingCompleted) }
@@ -230,7 +225,6 @@ class DefaultsManager {
         static let whatsNew = "whatsNewKey"
         static let completedFirstRun = "completedFirstRunKey"
         static let legendFirstRun = "legendFirstRunKey"
-        static let shouldAutoRefresh = "shouldAutoRefresh"
         static let onboardingCompleted = "onboardingCompletedKey"
         static let regionsFilter = "regionsFilterKey"
         static let regionsUpdated = "regionsUpdatedKey"
