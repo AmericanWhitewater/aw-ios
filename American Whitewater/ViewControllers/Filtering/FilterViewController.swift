@@ -1,9 +1,7 @@
 import UIKit
 import CoreLocation
 
-class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, CLLocationManagerDelegate,
-                            UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    
+class FilterViewController: UIViewController {
     @IBOutlet weak var contentCollectionView: UICollectionView!
     @IBOutlet weak var filterSegmentControl: UISegmentedControl!
     @IBOutlet weak var regionsContainerView: UIView!
@@ -91,9 +89,90 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         contentCollectionView.reloadData()
     }
     
+    func toggle(region: Region) {
+        if filters.regionsFilter.contains(region.code) {
+            filters.regionsFilter.removeAll { $0 == region.code }
+        } else {
+            filters.regionsFilter.append(region.code)
+        }
+        
+        // This used to write to DefaultsManager to try and indicate that the region filter had changed
+        // AWTODO: should this broadcast changes? Use a Notification if so
+    }
     
-    // MARK - Collection View Delegate / Datasource functions
+    //
+    // MARK - Class Filtering
+    //
     
+    /// Adds or removes a class filter based on the switch
+    /// Note: this depends on tags beign set to the right number in the storyboard, and will break if that changes
+    @objc func classFilterChanged(classSwitch: UISwitch) {
+        let filterClass = classSwitch.tag
+
+        if filters.classFilter.contains(filterClass) {
+            filters.classFilter.removeAll { $0 == filterClass}
+        } else {
+            filters.classFilter.append(filterClass)
+        }
+    }
+
+    
+    //
+    // MARK - Distance Filtering
+    //
+    
+    @objc func updateLocationButtonPressed(_ sender: Any) {
+        if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func updateFilterBy(shouldFilterByRegion: Bool) {
+        if shouldFilterByRegion {
+            filters.showRegionFilter = true
+            filters.showDistanceFilter = false
+        } else {
+            filters.showRegionFilter = false
+            filters.showDistanceFilter = true
+        }
+        
+        contentCollectionView.reloadData()
+    }
+    
+    @objc func filterByRegionSwitchChanged(_ regionSwitch: UISwitch) {
+        updateFilterBy(shouldFilterByRegion: regionSwitch.isOn)
+    }
+    
+    @objc func filterByDistanceSwitchChanged(_ distanceSwitch: UISwitch) {
+        updateFilterBy(shouldFilterByRegion: !distanceSwitch.isOn)
+    }
+    
+    @objc func distanceSliderChanged(distanceSlider: UISlider) {
+        filters.distanceFilter = Double(distanceSlider.value)
+        distanceFilterLabel?.text = distanceFilterDescription
+        contentCollectionView.reloadData()
+    }
+    
+    //
+    // MARK - Navigation
+    //
+    
+    @IBAction func doneButtonPressed(_ sender: Any) {
+        // FIXME: why isn't this OK for the user to do?
+        if filters.showRegionFilter, filters.regionsFilter.isEmpty {
+            DuffekDialog.shared.showOkDialog(title: "Region Required", message: "Please select a region or choose to filter by Distance before continuing")
+            
+            return
+        }
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+//
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
+//
+extension FilterViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: contentCollectionView.frame.width, height: contentCollectionView.frame.height)
     }
@@ -211,25 +290,23 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return cell
         }
     }
-    
+}
+
+//
+// MARK: - UIScrollViewDelegate
+//
+extension FilterViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if let indexPath = contentCollectionView.indexPathsForVisibleItems.first {
             filterSegmentControl.selectedSegmentIndex = indexPath.row
         }
     }
-
+}
     
-    
-    // MARK - Region UITableViewDelegate Functions
-    
-    private func region(for indexPath: IndexPath) -> Region {
-        if indexPath.section == 0 {
-            return usaRegions[indexPath.row]
-        } else {
-            return internationalRegions[indexPath.row]
-        }
-    }
-    
+//
+// MARK: - UITableViewDelegate, UITableViewDataSource
+//
+extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -271,18 +348,19 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         contentCollectionView.reloadData()
     }
     
-    func toggle(region: Region) {
-        if filters.regionsFilter.contains(region.code) {
-            filters.regionsFilter.removeAll { $0 == region.code }
+    private func region(for indexPath: IndexPath) -> Region {
+        if indexPath.section == 0 {
+            return usaRegions[indexPath.row]
         } else {
-            filters.regionsFilter.append(region.code)
+            return internationalRegions[indexPath.row]
         }
-        
-        // This used to write to DefaultsManager to try and indicate that the region filter had changed
-        // AWTODO: should this broadcast changes? Use a Notification if so
     }
-    
-    
+}
+
+//
+// MARK: - UISearchBarDelegate
+//
+extension FilterViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
@@ -308,35 +386,12 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             $0.abbreviation.uppercased().contains(q)
         }
     }
-    
-    
-    //
-    // MARK - Class Filtering
-    //
-    
-    /// Adds or removes a class filter based on the switch
-    /// Note: this depends on tags beign set to the right number in the storyboard, and will break if that changes
-    @objc func classFilterChanged(classSwitch: UISwitch) {
-        let filterClass = classSwitch.tag
+}
 
-        if filters.classFilter.contains(filterClass) {
-            filters.classFilter.removeAll { $0 == filterClass}
-        } else {
-            filters.classFilter.append(filterClass)
-        }
-    }
-
-    
-    //
-    // MARK - Distance Filtering
-    //
-    
-    @objc func updateLocationButtonPressed(_ sender: Any) {
-        if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
-            locationManager.startUpdatingLocation()
-        }
-    }
-    
+//
+// MARK: - CLLocationManagerDelegate
+//
+extension FilterViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             locationManager.stopUpdatingLocation()
@@ -354,45 +409,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             locationManager.startUpdatingLocation()
         }
     }
-
-    func updateFilterBy(shouldFilterByRegion: Bool) {
-        if shouldFilterByRegion {
-            filters.showRegionFilter = true
-            filters.showDistanceFilter = false
-        } else {
-            filters.showRegionFilter = false
-            filters.showDistanceFilter = true
-        }
-        
-        contentCollectionView.reloadData()
-    }
-    
-    @objc func filterByRegionSwitchChanged(_ regionSwitch: UISwitch) {
-        updateFilterBy(shouldFilterByRegion: regionSwitch.isOn)
-    }
-    
-    @objc func filterByDistanceSwitchChanged(_ distanceSwitch: UISwitch) {
-        updateFilterBy(shouldFilterByRegion: !distanceSwitch.isOn)
-    }
-    
-    @objc func distanceSliderChanged(distanceSlider: UISlider) {
-        filters.distanceFilter = Double(distanceSlider.value)
-        distanceFilterLabel?.text = distanceFilterDescription
-        contentCollectionView.reloadData()
-    }
-    
-    //
-    // MARK - Navigation
-    //
-    
-    @IBAction func doneButtonPressed(_ sender: Any) {
-        // FIXME: why isn't this OK for the user to do?
-        if filters.showRegionFilter, filters.regionsFilter.isEmpty {
-            DuffekDialog.shared.showOkDialog(title: "Region Required", message: "Please select a region or choose to filter by Distance before continuing")
-            
-            return
-        }
-        
-        self.navigationController?.popViewController(animated: true)
-    }
 }
+
+
