@@ -4,7 +4,7 @@ import CoreData
 
 extension Reach {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Reach> {
+    @nonobjc public class func reachFetchRequest() -> NSFetchRequest<Reach> {
         return NSFetchRequest<Reach>(entityName: "Reach")
     }
 

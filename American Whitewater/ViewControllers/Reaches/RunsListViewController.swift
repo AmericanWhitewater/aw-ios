@@ -57,7 +57,6 @@ class RunsListViewController: UIViewController {
 
         updateData();
         
-        print("Check if onboarding needed")
         showOnboardingIfNeeded()
 
         // check if user is logged in
@@ -76,11 +75,6 @@ class RunsListViewController: UIViewController {
         
         fetchedResultsController?.delegate = nil
         fetchedResultsController = nil
-    }
-    
-    @objc func dismissKeyboard() {
-        self.searchBar.textField?.resignFirstResponder()
-        self.searchBar.textField?.endEditing(true)
     }
     
     func showOnboardingIfNeeded() {
@@ -151,7 +145,17 @@ class RunsListViewController: UIViewController {
                     refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
                 }
             } else {
-                refreshFetchedReaches(success: onUpdateSuccessful, failure: onUpdateFailed)
+                guard let results = fetchedResultsController?.fetchedObjects else {
+                    // FIXME: is this a success or failure?
+                    onUpdateSuccessful()
+                    return
+                }
+                
+                AWApiReachHelper.shared.updateReaches(
+                    reachIds: results.map{ "\($0.id)" },
+                    callback: onUpdateSuccessful,
+                    callbackError: onUpdateFailed
+                )
             }
         }
     }
@@ -165,7 +169,7 @@ class RunsListViewController: UIViewController {
             fetchedResultsController.fetchRequest.predicate = combinedFilterPredicate
         } else {
             // Create the fetched results controller if it doesn't exist
-            let request = Reach.fetchRequest()
+            let request = Reach.reachFetchRequest()
             request.sortDescriptors = sortDescriptors
             request.predicate = combinedFilterPredicate
             fetchedResultsController = NSFetchedResultsController(
@@ -194,23 +198,14 @@ class RunsListViewController: UIViewController {
         )
     }
     
-    func refreshFetchedReaches(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        guard let results = fetchedResultsController?.fetchedObjects else {
-            // FIXME: is this a success or failure?
-            success()
-            return
-        }
-        
-        AWApiReachHelper.shared.updateReaches(
-            reachIds: results.map{ "\($0.id)" },
-            callback: success,
-            callbackError: failure
-        )
-    }
-    
     @objc func didPullRefreshControl(refreshControl: UIRefreshControl) {
         print("Refresh called from refresh control")
         self.updateData(fromNetwork: true)
+    }
+    
+    @objc func dismissKeyboard() {
+        self.searchBar.textField?.resignFirstResponder()
+        self.searchBar.textField?.endEditing(true)
     }
     
     @IBAction func runnableFilterChanged(_ runnableSwitch: UISwitch) {

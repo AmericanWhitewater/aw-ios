@@ -85,7 +85,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func fetchReachesFromCoreData() {
         print("Fetching reaches")
-        let request = Reach.fetchRequest() as NSFetchRequest<Reach>
+        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
         
         // setup sort filters
         request.sortDescriptors = [
