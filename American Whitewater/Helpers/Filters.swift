@@ -18,6 +18,19 @@ struct Filters {
     var distanceFilter: Double
     var classFilter: [Int]
     var runnableFilter: Bool
+    
+    //
+    // MARK: - Some defaults for first run or resetting
+    //
+    
+    static let defaultByRegionFilters = Filters(        
+        showDistanceFilter: false,
+        showRegionFilter: true,
+        regionsFilter: [], // FIXME?
+        distanceFilter: 100,
+        classFilter: [1,2,3,4,5],
+        runnableFilter: false
+    )
 }
 
 //
