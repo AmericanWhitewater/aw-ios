@@ -94,14 +94,20 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
                 print("Place: \(String(describing: place.administrativeArea))")
                 
                 DefaultsManager.shared.coordinate = coordinate
-                DefaultsManager.shared.distanceFilter = 100
                 DefaultsManager.shared.onboardingCompleted = true
                 DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
                 
-                // grab and store the region code from admin area
+                var filters = DefaultsManager.shared.filters
+                // Reset distance filter to 100 miles
+                // FIXME: should this be changing showDistanceFilter vs showRegionFilter?
+                filters.distanceFilter = 100
+                
+                // Set region code from admin area if available
                 if let adminArea = place.administrativeArea, let region = Region.regionByCode(code: "st\(adminArea)") {
-                    DefaultsManager.shared.regionsFilter = [region.code]
+                    filters.regionsFilter = [region.code]
                 }
+                
+                DefaultsManager.shared.filters = filters
                 
                 // dismiss this view controller and tell the referencing ViewController to refresh
                 // AWTODO: Post a notification about this instead of coupling to the runs list controller
@@ -120,42 +126,43 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
      and zip code so we can find a default region for them to see
     */
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        if let location = locations.last {
-
-            print("Got the latest location: \(location.debugDescription)")
-            // stop updating
-            locationManager.stopUpdatingLocation()
-
-            // store the location for future use
-            DefaultsManager.shared.coordinate = location.coordinate
-            DefaultsManager.shared.showRegionFilter = false
-            DefaultsManager.shared.showDistanceFilter = true
-            DefaultsManager.shared.distanceFilter = 100
-            DefaultsManager.shared.onboardingCompleted = true
-            DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
-            
-            // reverse geocode the users location so we can get the admin area so we can request this location first
-            let decoder = CLGeocoder()
-            decoder.reverseGeocodeLocation(location) { (placemarks, error) in
-                if error == nil {
-                    if let placemark = placemarks?.first {
-                        if let adminArea = placemark.administrativeArea, let region = Region.regionByCode(code: "st\(adminArea)") {
-
-                            DefaultsManager.shared.regionsFilter = [region.code]
-                        }
-                    }
-                }
-            }
-            
-            // dismiss this modal view controller and tell the referencing ViewController to refresh
-            // AWTODO: Post a notification about this instead of coupling to the runs list controller
-            self.dismiss(animated: true, completion: {
-                if let viewVC = self.referenceViewController as? RunsListViewController {
-                    viewVC.updateData()
-                }
-            })
+        guard let location = locations.last else {
+            return
         }
+
+        print("Got the latest location: \(location.debugDescription)")
+        // stop updating
+        locationManager.stopUpdatingLocation()
+        
+        // store the location for future use
+        DefaultsManager.shared.coordinate = location.coordinate
+        
+        DefaultsManager.shared.filters = Filters.defaultByDistanceFilters
+
+        DefaultsManager.shared.onboardingCompleted = true
+        DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
+        
+        // reverse geocode the users location so we can get the admin area so we can request this location first
+        let decoder = CLGeocoder()
+        decoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            if
+                error == nil,
+                let placemark = placemarks?.first,
+                let adminArea = placemark.administrativeArea,
+                let region = Region.regionByCode(code: "st\(adminArea)")
+            {
+                // FIXME: this updates the regions filter after dismissing the view controller, notifying the parent. Is this a problem?
+                DefaultsManager.shared.filters.regionsFilter = [region.code]
+            }
+        }
+        
+        // dismiss this modal view controller and tell the referencing ViewController to refresh
+        // AWTODO: Post a notification about this instead of coupling to the runs list controller
+        self.dismiss(animated: true, completion: {
+            if let viewVC = self.referenceViewController as? RunsListViewController {
+                viewVC.updateData()
+            }
+        })
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

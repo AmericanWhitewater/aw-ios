@@ -31,6 +31,15 @@ struct Filters {
         classFilter: [1,2,3,4,5],
         runnableFilter: false
     )
+    
+    static let defaultByDistanceFilters = Filters(
+        showDistanceFilter: true,
+        showRegionFilter: false,
+        regionsFilter: [],
+        distanceFilter: 100,
+        classFilter: [1,2,3,4,5],
+        runnableFilter: false
+    )
 }
 
 //
