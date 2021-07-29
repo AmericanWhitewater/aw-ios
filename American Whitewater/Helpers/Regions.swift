@@ -6,6 +6,10 @@ struct Region {
     let country: String
     let apiResponse: String
     
+    var abbreviation: Substring {
+        code.suffix(2)
+    }
+    
     static let all: [Region] = [
         Region(code: "stAL", title: "Alabama", country: "US", apiResponse: "USA-ALB"),
         Region(code: "stAK", title: "Alaska", country: "US", apiResponse: "USA-ALK"),
