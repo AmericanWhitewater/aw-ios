@@ -99,17 +99,17 @@ class DefaultsManager {
         }
     }
     
-    var showDistanceFilter: Bool {
+    private var showDistanceFilter: Bool {
         get { defaults.bool(forKey: Keys.showDistanceFilter) }
         set { defaults.set(newValue, forKey: Keys.showDistanceFilter) }
     }
 
-    var showRegionFilter: Bool {
+    private var showRegionFilter: Bool {
         get { defaults.bool(forKey: Keys.showRegionFilter) }
         set { defaults.set(newValue, forKey: Keys.showRegionFilter) }
     }
     
-    var regionsFilter: [String] {
+    private var regionsFilter: [String] {
         get {
             (defaults.array(forKey: Keys.regionsFilter) as? [String]) ??
             []
@@ -117,7 +117,7 @@ class DefaultsManager {
         set { defaults.set(newValue, forKey: Keys.regionsFilter) }
     }
 
-    var distanceFilter: Double {
+    private var distanceFilter: Double {
         get {
             (defaults.object(forKey: Keys.distanceFilter) as? Double) ??
             100
@@ -127,7 +127,7 @@ class DefaultsManager {
         }
     }
     
-    var classFilter: [Int] {
+    private var classFilter: [Int] {
         get {
             (defaults.array(forKey: Keys.classFilter) as? [Int]) ??
             []
@@ -135,7 +135,7 @@ class DefaultsManager {
         set { defaults.set(newValue, forKey: Keys.classFilter) }
     }
     
-    var runnableFilter: Bool {
+    private var runnableFilter: Bool {
         get { defaults.bool(forKey: Keys.runnableFilter) }
         set { defaults.set(newValue, forKey: Keys.runnableFilter) }
     }
