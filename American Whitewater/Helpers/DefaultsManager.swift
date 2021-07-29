@@ -34,11 +34,6 @@ class DefaultsManager {
         set { defaults.set(newValue, forKey: Keys.completedFirstRun) }
     }
     
-    var legendFirstRun: Bool {
-        get { defaults.bool(forKey: Keys.legendFirstRun) }
-        set { defaults.set(newValue, forKey: Keys.legendFirstRun) }
-    }
-    
     var onboardingCompleted: Bool {
         get { defaults.bool(forKey: Keys.onboardingCompleted) }
         set { defaults.set(newValue, forKey: Keys.onboardingCompleted) }
@@ -148,12 +143,7 @@ class DefaultsManager {
     var signedInAuth: String? {
         get { defaults.string(forKey: Keys.signedInAuth) }
         set { defaults.set(newValue, forKey: Keys.signedInAuth) }
-    }
-    
-    var signInAlertCount: Int {
-        get { defaults.integer(forKey: Keys.signInAlertCount) }
-        set { defaults.set(newValue, forKey: Keys.signInAlertCount) }
-    }
+    }   
     
     var signInLastShown: Date? {
         get { defaults.object(forKey: Keys.signInLastShown) as? Date }
@@ -210,7 +200,6 @@ class DefaultsManager {
         static let userAccountId = "userAccountId"
         static let unameId = "uname"
         static let completedFirstRun = "completedFirstRunKey"
-        static let legendFirstRun = "legendFirstRunKey"
         static let onboardingCompleted = "onboardingCompletedKey"
         static let regionsFilter = "regionsFilterKey"
         static let distanceFilter = "distanceFilterKey"
@@ -225,7 +214,6 @@ class DefaultsManager {
         static let articlesUpdated = "articlesUpdatedKey"
         static let reachAlerts = "reachAlertsKey"
         static let signedInAuth = "signedInUserIdKey"
-        static let signInAlertCount = "signInAlertCountKey"
         static let signInLastShown = "signInLastShownKey"
         static let userFavorites = "userFavoritesKey"
     }
