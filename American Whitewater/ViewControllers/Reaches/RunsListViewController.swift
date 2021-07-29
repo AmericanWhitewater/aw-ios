@@ -212,30 +212,6 @@ class RunsListViewController: UIViewController {
         DefaultsManager.shared.runnableFilter = runnableSwitch.isOn
         updateData()
     }
-
-    /// Returns the distance from the last saved user location to a location given as lat/long strings, in miles (approximately)
-    private func calculateDistanceToRiver(riverLatString: String?, riverLonString: String?) -> Double? {
-        // get river info
-        guard
-            let riverLat = Double(riverLatString ?? ""),
-            let riverLon = Double(riverLonString ?? "")
-        else {
-            return nil
-        }
-        
-        let riverLocation = CLLocation(latitude: riverLat, longitude: riverLon)
-        
-        // get user location and check it
-        let location = DefaultsManager.shared.location
-        
-        // FIXME: why is this check here? how does this check validity?
-        // Perhaps what is wanted instead is CLLocationCoordinate2DIsValid(), but I'm not sure what the intent is
-        if location.coordinate.latitude > 1 && location.coordinate.longitude < 0 {
-            return location.distance(from: riverLocation) / 1609
-        }
-        
-        return nil
-    }
     
     // MARK: - Get Filter Information
 
