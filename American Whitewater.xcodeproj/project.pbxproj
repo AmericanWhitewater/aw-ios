@@ -11,6 +11,7 @@
 		2FE342D026A2846100352D1E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE342CF26A2846100352D1E /* Location.swift */; };
 		4760DD5C0E5548BBA92D25AF /* Pods_American_Whitewater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A750E2F24748D3B54A1DEB84 /* Pods_American_Whitewater.framework */; };
 		4A36D1E726A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */; };
+		4AA3FEFB26B2725100AC4303 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA3FEFA26B2725100AC4303 /* Filters.swift */; };
 		4AC4BB5A26A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */; };
 		4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */; };
 		4ADE944D26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */; };
@@ -155,6 +156,7 @@
 		2FE342CD26A1FF8100352D1E /* UIViewController+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Toast.swift"; sourceTree = "<group>"; };
 		2FE342CF26A2846100352D1E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+FullResolutionEditedImage.swift"; sourceTree = "<group>"; };
+		4AA3FEFA26B2725100AC4303 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+difference.swift"; sourceTree = "<group>"; };
@@ -598,6 +600,7 @@
 			isa = PBXGroup;
 			children = (
 				63E90EAC22EAA14700C8DAA3 /* DefaultsManager.swift */,
+				4AA3FEFA26B2725100AC4303 /* Filters.swift */,
 				63B5B4982457AE800062F54B /* GraphQL */,
 				63A6FD682367730C00148231 /* AWApiReachHelper.swift */,
 				63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */,
@@ -937,6 +940,7 @@
 				63A6FD672363EEA200148231 /* AWApiArticleHelper.swift in Sources */,
 				631EFFAB23688A3600BA17F7 /* Reach+CoreDataProperties.swift in Sources */,
 				63E90EAD22EAA14700C8DAA3 /* DefaultsManager.swift in Sources */,
+				4AA3FEFB26B2725100AC4303 /* Filters.swift in Sources */,
 				6342A3EB2385AD3500B54365 /* MKMapView+FitAnnotations.swift in Sources */,
 				63DEE01F24ABB3EC00638E84 /* RiverFlowCell.swift in Sources */,
 				63D7BD1923199D1900935693 /* DuffekDialog.swift in Sources */,

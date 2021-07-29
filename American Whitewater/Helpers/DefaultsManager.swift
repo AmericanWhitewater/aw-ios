@@ -77,6 +77,28 @@ class DefaultsManager {
     // MARK: - Filters
     //
     
+    public var filters: Filters {
+        get {
+            .init(
+                showDistanceFilter: showDistanceFilter,
+                showRegionFilter: showRegionFilter,
+                regionsFilter: regionsFilter,
+                distanceFilter: distanceFilter,
+                classFilter: classFilter,
+                runnableFilter: runnableFilter
+            )
+        }
+        
+        set {
+            showDistanceFilter = newValue.showDistanceFilter
+            showRegionFilter = newValue.showRegionFilter
+            regionsFilter = newValue.regionsFilter
+            distanceFilter = newValue.distanceFilter
+            classFilter = newValue.classFilter
+            runnableFilter = newValue.runnableFilter
+        }
+    }
+    
     var showDistanceFilter: Bool {
         get { defaults.bool(forKey: Keys.showDistanceFilter) }
         set { defaults.set(newValue, forKey: Keys.showDistanceFilter) }
@@ -148,11 +170,6 @@ class DefaultsManager {
     var signedInAuth: String? {
         get { defaults.string(forKey: Keys.signedInAuth) }
         set { defaults.set(newValue, forKey: Keys.signedInAuth) }
-    }
-    
-    var signInAlertCount: Int {
-        get { defaults.integer(forKey: Keys.signInAlertCount) }
-        set { defaults.set(newValue, forKey: Keys.signInAlertCount) }
     }
     
     var signInLastShown: Date? {
