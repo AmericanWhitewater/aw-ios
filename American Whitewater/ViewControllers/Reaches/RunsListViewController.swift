@@ -6,7 +6,6 @@ import CoreLocation
 import KeychainSwift
 
 class RunsListViewController: UIViewController {
-    
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
     
@@ -15,6 +14,8 @@ class RunsListViewController: UIViewController {
     @IBOutlet weak var runnableSwitch: UISwitch!
     let searchBar = UISearchBar()
     let refreshControl = UIRefreshControl()
+    
+    private var filters: Filters { DefaultsManager.shared.filters }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +33,7 @@ class RunsListViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 120
         
-        runnableSwitch.isOn = DefaultsManager.shared.runnableFilter
+        runnableSwitch.isOn = filters.runnableFilter
         AWGQLApiHelper.shared.updateAccountInfo()
         
         // AWTODO loading UI states
@@ -134,13 +135,13 @@ class RunsListViewController: UIViewController {
                 self.showToast(message: "Error fetching data: " + error.localizedDescription)
             }
             
-            if DefaultsManager.shared.showRegionFilter {
-                if (DefaultsManager.shared.regionsFilter.count == 0) {
+            if filters.showRegionFilter {
+                if filters.regionsFilter.isEmpty {
                     DuffekDialog.shared.showStandardDialog(title: "Pull All Data?", message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.", buttonTitle: "Continue", buttonFunction: {
                         self.refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
                     }, cancelFunction: {
                         self.refreshControl.endRefreshing()
-                    });
+                    })
                 } else {
                     refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
                 }
@@ -160,18 +161,35 @@ class RunsListViewController: UIViewController {
         }
     }
     
+    private var searchPredicate: NSPredicate? {
+        guard let searchText = searchBar.textField?.text, searchText.count > 0 else { return nil }
+        
+        let searchName = NSPredicate(format: "name contains[cd] %@", searchText)
+        let searchSection = NSPredicate(format: "section contains[cd] %@", searchText)
+        
+        return NSCompoundPredicate(orPredicateWithSubpredicates: [searchName, searchSection])
+    }
+    
+    /// This is the combination of the filter's predicate and the current search query (which Filters doesn't know about)
+    private var combinedPredicateWithSearch: NSPredicate {
+        NSCompoundPredicate(andPredicateWithSubpredicates: [
+            filters.combinedPredicate(),
+            searchPredicate
+        ].compactMap({$0}))
+    }
+    
     func updateFetchedResultsController() throws {
         print("Fetching rivers from core data")
         
         if let fetchedResultsController = fetchedResultsController {
             // Update sort descriptors and predicate if the controller already exists
-            fetchedResultsController.fetchRequest.sortDescriptors = sortDescriptors
-            fetchedResultsController.fetchRequest.predicate = combinedFilterPredicate
+            fetchedResultsController.fetchRequest.sortDescriptors = filters.sortDescriptors
+            fetchedResultsController.fetchRequest.predicate = combinedPredicateWithSearch
         } else {
             // Create the fetched results controller if it doesn't exist
             let request = Reach.reachFetchRequest()
-            request.sortDescriptors = sortDescriptors
-            request.predicate = combinedFilterPredicate
+            request.sortDescriptors = filters.sortDescriptors
+            request.predicate = combinedPredicateWithSearch
             fetchedResultsController = NSFetchedResultsController(
                 fetchRequest: request,
                 managedObjectContext: managedObjectContext,
@@ -192,7 +210,7 @@ class RunsListViewController: UIViewController {
         print("Updating reaches by region")
         
         AWApiReachHelper.shared.updateRegionalReaches(
-            regionCodes: DefaultsManager.shared.regionsFilter.count > 0 ? DefaultsManager.shared.regionsFilter : Region.all.map { $0.code },
+            regionCodes: filters.regionsFilter.count > 0 ? filters.regionsFilter : Region.all.map { $0.code },
             callback: success,
             callbackError: failure
         )
@@ -209,7 +227,10 @@ class RunsListViewController: UIViewController {
     }
     
     @IBAction func runnableFilterChanged(_ runnableSwitch: UISwitch) {
-        DefaultsManager.shared.runnableFilter = runnableSwitch.isOn
+        var filters = filters
+        filters.runnableFilter = runnableSwitch.isOn
+        DefaultsManager.shared.filters = filters
+        
         updateData()
     }
 
@@ -267,104 +288,6 @@ class RunsListViewController: UIViewController {
         }
         
         self.tableView.reloadData()
-    }
-    
-
-    private func searchPredicate() -> NSPredicate? {
-        guard let searchText = searchBar.textField?.text, searchText.count > 0 else { return nil }
-        
-        let searchName = NSPredicate(format: "name contains[cd] %@", searchText)
-        let searchSection = NSPredicate(format: "section contains[cd] %@", searchText)
-        
-        return NSCompoundPredicate(orPredicateWithSubpredicates: [searchName, searchSection])
-    }
-    
-    private func runnablePredicate() -> NSPredicate? {
-        if DefaultsManager.shared.runnableFilter {
-            return NSPredicate(format: "condition == %@ || condition == %@", "med", "high")
-        }
-        
-        return nil
-    }
-    
-    private func difficultiesPredicate() -> NSCompoundPredicate? {
-    
-        var classPredicates: [NSPredicate] = []
-
-        for difficulty in DefaultsManager.shared.classFilter {
-            classPredicates.append(NSPredicate(format: "difficulty\(difficulty) == TRUE"))
-        }
-
-        if classPredicates.count == 0 {
-            return nil
-        }
-
-        return NSCompoundPredicate(orPredicateWithSubpredicates: classPredicates)
-    }
-    
-    private func regionsPredicate() -> NSPredicate? {
-        // if we are filtering by distance then ignore regions
-        if DefaultsManager.shared.showDistanceFilter {
-            return nil
-        }
-        
-        let regionCodes = DefaultsManager.shared.regionsFilter
-        var states:[String] = []
-        for regionCode in regionCodes {
-            if let region = Region.regionByCode(code: regionCode) {
-                states.append(region.apiResponse)
-            }
-        }
-
-        if states.count == 0 {
-            return nil
-        }
-        return NSPredicate(format: "state IN[cd] %@", states)
-    }
-
-    private func distancePredicate() -> NSPredicate? {
-        // check if user is using the distance filter or if
-        // they have turned it off
-        if !DefaultsManager.shared.showDistanceFilter { return nil }
-        
-        let distance = DefaultsManager.shared.distanceFilter
-        if distance == 0 { return nil }
-        let predicates: [NSPredicate] = [
-            NSPredicate(format: "distance <= %lf", distance),
-            NSPredicate(format: "distance != 0")] // hide invalid distances
-        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-    }
-    
-    // based on our filtering settings (distance, region, or class) we request Reaches that
-    // match these settings
-    private var filterPredicates: [NSPredicate] {
-        [
-            searchPredicate(),
-            difficultiesPredicate(),
-            runnablePredicate(),
-            DefaultsManager.shared.showDistanceFilter ? distancePredicate() : regionsPredicate()
-        ]
-            .compactMap { $0 }
-    }
-    
-    private var combinedFilterPredicate: NSPredicate {
-        NSCompoundPredicate(andPredicateWithSubpredicates: filterPredicates)
-    }
-    
-    private var sortDescriptors: [NSSortDescriptor] {
-        if DefaultsManager.shared.showDistanceFilter && DefaultsManager.shared.distanceFilter > 0 {
-            print("Using distance filter")
-            
-            return [
-                NSSortDescriptor(key: "distance", ascending: true),
-                NSSortDescriptor(key: "name", ascending: true)
-            ]
-        } else {
-            return [
-                NSSortDescriptor(key: "name", ascending: true),
-                NSSortDescriptor(key: "sortName", ascending: true)
-            ]
-        }
     }
     
     
