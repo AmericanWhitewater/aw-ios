@@ -1,6 +1,6 @@
 # Apollo iOS
 
-[![CircleCI](https://circleci.com/gh/apollographql/apollo-ios/tree/master.svg?style=shield)](https://circleci.com/gh/apollographql/apollo-ios/tree/master) [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg?maxAge=2592000)](https://raw.githubusercontent.com/apollographql/apollo-ios/master/LICENSE) [![Swift 5 Supported](https://img.shields.io/badge/Swift-5.0-orange.svg)](https://github.com/apple/swift) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)   [![CocoaPods](https://img.shields.io/cocoapods/v/Apollo.svg)](https://cocoapods.org/pods/Apollo) [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/apollo)
+[![CircleCI](https://circleci.com/gh/apollographql/apollo-ios/tree/main.svg?style=shield)](https://circleci.com/gh/apollographql/apollo-ios/tree/main) [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg?maxAge=2592000)](https://raw.githubusercontent.com/apollographql/apollo-ios/main/LICENSE) [![Swift 5 Supported](https://img.shields.io/badge/Swift-5.0-orange.svg)](https://github.com/apple/swift) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)   [![CocoaPods](https://img.shields.io/cocoapods/v/Apollo.svg)](https://cocoapods.org/pods/Apollo) 
 
 Apollo iOS is a strongly-typed, caching GraphQL client for iOS, written in Swift.
 
@@ -17,16 +17,33 @@ This combination of models with value semantics, one way data flow, and automati
 [Read the full docs at apollographql.com/docs/ios/](https://www.apollographql.com/docs/ios/)
 
 ## Changelog
-[Read about the latest changes to the library](https://github.com/apollographql/apollo-ios/blob/master/CHANGELOG.md)
+[Read about the latest changes to the library](https://github.com/apollographql/apollo-ios/blob/main/CHANGELOG.md)
 
 ## Contributing
 
-This project is being developed using Xcode 11 and Swift 5.0.
+This project is being developed using Xcode 12 and Swift 5.3.
 
-If you open `Apollo.xcworkspace`, you should be able to run the tests of the Apollo, ApolloSQLite, and ApolloWebSocket frameworks on your Mac or an iOS Simulator.
+If you open `Apollo.xcodeproj`, you should be able to run the tests of the Apollo, ApolloSQLite, and ApolloWebSocket frameworks on your Mac or an iOS Simulator.
 
-> **NOTE**: Due to a change in behavior in Xcode 11's git integration, if you check this repo out using Xcode, please close the window Xcode automatically opens using the Swift Package manager structure, and open the `Apollo.xcworkspace` file instead.
+> **NOTE**: Due to a change in behavior in Xcode 11's git integration, if you check this repo out using Xcode, please close the window Xcode automatically opens using the Swift Package manager structure, and open the `Apollo.xcodeproj` file instead.
 
 Some of the tests run against [a simple GraphQL server serving the Star Wars example schema](https://github.com/apollographql/starwars-server) (see installation instructions there).
 
-If you'd like to contribute, please refer to the [Apollo Contributor Guide](https://github.com/apollographql/apollo-ios/blob/master/CONTRIBUTING.md).
+If you'd like to contribute, please refer to the [Apollo Contributor Guide](https://github.com/apollographql/apollo-ios/blob/main/CONTRIBUTING.md).
+
+## Maintainers
+
+- [@AnthonyMDev](https://github.com/AnthonyMDev) (Apollo)
+- [@calvincestari](https://github.com/calvincestari) (Apollo)
+- [@designatednerd](https://github.com/designatednerd) (Apollo)
+
+## Who is Apollo?
+
+[Apollo Graph, Inc.](https://apollographql.com/) creates industry-leading tools for building applications with GraphQL:
+
+- [Apollo Client](https://www.apollographql.com/apollo-client/) – The most popular GraphQL client for the web. Apollo also builds and maintains [Apollo iOS](https://github.com/apollographql/apollo-ios) and [Apollo Android](https://github.com/apollographql/apollo-android).
+- [Apollo Server](https://www.apollographql.com/docs/apollo-server/) – Build a production-ready JavaScript GraphQL server with a schema-first approach.
+- [Apollo Studio](https://www.apollographql.com/studio/develop/) – A turnkey portal for GraphQL developers, featuring a powerful GraphQL IDE (the [Apollo Explorer](https://www.apollographql.com/docs/studio/explorer/)), metrics reporting, schema search, and documentation.
+- [Apollo Federation](https://www.apollographql.com/apollo-federation) – Create and manage a single data graph composed of subgraphs that can be developed independently.
+
+We are fully committed to advancing the frontier of graph development with open-source libraries, hosted software tooling, developer extensions, and community contributions.

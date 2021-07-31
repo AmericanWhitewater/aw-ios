@@ -4,9 +4,9 @@ PODS:
     - Alamofire (~> 5.4)
   - AlamofireNetworkActivityIndicator (3.1.0):
     - Alamofire (~> 5.1)
-  - Apollo (0.26.0):
-    - Apollo/Core (= 0.26.0)
-  - Apollo/Core (0.26.0)
+  - Apollo (0.45.0):
+    - Apollo/Core (= 0.45.0)
+  - Apollo/Core (0.45.0)
   - Charts (3.6.0):
     - Charts/Core (= 3.6.0)
   - Charts/Core (3.6.0)
@@ -113,7 +113,7 @@ DEPENDENCIES:
   - Alamofire (~> 5.4.0)
   - AlamofireImage (~> 4.1)
   - AlamofireNetworkActivityIndicator (~> 3.1.0)
-  - Apollo (~> 0.26.0)
+  - Apollo (~> 0.45)
   - Charts (~> 3.6.0)
   - Firebase/Analytics
   - Firebase/Crashlytics
@@ -163,7 +163,7 @@ SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
   AlamofireNetworkActivityIndicator: 6564782bd7b9e6c430ae67d9277af01907b01ca4
-  Apollo: 8f088475d9d2fd6f5477372f031ac16d34956cc5
+  Apollo: 241254e8b26f49dc180e3be848f0b3fc5699e6f4
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   Firebase: 54cdc8bc9c9b3de54f43dab86e62f5a76b47034f
   FirebaseAnalytics: 4751d6a49598a2b58da678cc07df696bcd809ab9
@@ -184,6 +184,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 281455f0a8aee65e43edc2e27bd88e066ba49dc1
+PODFILE CHECKSUM: 5fb4f3c8721981a7439cafd1d9d27ae380625c06
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.2

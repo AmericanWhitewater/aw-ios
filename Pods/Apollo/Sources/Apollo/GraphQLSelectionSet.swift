@@ -1,3 +1,7 @@
+#if !COCOAPODS
+import ApolloAPI
+#endif
+
 public typealias ResultMap = [String: Any?]
 
 public protocol GraphQLSelectionSet {
@@ -9,11 +13,9 @@ public protocol GraphQLSelectionSet {
 
 public extension GraphQLSelectionSet {
   init(jsonObject: JSONObject, variables: GraphQLMap? = nil) throws {
-    let executor = GraphQLExecutor { object, info in
-      .result(.success(object[info.responseKeyForField]))
-    }
-    executor.shouldComputeCachePath = false
-    self = try executor.execute(selections: Self.selections, on: jsonObject, variables: variables, accumulator: GraphQLSelectionSetMapper<Self>()).await()
+    self = try decode(selectionSet: Self.self,
+                          from: jsonObject,
+                          variables: variables)
   }
 
   var jsonObject: JSONObject {
@@ -27,13 +29,19 @@ extension GraphQLSelectionSet {
   }
 }
 
+/// For backwards compatibility with legacy codegen.
+/// The `GraphQLVariable` class has been replaced by `InputValue.variable`
+public func GraphQLVariable(_ name: String) -> InputValue {
+  return .variable(name)
+}
+
 public protocol GraphQLSelection {
 }
 
 public struct GraphQLField: GraphQLSelection {
   let name: String
   let alias: String?
-  let arguments: [String: GraphQLInputValue]?
+  let arguments: FieldArguments?
 
   var responseKey: String {
     return alias ?? name
@@ -43,7 +51,7 @@ public struct GraphQLField: GraphQLSelection {
 
   public init(_ name: String,
               alias: String? = nil,
-              arguments: [String: GraphQLInputValue]? = nil,
+              arguments: FieldArguments? = nil,
               type: GraphQLOutputType) {
     self.name = name
     self.alias = alias
@@ -56,12 +64,28 @@ public struct GraphQLField: GraphQLSelection {
   func cacheKey(with variables: [String: JSONEncodable]?) throws -> String {
     if
       let argumentValues = try arguments?.evaluate(with: variables),
-      argumentValues.isNotEmpty {
+      argumentValues.apollo.isNotEmpty {
         let argumentsKey = orderIndependentKey(for: argumentValues)
         return "\(name)(\(argumentsKey))"
     } else {
       return name
     }
+  }
+}
+
+public struct FieldArguments: ExpressibleByDictionaryLiteral {
+  let arguments: InputValue
+
+  public init(dictionaryLiteral elements: (String, InputValue)...) {
+    arguments = .object(Dictionary(elements, uniquingKeysWith: { (_, last) in last }))
+  }
+
+  public func evaluate(with variables: [String: JSONEncodable]?) throws -> JSONValue {
+    return try arguments.evaluate(with: variables)
+  }
+
+  public func evaluate(with variables: [String: JSONEncodable]?) throws -> JSONObject {
+    return try arguments.evaluate(with: variables) as! JSONObject
   }
 }
 
@@ -85,6 +109,8 @@ private func orderIndependentKey(for object: JSONObject) -> String {
   return object.sorted { $0.key < $1.key }.map {
     if let object = $0.value as? JSONObject {
       return "[\($0.key):\(orderIndependentKey(for: object))]"
+    } else if let array = $0.value as? [JSONObject] {
+      return "\($0.key):[\(array.map { orderIndependentKey(for: $0) }.joined(separator: ","))]"
     } else {
       return "\($0.key):\($0.value)"
     }

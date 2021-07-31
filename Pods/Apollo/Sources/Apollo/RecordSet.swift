@@ -9,6 +9,18 @@ public struct RecordSet {
   public mutating func insert(_ record: Record) {
     storage[record.key] = record
   }
+  
+  public mutating func removeRecord(for key: CacheKey) {
+    storage.removeValue(forKey: key)
+  }
+
+  public mutating func removeRecords(matching pattern: CacheKey) {
+    for (key, _) in storage {
+      if key.range(of: pattern, options: .caseInsensitive) != nil {
+        storage.removeValue(forKey: key)
+      }
+    }
+  }
 
   public mutating func clear() {
     storage.removeAll()
@@ -28,8 +40,8 @@ public struct RecordSet {
     return storage.isEmpty
   }
 
-  public var keys: [CacheKey] {
-    return Array(storage.keys)
+  public var keys: Set<CacheKey> {
+    return Set(storage.keys)
   }
 
   @discardableResult public mutating func merge(records: RecordSet) -> Set<CacheKey> {
@@ -47,7 +59,7 @@ public struct RecordSet {
       var changedKeys: Set<CacheKey> = Set()
 
       for (key, value) in record.fields {
-        if let oldValue = oldRecord.fields[key], equals(oldValue, value) {
+        if let oldValue = oldRecord.fields[key], JSONValueMatcher.equals(oldValue, value) {
           continue
         }
         oldRecord[key] = value
@@ -75,7 +87,7 @@ extension RecordSet: CustomStringConvertible {
 }
 
 extension RecordSet: CustomPlaygroundDisplayConvertible {
-	public var playgroundDescription: Any {
-		 return description
-	}
+  public var playgroundDescription: Any {
+    return description
+  }
 }

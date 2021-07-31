@@ -10,7 +10,7 @@ target 'American Whitewater' do
   # to be included in the functionality - this will need to be updated
   # or reverted back - but Search on RunsListViewController will not
   # work correctly if you do not use this Fork
-  pod 'IQKeyboardManagerSwift', :git => 'https://github.com/duffek/IQKeyboardManager.git'
+  pod 'IQKeyboardManagerSwift', :git => 'https://github.com/duffek/IQKeyboardManager.git', :inhibit_warnings => true
   
   # Push Notification System
   pod 'OneSignalXCFramework'
@@ -23,21 +23,21 @@ target 'American Whitewater' do
   pod 'SwiftyJSON', '~> 5.0.0'
   
   # GraphQL client
-  pod 'Apollo', '~> 0.26.0'
+  pod 'Apollo', '~> 0.45'
   
   # OAuth and Secure Storge for Auth Keys
-  pod 'OAuthSwift', '~> 2'
+  pod 'OAuthSwift', '~> 2', :inhibit_warnings => true
   pod 'KeychainSwift', '~> 19.0'
   
   # Better looking alerts
-  pod 'NYAlertViewController', '~> 1.3.0'
+  pod 'NYAlertViewController', '~> 1.3.0', :inhibit_warnings => true
   
   # Firebase added for analytics and Crashlytics
   pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
   
   # Pod Charts
-  pod 'Charts', '~> 3.6.0'
+  pod 'Charts', '~> 3.6.0', :inhibit_warnings => true
   
   # Advanced debugging - only loads in debug
   pod 'netfox'
