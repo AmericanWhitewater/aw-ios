@@ -453,7 +453,7 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
                 lastUpdatedMessage = "Last Updated: \(dateFormatter.string(from: lastUpdatedDate))"
             }
             
-            view.backgroundColor = UIColor.groupTableViewBackground
+            view.backgroundColor = UIColor.systemGroupedBackground
             
             label.text = lastUpdatedMessage
             label.textAlignment = .center
