@@ -22,10 +22,17 @@ class AWGQLApiHelper
     static let shared = AWGQLApiHelper()
     
     private(set) lazy var apollo: ApolloClient = {
-        let httpNetworkTransport = HTTPNetworkTransport(url: URL(string: "\(AWGC.AW_BASE_URL)/graphql")!)
-        print("Using URL:", "\(AWGC.AW_BASE_URL)/graphql")
-        httpNetworkTransport.delegate = self
-        return ApolloClient(networkTransport: httpNetworkTransport)
+        let url = URL(string: "\(AWGC.AW_BASE_URL)/graphql")!
+        print("Using URL:", "\(url.absoluteString)")
+        
+        let store = ApolloStore()
+        let provider = NetworkInterceptorProvider(
+            client: URLSessionClient(),
+            store: store
+        )
+        let transport = RequestChainNetworkTransport(interceptorProvider: provider, endpointURL: url)
+        
+        return ApolloClient(networkTransport: transport, store: store)
     }()
     
     private let keychain = KeychainSwift()
@@ -380,17 +387,4 @@ class AWGQLApiHelper
         
     }
     
-}
-
-
-extension AWGQLApiHelper: HTTPNetworkTransportPreflightDelegate {
-    func networkTransport(_ networkTransport: HTTPNetworkTransport, shouldSend request: URLRequest) -> Bool {
-        return true
-    }
-    
-    func networkTransport(_ networkTransport: HTTPNetworkTransport, willSend request: inout URLRequest) {
-        if let token = keychain.get(AWGC.AuthKeychainToken) {
-            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
-    }
 }

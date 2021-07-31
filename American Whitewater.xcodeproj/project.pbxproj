@@ -12,6 +12,7 @@
 		4760DD5C0E5548BBA92D25AF /* Pods_American_Whitewater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A750E2F24748D3B54A1DEB84 /* Pods_American_Whitewater.framework */; };
 		4A36D1E726A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */; };
 		4AA3FEFB26B2725100AC4303 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA3FEFA26B2725100AC4303 /* Filters.swift */; };
+		4ABE3B7D26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */; };
 		4AC4BB5A26A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */; };
 		4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */; };
 		4ADE944D26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */; };
@@ -115,7 +116,6 @@
 		63E90EC022EAB5CC00C8DAA3 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63E90EBE22EAB5CC00C8DAA3 /* OpenSans-Regular.ttf */; };
 		63E90EC122EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63E90EBF22EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf */; };
 		63EDA74F24B3F5AF0020382A /* GaugeMetrics.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 63EDA74E24B3F5AF0020382A /* GaugeMetrics.graphql */; };
-		63EDA75124B4DAF10020382A /* reaches.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 63EDA75024B4DAF10020382A /* reaches.graphql */; };
 		63F712E2238869A50047C8F0 /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F712E1238869A50047C8F0 /* UIImage+Color.swift */; };
 		63F712E4238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */; };
 		63F87AD5236A923D0005AA0B /* AWReachDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F87AD4236A923D0005AA0B /* AWReachDetail.swift */; };
@@ -155,6 +155,7 @@
 		2FE342CF26A2846100352D1E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+FullResolutionEditedImage.swift"; sourceTree = "<group>"; };
 		4AA3FEFA26B2725100AC4303 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
+		4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterceptorProvider.swift; sourceTree = "<group>"; };
 		4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+difference.swift"; sourceTree = "<group>"; };
@@ -268,7 +269,6 @@
 		63E90EBE22EAB5CC00C8DAA3 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		63E90EBF22EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		63EDA74E24B3F5AF0020382A /* GaugeMetrics.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GaugeMetrics.graphql; sourceTree = "<group>"; };
-		63EDA75024B4DAF10020382A /* reaches.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = reaches.graphql; sourceTree = "<group>"; };
 		63F712E1238869A50047C8F0 /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
 		63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentControl+PreiOS13.swift"; sourceTree = "<group>"; };
 		63F87AD4236A923D0005AA0B /* AWReachDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWReachDetail.swift; sourceTree = "<group>"; };
@@ -420,13 +420,13 @@
 				63B5B4AA245939650062F54B /* alerts.graphql */,
 				63164499246C29A600807E19 /* photos.graphql */,
 				6316449A246C422100807E19 /* createPhotos.graphql */,
-				63EDA75024B4DAF10020382A /* reaches.graphql */,
 				63DEE02224AE7FB700638E84 /* Observations.graphql */,
 				63EDA74E24B3F5AF0020382A /* GaugeMetrics.graphql */,
 				6392147725A634350042E97E /* GageInfoForReach.graphql */,
 				634154B825242191009DD31D /* AccountInfo.graphql */,
 				634154C0252BDD2E009DD31D /* News.graphql */,
 				63B5B49D2457B2270062F54B /* AwGraphQLAPI.swift */,
+				4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -745,7 +745,6 @@
 				63EDA74F24B3F5AF0020382A /* GaugeMetrics.graphql in Resources */,
 				6392147825A634350042E97E /* GageInfoForReach.graphql in Resources */,
 				631B3573237C722200738889 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
-				63EDA75124B4DAF10020382A /* reaches.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -923,6 +922,7 @@
 				63309E3D233E739C00E6DBC4 /* MapViewController.swift in Sources */,
 				63E32B1D2357F3260057DE34 /* FilterClassCollectionViewCell.swift in Sources */,
 				639350C22475929900577027 /* AddRiverFlowTableViewController.swift in Sources */,
+				4ABE3B7D26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift in Sources */,
 				2FE342D026A2846100352D1E /* Location.swift in Sources */,
 				63949955246F0DD40061552C /* AwImageCell.swift in Sources */,
 				63FF68C525ACF2A900AF0F37 /* GageGraphCell.swift in Sources */,
