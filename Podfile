@@ -1,4 +1,5 @@
-platform :ios, '13.0'
+deployment_target = '13.0'
+platform :ios, deployment_target
 
 target 'American Whitewater' do
 
@@ -47,5 +48,12 @@ target 'OneSignalNotificationServiceExtension' do
   use_frameworks!
 
   pod 'OneSignalXCFramework'
-  
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |t|
+    t.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = deployment_target
+    end
+  end
 end
