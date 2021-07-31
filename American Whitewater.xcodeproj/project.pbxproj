@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -89,8 +89,6 @@
 		63A6FD6B2367748F00148231 /* AWApiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD6A2367748F00148231 /* AWApiLinks.swift */; };
 		63A8B17D23281A8A00FD2E00 /* AWArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8B17C23281A8A00FD2E00 /* AWArticle.swift */; };
 		63B5B48F245756D40062F54B /* AlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B48E245756D40062F54B /* AlertTableViewCell.swift */; };
-		63B5B492245770270062F54B /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 63B5B491245770270062F54B /* Apollo */; };
-		63B5B494245770270062F54B /* ApolloWebSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 63B5B493245770270062F54B /* ApolloWebSocket */; };
 		63B5B49E2457B2270062F54B /* AwGraphQLAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B49D2457B2270062F54B /* AwGraphQLAPI.swift */; };
 		63B5B4A02457B2750062F54B /* AWGQLApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B49F2457B2750062F54B /* AWGQLApiHelper.swift */; };
 		63B5B4A324589EAB0062F54B /* RunAccidentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B4A224589EAB0062F54B /* RunAccidentsViewController.swift */; };
@@ -292,10 +290,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				63309E38233DA2AC00E6DBC4 /* StoreKit.framework in Frameworks */,
-				63B5B492245770270062F54B /* Apollo in Frameworks */,
 				63491B0723289A440036A906 /* WebKit.framework in Frameworks */,
 				63309E3F233E73AA00E6DBC4 /* MapKit.framework in Frameworks */,
-				63B5B494245770270062F54B /* ApolloWebSocket in Frameworks */,
 				63309E3A233DACAD00E6DBC4 /* MessageUI.framework in Frameworks */,
 				4760DD5C0E5548BBA92D25AF /* Pods_American_Whitewater.framework in Frameworks */,
 			);
@@ -650,7 +646,7 @@
 			buildPhases = (
 				C5A3EE7F12EB780BAA720589 /* [CP] Check Pods Manifest.lock */,
 				631EFFA9236884FE00BA17F7 /* Custom Highlighting - AWTODO: & FIXME: - Run Script */,
-				63B5B4952457A7800062F54B /* Apollo CLI */,
+				63B5B4952457A7800062F54B /* Generate Apollo GraphQL API */,
 				63387B5B22CDBFFC0089BAA8 /* Sources */,
 				63387B5C22CDBFFC0089BAA8 /* Frameworks */,
 				63387B5D22CDBFFC0089BAA8 /* Resources */,
@@ -666,8 +662,6 @@
 			);
 			name = "American Whitewater";
 			packageProductDependencies = (
-				63B5B491245770270062F54B /* Apollo */,
-				63B5B493245770270062F54B /* ApolloWebSocket */,
 			);
 			productName = "American Whitewater";
 			productReference = 63387B5F22CDBFFC0089BAA8 /* AW.app */;
@@ -719,7 +713,6 @@
 			);
 			mainGroup = 63387B5622CDBFFC0089BAA8;
 			packageReferences = (
-				63B5B490245770270062F54B /* XCRemoteSwiftPackageReference "apollo-ios" */,
 			);
 			productRefGroup = 63387B6022CDBFFC0089BAA8 /* Products */;
 			projectDirPath = "";
@@ -843,7 +836,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
-		63B5B4952457A7800062F54B /* Apollo CLI */ = {
+		63B5B4952457A7800062F54B /* Generate Apollo GraphQL API */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -852,14 +845,14 @@
 			);
 			inputPaths = (
 			);
-			name = "Apollo CLI";
+			name = "Generate Apollo GraphQL API";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Go to the build root and search up the chain to find the Derived Data Path where the source packages are checked out.\nDERIVED_DATA_CANDIDATE=\"${BUILD_ROOT}\"\n\nwhile ! [ -d \"${DERIVED_DATA_CANDIDATE}/SourcePackages\" ]; do\n  if [ \"${DERIVED_DATA_CANDIDATE}\" = / ]; then\n    echo >&2 \"error: Unable to locate SourcePackages directory from BUILD_ROOT: '${BUILD_ROOT}'\"\n    exit 1\n  fi\n\n  DERIVED_DATA_CANDIDATE=\"$(dirname \"${DERIVED_DATA_CANDIDATE}\")\"\ndone\n\n# Grab a reference to the directory where scripts are checked out\nSCRIPT_PATH=\"${DERIVED_DATA_CANDIDATE}/SourcePackages/checkouts/apollo-ios/scripts\"\n\nif [ -z \"${SCRIPT_PATH}\" ]; then\n    echo >&2 \"error: Couldn't find the CLI script in your checked out SPM packages; make sure to add the framework to your project.\"\n    exit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\n# Creates API.swift file for accessing GraphQL from Swift\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"schema.json\" AwGraphQLAPI.swift\n\n# Local Site: Used to download an updated schema.json on Local\n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"http://aw.local/graphql/\"\n\n# Beta Site: https://beta.americanwhitewater.org/graphql/ \n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"https://beta.americanwhitewater.org/graphql/\"\n\n# Live Site: https://www.americanwhitewater.org/graphql/ \n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"https://www.americanwhitewater.org/graphql/\"\n";
+			shellScript = "SCRIPT_PATH=\"${PODS_ROOT}/Apollo/scripts\"\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\n# Creates API.swift file for accessing GraphQL from Swift\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"schema.json\" AwGraphQLAPI.swift\n\n# Local Site: Used to download an updated schema.json on Local\n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"http://aw.local/graphql/\"\n\n# Beta Site: https://beta.americanwhitewater.org/graphql/ \n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"https://beta.americanwhitewater.org/graphql/\"\n\n# Live Site: https://www.americanwhitewater.org/graphql/ \n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"https://www.americanwhitewater.org/graphql/\"\n";
 		};
 		C5A3EE7F12EB780BAA720589 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1286,30 +1279,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		63B5B490245770270062F54B /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.26.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		63B5B491245770270062F54B /* Apollo */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 63B5B490245770270062F54B /* XCRemoteSwiftPackageReference "apollo-ios" */;
-			productName = Apollo;
-		};
-		63B5B493245770270062F54B /* ApolloWebSocket */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 63B5B490245770270062F54B /* XCRemoteSwiftPackageReference "apollo-ios" */;
-			productName = ApolloWebSocket;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		63C1DABF235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld */ = {

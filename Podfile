@@ -21,6 +21,9 @@ target 'American Whitewater' do
   pod 'AlamofireNetworkActivityIndicator', '~> 3.1.0'
   pod 'SwiftyJSON', '~> 5.0.0'
   
+  # GraphQL client
+  pod 'Apollo', '~> 0.26.0'
+  
   # OAuth and Secure Storge for Auth Keys
   pod 'OAuthSwift', '~> 2.1.0'
   pod 'KeychainSwift', '~> 19.0'
