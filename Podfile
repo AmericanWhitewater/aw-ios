@@ -19,7 +19,6 @@ target 'American Whitewater' do
   # - Used for reach API / rivers listing
   pod 'Alamofire', '~> 5.4.0'
   pod 'AlamofireImage', '~> 4.1'
-  pod 'AlamofireNetworkActivityIndicator', '~> 3.1.0'
   pod 'SwiftyJSON', '~> 5.0.0'
   
   # GraphQL client

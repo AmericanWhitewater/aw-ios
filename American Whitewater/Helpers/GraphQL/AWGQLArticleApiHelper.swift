@@ -69,7 +69,6 @@ class AWGQLArticleApiHelper
             // process articles
             let context = self.getContext()
             let dispatchGroup = DispatchGroup()
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
             dispatchGroup.enter()
             
             context.perform {
@@ -100,7 +99,6 @@ class AWGQLArticleApiHelper
                 dispatchGroup.leave()
             }
             
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             DefaultsManager.shared.articlesLastUpdated = Date()
             
             callback()

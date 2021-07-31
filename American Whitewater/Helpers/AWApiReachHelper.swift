@@ -280,7 +280,6 @@ class AWApiReachHelper {
         
         Self.isFetchingReaches = true
         let dispatchGroup = DispatchGroup()
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         print("Dispatch group enter")
         dispatchGroup.enter()
         
@@ -325,7 +324,6 @@ class AWApiReachHelper {
 //            DefaultsManager.lastUpdated = Date()
 //            DefaultsManager.favoritesLastUpdated = Date()
             Self.isFetchingReaches = false
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
     
@@ -335,7 +333,6 @@ class AWApiReachHelper {
         let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         let dispatchGroup = DispatchGroup()
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         dispatchGroup.enter()
         
         fetchReachesRecursively(currentIndex: 0, allRegionCodes: codes, allRiverJSONdata: [], successCallback: { (reaches) in
@@ -377,7 +374,6 @@ class AWApiReachHelper {
             
             DefaultsManager.shared.lastUpdated = Date()
             DefaultsManager.shared.favoritesLastUpdated = Date()
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
 
@@ -387,7 +383,6 @@ class AWApiReachHelper {
         let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         let dispatchGroup = DispatchGroup()
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         dispatchGroup.enter()
         
         fetchReachesByIds(reachIds: reachIds, callback: { (reaches) in
@@ -423,7 +418,6 @@ class AWApiReachHelper {
                     print("Unable to save view context \(error) \(error.userInfo)")
                 }
             }
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             callback()
         }
         
@@ -532,7 +526,6 @@ class AWApiReachHelper {
 
         let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
         fetchReachDetail(reachId: reachId, callback: { (reachDetail) in
@@ -560,7 +553,6 @@ class AWApiReachHelper {
                 }
             }
 
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
     

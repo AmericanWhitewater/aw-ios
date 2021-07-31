@@ -90,7 +90,6 @@ class AWApiArticleHelper {
         let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         let dispatchGroup = DispatchGroup()
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         dispatchGroup.enter()
         fetchArticles(callback: { (articles) in
             
@@ -139,7 +138,7 @@ class AWApiArticleHelper {
                     callbackError(error)
                 }
             }
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+
             DefaultsManager.shared.articlesLastUpdated = Date()
             callback()
         }
