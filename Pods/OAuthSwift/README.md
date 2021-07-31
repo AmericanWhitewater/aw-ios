@@ -8,7 +8,7 @@ Swift based OAuth library for iOS and macOS.
 
 ## Support OAuth1.0, OAuth2.0
 
-Twitter, Flickr, Github, Instagram, Foursquare, Fitbit, Withings, Linkedin, Dropbox, Dribbble, Salesforce, BitBucket, GoogleDrive, Smugmug, Intuit, Zaim, Tumblr, Slack, Uber, Gitter, Facebook, Spotify, Typetalk, SoundCloud, etc
+Twitter, Flickr, Github, Instagram, Foursquare, Fitbit, Withings, Linkedin, Dropbox, Dribbble, Salesforce, BitBucket, GoogleDrive, Smugmug, Intuit, Zaim, Tumblr, Slack, Uber, Gitter, Facebook, Spotify, Typetalk, SoundCloud, Twitch, Reddit, etc
 
 ## Installation
 
@@ -22,60 +22,99 @@ OAuthSwift is packaged as a Swift framework. Currently this is the simplest way 
 ### Support Carthage
 
 * Install Carthage (https://github.com/Carthage/Carthage)
-* Create Cartfile file
+* Create `Cartfile` file
+
+```text
+github "OAuthSwift/OAuthSwift" ~> 2.2.0
 ```
-github "OAuthSwift/OAuthSwift" ~> 2.0.0
-```
+
 * Run `carthage update`.
-* On your application targets’ “General” settings tab, in the “Embedded Binaries” section, drag and drop OAuthSwift.framework from the Carthage/Build/iOS folder on disk.
+* On your application targets’ “General” settings tab, in the “Embedded Binaries”
+section, drag and drop OAuthSwift.framework from the Carthage/Build/iOS folder on disk.
 
 ### Support CocoaPods
 
 * Podfile
 
-```
+```ruby
 platform :ios, '10.0'
 use_frameworks!
 
-pod 'OAuthSwift', '~> 2.0.0'
+pod 'OAuthSwift', '~> 2.2.0'
+```
+
+### Swift Package Manager Support
+
+```swift
+import PackageDescription
+
+let package = Package(
+    name: "MyApp",
+    dependencies: [
+        .package(name: "OAuthSwift",
+            url: "https://github.com/OAuthSwift/OAuthSwift.git",
+            .upToNextMajor(from: "2.2.0"))
+    ]
+)
 ```
 
 ### Old versions
 
-#### swift 3
+#### Swift 3
 
 Use the `swift3` branch, or the tag `1.1.2` on main branch
 
-#### swift 4
+#### Swift 4
 
 Use the tag `1.2.0` on main branch
 
-#### objective c
+#### Objective-C
 
 Use the tag `1.4.1` on main branch
 
 ## How to
+
 ### Setting URL Schemes
+
 In info tab of your target
 ![Image](Assets/URLSchemes.png "Image")
 Replace oauth-swift by your application name
 
 ### Handle URL in AppDelegate
+
 - On iOS implement `UIApplicationDelegate` method
+
 ```swift
 func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey  : Any] = [:]) -> Bool {
-  if (url.host == "oauth-callback") {
+  if url.host == "oauth-callback" {
     OAuthSwift.handle(url: url)
   }
   return true
 }
 ```
-:warning: Any other application may try to open a URL with your url scheme. So you can check the source application, for instance for safari controller :
-```
-if (options[.sourceApplication] as? String == "com.apple.SafariViewService") {
+
+- On iOS 13, UIKit will notify `UISceneDelegate` instead of `UIApplicationDelegate`.
+- Implement `UISceneDelegate` method
+
+```swift
+func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else {
+            return
+        }
+        if url.host == "oauth-callback" {
+            OAuthSwift.handle(url: url)
+        }
+}
 ```
 
-- On macOS you must register an handler on `NSAppleEventManager` for event type `kAEGetURL` (see demo code)
+:warning: Any other application may try to open a URL with your url scheme. So you can check the source application, for instance for safari controller :
+
+```swift
+if options[.sourceApplication] as? String == "com.apple.SafariViewService" {
+```
+
+- On macOS you must register a handler on `NSAppleEventManager` for event type `kAEGetURL` (see demo code)
+
 ```swift
 func applicationDidFinishLaunching(_ aNotification: NSNotification) {
     NSAppleEventManager.shared().setEventHandler(self, andSelector:#selector(AppDelegate.handleGetURL(event:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
@@ -88,6 +127,7 @@ func handleGetURL(event: NSAppleEventDescriptor!, withReplyEvent: NSAppleEventDe
 ```
 
 ### Authorize with OAuth1.0
+
 ```swift
 // create an instance and retain it
 oauthswift = OAuth1Swift(
@@ -99,7 +139,7 @@ oauthswift = OAuth1Swift(
 )
 // authorize
 let handle = oauthswift.authorize(
-    withCallbackURL: URL(string: "oauth-swift://oauth-callback/twitter")!) { result in
+    withCallbackURL: "oauth-swift://oauth-callback/twitter") { result in
     switch result {
     case .success(let (credential, response, parameters)):
       print(credential.oauthToken)
@@ -111,8 +151,11 @@ let handle = oauthswift.authorize(
     }             
 }
 ```
+
 ### OAuth1 without authorization
+
 No urls to specify here
+
 ```swift
 // create an instance and retain it
 oauthswift = OAuth1Swift(
@@ -131,6 +174,7 @@ oauthswift.client.get("https://api.example.com/foo/bar") { result in
 ```
 
 ### Authorize with OAuth2.0
+
 ```swift
 // create an instance and retain it
 oauthswift = OAuth2Swift(
@@ -140,7 +184,7 @@ oauthswift = OAuth2Swift(
     responseType:   "token"
 )
 let handle = oauthswift.authorize(
-    withCallbackURL: URL(string: "oauth-swift://oauth-callback/instagram")!,
+    withCallbackURL: "oauth-swift://oauth-callback/instagram",
     scope: "likes+comments", state:"INSTAGRAM") { result in
     switch result {
     case .success(let (credential, response, parameters)):
@@ -150,10 +194,10 @@ let handle = oauthswift.authorize(
       print(error.localizedDescription)
     }
 }
-
 ```
 
 ### Authorize with OAuth2.0 and proof key flow (PKCE)
+
 ```swift
 // create an instance and retain it
 oauthswift = OAuth2Swift(
@@ -164,11 +208,11 @@ oauthswift = OAuth2Swift(
 )
 oauthswift.accessTokenBasicAuthentification = true
 
-let codeVerifier = base64url("abcd...")
-let codeChallenge = codeChallenge(for: codeVerifier)
+guard let codeVerifier = generateCodeVerifier() else {return}
+guard let codeChallenge = generateCodeChallenge(codeVerifier: codeVerifier) else {return}
 
 let handle = oauthswift.authorize(
-    withCallbackURL: URL(string: "myApp://callback/")!,
+    withCallbackURL: "myApp://callback/",
     scope: "requestedScope", 
     state:"State01",
     codeChallenge: codeChallenge,
@@ -182,9 +226,7 @@ let handle = oauthswift.authorize(
       print(error.localizedDescription)
     }
 }
-
 ```
-
 
 See demo for more examples
 
@@ -194,25 +236,32 @@ The authorize URL allows the user to connect to a provider and give access to yo
 By default this URL is opened into the external web browser (ie. safari), but apple does not allow it for app-store iOS applications.
 
 To change this behavior you must set an `OAuthSwiftURLHandlerType`, simple protocol to handle an `URL`
+
 ```swift
 oauthswift.authorizeURLHandler = ..
 ```
+
 For instance you can embed a web view into your application by providing a controller that displays a web view (`UIWebView`, `WKWebView`).
 Then this controller must implement `OAuthSwiftURLHandlerType` to load the URL into the web view
+
 ```swift
 func handle(_ url: NSURL) {
   let req = URLRequest(URL: targetURL)
   self.webView.loadRequest(req)
   ...
 ```
+
 and present the view (`present(viewController`, `performSegue(withIdentifier: `, ...)
 *You can extend `OAuthWebViewController` for a default implementation of view presentation and dismiss*
 
 #### Use the SFSafariViewController (iOS9)
+
 A default implementation of `OAuthSwiftURLHandlerType` is provided using the `SFSafariViewController`, with automatic view dismiss.
+
 ```swift
 oauthswift.authorizeURLHandler = SafariURLHandler(viewController: self, oauthSwift: oauthswift)
 ```
+
 Of course you can create your own class or customize the controller by setting the variable `SafariURLHandler#factory`.
 
 ### Make signed request
@@ -268,6 +317,7 @@ See more examples in the demo application: [ViewController.swift](/Demo/Common/V
 * [SoundCloud](https://developers.soundcloud.com/docs/api/guide#authentication)
 * [Doper](https://doper.io/developer/oauth)
 * [NounProject](http://api.thenounproject.com/getting_started.html#authentication)
+* [Reddit](https://github.com/reddit-archive/reddit/wiki/oauth2)
 
 ## Images
 
@@ -276,17 +326,19 @@ See more examples in the demo application: [ViewController.swift](/Demo/Common/V
 ![Image](Assets/TwitterOAuthTokens.png "Image")
 
 ## Contributing
- See [CONTRIBUTING.md](.github/CONTRIBUTING.md)
+
+See [CONTRIBUTING.md](.github/CONTRIBUTING.md)
 
 [Add a new service in demo app](https://github.com/OAuthSwift/OAuthSwift/wiki/Demo-application#add-a-new-service-in-demo-app)
 
-
 ## Integration
+
 OAuthSwift could be used with others frameworks
 
 You can sign [Alamofire](https://github.com/Alamofire/Alamofire) request with [OAuthSwiftAlamofire](https://github.com/OAuthSwift/OAuthSwiftAlamofire)
 
 To achieve great asynchronous code you can use one of these integration frameworks
+
 - [OAuthSwiftFutures](https://github.com/OAuthSwift/OAuthSwiftFutures) - [BrightFutures](https://github.com/Thomvis/BrightFutures)
 - [OAuthRxSwift](https://github.com/OAuthSwift/OAuthRxSwift) - [RxSwift](https://github.com/ReactiveX/RxSwift)
 - [OAuthReactiveSwift](https://github.com/OAuthSwift/OAuthReactiveSwift) - [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift)

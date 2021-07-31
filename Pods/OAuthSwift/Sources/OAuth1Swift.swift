@@ -17,6 +17,15 @@ open class OAuth1Swift: OAuthSwift {
     /// Optionally add callback URL to authorize Url (default: false)
     open var addCallbackURLToAuthorizeURL: Bool = false
 
+    /// Optionally add consumer key to authorize Url (default: false)
+    open var addConsumerKeyToAuthorizeURL: Bool = false
+
+    /// Optionally change the standard `oauth_token` param name of the authorize Url
+    open var authorizeURLOAuthTokenParam: String = "oauth_token"
+
+    /// Optionally change the standard `oauth_consumer_key` param name of the authorize Url
+    open var authorizeURLConsumerKeyParam: String = "oauth_consumer_key"
+
     /// Encode token using RFC3986
     open var useRFC3986ToEncodeToken: Bool = false
 
@@ -44,12 +53,12 @@ open class OAuth1Swift: OAuthSwift {
     public convenience init?(parameters: ConfigParameters) {
         guard let consumerKey = parameters["consumerKey"], let consumerSecret = parameters["consumerSecret"],
             let requestTokenUrl = parameters["requestTokenUrl"], let authorizeUrl = parameters["authorizeUrl"], let accessTokenUrl = parameters["accessTokenUrl"] else {
-            return nil
+                return nil
         }
         self.init(consumerKey: consumerKey, consumerSecret: consumerSecret,
-          requestTokenUrl: requestTokenUrl,
-          authorizeUrl: authorizeUrl,
-          accessTokenUrl: accessTokenUrl)
+                  requestTokenUrl: requestTokenUrl,
+                  authorizeUrl: authorizeUrl,
+                  accessTokenUrl: accessTokenUrl)
     }
 
     open var parameters: ConfigParameters {
@@ -105,7 +114,10 @@ open class OAuth1Swift: OAuthSwift {
                 // 2. Authorize
                 if let token = self.encode(token: credential.oauthToken) {
                     var urlString = self.authorizeUrl + (self.authorizeUrl.contains("?") ? "&" : "?")
-                    urlString += "oauth_token=\(token)"
+                    urlString += "\(self.authorizeURLOAuthTokenParam)=\(token)"
+                    if self.addConsumerKeyToAuthorizeURL {
+                        urlString += "&\(self.authorizeURLConsumerKeyParam)=\(self.consumerKey)"
+                    }
                     if self.addCallbackURLToAuthorizeURL {
                         urlString += "&oauth_callback=\(callbackURL.absoluteString)"
                     }
@@ -115,7 +127,7 @@ open class OAuth1Swift: OAuthSwift {
                         completion(.failure(.encodingError(urlString: urlString)))
                     }
                 } else {
-                    completion(.failure(.encodingError(urlString: credential.oauthToken))) //TODO specific error
+                    completion(.failure(.encodingError(urlString: credential.oauthToken))) // TODO specific error
                 }
             case .failure(let error):
                 completion(.failure(error))

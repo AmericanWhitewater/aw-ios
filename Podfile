@@ -26,7 +26,7 @@ target 'American Whitewater' do
   pod 'Apollo', '~> 0.26.0'
   
   # OAuth and Secure Storge for Auth Keys
-  pod 'OAuthSwift', '~> 2.1.0'
+  pod 'OAuthSwift', '~> 2'
   pod 'KeychainSwift', '~> 19.0'
   
   # Better looking alerts
