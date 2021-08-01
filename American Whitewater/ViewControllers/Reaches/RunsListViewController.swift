@@ -162,7 +162,7 @@ class RunsListViewController: UIViewController {
     }
     
     private var searchPredicate: NSPredicate? {
-        guard let searchText = searchBar.textField?.text, searchText.count > 0 else { return nil }
+        guard let searchText = searchBar.searchTextField.text, searchText.count > 0 else { return nil }
         
         let searchName = NSPredicate(format: "name contains[cd] %@", searchText)
         let searchSection = NSPredicate(format: "section contains[cd] %@", searchText)
@@ -229,8 +229,8 @@ class RunsListViewController: UIViewController {
     }
     
     @objc func dismissKeyboard() {
-        self.searchBar.textField?.resignFirstResponder()
-        self.searchBar.textField?.endEditing(true)
+        self.searchBar.searchTextField.resignFirstResponder()
+        self.searchBar.searchTextField.endEditing(true)
     }
     
     @IBAction func runnableFilterChanged(_ runnableSwitch: UISwitch) {
@@ -490,7 +490,7 @@ extension RunsListViewController: UISearchBarDelegate {
         searchBar.isTranslucent = true
         searchBar.setTextField(color: UIColor.white)
         searchBar.tintColor = UIColor(named: "primary") ?? UIColor.AW.Unknown
-        searchBar.textField?.textColor = UIColor.AW.Unknown
+        searchBar.searchTextField.textColor = UIColor.AW.Unknown
         searchBar.placeholder = "Search for a Run"
         searchBar.enablesReturnKeyAutomatically = false
         searchBar.returnKeyType = .done
@@ -504,7 +504,7 @@ extension RunsListViewController: UISearchBarDelegate {
     }
     
     @objc func clearButtonPressed() {
-        searchBar.textField?.resignFirstResponder()
+        searchBar.searchTextField.resignFirstResponder()
         updateData()
     }
 

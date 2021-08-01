@@ -54,7 +54,6 @@
 		634154B925242191009DD31D /* AccountInfo.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 634154B825242191009DD31D /* AccountInfo.graphql */; };
 		634154C1252BDD2E009DD31D /* News.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 634154C0252BDD2E009DD31D /* News.graphql */; };
 		634154C5252BDE1A009DD31D /* AWGQLArticleApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634154C4252BDE1A009DD31D /* AWGQLArticleApiHelper.swift */; };
-		6342A3E92385A3A400B54365 /* UISearchBar+UITextFieldColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6342A3E82385A3A400B54365 /* UISearchBar+UITextFieldColor.swift */; };
 		6342A3EB2385AD3500B54365 /* MKMapView+FitAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6342A3EA2385AD3500B54365 /* MKMapView+FitAnnotations.swift */; };
 		63432D462540DA340037AA37 /* UISegmentedControl+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63432D452540DA340037AA37 /* UISegmentedControl+Colors.swift */; };
 		63491B03232882170036A906 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B02232882170036A906 /* NewsTableViewCell.swift */; };
@@ -117,7 +116,6 @@
 		63E90EC122EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63E90EBF22EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf */; };
 		63EDA74F24B3F5AF0020382A /* GaugeMetrics.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 63EDA74E24B3F5AF0020382A /* GaugeMetrics.graphql */; };
 		63F712E2238869A50047C8F0 /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F712E1238869A50047C8F0 /* UIImage+Color.swift */; };
-		63F712E4238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */; };
 		63F87AD5236A923D0005AA0B /* AWReachDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F87AD4236A923D0005AA0B /* AWReachDetail.swift */; };
 		63FF68B925ACEE0700AF0F37 /* GageForRunCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF68B825ACEE0700AF0F37 /* GageForRunCell.swift */; };
 		63FF68BF25ACF29700AF0F37 /* GageDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF68BE25ACF29700AF0F37 /* GageDetailsCell.swift */; };
@@ -202,7 +200,6 @@
 		634154B825242191009DD31D /* AccountInfo.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = AccountInfo.graphql; sourceTree = "<group>"; };
 		634154C0252BDD2E009DD31D /* News.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = News.graphql; sourceTree = "<group>"; };
 		634154C4252BDE1A009DD31D /* AWGQLArticleApiHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWGQLArticleApiHelper.swift; sourceTree = "<group>"; };
-		6342A3E82385A3A400B54365 /* UISearchBar+UITextFieldColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+UITextFieldColor.swift"; sourceTree = "<group>"; };
 		6342A3EA2385AD3500B54365 /* MKMapView+FitAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+FitAnnotations.swift"; sourceTree = "<group>"; };
 		63432D452540DA340037AA37 /* UISegmentedControl+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Colors.swift"; sourceTree = "<group>"; };
 		63491B02232882170036A906 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
@@ -270,7 +267,6 @@
 		63E90EBF22EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		63EDA74E24B3F5AF0020382A /* GaugeMetrics.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GaugeMetrics.graphql; sourceTree = "<group>"; };
 		63F712E1238869A50047C8F0 /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
-		63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentControl+PreiOS13.swift"; sourceTree = "<group>"; };
 		63F87AD4236A923D0005AA0B /* AWReachDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWReachDetail.swift; sourceTree = "<group>"; };
 		63FF68B825ACEE0700AF0F37 /* GageForRunCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GageForRunCell.swift; sourceTree = "<group>"; };
 		63FF68BE25ACF29700AF0F37 /* GageDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GageDetailsCell.swift; sourceTree = "<group>"; };
@@ -491,12 +487,10 @@
 				63203C0D23694BFF006A4148 /* Reach.swift */,
 				63491B0E2328D72D0036A906 /* UIColor+Hex.swift */,
 				637D0736236B541000BE90D0 /* UISearchBar+BGColor.swift */,
-				6342A3E82385A3A400B54365 /* UISearchBar+UITextFieldColor.swift */,
 				6342A3EA2385AD3500B54365 /* MKMapView+FitAnnotations.swift */,
 				63E0B22B23A3EDDE00A348FC /* MKMapView+FitAll.swift */,
 				63081BF9236B2F8500FC3823 /* OpenTerminal.sh */,
 				63F712E1238869A50047C8F0 /* UIImage+Color.swift */,
-				63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */,
 				63164497246C1C6D00807E19 /* UITextView+HTML.swift */,
 				63B5B4A82459298F0062F54B /* UILabel+HTML.swift */,
 				631644A1246ED80B00807E19 /* UIButton+UrlImageLoad.swift */,
@@ -927,7 +921,6 @@
 				63949955246F0DD40061552C /* AwImageCell.swift in Sources */,
 				63FF68C525ACF2A900AF0F37 /* GageGraphCell.swift in Sources */,
 				631EFF9A23677C4000BA17F7 /* Article+CoreDataProperties.swift in Sources */,
-				6342A3E92385A3A400B54365 /* UISearchBar+UITextFieldColor.swift in Sources */,
 				631EFFA42367842300BA17F7 /* DifficultyHelper.swift in Sources */,
 				637D0737236B541000BE90D0 /* UISearchBar+BGColor.swift in Sources */,
 				63A6FD672363EEA200148231 /* AWApiArticleHelper.swift in Sources */,
@@ -954,7 +947,6 @@
 				63A8B17D23281A8A00FD2E00 /* AWArticle.swift in Sources */,
 				6389BFB0234E311500DE7D6C /* RunMapAnnotation.swift in Sources */,
 				63B5B4A724591A460062F54B /* RunAccidentDetailsTableViewController.swift in Sources */,
-				63F712E4238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift in Sources */,
 				635141FB2460947A00B4F974 /* AddAlertTableViewController.swift in Sources */,
 				63309E36233DA29000E6DBC4 /* MoreTableViewController.swift in Sources */,
 				63B5B4A92459298F0062F54B /* UILabel+HTML.swift in Sources */,
