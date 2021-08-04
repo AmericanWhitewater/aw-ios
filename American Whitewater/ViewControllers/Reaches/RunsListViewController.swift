@@ -95,14 +95,13 @@ class RunsListViewController: UIViewController {
         guard
             let lastShown = DefaultsManager.shared.signInLastShown,
             // Only show once per day
-            lastShown < Date(timeIntervalSinceNow: -24 * 60 * 60),
-            let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController
+            lastShown < Date(timeIntervalSinceNow: -24 * 60 * 60)
         else {
             return
         }
 
-        modalSignInVC.modalPresentationStyle = .overCurrentContext
-        tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+        // AWTODO: why not present on self?
+        tabBarController?.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
     }
     
     // Contract for updating data

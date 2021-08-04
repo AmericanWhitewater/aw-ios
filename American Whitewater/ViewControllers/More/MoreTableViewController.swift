@@ -37,10 +37,7 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
     }
     
     func showLoginScreen() {
-        if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
-            modalSignInVC.modalPresentationStyle = .overCurrentContext
-            tabBarController?.present(modalSignInVC, animated: true, completion: nil)
-        }
+        tabBarController?.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
     }
 
     

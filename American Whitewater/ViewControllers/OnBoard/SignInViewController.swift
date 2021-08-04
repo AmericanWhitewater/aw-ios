@@ -10,6 +10,16 @@ class SignInViewController: UIViewController {
         
     var oauthswift: OAuthSwift?
     
+    static func fromStoryboard() -> SignInViewController {
+        let signinController = UIStoryboard.main.instantiateViewController(withIdentifier: "ModalOnboardLogin") as! SignInViewController
+        
+        // Set the presentation style that's generally used
+        signinController.modalPresentationStyle = .overCurrentContext
+        
+        return signinController
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
