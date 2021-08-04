@@ -2,6 +2,7 @@ import UIKit
 import netfox
 import CoreData
 import Firebase
+import FirebaseAnalytics
 import OneSignal
 import OAuthSwift
 import IQKeyboardManagerSwift
@@ -47,6 +48,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Firebase for crash reporting
         // and analytics of the app
         FirebaseApp.configure()
+        
+        // Firebase behaves differently if there's no reference to Analytics anywhere in the app.
+        // Perhaps it gets optimized away during build?
+        // At any rate, Firebase debug logs report "Firebase Analytics SDK not detected. Crash-free statistics and breadcrumbs will not be reported", and analytics events don't seem to be sent
+        _ = Analytics.self
         
         // This nice library moves text fields out of the way of the keyboard automagically
         IQKeyboardManager.shared.enable = true
