@@ -10,8 +10,9 @@ import UIKit
 import AVFoundation
 
 class AddRiverFlowTableViewController: UITableViewController {
-
-    var selectedRun: Reach?
+    // This must always be set before presenting the controller.
+    // Storyboards/segues make it difficult to remove the optional
+    var selectedRun: Reach!
         
     @IBOutlet weak var riverNameLabel: UILabel!
     @IBOutlet weak var riverSectionLabel: UILabel!
@@ -48,11 +49,11 @@ class AddRiverFlowTableViewController: UITableViewController {
         submitFlowButton?.layer.cornerRadius = submitFlowButton.frame.height / 2
         submitFlowButton?.clipsToBounds = true
         
-        riverNameLabel?.text = selectedRun?.name
-        riverSectionLabel?.text = selectedRun?.section
+        riverNameLabel?.text = selectedRun.name
+        riverSectionLabel?.text = selectedRun.section
         
         dateObservedLabel?.text = dateFormatter.string(from: Date())
-        observedGaugeUnitsLabel?.text = selectedRun?.unit ?? "cfs"
+        observedGaugeUnitsLabel?.text = selectedRun.unit ?? "cfs"
         
         if availableMetrics.count > 0 {
             self.unitOptions = Array(availableMetrics.keys)
@@ -83,11 +84,6 @@ class AddRiverFlowTableViewController: UITableViewController {
         observedGaugeLevelTextField.resignFirstResponder()
         observationTitleTextField.resignFirstResponder()
         
-        guard let selectedRun = selectedRun else {
-            DuffekDialog.shared.showOkDialog(title: "Post Observation Error", message: "An error has occured. Please notify us of this problem")
-            return
-        }
-
         AWProgressModal.shared.show(fromViewController: self, message: "Posting...");
         
         // send value to server

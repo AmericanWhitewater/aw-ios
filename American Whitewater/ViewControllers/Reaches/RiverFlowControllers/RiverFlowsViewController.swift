@@ -173,12 +173,22 @@ class RiverFlowsViewController: UIViewController {
     }
     
     // MARK: - Navigation
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        switch identifier {
+        case Segue.addRiverFlowSeg.rawValue:
+            return selectedRun != nil
+        default:
+            return true
+        }
+        
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.identifier == Segue.addRiverFlowSeg.rawValue {
             let addFlowVC = segue.destination as? AddRiverFlowTableViewController
-            addFlowVC?.selectedRun = self.selectedRun
+            addFlowVC?.selectedRun = self.selectedRun!
             addFlowVC?.senderVC = self
             addFlowVC?.availableMetrics = self.availableMetrics
         }
