@@ -116,9 +116,7 @@ class AddRiverFlowTableViewController: UITableViewController {
         AWGQLApiHelper.shared.postGaugeObservationFor(reach_id: reachId, metric_id: metricId, title: title, dateString: dateString, reading: reading, callback: { (postResult) in
             // handle post result
             AWProgressModal.shared.hide()
-            
-            // AWTODO: Check for errors!
-            
+                        
             if let postResult = postResult {
                 print("Flow Posted: \(postResult.title ?? "no title") -- \(postResult.postDate ?? "no date")")
             }
@@ -128,8 +126,13 @@ class AddRiverFlowTableViewController: UITableViewController {
             
         }) { (error, errorMessage) in
             AWProgressModal.shared.hide()
-            // handle error
-            print("Error posting observation: ", error?.localizedDescription ?? "", errorMessage ?? "")
+            if let error = error, case AWGQLApiHelper.Errors.notSignedIn = error {
+                self.showToast(message: "You must sign in before adding a flow.")
+                self.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
+            } else {
+                // AWTODO: handle other errors
+                print("Error posting observation: ", error?.localizedDescription ?? "", errorMessage ?? "")
+            }
         }
 
     }

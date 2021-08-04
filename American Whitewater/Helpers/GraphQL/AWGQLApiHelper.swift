@@ -19,6 +19,10 @@ class AWGQLApiHelper
     typealias AWGaugesListCallback = ([ [String : String] ]) -> Void
     typealias AWGraphQLError = (Error?, String?) -> Void
     
+    enum Errors: Error {
+        case notSignedIn
+    }
+    
     static let shared = AWGQLApiHelper()
     
     private(set) lazy var apollo: ApolloClient = {
@@ -144,9 +148,7 @@ class AWGQLApiHelper
                 }
             }
         } else {
-            // user is not signed in
-            // AWTODO: Add option to sign in
-            DuffekDialog.shared.showOkDialog(title: "Sign In Required", message: "You must sign in before sumbitting an alert.")
+            errorCallback(Errors.notSignedIn, nil)
         }
     }
     
@@ -206,9 +208,7 @@ class AWGQLApiHelper
                 }
             }
         } else {
-            // user is not signed in
-            // AWTODO: Add option to sign in
-            DuffekDialog.shared.showOkDialog(title: "Sign In Required", message: "You must sign in before sumbitting an alert.")
+            errorCallback(Errors.notSignedIn, nil)
         }
     }
     

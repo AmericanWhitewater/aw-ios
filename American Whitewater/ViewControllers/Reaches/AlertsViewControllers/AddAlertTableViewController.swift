@@ -83,14 +83,21 @@ class AddAlertTableViewController: UITableViewController {
             self.successAndDismissView()
             
         }) { (error, message) in
-            AWProgressModal.shared.hideWith {
-                let errorMessage = GQLError.handleGQLError(error: error, altMessage: message)
-                print("Error:", errorMessage)
-                self.showToast(message: "Connection error: \(errorMessage)")
+            if
+                let error = error,
+                case AWGQLApiHelper.Errors.notSignedIn = error
+            {
+                self.showToast(message: "You must sign in to submit an alert.")
+                self.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
+            } else {
+                AWProgressModal.shared.hideWith {
+                    let errorMessage = GQLError.handleGQLError(error: error, altMessage: message)
+                    print("Error:", errorMessage)
+                    self.showToast(message: "Connection error: \(errorMessage)")
+                }
             }
         }
     }
-
     
     func successAndDismissView() {
         self.showToast(message: "Your alert has been added. Thank you for providing valuable information to the river community.\n\nRiver Karma Granted!")
