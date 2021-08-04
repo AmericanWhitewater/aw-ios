@@ -234,7 +234,6 @@ extension AddRiverFlowTableViewController: UIPickerViewDelegate, UIPickerViewDat
                     }
                 }
             }
-            
         }
     }
     

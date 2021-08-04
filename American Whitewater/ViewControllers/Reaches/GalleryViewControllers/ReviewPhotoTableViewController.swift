@@ -72,9 +72,14 @@ class ReviewPhotoTableViewController: UITableViewController {
                 description = desc
             }
             
+            // AWTODO: what's this alert mean? fix date parsing, supply a default, or indicate how to fix.
             let dateString = self.approxDateTimeLabel.text!
             guard let date = dateFormatter.date(from: dateString) else {
-                DuffekDialog.shared.showOkDialog(title: "Invalid Date Issue", message: "There was an issue with the date/time for this post. Please contact us about this problem.")
+                let alert = UIAlertController(
+                    title: "Invalid Date Issue",
+                    message: "There was an issue with the date/time for this post. Please contact us about this problem.",
+                    preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                 return
             }
 

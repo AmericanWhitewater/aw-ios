@@ -65,17 +65,26 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
         } else if indexPath.row == 3 {
             
             // FEEDBACK - via email
+    
+            // AWTODO: is this still the right email to use?
+            let toAddress = "evan@americanwhitewater.org"
+            
             if MFMailComposeViewController.canSendMail() {
-                    
                 let mail = MFMailComposeViewController()
                 mail.mailComposeDelegate = self
-                mail.setToRecipients(["evan@americanwhitewater.org"])
+                mail.setToRecipients([toAddress])
                 mail.setMessageBody("<p>Here is some feedback for the AW iOS App:</p><br/>", isHTML: true)
 
                 present(mail, animated: true)
             
             } else {
-                DuffekDialog.shared.showOkDialog(title: "Feedback Issue ", message: "Please setup a valid email account before attempting to contact us.")
+                let alert = UIAlertController(
+                    title: "Feedback Issue",
+                    message: "Please email your feedback to \(toAddress)",
+                    preferredStyle: .alert
+                )
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                present(alert, animated: true)
             }
         } else if indexPath.row == 4 {
             

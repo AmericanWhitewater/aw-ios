@@ -152,8 +152,14 @@ class FilterViewController: UIViewController {
     @IBAction func doneButtonPressed(_ sender: Any) {
         // We want to encourage people to choose a region, and not accidentally get data for the whole country, which is slow
         if filters.isRegion, filters.regionsFilter.isEmpty {
-            DuffekDialog.shared.showOkDialog(title: "Region Required", message: "Please select a region or choose to filter by Distance before continuing")
-            
+            let alert = UIAlertController(
+                title: "Region Required",
+                message: "Please select a region or choose to filter by Distance before continuing",
+                preferredStyle: .alert
+            )
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+
             return
         }
         

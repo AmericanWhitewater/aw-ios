@@ -80,9 +80,13 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
                     let placemarks = placemarks,
                     let place = placemarks.first,
                     let coordinate = place.location?.coordinate else {
+                        let alert = UIAlertController(
+                            title: "Unable to Find Location",
+                            message: "We are unable to find that location. Please check your connection or enter a new zip code to try again.",
+                            preferredStyle: .alert)
+                        alert.addAction(.init(title: "Dismiss", style: .default, handler: nil))
+                        self.present(alert, animated: true)
                         
-                        // some sort of error so show message and reset view
-                        DuffekDialog.shared.showOkDialog(title: "Unable to Find Location", message: "We are unable to find that location. Please check your connection or enter a new zip code to try again.")
                         self.zipcodeTextField.text = ""
                         self.nextButton.setTitle("Use Your Current Location", for: .normal)
                         self.locationImageView.isHidden = false
