@@ -13,7 +13,12 @@ class AddAlertTableViewController: UITableViewController {
     
     var dateFormatter = DateFormatter()
     
-    let PLACEHOLDER_ALERT: String = "e.g. behold the tree in the creek..."
+    static let placeholderText: String = "e.g. behold the tree in the creek..."
+    
+    var alertTextIsValid: Bool {
+        !alertTextView.text.isEmpty &&
+        alertTextView.text != Self.placeholderText
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,9 +26,10 @@ class AddAlertTableViewController: UITableViewController {
         alertTextViewContainer.layer.cornerRadius = 15
         alertTextViewBacking.layer.cornerRadius = alertTextViewContainer.layer.cornerRadius
         alertTextView.delegate = self
-        alertTextView?.text = PLACEHOLDER_ALERT
+        alertTextView?.text = Self.placeholderText
         
         submitButton.layer.cornerRadius = submitButton.bounds.height / 2
+        updateSubmitButtonEnabled()
         
         if let selectedRun = selectedRun {
             riverTitleLabel.text = selectedRun.title
@@ -38,13 +44,12 @@ class AddAlertTableViewController: UITableViewController {
     @IBAction func submitButtonPressed(_ sender: Any) {
         alertTextView.resignFirstResponder()
         
-        if alertTextView.text == PLACEHOLDER_ALERT || alertTextView.text.count == 0 {
-            DuffekDialog.shared.showOkDialog(title: "Invalid Alert", message: "Please enter a detailed description of the alert before pressing submit.")
+        guard
+            alertTextIsValid,
+            let selectedRun = self.selectedRun
+        else {
             return
         }
-        
-        // post the alert with GraphQL
-        guard let selectedRun = self.selectedRun else { return }
                 
         AWProgressModal.shared.show(fromViewController: self, message: "Saving...")
         
@@ -106,6 +111,12 @@ class AddAlertTableViewController: UITableViewController {
         }
     }
     
+    private func updateSubmitButtonEnabled() {
+        submitButton.isEnabled = alertTextIsValid
+        // FIXME: button should dim or otherwise visually change when disabled to indicate it's state, lowering opacity is not a great way to do that but it's quick:
+        submitButton.alpha = alertTextIsValid ? 1.0 : 0.6
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -117,16 +128,20 @@ class AddAlertTableViewController: UITableViewController {
 
 extension AddAlertTableViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == PLACEHOLDER_ALERT {
+        if textView.text == Self.placeholderText {
             textView.text = ""
-            textView.textColor = UIColor.black
+            textView.textColor = .black
         }
     }
     
+    func textViewDidChange(_ textView: UITextView) {
+        updateSubmitButtonEnabled()
+    }
+    
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.count == 0 {
-            textView.text = PLACEHOLDER_ALERT
-            textView.textColor = UIColor.lightGray
+        if textView.text.isEmpty {
+            textView.text = Self.placeholderText
+            textView.textColor = .lightGray
         }
     }
 }
