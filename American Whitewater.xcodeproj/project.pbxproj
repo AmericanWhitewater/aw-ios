@@ -652,9 +652,8 @@
 				63387B5C22CDBFFC0089BAA8 /* Frameworks */,
 				63387B5D22CDBFFC0089BAA8 /* Resources */,
 				E9E2B22FD2DE305D092B73A8 /* [CP] Embed Pods Frameworks */,
-				637FF77C236B327400F18400 /* Run Script */,
 				637FF78C236B33F300F18400 /* Embed App Extensions */,
-				63162D2725658EAD00A16404 /* ShellScript */,
+				63162D2725658EAD00A16404 /* Firebase/Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -785,7 +784,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		63162D2725658EAD00A16404 /* ShellScript */ = {
+		63162D2725658EAD00A16404 /* Firebase/Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -796,6 +795,7 @@
 				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
 				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
+			name = Firebase/Crashlytics;
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -821,24 +821,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nTAGS=\"AWTODO:|FIXME:\"\nERRORTAG=\"ERROR:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$|($ERRORTAG).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\" | perl -p -e \"s/($ERRORTAG)/ error: \\$1/\"\n";
-		};
-		637FF77C236B327400F18400 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		63B5B4952457A7800062F54B /* Apollo CLI */ = {
 			isa = PBXShellScriptBuildPhase;
