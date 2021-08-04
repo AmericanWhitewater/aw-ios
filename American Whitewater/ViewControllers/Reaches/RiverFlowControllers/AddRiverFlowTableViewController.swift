@@ -103,12 +103,12 @@ class AddRiverFlowTableViewController: UITableViewController {
         let metricIdString = availableMetrics[observedGaugeUnitsLabel.text ?? ""] ?? "0"
         let metricId = Int(metricIdString) ?? 0
         
-        if flowImageView.image == nil {
+        if let image = flowImageView.image {
+            print("Posting obs with photo!")
+            postFlowWithPhoto(image, reachId: reachId, gageId: gageId, metricId: metricId, title: title, dateString: dateString, reading: reading)
+        } else {
             print("Posting obs without photo!")
             postFlowWithoutPhoto(reachId: reachId, gageId: gageId, metricId: metricId, title: title, dateString: dateString, reading: reading)
-        } else {
-            print("Posting obs with photo!")
-            postFlowWithPhoto(reachId: reachId, gageId: gageId, metricId: metricId, title: title, dateString: dateString, reading: reading)
         }
     }
 
@@ -137,13 +137,8 @@ class AddRiverFlowTableViewController: UITableViewController {
 
     }
     
-    func postFlowWithPhoto(reachId: Int, gageId: String?, metricId: Int, title: String, dateString: String, reading: Double) {
+    func postFlowWithPhoto(_ image: UIImage, reachId: Int, gageId: String?, metricId: Int, title: String, dateString: String, reading: Double) {
         print("GageId:", gageId ?? "n/a")
-        
-        guard let image = flowImageView.image else {
-            DuffekDialog.shared.showOkDialog(title: "Invalid Image", message: "There is an issue with the chosen image. Please try a different one")
-            return
-        }
         
         AWGQLApiHelper.shared.postPhotoForReach(photoPostType: .gaugeObservation, image: image, reach_id: reachId, caption: title,
                                                        description: "", photoDate: dateString,
@@ -273,12 +268,11 @@ extension AddRiverFlowTableViewController: UIPickerViewDelegate, UIPickerViewDat
 }
 
 extension AddRiverFlowTableViewController: AWImagePickerDelegate {
-
-    // show the users photo in the preview listing
     func didSelect(image: UIImage?) {
-        // Go add captioning and input to photo
-        if let image = image, let _ = selectedRun {
-            self.flowImageView.image = image
+        guard let image = image else {
+            return
         }
+        
+        self.flowImageView.image = image
     }
 }
