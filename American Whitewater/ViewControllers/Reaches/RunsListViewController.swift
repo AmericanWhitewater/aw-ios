@@ -102,7 +102,6 @@ class RunsListViewController: UIViewController {
         }
 
         modalSignInVC.modalPresentationStyle = .overCurrentContext
-        modalSignInVC.referenceViewController = self
         tabBarController?.present(modalSignInVC, animated: true, completion: nil)
     }
     

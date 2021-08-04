@@ -169,7 +169,6 @@ class RiverFlowsViewController: UIViewController {
     func showLoginScreen() {
         if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
             modalSignInVC.modalPresentationStyle = .overCurrentContext
-            modalSignInVC.referenceViewController = self
             tabBarController?.present(modalSignInVC, animated: true, completion: nil)
         }
     }

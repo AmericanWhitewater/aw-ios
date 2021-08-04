@@ -10,8 +10,6 @@ class SignInViewController: UIViewController {
         
     var oauthswift: OAuthSwift?
     
-    var referenceViewController: UIViewController?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
