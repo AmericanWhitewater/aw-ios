@@ -138,15 +138,18 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
             if annotation.title?.lowercased().contains("Put-In".lowercased()) == true ||
                annotation.title?.lowercased().contains("Take-Out".lowercased()) == true {
                 
-                DuffekDialog.shared.showStandardDialog(title: "Open in Maps?", message: "Would you like directions to the \(annotation.title ?? "River")", buttonTitle: "Get Directions", buttonFunction: {
+                let alert = UIAlertController(
+                    title: "Open in Maps?",
+                    message: "Would you like directions to the \(annotation.title ?? "River")",
+                    preferredStyle: .alert
+                )
+                alert.addAction(.init(title: "Get Directions", style: .default, handler: { _ in
                     // take them to Apple Maps
                     let url = "http://maps.apple.com/maps?daddr=\(annotation.coordinate.latitude),\(annotation.coordinate.longitude)"
                     UIApplication.shared.open(URL(string: url)!, options: [:], completionHandler: nil)
-
-                }, cancelFunction: {
-                    // handle cancel
-                })
-            
+                }))
+                alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+                present(alert, animated: true)
             } else {
                 
                 // open detail view

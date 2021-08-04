@@ -186,21 +186,26 @@ class AddRiverFlowTableViewController: UITableViewController {
     }
     
     @objc @IBAction func addPhotoButtonPressed(_ sender: UIButton) {
-        
         let authStatus = AVCaptureDevice.authorizationStatus(for: .video)
         
-        if authStatus == .denied || authStatus == .restricted {
-            // user rejected the ask
-            DuffekDialog.shared.showStandardDialog(title: "Camera not enabled", message: "Please enable your camera to add a picture.", buttonTitle: "Let's Fix It!") {
-                // user wants to fix the issue
+        guard authStatus != .denied, authStatus != .restricted else {
+            let alert = UIAlertController(
+                title: "Camera not enabled",
+                message: "Please enable your camera to add a picture.",
+                preferredStyle: .alert
+            )
+        
+            // Opens Settings.app 
+            alert.addAction(.init(title: "Let's Fix It!", style: .default, handler: { _ in
                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                
-            } cancelFunction: {
-                // user doens't want to fix it.
-            }
-        } else {
-            awImagePicker.present(from: sender)
+            }))
+            alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        
+            present(alert, animated: true)
+            return
         }
+        
+        awImagePicker.present(from: sender)
     }
     
     // MARK: - Navigation

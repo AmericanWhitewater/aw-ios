@@ -135,11 +135,17 @@ class RunsListViewController: UIViewController {
             
             if filters.isRegion {
                 if filters.regionsFilter.isEmpty {
-                    DuffekDialog.shared.showStandardDialog(title: "Pull All Data?", message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.", buttonTitle: "Continue", buttonFunction: {
+                    let alert = UIAlertController(
+                        title: "Pull All Data?",
+                        message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.",
+                        preferredStyle: .alert
+                    )
+                
+                    alert.addAction(.init(title: "Continue", style: .default, handler: { _ in
                         self.refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
-                    }, cancelFunction: {
-                        self.refreshControl.endRefreshing()
-                    })
+                    }))
+                    alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+                    present(alert, animated: true)
                 } else {
                     refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
                 }

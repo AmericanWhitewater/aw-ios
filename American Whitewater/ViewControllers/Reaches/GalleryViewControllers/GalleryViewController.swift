@@ -93,23 +93,30 @@ class GalleryViewController: UIViewController {
     @objc @IBAction func addPhotoButtonPressed(_ sender: UIButton) {
         let authStatus = AVCaptureDevice.authorizationStatus(for: .video)
         
-        if authStatus == .denied || authStatus == .restricted {
-            // user rejected the ask
-            DuffekDialog.shared.showStandardDialog(title: "Access Denied", message: "Hey, it looks like you rejected our access to your camera... We can't enable your camera to take pictures without it.", buttonTitle: "Let's Fix It!") {
-                // user wants to fix the issue
+        guard authStatus != .denied, authStatus != .restricted else {
+            let alert = UIAlertController(
+                title: "Camera not enabled",
+                message: "Please enable your camera to add a picture.",
+                preferredStyle: .alert
+            )
+        
+            // Opens Settings.app
+            alert.addAction(.init(title: "Let's Fix It!", style: .default, handler: { _ in
                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                
-            } cancelFunction: {
-                // user doens't want to fix it.
-            }
-        } else {
+            }))
+            alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        
+            present(alert, animated: true)
             
-            if DefaultsManager.shared.signedInAuth == nil {
-                self.showLoginScreen()
-            } else {
-                awImagePicker.present(from: sender)
-            }
+            return
         }
+            
+        guard DefaultsManager.shared.signedInAuth != nil else {
+            self.showLoginScreen()
+            return
+        }
+        
+        awImagePicker.present(from: sender)
     }
     
     func showLoginScreen() {
