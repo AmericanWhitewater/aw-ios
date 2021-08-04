@@ -120,83 +120,7 @@ class DuffekDialog {
         }
     }
     
-    func showPictureOptionsDialog(title: String, message: String, takePicture: @escaping () -> Void, selectPicture: @escaping () -> Void) {
-        alertViewController = styledAlert()
-        
-        if let alertViewController = alertViewController {
-            alertViewController.title = title
-            alertViewController.titleColor = UIColor.white
-            alertViewController.message = "\n\(message)\n"
-            alertViewController.buttonTitleFont = UIFont.boldSystemFont(ofSize: 17)
-            
-            let takePictureAction = NYAlertAction(title: "Camera", style: .default) { (_) in
-                self.alertViewController?.dismiss(animated: true, completion: nil)
-                
-                takePicture()
-            }
-            alertViewController.addAction(takePictureAction)
-            
-            let selectPictureAction = NYAlertAction(title: "Select Picture", style: .default) { (_) in
-                self.alertViewController?.dismiss(animated: true, completion: nil)
-                
-                selectPicture()
-            }
-            alertViewController.addAction(selectPictureAction)
-            
-            // add default cancel option
-            let cancelAction = NYAlertAction(title: "Cancel", style: .cancel) { (_) in
-                self.alertViewController?.dismiss(animated: true, completion: nil)
-            }
-            alertViewController.addAction(cancelAction)
-            
-            self.displayAlert(alertController: alertViewController)
-        }
-    }
-    
-    func showContactPickerDialogFor(contact:CNContact, pickerDataSource:UIPickerViewDataSource, pickerDelegate: UIPickerViewDelegate, title: String, message: String, selectedActionPressed: @escaping ()->Void) {
-        
-        alertViewController = styledAlert()
-        guard let alertViewController = alertViewController else {
-            print("Error creating alertViewController");
-            return;
-        }
-        
-        alertViewController.title = title
-        alertViewController.message = "\n\(message)\n"
-        
-        let cancelAction = NYAlertAction(title: "Cancel", style: .cancel) { (_) in
-            self.alertViewController?.dismiss(animated: true, completion: nil)
-        }
-        
-        let selectAction = NYAlertAction(title: "Select", style: .default) { (_) in
-            self.alertViewController?.dismiss(animated: true, completion: nil)
-            
-            // Send selected option from picker view
-            selectedActionPressed()
-        }
-        
-        alertViewController.addAction(cancelAction)
-        alertViewController.addAction(selectAction)
-        
-        // setup contact picker view
-        let contactPicker = UIPickerView()
-        contactPicker.dataSource = pickerDataSource
-        contactPicker.delegate = pickerDelegate
-        
-        // add picker view to alertViewControllers content view
-        alertViewController.alertViewContentView = contactPicker
-        
-        // show the alert
-        self.displayAlert(alertController: alertViewController)
-        
-        // select the first row in case the user hasn't already chosen an item by default
-        contactPicker.selectRow(0, inComponent: 0, animated: false)
-        if let delegate = contactPicker.delegate {
-            delegate.pickerView?(contactPicker, didSelectRow: 0, inComponent: 0)
-        }
-    }
-    
-    
+  
     
     func showPickerDialog(pickerDataSource:UIPickerViewDataSource, pickerDelegate: UIPickerViewDelegate, title: String, message: String, selectedActionPressed: @escaping ()->Void) {
         
@@ -267,11 +191,6 @@ class DuffekDialog {
         
         // show the alert
         self.displayAlert(alertController: alertViewController)
-    }
-    
-    /// A direct way to hide the alert at any time
-    func hideAlert() {
-        alertViewController?.dismiss(animated: true, completion: nil)
     }
     
     /// Displays alert dialog on currently viewed window
