@@ -67,7 +67,7 @@ class FavoritesViewController: UIViewController {
     
     
     func fetchRiversFromCoreData() {
-        let request = Reach.fetchRequest() as NSFetchRequest<Reach>
+        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         request.predicate = NSPredicate(format: "favorite == %@", NSNumber(value: true))
         
@@ -106,7 +106,7 @@ class FavoritesViewController: UIViewController {
             
         }) { (error) in
             self.refreshControl.endRefreshing()
-            print("Error fetching by IDs: \(error?.localizedDescription ?? "Unknown Reason")")
+            print("Error fetching by IDs: \(error.localizedDescription)")
         }
     }
     

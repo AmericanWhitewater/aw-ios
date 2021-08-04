@@ -13,92 +13,51 @@ class RunsListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var runnableFilterContainerView: UIView!
     @IBOutlet weak var runnableSwitch: UISwitch!
-    @IBOutlet weak var legendContainerView: UIView!
-    @IBOutlet weak var mainLegendBackgroundView: UIView!
-    @IBOutlet weak var legendCloseButton: UIButton!
-    
-    var predicates: [NSPredicate] = []
-    
-    var lastUpdatedDate:Date?
-    let dateFormatter = DateFormatter()
-    
     let searchBar = UISearchBar()
     let refreshControl = UIRefreshControl()
-    
-    var isLoadingData = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // setup our search bar to show correctly
-        setupSearchBar()
-        
-        dateFormatter.dateFormat = "MMM d, h:mm a"
-        
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 120
-        
         // setup pull to refresh
-        refreshControl.addTarget(self, action: #selector(refreshRiverData), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(didPullRefreshControl), for: .valueChanged)
         tableView.refreshControl = refreshControl
         
+        setupSearchBar()
         // add tap-away from search to dismiss keyboard
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false;
         self.view.addGestureRecognizer(tapGesture)
         
-        mainLegendBackgroundView.layer.cornerRadius = 15
-        mainLegendBackgroundView.clipsToBounds = true
-        legendCloseButton.layer.cornerRadius = legendCloseButton.frame.height / 2
-        legendCloseButton.clipsToBounds = true
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 120
         
         runnableSwitch.isOn = DefaultsManager.shared.runnableFilter
+        AWGQLApiHelper.shared.updateAccountInfo()
         
-        // set this view to listen for application resuming from background
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive),
-                                                 name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
-    
-    fileprivate  func removeObservers() {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
+        // AWTODO loading UI states
+        if !DefaultsManager.shared.completedFirstRun {
+            print("downloading all reaches")
+            AWApiReachHelper.shared.downloadAllReachesInBackground {
+                print("Completed downloading all data")
 
-    @objc fileprivate func applicationDidBecomeActive() {
-        print("Application resumed")
-        viewWillAppear(true)
+                do {
+                    try self.updateFetchedResultsController()
+                } catch {
+                    print("Error in updateFetchedResultsController: \(error)")
+                }
+                
+                DefaultsManager.shared.completedFirstRun = true
+            }
+        }
     }
-    
-    @objc func dismissKeyboard() {
-        self.searchBar.textField?.resignFirstResponder()
-        self.searchBar.textField?.endEditing(true)
-    }
-        
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        // get and store the user's uname and id in local storage
-        AWGQLApiHelper.shared.getAccountInfo()
+        updateData();
         
-        // set the right nav button based on chosen filters
-        // needed due to a visual bug in XCode 11 when
-        // manually setting the image
-        updateFilterButton()
-        
-        // first fetch the rivers we have stored locally
-        fetchRiversFromCoreData();
-        
-        print("Check if onboarding needed")
-        if checkIfOnboardingNeeded() == false {
-             self.refresh()
-        }
-        
-        // show the ugly legend until we design a better one
-        if DefaultsManager.shared.legendFirstRun == false {
-            showLegend([])
-            DefaultsManager.shared.legendFirstRun = true
-        }
-
+        showOnboardingIfNeeded()
 
         // check if user is logged in
         let keychain = KeychainSwift();
@@ -111,271 +70,159 @@ class RunsListViewController: UIViewController {
         }        
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         
         fetchedResultsController?.delegate = nil
         fetchedResultsController = nil
     }
-        
-    func updateFilterButton() {
-        navigationItem.rightBarButtonItem?.title = ""
-        if DefaultsManager.shared.classFilter.count < 5 || DefaultsManager.shared.showDistanceFilter == true || DefaultsManager.shared.showRegionFilter == true {
-            navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: "filterOn"), for: .normal, barMetrics: .default)
-        } else {
-            navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: "filterOff"), for: .normal, barMetrics: .default)
-        }
-    }
     
-    func fetchRiversFromCoreData() {
-        
-        print("Fetching rivers from core data")
-        
-        let request = Reach.fetchRequest() as NSFetchRequest<Reach>
-
-        // setup sort filters
-        if DefaultsManager.shared.showDistanceFilter && DefaultsManager.shared.distanceFilter > 0 {
-            print("Using distance filter")
-            
-            request.sortDescriptors = [
-                NSSortDescriptor(key: "distance", ascending: true),
-                NSSortDescriptor(key: "name", ascending: true)
-            ]
-        } else {
-            request.sortDescriptors = [
-                NSSortDescriptor(key: "name", ascending: true),
-                NSSortDescriptor(key: "sortName", ascending: true)
-            ]
+    func showOnboardingIfNeeded() {
+        guard
+            !DefaultsManager.shared.onboardingCompleted,
+            let modalOnboardingVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardingVC") as? OnboardLocationViewController
+        else {
+            return
         }
-
-        // based on our filtering settings (distance, region, or class) we request Reaches that
-        // match these settings
-        let combinedPredicates: [NSPredicate] = filterPredicates().compactMap { $0 } + predicates
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: combinedPredicates)
-        
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
-                                                              managedObjectContext: managedObjectContext,
-                                                              sectionNameKeyPath: nil, cacheName: nil)
-        do {
-            try fetchedResultsController?.performFetch()
-        } catch {
-            let error = error as NSError
-            print("Error fetching reaches from CoreData: \(error), \(error.userInfo)")
-            self.showToast(message: "Connection Error: " + error.userInfo.description)
-        }
-        
-        tableView.reloadData()
-        
-        // Here we determined if the user has downloaded their local
-        // region data. Then if they haven't already we start downloading
-        // all reaches in the background.
-        // Since the Onboarding is now modal this may be completely hidden
-        // from the user and it wont impact their experience
-        if !DefaultsManager.shared.completedFirstRun {
-            print("downloading all reaches")
-            DefaultsManager.shared.completedFirstRun = true
-            AWApiReachHelper.shared.downloadAllReachesInBackground {
-                print("Completed downloading all data")
-                self.fetchRiversFromCoreData()
-            }
-        }
-    }
-    
-    func checkIfOnboardingNeeded() -> Bool {
-        let appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
-        print("AppVersion: \(appVersion) - Defaults: \(DefaultsManager.shared.appVersion ?? 0.0)")
-        
-        // This ads version checking and forces users to onboard if their version is less than the current version
-        // we might want to adjust this in the next release
-        if DefaultsManager.shared.appVersion == nil || DefaultsManager.shared.appVersion! < appVersion || !DefaultsManager.shared.onboardingCompleted {
-            
-            if let modalOnboadingVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardingVC") as? OnboardLocationViewController {
-                modalOnboadingVC.modalPresentationStyle = .overCurrentContext
-                modalOnboadingVC.referenceViewController = self
-                tabBarController?.present(modalOnboadingVC, animated: true, completion: nil)
-                return true
-            }
-        }
-        
-        return false
+ 
+        modalOnboardingVC.modalPresentationStyle = .overCurrentContext
+        modalOnboardingVC.referenceViewController = self
+        tabBarController?.present(modalOnboardingVC, animated: true, completion: nil)
     }
 
     func showLoginScreen() {
-        if let lastShown = DefaultsManager.shared.signInLastShown {
+        guard
+            let lastShown = DefaultsManager.shared.signInLastShown,
             // Only show once per day
-            if lastShown < Date(timeIntervalSinceNow: -24 * 60 * 60) {
-                if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
-                    modalSignInVC.modalPresentationStyle = .overCurrentContext
-                    modalSignInVC.referenceViewController = self
-                    tabBarController?.present(modalSignInVC, animated: true, completion: nil)
-                }
-            }
+            lastShown < Date(timeIntervalSinceNow: -24 * 60 * 60),
+            let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController
+        else {
+            return
         }
+
+        modalSignInVC.modalPresentationStyle = .overCurrentContext
+        modalSignInVC.referenceViewController = self
+        tabBarController?.present(modalSignInVC, animated: true, completion: nil)
     }
     
-    func refresh(regions: [Region] = Region.all) {
-        print("Refresh called")
-        // don't update if the tableView is already updating
-//        if tableView.hasUncommittedUpdates {
-//            print("already updating")
-//            refreshControl.endRefreshing()
-//            return
-//        }
-    
-        self.refreshControl.beginRefreshingManually()
-        
-        if DefaultsManager.shared.showRegionFilter {
-            print("Updating reaches by region")
-            var codes: [String] = []
-                    
-            // DEBUG: Force all regions
-            //DefaultsManager.regionsFilter = []
-        
-            // if the regionsFilter is set, only pull those regions
-            if DefaultsManager.shared.regionsFilter.count > 0 {
-                codes = DefaultsManager.shared.regionsFilter
-            } else {
-                codes = regions.map { $0.code }
-                print("Refreshing all regions")
-            }
-            
-            
-            // Check if we're pulling ALL data - if so let the user know
-            // a full refresh takes 30-60 seconds to complete
-            if codes.count == Region.all.count,
-               // Quick fix: this can get called multiple times resulting in nested broken alerts below
-               // so don't present an alert if there's already an alert being presented
-               DuffekDialog.shared.alertViewController == nil
-            {
-                print("Showing pull all data message")
-                DuffekDialog.shared.showStandardDialog(title: "Pull All Data?", message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.", buttonTitle: "Continue", buttonFunction: {
-                    // User wants to continue
-                    if self.tableView.numberOfRows(inSection: 0) > 0 {
-                        self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-                    }
-                    self.refreshData(with: codes)
-                }, cancelFunction: {
-                    // cancelled so end refresh
-                    self.refreshControl.endRefreshing()
-                });
-            } else {
-                refreshData(with: codes)
-            }
-        } else {
-            print("Updating reaches by distance")
-            // Show locations by distance
-            refreshDistanceData()
-        }
-    }
-    
-    func refreshDistanceData() {
-        // get all the reaches that are within a certain distance
-        let request = Reach.fetchRequest() as NSFetchRequest<Reach>
-        request.sortDescriptors = [
-           NSSortDescriptor(key: "distance", ascending: true),
-           NSSortDescriptor(key: "name", ascending: true)
-        ]
-
-        // based on our filtering settings (distance, region, or class) we request Reaches that
-        // match these settings
-        let combinedPredicates: [NSPredicate] = filterPredicates().compactMap { $0 } + predicates
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: combinedPredicates)
-
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
-                                                             managedObjectContext: managedObjectContext,
-                                                             sectionNameKeyPath: nil, cacheName: nil)
-//drn        fetchedResultsController?.delegate = self
-       
+    // Contract for updating data
+    // - Uses the settings in the defaults manager
+    // - The data will not be returned, but will be in the fetchedResultsController
+    // - TableView.reloadData() will be called automatically
+    // - LastUpdate will be updated automatically
+    func updateData(fromNetwork: Bool = false) {
         do {
-            try fetchedResultsController?.performFetch()
+            try updateFetchedResultsController()
         } catch {
-            let error = error as NSError
-            print("Error fetching reaches from coredata: \(error), \(error.userInfo)")
-            self.showToast(message: "Connection Error: " + error.userInfo.description)
+            print("Error in updateFetchedResultsController: \(error)")
         }
-
-        tableView.reloadData() 
         
-        // update those reaches
-        if let results = fetchedResultsController?.fetchedObjects {
-            let reachIds = results.map{ "\($0.id)" }
-            self.refreshControl.beginRefreshingManually()
-            AWApiReachHelper.shared.updateReaches(reachIds: reachIds, callback: {
-                print("1")
+        // Update from network if requested or if data is more than 1 hour old
+        let lastUpdate = DefaultsManager.shared.lastUpdated
+        let isDataStale = lastUpdate != nil ? lastUpdate! < Date(timeIntervalSinceNow: -60 * 60) : false
+        if fromNetwork || isDataStale {
+            refreshControl.beginRefreshing()
+
+            func onUpdateSuccessful() {
                 self.refreshControl.endRefreshing()
-                // finished - load the data again for display
-                self.fetchRiversFromCoreData()
-                
-            }) { (error) in
-                print("2")
+                DefaultsManager.shared.lastUpdated = Date()
+                self.tableView.reloadData()
+            }
+            
+            func onUpdateFailed(error: Error) {
                 self.refreshControl.endRefreshing()
-                
-                if let error = error {
-                    print("1 Error updating reaches: \(error.localizedDescription)")
-                    self.showToast(message: "Connection Error: " + error.localizedDescription)
+                self.showToast(message: "Error fetching data: " + error.localizedDescription)
+            }
+            
+            if DefaultsManager.shared.showRegionFilter {
+                if (DefaultsManager.shared.regionsFilter.count == 0) {
+                    DuffekDialog.shared.showStandardDialog(title: "Pull All Data?", message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.", buttonTitle: "Continue", buttonFunction: {
+                        self.refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
+                    }, cancelFunction: {
+                        self.refreshControl.endRefreshing()
+                    });
                 } else {
-                    print("Error updating reaches: Unknown why 2")
+                    refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
                 }
-            }
-        }
-    }
-    
-    func refreshData(with codes: [String]) {
-        print("RefreshData called!")
-        
-        self.refreshControl.beginRefreshingManually()
-        AWApiReachHelper.shared.updateRegionalReaches(regionCodes: codes, callback: {
-            // handle success
-            print("3")
-            self.refreshControl.endRefreshing()
-            print("Fetched Regions From Server")
-            
-            self.fetchRiversFromCoreData()
-
-            DefaultsManager.shared.lastUpdated = Date()
-            DefaultsManager.shared.favoritesLastUpdated = Date()
-
-            // we need this to update section headers
-            self.tableView.reloadSections([0], with: .automatic)
-            
-            
-        }) { (error) in
-            print("4")
-            self.refreshControl.endRefreshing()
-            
-            if let error = error {
-                print("2 Error updating reaches: \(error.localizedDescription)")
-                self.showToast(message: "Connection Error: " + error.localizedDescription)
             } else {
-                print("Error updating reaches: Unknown why")
+                guard let results = fetchedResultsController?.fetchedObjects else {
+                    // FIXME: is this a success or failure?
+                    onUpdateSuccessful()
+                    return
+                }
+                
+                AWApiReachHelper.shared.updateReaches(
+                    reachIds: results.map{ "\($0.id)" },
+                    callback: onUpdateSuccessful,
+                    callbackError: onUpdateFailed
+                )
             }
         }
-
     }
     
-    @IBAction func showLegend(_ sender: Any) {
-        legendContainerView.isHidden = false
+    func updateFetchedResultsController() throws {
+        print("Fetching rivers from core data")
+        
+        if let fetchedResultsController = fetchedResultsController {
+            // Update sort descriptors and predicate if the controller already exists
+            fetchedResultsController.fetchRequest.sortDescriptors = sortDescriptors
+            fetchedResultsController.fetchRequest.predicate = combinedFilterPredicate
+        } else {
+            // Create the fetched results controller if it doesn't exist
+            let request = Reach.reachFetchRequest()
+            request.sortDescriptors = sortDescriptors
+            request.predicate = combinedFilterPredicate
+            fetchedResultsController = NSFetchedResultsController(
+                fetchRequest: request,
+                managedObjectContext: managedObjectContext,
+                sectionNameKeyPath: nil,
+                cacheName: nil
+            )
+            fetchedResultsController?.delegate = self
+        }
+        
+        try fetchedResultsController?.performFetch()
+        
+        // Still have to update the tableView after the initial fetch
+        // (the delegate will handle further updates)
+        tableView.reloadData()
     }
     
-    @IBAction func hideLegendView(_ sender: Any) {
-        legendContainerView.isHidden = true
+    func refreshByRegion(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+        print("Updating reaches by region")
+        
+        AWApiReachHelper.shared.updateRegionalReaches(
+            regionCodes: DefaultsManager.shared.regionsFilter.count > 0 ? DefaultsManager.shared.regionsFilter : Region.all.map { $0.code },
+            callback: success,
+            callbackError: failure
+        )
     }
     
-    
-    @objc func refreshRiverData(refreshControl: UIRefreshControl) {
+    @objc func didPullRefreshControl(refreshControl: UIRefreshControl) {
         print("Refresh called from refresh control")
-        self.refresh()
+        self.updateData(fromNetwork: true)
+    }
+    
+    @objc func dismissKeyboard() {
+        self.searchBar.textField?.resignFirstResponder()
+        self.searchBar.textField?.endEditing(true)
     }
     
     @IBAction func runnableFilterChanged(_ runnableSwitch: UISwitch) {
         DefaultsManager.shared.runnableFilter = runnableSwitch.isOn
-        fetchRiversFromCoreData()
+        updateData()
     }
 
     /// Returns the distance from the last saved user location to a location given as lat/long strings, in miles (approximately)
     private func calculateDistanceToRiver(riverLatString: String?, riverLonString: String?) -> Double? {
         // get river info
-        guard let riverLat = Double(riverLatString ?? ""), let riverLon = Double(riverLonString ?? "") else { return nil }
+        guard
+            let riverLat = Double(riverLatString ?? ""),
+            let riverLon = Double(riverLonString ?? "")
+        else {
+            return nil
+        }
+        
         let riverLocation = CLLocation(latitude: riverLat, longitude: riverLon)
         
         // get user location and check it
@@ -391,38 +238,39 @@ class RunsListViewController: UIViewController {
     }
     
     // MARK: - Get Filter Information
-    @objc func changeFiltersPressed() {
+
+    @IBAction func selectFiltersPressed(_ sender: Any) {
         performSegue(withIdentifier: Segue.showFilters.rawValue, sender: nil)
     }
     
-    @IBAction func selectFiltersPressed(_ sender: Any) {
-        changeFiltersPressed()
-    }
-    
     @objc func favoriteButtonPressed(_ sender: UIButton?) {
-        if let button = sender {
-                                    
-            // This is a good time to ask for permissions!
-            OneSignal.promptForPushNotifications(userResponse: { accepted in
-                print("User accepted notifications: \(accepted)")
-            })
-
-            
-            guard let reach = fetchedResultsController?.object(at: IndexPath(row: button.tag, section: 0)) else { return }
-            reach.favorite = !reach.favorite
-            
-            do {
-                defer { self.tableView.reloadData(); }
-                
-                try managedObjectContext.save()
-            } catch {
-                print("Unable to save context after save button pressed")
-            }
+        guard let button = sender else {
+            return
         }
+                                    
+        // This is a good time to ask for permissions!
+        OneSignal.promptForPushNotifications(userResponse: { accepted in
+            print("User accepted notifications: \(accepted)")
+        })
+        
+        
+        guard let reach = fetchedResultsController?.object(at: IndexPath(row: button.tag, section: 0)) else {
+            return
+        }
+        
+        reach.favorite.toggle()
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save context after save button pressed")
+        }
+        
+        self.tableView.reloadData()
     }
     
-    
-    func searchPredicate() -> NSPredicate? {
+
+    private func searchPredicate() -> NSPredicate? {
         guard let searchText = searchBar.textField?.text, searchText.count > 0 else { return nil }
         
         let searchName = NSPredicate(format: "name contains[cd] %@", searchText)
@@ -431,7 +279,7 @@ class RunsListViewController: UIViewController {
         return NSCompoundPredicate(orPredicateWithSubpredicates: [searchName, searchSection])
     }
     
-    func runnablePredicate() -> NSPredicate? {
+    private func runnablePredicate() -> NSPredicate? {
         if DefaultsManager.shared.runnableFilter {
             return NSPredicate(format: "condition == %@ || condition == %@", "med", "high")
         }
@@ -439,7 +287,7 @@ class RunsListViewController: UIViewController {
         return nil
     }
     
-    func difficultiesPredicate() -> NSCompoundPredicate? {
+    private func difficultiesPredicate() -> NSCompoundPredicate? {
     
         var classPredicates: [NSPredicate] = []
 
@@ -454,7 +302,7 @@ class RunsListViewController: UIViewController {
         return NSCompoundPredicate(orPredicateWithSubpredicates: classPredicates)
     }
     
-    func regionsPredicate() -> NSPredicate? {
+    private func regionsPredicate() -> NSPredicate? {
         // if we are filtering by distance then ignore regions
         if DefaultsManager.shared.showDistanceFilter {
             return nil
@@ -474,7 +322,7 @@ class RunsListViewController: UIViewController {
         return NSPredicate(format: "state IN[cd] %@", states)
     }
 
-    func distancePredicate() -> NSPredicate? {
+    private func distancePredicate() -> NSPredicate? {
         // check if user is using the distance filter or if
         // they have turned it off
         if !DefaultsManager.shared.showDistanceFilter { return nil }
@@ -487,30 +335,57 @@ class RunsListViewController: UIViewController {
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
     
-    func filterPredicates() -> [NSPredicate?] {
-        var predis = [searchPredicate(), difficultiesPredicate(), runnablePredicate()]
-        
-        if DefaultsManager.shared.showDistanceFilter {
-            predis = predis + [distancePredicate()]
+    // based on our filtering settings (distance, region, or class) we request Reaches that
+    // match these settings
+    private var filterPredicates: [NSPredicate] {
+        [
+            searchPredicate(),
+            difficultiesPredicate(),
+            runnablePredicate(),
+            DefaultsManager.shared.showDistanceFilter ? distancePredicate() : regionsPredicate()
+        ]
+            .compactMap { $0 }
+    }
+    
+    private var combinedFilterPredicate: NSPredicate {
+        NSCompoundPredicate(andPredicateWithSubpredicates: filterPredicates)
+    }
+    
+    private var sortDescriptors: [NSSortDescriptor] {
+        if DefaultsManager.shared.showDistanceFilter && DefaultsManager.shared.distanceFilter > 0 {
+            print("Using distance filter")
+            
+            return [
+                NSSortDescriptor(key: "distance", ascending: true),
+                NSSortDescriptor(key: "name", ascending: true)
+            ]
         } else {
-            predis = predis + [regionsPredicate()]
+            return [
+                NSSortDescriptor(key: "name", ascending: true),
+                NSSortDescriptor(key: "sortName", ascending: true)
+            ]
         }
-        
-        return predis
     }
     
     
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let reach = sender as? Reach,
+           segue.identifier == Segue.runDetail.rawValue
+        else {
+            return
+        }
         
-        if let reach = sender as? Reach {
-            if segue.identifier == Segue.runDetail.rawValue {
-                let detailVC = segue.destination as! RunDetailTableViewController
-                detailVC.selectedRun = reach
-            }
-        }        
+        let detailVC = segue.destination as! RunDetailTableViewController
+        detailVC.selectedRun = reach
+    }
+}
+
+/// A minimal implementation that reloads the whole tableView every time the fetched results change
+extension RunsListViewController: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.reloadData()
     }
 }
 
@@ -526,18 +401,17 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // AWTODO: when 0 items exist we return 1 to show placeholder values
         // i.e. Check your filters before searching
+        let count = fetchedResultsController?.fetchedObjects?.count ?? 0
         if section == 0 {
-            return fetchedResultsController?.fetchedObjects?.count ?? 0
+            return count
         } else {
-            return (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0 ? 1 : 0
+            return count == 0 ? 1 : 0
         }
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         // handle the case when a filter shows 0 items
-        print("fetchedObjects.count == \(fetchedResultsController?.fetchedObjects?.count ?? 0)")
         if indexPath.section == 1 && (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingRiversCell", for: indexPath) as! LoadingRiversCell
             cell.activityIndicator.startAnimating()
@@ -580,7 +454,7 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.runFavoritesButton.setImage(UIImage(named: "icon_favorite"), for: .normal)
             }
             
-    // DEBUG ONLY!
+    // DEBUG ONLY! AWTODO Fix this to set alert image correctly
             if let name = reach.name, name.lowercased().contains("watauga") {
                 cell.runAlertsButton.setImage(UIImage(named: "alert-filled"), for: .normal)
             } else {
@@ -610,10 +484,11 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        guard let selectedRun = fetchedResultsController?.object(at: indexPath) else { return }
+        guard let selectedRun = fetchedResultsController?.object(at: indexPath) else {
+            return
+        }
+        
         performSegue(withIdentifier: Segue.runDetail.rawValue, sender: selectedRun)
-
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -622,6 +497,8 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
             let label = UILabel()
             
             var lastUpdatedMessage = "Refreshing..."
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM d, h:mm a"
             if let lastUpdatedDate = DefaultsManager.shared.lastUpdated {
                 lastUpdatedMessage = "Last Updated: \(dateFormatter.string(from: lastUpdatedDate))"
             }
@@ -656,52 +533,6 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-
-
-//extension RunsListViewController: NSFetchedResultsControllerDelegate {
-//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        tableView.beginUpdates()
-//    }
-//
-//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//
-//        if fetchedResultsController == nil {
-//            print("FetchedResultsController is nil... ignoring update")
-//            return
-//        } else if tableView == nil {
-//            print("tableView is nil... ignoring update of table")
-//            return
-//        }
-//
-//
-//        tableView.endUpdates()
-//    }
-//
-//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-//                    didChange anObject: Any,
-//                    at indexPath: IndexPath?,
-//                    for type: NSFetchedResultsChangeType,
-//                    newIndexPath: IndexPath?) {
-//
-//        switch type {
-//            case .insert:
-//                guard let insertIndex = newIndexPath else { return }
-//                tableView.insertRows(at: [insertIndex], with: .automatic)
-//            case .delete:
-//                guard let deleteIndex = indexPath else { return }
-//                tableView.deleteRows(at: [deleteIndex], with: .automatic)
-//            case .move:
-//                guard let fromIndex = indexPath, let toIndex = newIndexPath else { return }
-//                tableView.moveRow(at: fromIndex, to: toIndex)
-//            case .update:
-//                guard let updateIndex = indexPath else { return }
-//                tableView.reloadRows(at: [updateIndex], with: .automatic)
-//            default:
-//                break
-//        }
-//    }
-//}
-
 extension RunsListViewController: UISearchBarDelegate {
 
     func setupSearchBar() {
@@ -724,24 +555,24 @@ extension RunsListViewController: UISearchBarDelegate {
     
     @objc func clearButtonPressed() {
         searchBar.textField?.resignFirstResponder()
-        fetchRiversFromCoreData()
+        updateData()
     }
 
     // hide keyboard on search press
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        fetchRiversFromCoreData()
+        updateData()
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        fetchRiversFromCoreData()
+        updateData()
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
         searchBar.endEditing(true)
-        fetchRiversFromCoreData()
+        updateData()
     }
 }
 

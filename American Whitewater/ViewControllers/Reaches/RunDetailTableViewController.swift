@@ -104,7 +104,7 @@ class RunDetailTableViewController: UITableViewController {
             AWApiReachHelper.shared.updateReachDetail(reachId: "\(selectedRun.id)", callback: {
                 self.fetchDetailsFromCoreData()
             }) { (error) in
-                print("Error: \(error?.localizedDescription ?? "?")")
+                print("Error: \(error.localizedDescription)")
             }
         }
         
@@ -213,7 +213,7 @@ class RunDetailTableViewController: UITableViewController {
     func fetchDetailsFromCoreData() {
         guard let selectedRun = self.selectedRun else { return }
         
-        let request = Reach.fetchRequest() as NSFetchRequest<Reach>
+        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
         request.predicate = NSPredicate(format: "id == %i", selectedRun.id)
         
         guard let result = try? managedObjectContext.fetch(request), let fetchedReach = result.first else {

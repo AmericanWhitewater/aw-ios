@@ -20,7 +20,7 @@ class AWApiReachHelper {
     
     typealias ReachCallback = ([AWReach]) -> Void
     typealias UpdateCallback = () -> Void
-    typealias ReachErrorCallback = (Error?) -> Void
+    typealias ReachErrorCallback = (Error) -> Void
     typealias UpdateReachesCallback = () -> Void
     typealias ReachDetailCallback = (AWReachDetail) -> Void
         
@@ -129,9 +129,9 @@ class AWApiReachHelper {
     func fetchReachesByIds(reachIds: [String], callback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
         
         if reachIds.count == 0 {
-            print("No reache ids sent");
-            callbackError(nil)
-            return;
+            print("No reach ids sent")
+            callback([])
+            return
         }
         
         let urlString = baseURL + "River/list/list/\(reachIds.joined(separator: ":"))/.json"
@@ -172,7 +172,7 @@ class AWApiReachHelper {
     
     
     func findOrNewReach(newReach: AWReach, context: NSManagedObjectContext) -> Reach {
-        let request = Reach.fetchRequest() as NSFetchRequest<Reach>
+        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
         //print("nReach name: \(newReach.name ?? "na") ID: \(NSNumber(value: newReach.id ?? 0))")
         guard let id = newReach.id else {
             print("invalid id: \(newReach.id ?? -1)")
@@ -358,7 +358,7 @@ class AWApiReachHelper {
             }
             
         }) { (error) in
-            print("Error with getting all reaches: \(error?.localizedDescription ?? "Unknown error")")
+            print("Error with getting all reaches: \(error.localizedDescription)")
         }
         
         dispatchGroup.notify(queue: .main) {
@@ -485,7 +485,7 @@ class AWApiReachHelper {
     
     func updateDetail(reachId: String, details: AWReachDetail, context: NSManagedObjectContext) {
         
-        let request = Reach.fetchRequest() as NSFetchRequest<Reach>
+        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
         request.predicate = NSPredicate(format: "id = %@", reachId)
         
         do {
@@ -576,7 +576,7 @@ class AWApiReachHelper {
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
-        let request = Reach.fetchRequest() as NSFetchRequest<Reach>
+        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         
         if let results = try? context.fetch(request), results.count > 0 {

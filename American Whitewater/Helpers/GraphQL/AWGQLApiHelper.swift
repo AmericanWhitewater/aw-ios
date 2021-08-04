@@ -30,7 +30,7 @@ class AWGQLApiHelper
     
     private let keychain = KeychainSwift()
     
-    public func getAccountInfo() {
+    public func updateAccountInfo() {
         
         apollo.fetch(query: UserInfoQuery()) { result in
             switch result {

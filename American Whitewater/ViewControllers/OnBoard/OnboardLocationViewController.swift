@@ -104,10 +104,10 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
                 }
                 
                 // dismiss this view controller and tell the referencing ViewController to refresh
-                // NOTE: this could be a delegate or protocol if we want to get fancier
+                // AWTODO: Post a notification about this instead of coupling to the runs list controller
                 self.dismiss(animated: true, completion: {
                     if let viewVC = self.referenceViewController as? RunsListViewController {
-                        viewVC.refresh()
+                        viewVC.updateData()
                     }
                 })
             }
@@ -149,10 +149,10 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
             }
             
             // dismiss this modal view controller and tell the referencing ViewController to refresh
-            // NOTE: this could be a delegate or protocol if we want to get fancier
+            // AWTODO: Post a notification about this instead of coupling to the runs list controller
             self.dismiss(animated: true, completion: {
                 if let viewVC = self.referenceViewController as? RunsListViewController {
-                    viewVC.refresh()
+                    viewVC.updateData()
                 }
             })
         }
