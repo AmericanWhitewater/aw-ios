@@ -2,11 +2,15 @@ import UIKit
 import WebKit
 
 class AboutAWViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
-
     
     @IBOutlet weak var aboutSegmentControl: UISegmentedControl!
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
+    
+    @IBAction func didTapCrashButton() {
+        let foo = [Int]()
+        foo[1]
+    }
     
     
     override func viewDidLoad() {
