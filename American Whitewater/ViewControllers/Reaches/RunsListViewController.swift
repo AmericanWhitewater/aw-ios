@@ -178,6 +178,13 @@ class RunsListViewController: UIViewController {
         ].compactMap({$0}))
     }
     
+    /// The count of all reaches cached locally.
+    /// Used to ask, essentially, "do we have any data?" below when deciding whether to show the loading or empty state for no results
+    private var totalReachCount: Int {
+        let count = try? managedObjectContext.count(for: Reach.fetchRequest())
+        return count ?? 0
+    }
+    
     func updateFetchedResultsController() throws {
         print("Fetching rivers from core data")
         
@@ -260,7 +267,7 @@ class RunsListViewController: UIViewController {
     
     // MARK: - Get Filter Information
 
-    @IBAction func selectFiltersPressed(_ sender: Any) {
+    @objc @IBAction func selectFiltersPressed(_ sender: Any) {
         performSegue(withIdentifier: Segue.showFilters.rawValue, sender: nil)
     }
     
@@ -334,8 +341,28 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // handle the case when a filter shows 0 items
-        if indexPath.section == 1 && (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0 {
+        // handle the case when there are no fetched objects
+        if
+            indexPath.section == 1,
+            (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0
+        {
+            if totalReachCount == 0 {
+                // The loading state.
+                // There aren't any reaches stored locally, so (presumably?) we must be doing an initial load of reaches from the network
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingRiversCell", for: indexPath) as! LoadingRiversCell
+                cell.activityIndicator.startAnimating()
+                return cell
+            } else {
+                // The empty state.
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "NoRiversCell", for: indexPath) as! NoRiversTableViewCell
+                cell.noRiversButton.addTarget(self, action: #selector(selectFiltersPressed(_:)), for: .touchUpInside)
+                
+                return cell
+            }
+            
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingRiversCell", for: indexPath) as! LoadingRiversCell
             cell.activityIndicator.startAnimating()
             return cell
