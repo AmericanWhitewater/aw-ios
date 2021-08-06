@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Filters {
+struct Filters: Equatable {
     // FIXME: currently it appears that the app tries to treat these as a toggle, i.e. if showDistanceFilter = true, showRegionFilter must be false and vice versa. So why have both? Or should it be an enum?
     // (See below, the predicates mostly
     var showDistanceFilter: Bool

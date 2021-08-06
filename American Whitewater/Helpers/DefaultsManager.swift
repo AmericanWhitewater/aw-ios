@@ -3,6 +3,10 @@ import SwiftyJSON
 import KeychainSwift
 import CoreLocation
 
+extension Notification.Name {
+    static let filtersDidChange = Notification.Name("filtersDidChange")
+}
+
 class DefaultsManager {
     public static let shared = DefaultsManager()
     
@@ -90,12 +94,22 @@ class DefaultsManager {
         }
         
         set {
+            // Don't set/notify on duplicates:
+            guard newValue != filters else {
+                return
+            }
+            
             showDistanceFilter = newValue.showDistanceFilter
             showRegionFilter = newValue.showRegionFilter
             regionsFilter = newValue.regionsFilter
             distanceFilter = newValue.distanceFilter
             classFilter = newValue.classFilter
             runnableFilter = newValue.runnableFilter
+            
+            // Post a notification to make it easier to respond to a change in filters
+            // This could be also be done with combine (filters could be @Published)
+            // but this is a smaller change to the app:
+            NotificationCenter.default.post(name: .filtersDidChange, object: newValue)
         }
     }
     
