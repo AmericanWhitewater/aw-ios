@@ -150,7 +150,6 @@ class FilterViewController: UIViewController {
     @objc func distanceSliderChanged(distanceSlider: UISlider) {
         filters.distanceFilter = Double(distanceSlider.value)
         distanceFilterLabel?.text = distanceFilterDescription
-        contentCollectionView.reloadData()
     }
     
     //
