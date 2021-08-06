@@ -18,6 +18,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     let locationManager = CLLocationManager()
     var lastLocation: CLLocation? = nil
     
+    private var notificationObservers = [NSObjectProtocol]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,13 +32,30 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         
         self.locationManager.delegate = self
+        
+        updateFilterButton()
+        fetchReachesFromCoreData()
+        
+        notificationObservers.append(
+            NotificationCenter.default.addObserver(
+                forName: .filtersDidChange,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                self?.fetchReachesFromCoreData()
+            }
+        )
+    }
+    
+    deinit {
+        // Have to deregister block-based notification observers or they will continue to call their blocks:
+        notificationObservers.forEach {
+            NotificationCenter.default.removeObserver($0)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        updateFilterButton()
-        fetchReachesFromCoreData()
         
         if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
             showUserLocation()
@@ -47,9 +66,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.viewWillDisappear(animated)
         
         mapView.showsUserLocation = false
-        
-        fetchedResultsController?.delegate = nil
-        fetchedResultsController = nil
     }
 
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
