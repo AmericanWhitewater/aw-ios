@@ -118,7 +118,7 @@ class GalleryViewController: UIViewController {
     @objc private func refreshPictures() {
         guard let selectedRun = selectedRun else { print("selected run is nil"); return }
                 
-        AWGQLApiHelper.shared.getPhotosForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 100, callback: { (photoResults) in
+        API.shared.getPhotosForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 100, callback: { (photoResults) in
             
             self.refreshControl.endRefreshing()
             

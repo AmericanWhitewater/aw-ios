@@ -27,7 +27,7 @@ class GageDetailsTableViewController: UITableViewController {
             let reachId = selectedRun.id
             let reachIdString = "\(reachId)"
             print("Selected Run ReachID: \(reachId)")
-            AWGQLApiHelper.shared.getGagesForReach(id: reachIdString) { (gagesResult) in
+            API.shared.getGagesForReach(id: reachIdString) { (gagesResult) in
                 
                 self.gagesList = gagesResult
                 self.tableView.reloadData()

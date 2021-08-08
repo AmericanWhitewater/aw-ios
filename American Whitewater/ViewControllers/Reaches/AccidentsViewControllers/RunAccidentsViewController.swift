@@ -57,7 +57,7 @@ class RunAccidentsViewController: UIViewController {
         
         guard let reach = selectedRun else { print("can't get reach id on accidents list"); return }
         
-        AWGQLApiHelper.shared.getAccidentsForReach(reach_id: Int(reach.id), first: 100, page: 1, callback: { (accidentResults) in
+        API.shared.getAccidentsForReach(reach_id: Int(reach.id), first: 100, page: 1, callback: { (accidentResults) in
             self.accidentsList.removeAll()
             
             // handle server sending back multiple of the same results

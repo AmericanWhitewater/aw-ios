@@ -15,7 +15,8 @@ class AWGQLArticleApiHelper
     // Use the same client as the main AWGLApiHelper
     // This previously created a new client (with copy pasted base URL setting and auth handling)
     // NB: sharing will mean a shared cache for the requests here and in the main helper, see AWGQLApiHelper.shared.apollo
-    private(set) lazy var apollo: ApolloClient = AWGQLApiHelper.shared.apollo
+    // FIXME: TEMP don't construct an AWGQLHelper here
+    private(set) lazy var apollo: ApolloClient = AWGQLApiHelper().apollo
         
     private func fetchArticles(callback: @escaping NewsArticlesCallback, errorCallback: @escaping AWGraphQLError) {
         apollo.fetch(query: NewsQuery(page_size: 20, page: 0)) { result in

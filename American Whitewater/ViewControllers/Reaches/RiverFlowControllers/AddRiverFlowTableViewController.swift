@@ -150,7 +150,7 @@ class AddRiverFlowTableViewController: UITableViewController {
 
     // FIXME: this doesn't send flowObservationValue
     func postFlowWithoutPhoto(reachId: Int, gageId: String?, metricId: Int, title: String, dateString: String, reading: Double) {
-        AWGQLApiHelper.shared.postGaugeObservationFor(reach_id: reachId, metric_id: metricId, title: title, dateString: dateString, reading: reading, callback: { (postResult) in
+        API.shared.postGaugeObservationFor(reach_id: reachId, metric_id: metricId, title: title, dateString: dateString, reading: reading, callback: { (postResult) in
             // handle post result
             AWProgressModal.shared.hide()
                         
@@ -177,11 +177,12 @@ class AddRiverFlowTableViewController: UITableViewController {
     func postFlowWithPhoto(_ image: UIImage, reachId: Int, gageId: String?, metricId: Int, title: String, dateString: String, reading: Double) {
         print("GageId:", gageId ?? "n/a")
         
-        AWGQLApiHelper.shared.postPhotoForReach(photoPostType: .gaugeObservation, image: image, reach_id: reachId, caption: title,
-                                                       description: "", photoDate: dateString,
-                                                reachObservation: flowObservation?.value, gauge_id: gageId, metric_id: metricId,
-                                                       reachReading: reading,
-                                                       callback: { (photoFileUpdate, photoPostUpdate) in
+        
+        API.shared.postPhotoForReach(photoPostType: .gaugeObservation, image: image, reach_id: reachId, caption: title,
+                                     description: "", photoDate: dateString,
+                                     reachObservation: flowObservation?.value, gauge_id: gageId, metric_id: metricId,
+                                     reachReading: reading,
+                                     callback: { (photoFileUpdate, photoPostUpdate) in
             AWProgressModal.shared.hide()
             print("Photo uploaded - callback returned")
             

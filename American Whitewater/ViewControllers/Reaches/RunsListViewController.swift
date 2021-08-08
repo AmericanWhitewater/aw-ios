@@ -34,7 +34,7 @@ class RunsListViewController: UIViewController {
         tableView.estimatedRowHeight = 120
         
         runnableSwitch.isOn = filters.runnableFilter
-        AWGQLApiHelper.shared.updateAccountInfo()
+        API.shared.updateAccountInfo()
         
         // AWTODO loading UI states
         if !DefaultsManager.shared.completedFirstRun {

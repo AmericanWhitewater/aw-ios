@@ -16,7 +16,7 @@ struct API {
     private let reachHelper: AWApiReachHelper
     private let baseURL = "https://www.americanwhitewater.org/content/"
     
-    private let graphQLHelper = AWGQLApiHelper.shared
+    private let graphQLHelper = AWGQLApiHelper()
     private let articleHelper = AWGQLArticleApiHelper.shared
     
     private init() {
@@ -157,5 +157,4 @@ struct API {
     public func getGagesForReach(id: String, gagesInfoCallback: @escaping AWGQLApiHelper.AWGaugesListCallback) {
         graphQLHelper.getGagesForReach(id: id, gagesInfoCallback: gagesInfoCallback)
     }
-    
 }
