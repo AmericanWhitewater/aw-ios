@@ -39,7 +39,7 @@ class RunsListViewController: UIViewController {
         // AWTODO loading UI states
         if !DefaultsManager.shared.completedFirstRun {
             print("downloading all reaches")
-            API.shared.downloadAllReachesInBackground {
+            API.shared.updateAllReaches {
                 print("Completed downloading all data")
 
                 do {
@@ -218,7 +218,7 @@ class RunsListViewController: UIViewController {
     func refreshByRegion(completion: @escaping (Error?) -> Void) {
         print("Updating reaches by region")
         
-        API.shared.updateRegionalReaches(
+        API.shared.updateReaches(
             regionCodes: filters.regionsFilter.count > 0 ? filters.regionsFilter : Region.all.map { $0.code },
             completion: completion
         )

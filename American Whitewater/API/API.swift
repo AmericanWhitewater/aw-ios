@@ -27,13 +27,12 @@ struct API {
     // MARK: - Reaches
     //
     
-    public func updateRegionalReaches(regionCodes: [String], completion: @escaping (Error?) -> Void) {
+    public func updateReaches(regionCodes: [String], completion: @escaping (Error?) -> Void) {
         reachHelper.updateRegionalReaches(regionCodes: regionCodes) {
             completion(nil)
         } callbackError: {
             completion($0)
         }
-
     }
     
     public func updateReaches(reachIds: [String], completion: @escaping (Error?) -> Void) {
@@ -42,10 +41,9 @@ struct API {
         } callbackError: {
             completion($0)
         }
-
     }
 
-    public func downloadAllReachesInBackground(completion: @escaping () -> Void) {
+    public func updateAllReaches(completion: @escaping () -> Void) {
         reachHelper.downloadAllReachesInBackground(callback: completion)
     }
     
@@ -57,6 +55,7 @@ struct API {
         }
     }
     
+    // FIXME: this should not exist
     public func updateAllReachDistances(completion: @escaping () -> Void) {
         reachHelper.updateAllReachDistances(callback: completion)
     }
