@@ -324,8 +324,9 @@
 		4AC4685B26C02A3E0032D68F /* API */ = {
 			isa = PBXGroup;
 			children = (
-				63A6FD682367730C00148231 /* AWApiReachHelper.swift */,
 				4AC4685C26C02A840032D68F /* API.swift */,
+				63A6FD682367730C00148231 /* AWApiReachHelper.swift */,
+				63B5B4982457AE800062F54B /* GraphQL */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -608,7 +609,6 @@
 			children = (
 				63E90EAC22EAA14700C8DAA3 /* DefaultsManager.swift */,
 				4AA3FEFA26B2725100AC4303 /* Filters.swift */,
-				63B5B4982457AE800062F54B /* GraphQL */,
 				63B5B4AB2459CB3B0062F54B /* AWImagePicker.swift */,
 				63D7BD142319774500935693 /* Regions.swift */,
 				63D7BD1823199D1900935693 /* DuffekDialog.swift */,
