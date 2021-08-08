@@ -132,7 +132,7 @@ class AddRiverFlowTableViewController: UITableViewController {
         
         // send value to server
         let reachId = Int(selectedRun.id)
-        let gageId: String? = selectedRun.gageId == -1 ? nil : "\(selectedRun.gageId)"
+        let gageId = selectedRun.gageId == -1 ? nil : Int(selectedRun.gageId)
         let title = observationTitleTextField.text ?? ""
         let dateString = Self.isoDateFormatter.string(from: dateObserved)
         let reading = Double(observedGaugeLevelTextField.text ?? "0") ?? 0
@@ -149,8 +149,8 @@ class AddRiverFlowTableViewController: UITableViewController {
     }
 
     // FIXME: this doesn't send flowObservationValue
-    func postFlowWithoutPhoto(reachId: Int, gageId: String?, metricId: Int, title: String, dateString: String, reading: Double) {
-        API.shared.postGaugeObservationFor(reach_id: reachId, metric_id: metricId, title: title, dateString: dateString, reading: reading, callback: { (postResult) in
+    func postFlowWithoutPhoto(reachId: Int, gageId: Int?, metricId: Int, title: String, dateString: String, reading: Double) {
+        API.shared.postGaugeObservation(reachId: reachId, metricId: metricId, title: title, dateString: dateString, reading: reading, callback: { (postResult) in
             // handle post result
             AWProgressModal.shared.hide()
                         
@@ -174,44 +174,49 @@ class AddRiverFlowTableViewController: UITableViewController {
 
     }
     
-    func postFlowWithPhoto(_ image: UIImage, reachId: Int, gageId: String?, metricId: Int, title: String, dateString: String, reading: Double) {
+    func postFlowWithPhoto(_ image: UIImage, reachId: Int, gageId: Int?, metricId: Int, title: String, dateString: String, reading: Double) {
         print("GageId:", gageId ?? "n/a")
         
-        
-        API.shared.postPhotoForReach(photoPostType: .gaugeObservation, image: image, reach_id: reachId, caption: title,
-                                     description: "", photoDate: dateString,
-                                     reachObservation: flowObservation?.value, gauge_id: gageId, metric_id: metricId,
-                                     reachReading: reading,
-                                     callback: { (photoFileUpdate, photoPostUpdate) in
-            AWProgressModal.shared.hide()
-            print("Photo uploaded - callback returned")
-            
-            if let imageResult = photoFileUpdate.image, let uri = imageResult.uri {
-                self.showToast(message: "Your flow observation has been reported and saved.")
-                if let _ = self.senderVC {
-                    var newFlow = [String:String?]()
-                    newFlow["thumb"] = uri.thumb
-                    newFlow["med"] = uri.medium
-                    newFlow["big"] = uri.big
+        API.shared.postPhoto(
+            photoPostType: .gaugeObservation,
+            image: image,
+            reachId: reachId,
+            caption: title,
+            description: "", photoDate: dateString,
+            reachObservation: flowObservation?.value,
+            gaugeId: gageId,
+            metricId: metricId,
+            reachReading: reading,
+            callback: { (photoFileUpdate, photoPostUpdate) in
+                AWProgressModal.shared.hide()
+                print("Photo uploaded - callback returned")
+                
+                if let imageResult = photoFileUpdate.image, let uri = imageResult.uri {
+                    self.showToast(message: "Your flow observation has been reported and saved.")
+                    if let _ = self.senderVC {
+                        var newFlow = [String:String?]()
+                        newFlow["thumb"] = uri.thumb
+                        newFlow["med"] = uri.medium
+                        newFlow["big"] = uri.big
+                        
+                        newFlow["id"] = "\(photoPostUpdate.id ?? photoFileUpdate.id)"
+                        newFlow["title"] = photoFileUpdate.caption ?? photoPostUpdate.title ?? ""
+                        newFlow["description"] = photoFileUpdate.description ?? photoPostUpdate.detail ?? ""
+                        newFlow["reading"] = "\(photoPostUpdate.reading != nil ? "\(photoPostUpdate.reading!)" : "n/a")"
+                        newFlow["author"] = photoFileUpdate.author ?? photoPostUpdate.user?.uname ?? "You"
+                        newFlow["postDate"] = photoFileUpdate.photoDate ?? photoPostUpdate.postDate ?? ""
+                        newFlow["metric"] = photoPostUpdate.metric?.unit ?? ""
+                        // TODO: newFlow["observed"] = ????
+                        
+                        self.senderVC?.riverFlows.insert(newFlow, at: 0)
+                    }
                     
-                    newFlow["id"] = "\(photoPostUpdate.id ?? photoFileUpdate.id)"
-                    newFlow["title"] = photoFileUpdate.caption ?? photoPostUpdate.title ?? ""
-                    newFlow["description"] = photoFileUpdate.description ?? photoPostUpdate.detail ?? ""
-                    newFlow["reading"] = "\(photoPostUpdate.reading != nil ? "\(photoPostUpdate.reading!)" : "n/a")"
-                    newFlow["author"] = photoFileUpdate.author ?? photoPostUpdate.user?.uname ?? "You"
-                    newFlow["postDate"] = photoFileUpdate.photoDate ?? photoPostUpdate.postDate ?? ""
-                    newFlow["metric"] = photoPostUpdate.metric?.unit ?? ""
-                    // TODO: newFlow["observed"] = ????
-                    
-                    self.senderVC?.riverFlows.insert(newFlow, at: 0)
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    self.showToast(message: "We were unable to save your flow report to the server. Please check your connection and try again.")
                 }
-
-                self.navigationController?.popViewController(animated: true)
-            } else {
-                self.showToast(message: "We were unable to save your flow report to the server. Please check your connection and try again.")
             }
-            
-        }) { (error, message) in
+        ) { (error, message) in
             AWProgressModal.shared.hide()
             print("Error: \(error?.localizedDescription ?? "no error object") -- \(message ?? "no message")")
             self.showToast(message: "An Error Occured: \(error?.localizedDescription ?? "")\n\(message ?? "")")

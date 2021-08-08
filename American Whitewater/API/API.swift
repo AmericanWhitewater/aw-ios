@@ -90,90 +90,98 @@ struct API {
         graphQLHelper.updateAccountInfo()
     }
     
-    public func getAccidentsForReach(
-        reach_id: Int,
+    public func getAccidents(
+        reachId: Int,
         first: Int,
         page: Int,
         callback: @escaping AWGQLApiHelper.AccidentCallback,
         errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
     ) {
-        graphQLHelper.getAccidentsForReach(reach_id: reach_id, first: first, page: page, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.getAccidentsForReach(reach_id: reachId, first: first, page: page, callback: callback, errorCallback: errorCallback)
     }
 
-    public func getAlertsForReach(
-        reach_id: Int,
+    public func getAlerts(
+        reachId: Int,
         page: Int,
-        page_size: Int,
+        pageSize: Int,
         callback: @escaping AWGQLApiHelper.AlertsCallback,
         errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
     ) {
-        graphQLHelper.getAlertsForReach(reach_id: reach_id, page: page, page_size: page_size, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.getAlertsForReach(reach_id: reachId, page: page, page_size: pageSize, callback: callback, errorCallback: errorCallback)
     }
     
-    public func postAlertFor(
-        reach_id: Int,
+    public func postAlert(
+        reachId: Int,
         message: String,
         callback: @escaping AWGQLApiHelper.AlertPostCallback,
         errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
     ) {
-        graphQLHelper.postAlertFor(reach_id: reach_id, message: message, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.postAlertFor(reach_id: reachId, message: message, callback: callback, errorCallback: errorCallback)
     }
     
-    public func getGaugeObservationsForReach(
-        reach_id: Int,
+    public func getGaugeObservations(
+        reachId: Int,
         page: Int,
-        page_size: Int,
+        pageSize: Int,
         callback: @escaping AWGQLApiHelper.ObservationsCallback,
         errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
     ) {
-        graphQLHelper.getGaugeObservationsForReach(reach_id: reach_id, page: page, page_size: page_size, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.getGaugeObservationsForReach(reach_id: reachId, page: page, page_size: pageSize, callback: callback, errorCallback: errorCallback)
     }
     
-    public func postGaugeObservationFor(
-        reach_id: Int,
-        metric_id: Int,
+    // FIXME: this doesn't take a gaugeId. Shouldn't it need one to post a gauge observation?!
+    public func postGaugeObservation(
+        reachId: Int,
+        metricId: Int,
         title: String,
         dateString: String,
         reading: Double,
         callback: @escaping AWGQLApiHelper.PostObservationsCallback,
         errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
     ) {
-        graphQLHelper.postGaugeObservationFor(reach_id: reach_id, metric_id: metric_id, title: title, dateString: dateString, reading: reading, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.postGaugeObservationFor(reach_id: reachId, metric_id: metricId, title: title, dateString: dateString, reading: reading, callback: callback, errorCallback: errorCallback)
     }
     
-    public func getPhotosForReach(
-        reach_id: Int,
+    public func getPhotos(
+        reachId: Int,
         page: Int,
-        page_size: Int,
+        pageSize: Int,
         callback: @escaping AWGQLApiHelper.PhotosCallback,
         errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
     ) {
-        graphQLHelper.getPhotosForReach(reach_id: reach_id, page: page, page_size: page_size, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.getPhotosForReach(reach_id: reachId, page: page, page_size: pageSize, callback: callback, errorCallback: errorCallback)
     }
     
-    public func postPhotoForReach(
+    // FIXME: this drops metricId and gaugeID on the floor? Aren't those important?
+    public func postPhoto(
         photoPostType: PostType = PostType.photoPost,
         image: UIImage,
-        reach_id: Int,
+        reachId: Int,
         caption: String,
         description: String,
         photoDate: String,
         reachObservation: Double? = nil,
-        gauge_id: String? = nil,
-        metric_id: Int? = nil,
+        gaugeId: Int? = nil,
+        metricId: Int? = nil,
         reachReading: Double? = nil,
         callback: @escaping AWGQLApiHelper.PhotoUploadCallback,
         errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
     ) {
-        graphQLHelper.postPhotoForReach(image: image, reach_id: reach_id, caption: caption, description: description, photoDate: photoDate, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.postPhotoForReach(image: image, reach_id: reachId, caption: caption, description: description, photoDate: photoDate, callback: callback, errorCallback: errorCallback)
     }
     
-    public func getMetricsForGauge(id: String, metricsCallback: @escaping AWGQLApiHelper.AWMetricsCallback) {
-        graphQLHelper.getMetricsForGauge(id: id, metricsCallback: metricsCallback)
+    public func getMetrics(gaugeId: Int, metricsCallback: @escaping AWGQLApiHelper.AWMetricsCallback) {
+        graphQLHelper.getMetricsForGauge(
+            id: "\(gaugeId)",
+            metricsCallback: metricsCallback
+        )
     }
 
-    public func getGagesForReach(id: String, gagesInfoCallback: @escaping AWGQLApiHelper.AWGaugesListCallback) {
-        graphQLHelper.getGagesForReach(id: id, gagesInfoCallback: gagesInfoCallback)
+    public func getGauges(reachId: Int, gagesInfoCallback: @escaping AWGQLApiHelper.AWGaugesListCallback) {
+        graphQLHelper.getGagesForReach(
+            id: "\(reachId)",
+            gagesInfoCallback: gagesInfoCallback
+        )
     }
     
     

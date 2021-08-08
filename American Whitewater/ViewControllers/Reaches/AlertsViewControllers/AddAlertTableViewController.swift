@@ -57,7 +57,7 @@ class AddAlertTableViewController: UITableViewController {
         print("Date using: \(dateString)")
         print("Selected Run Id: \(Int(selectedRun.id))")
 
-        API.shared.postAlertFor(reach_id: Int(selectedRun.id), message: alertTextView.text, callback: { (postUpdate) in
+        API.shared.postAlert(reachId: Int(selectedRun.id), message: alertTextView.text, callback: { (postUpdate) in
             print("Success - PostUpdate: \(postUpdate?.id ?? "no detail") -reach_id: \(postUpdate?.reachId ?? "no reach id")")
 
             AWProgressModal.shared.hide()

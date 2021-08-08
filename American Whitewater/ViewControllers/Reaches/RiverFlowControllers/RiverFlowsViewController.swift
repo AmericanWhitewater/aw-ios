@@ -46,7 +46,7 @@ class RiverFlowsViewController: UIViewController {
         }
         
         if let guageId = selectedRun?.gageId {
-            API.shared.getMetricsForGauge(id: "\(guageId)", metricsCallback: { reachGageMetrics in
+            API.shared.getMetrics(gaugeId: Int(guageId), metricsCallback: { reachGageMetrics in
                 //let keys = Array(availableMetrics.keys)
                 self.availableMetrics = reachGageMetrics
             })
@@ -70,7 +70,7 @@ class RiverFlowsViewController: UIViewController {
         print("Refreshing flows!")
         let reachId = Int(selectedRun.id)
                 
-        API.shared.getGaugeObservationsForReach(reach_id: reachId, page: 0, page_size: 100, callback: { (flowResults) in
+        API.shared.getGaugeObservations(reachId: reachId, page: 0, pageSize: 100, callback: { (flowResults) in
             print("Total Gauge Observations Returned:", flowResults?.count ?? 0)
             self.refreshControl.endRefreshing()
 

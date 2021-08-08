@@ -76,7 +76,7 @@ class ReviewPhotoTableViewController: UITableViewController {
             
             AWProgressModal.shared.show(fromViewController: self, message: "Saving...")
             
-            API.shared.postPhotoForReach(image: image, reach_id: Int(selectedRun.id), caption: capText,
+            API.shared.postPhoto(image: image, reachId: Int(selectedRun.id), caption: capText,
                                                            description: description, photoDate: serverDateString,
                                                            callback: { (photoFileUpdate, photoPostUpdate) in
                 AWProgressModal.shared.hide()

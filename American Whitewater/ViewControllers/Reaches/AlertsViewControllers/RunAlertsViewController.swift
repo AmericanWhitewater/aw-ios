@@ -68,7 +68,7 @@ class RunAlertsViewController: UIViewController {
         guard let selectedRun = selectedRun else { refreshControl.endRefreshing(); return }
         print(selectedRun.id)
                 
-        API.shared.getAlertsForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 50, callback: { (alertResults) in
+        API.shared.getAlerts(reachId: Int(selectedRun.id), page: 1, pageSize: 50, callback: { (alertResults) in
             self.refreshControl.endRefreshing()
             
             if let alertResults = alertResults {

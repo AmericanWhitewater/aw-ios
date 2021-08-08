@@ -24,10 +24,8 @@ class GageDetailsTableViewController: UITableViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         if let selectedRun = selectedRun{
-            let reachId = selectedRun.id
-            let reachIdString = "\(reachId)"
-            print("Selected Run ReachID: \(reachId)")
-            API.shared.getGagesForReach(id: reachIdString) { (gagesResult) in
+            print("Selected Run ReachID: \(selectedRun.id)")
+            API.shared.getGauges(reachId: selectedRun.id) { (gagesResult) in
                 
                 self.gagesList = gagesResult
                 self.tableView.reloadData()
