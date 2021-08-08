@@ -21,42 +21,7 @@ class AWApiReachHelper {
     typealias ReachErrorCallback = (Error) -> Void
     typealias UpdateReachesCallback = () -> Void
     typealias ReachDetailCallback = (AWReachDetail) -> Void
-        
-    public func fetchReachesByRegion(regionCode: String, callback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
-        print("Fetching Reaches by Region: \(regionCode)")
-        let urlString = riverURL + "?state=\(regionCode)"
-        
-        AF.request(urlString).responseJSON { (response) in
-            
-            switch response.result {
-                case .success(let value):
-
-                    var riversList: [AWReach] = []
-                                        
-                    let json = JSON(value)
-                    print("Total JSON Reaches from server: \(json.count)")
-                    
-                    if let riversArray = json.array {
-                        for riverJSON in riversArray {
-                            let reach = AWReach(json: riverJSON)
-                            riversList.append(reach)
-                        }
-                    }
-                
-                    print("Processed \(riversList.count) rivers.")
-                
-                    callback(riversList)
-                
-                case .failure(let error):
-                    print("Failed trying to call: \(urlString)")
-                    print("Response: \(response)")
-                    print("Response Description: \(response.debugDescription)")
-                    print("HTTP Response: \(response.response.debugDescription)")
-                    callbackError(error)
-            }
-        }
-    }
-
+    
     /// Calls each of the regions to be downloaded, then after all are downloaded it processes all of them at once which happens very quickly
     /// This is designed to run in the background and update the UI as it goes without delays. Users can still pull/refresh individual data while this is happening.
     private func fetchReachesRecursively(currentIndex: Int, allRegionCodes: [String], allRiverJSONdata: [JSON], successCallback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {

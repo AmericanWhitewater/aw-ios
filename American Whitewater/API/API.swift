@@ -27,18 +27,6 @@ struct API {
     // MARK: - Reaches
     //
     
-    public func fetchReachesByRegion(
-        regionCode: String,
-        callback: @escaping ([AWReach]) -> Void,
-        callbackError: @escaping (Error) -> Void
-    ) {
-        reachHelper.fetchReachesByRegion(
-            regionCode: regionCode,
-            callback: callback,
-            callbackError: callbackError
-        )
-    }
-    
     public func updateRegionalReaches(
         regionCodes: [String],
         callback: @escaping () -> Void,
