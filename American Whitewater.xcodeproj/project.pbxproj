@@ -15,6 +15,7 @@
 		4A7F530026BA192000DFBDFF /* UIStoryboard+convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F52FF26BA192000DFBDFF /* UIStoryboard+convenience.swift */; };
 		4AA3FEFB26B2725100AC4303 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA3FEFA26B2725100AC4303 /* Filters.swift */; };
 		4ABE3B7D26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */; };
+		4AC4685D26C02A840032D68F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4685C26C02A840032D68F /* API.swift */; };
 		4AC4BB5A26A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */; };
 		4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */; };
 		4ADE944D26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */; };
@@ -158,6 +159,7 @@
 		4A7F52FF26BA192000DFBDFF /* UIStoryboard+convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+convenience.swift"; sourceTree = "<group>"; };
 		4AA3FEFA26B2725100AC4303 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterceptorProvider.swift; sourceTree = "<group>"; };
+		4AC4685C26C02A840032D68F /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+difference.swift"; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 			children = (
 				63A6FD682367730C00148231 /* AWApiReachHelper.swift */,
 				63A6FD6A2367748F00148231 /* AWApiLinks.swift */,
+				4AC4685C26C02A840032D68F /* API.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -946,6 +949,7 @@
 				63DEE01F24ABB3EC00638E84 /* RiverFlowCell.swift in Sources */,
 				63D7BD1923199D1900935693 /* DuffekDialog.swift in Sources */,
 				6376508D2487E8AB00DD0FCE /* AWProgressModal.swift in Sources */,
+				4AC4685D26C02A840032D68F /* API.swift in Sources */,
 				63309E452343D9B500E6DBC4 /* NoRiversTableViewCell.swift in Sources */,
 				630F7EC825C3439000F17D8A /* LoadingRiversCell.swift in Sources */,
 				631EFFA223677CB600BA17F7 /* Rapid+CoreDataProperties.swift in Sources */,
