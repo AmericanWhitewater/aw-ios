@@ -13,7 +13,7 @@ struct API {
     static let shared = API()
     private init() {}
 
-    private var reachHelper = AWApiReachHelper.shared
+    private var reachHelper = AWApiReachHelper()
     
     //
     // MARK: - Reaches

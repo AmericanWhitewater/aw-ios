@@ -84,7 +84,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if newLocation.coordinate.hasChanged(from: DefaultsManager.shared.coordinate, byMoreThan: 0.01) {
             print("Updating distances of reaches")
             
-            AWApiReachHelper.shared.updateAllReachDistances(callback: {
+            API.shared.updateAllReachDistances(callback: {
                 self.fetchReachesFromCoreData()
             })
         }

@@ -39,7 +39,7 @@ class RunsListViewController: UIViewController {
         // AWTODO loading UI states
         if !DefaultsManager.shared.completedFirstRun {
             print("downloading all reaches")
-            AWApiReachHelper.shared.downloadAllReachesInBackground {
+            API.shared.downloadAllReachesInBackground {
                 print("Completed downloading all data")
 
                 do {
@@ -156,7 +156,7 @@ class RunsListViewController: UIViewController {
                     return
                 }
                 
-                AWApiReachHelper.shared.updateReaches(
+                API.shared.updateReaches(
                     reachIds: results.map{ "\($0.id)" },
                     callback: onUpdateSuccessful,
                     callbackError: onUpdateFailed
@@ -220,7 +220,7 @@ class RunsListViewController: UIViewController {
     func refreshByRegion(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         print("Updating reaches by region")
         
-        AWApiReachHelper.shared.updateRegionalReaches(
+        API.shared.updateRegionalReaches(
             regionCodes: filters.regionsFilter.count > 0 ? filters.regionsFilter : Region.all.map { $0.code },
             callback: success,
             callbackError: failure

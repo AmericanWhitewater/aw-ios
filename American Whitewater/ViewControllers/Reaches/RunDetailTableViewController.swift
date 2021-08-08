@@ -58,7 +58,7 @@ class RunDetailTableViewController: UITableViewController {
         if let selectedRun = selectedRun {
             updateDetailDisplay(selectedRun)
             
-            AWApiReachHelper.shared.updateReachDetail(reachId: "\(selectedRun.id)", callback: {
+            API.shared.updateReachDetail(reachId: "\(selectedRun.id)", callback: {
                 self.fetchDetailsFromCoreData()
             }) { (error) in
                 // Only show an error state if there aren't details stored locally

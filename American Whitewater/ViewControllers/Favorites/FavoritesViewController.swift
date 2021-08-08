@@ -97,7 +97,7 @@ class FavoritesViewController: UIViewController {
             return
         }
         
-        AWApiReachHelper.shared.updateReaches(reachIds: reachIds, callback: {
+        API.shared.updateReaches(reachIds: reachIds, callback: {
             self.refreshControl.endRefreshing()
             
             print("Fetched favorite rivers")

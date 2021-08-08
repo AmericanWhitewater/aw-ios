@@ -6,12 +6,9 @@ import Foundation
 import CoreLocation
 
 class AWApiReachHelper {
-    private var fetchedResultsController: NSFetchedResultsController<Reach>?
-    
-    // setup our singleton for the api helper class
-    static let shared = AWApiReachHelper()
-
-    private init() {} // prevent any other default initializer
+    init() {
+        
+    }
     
     typealias ReachCallback = ([AWReach]) -> Void
     typealias UpdateCallback = () -> Void
