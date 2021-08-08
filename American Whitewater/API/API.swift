@@ -152,7 +152,6 @@ struct API {
         graphQLHelper.getPhotosForReach(reach_id: reachId, page: page, page_size: pageSize, callback: callback, errorCallback: errorCallback)
     }
     
-    // FIXME: this drops metricId and gaugeID on the floor? Aren't those important?
     public func postPhoto(
         photoPostType: PostType = PostType.photoPost,
         image: UIImage,
@@ -167,7 +166,20 @@ struct API {
         callback: @escaping AWGQLApiHelper.PhotoUploadCallback,
         errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
     ) {
-        graphQLHelper.postPhotoForReach(image: image, reach_id: reachId, caption: caption, description: description, photoDate: photoDate, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.postPhotoForReach(
+            photoPostType: photoPostType,
+            image: image,
+            reach_id: reachId,
+            caption: caption,
+            description: description,
+            photoDate: photoDate,
+            reachObservation: reachObservation,
+            gauge_id: gaugeId != nil ? "\(gaugeId!)" : nil,
+            metric_id: metricId,
+            reachReading: reachReading,
+            callback: callback,
+            errorCallback: errorCallback
+        )
     }
     
     public func getMetrics(gaugeId: Int, metricsCallback: @escaping AWGQLApiHelper.AWMetricsCallback) {
