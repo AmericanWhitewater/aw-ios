@@ -97,16 +97,17 @@ class FavoritesViewController: UIViewController {
             return
         }
         
-        API.shared.updateReaches(reachIds: reachIds, callback: {
+        API.shared.updateReaches(reachIds: reachIds) { error in
             self.refreshControl.endRefreshing()
             
+            if let error = error {
+                print("Error fetching by IDs: \(error.localizedDescription)")
+                return
+            }
+
             print("Fetched favorite rivers")
             self.fetchRiversFromCoreData()
             DefaultsManager.shared.favoritesLastUpdated = Date()
-            
-        }) { (error) in
-            self.refreshControl.endRefreshing()
-            print("Error fetching by IDs: \(error.localizedDescription)")
         }
     }
     

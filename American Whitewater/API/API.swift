@@ -27,47 +27,37 @@ struct API {
     // MARK: - Reaches
     //
     
-    public func updateRegionalReaches(
-        regionCodes: [String],
-        callback: @escaping () -> Void,
-        callbackError: @escaping (Error) -> Void
-    ) {
-        reachHelper.updateRegionalReaches(
-            regionCodes: regionCodes,
-            callback: callback,
-            callbackError: callbackError
-        )
+    public func updateRegionalReaches(regionCodes: [String], completion: @escaping (Error?) -> Void) {
+        reachHelper.updateRegionalReaches(regionCodes: regionCodes) {
+            completion(nil)
+        } callbackError: {
+            completion($0)
+        }
+
     }
     
-    public func updateReaches(
-        reachIds: [String],
-        callback: @escaping () -> Void,
-        callbackError: @escaping (Error) -> Void
-    ) {
-        reachHelper.updateReaches(reachIds: reachIds,
-                                  callback: callback,
-                                  callbackError: callbackError
-        )
+    public func updateReaches(reachIds: [String], completion: @escaping (Error?) -> Void) {
+        reachHelper.updateReaches(reachIds: reachIds) {
+            completion(nil)
+        } callbackError: {
+            completion($0)
+        }
+
     }
 
-    
-    public func downloadAllReachesInBackground(callback: @escaping () -> Void) {
-        reachHelper.downloadAllReachesInBackground(callback: callback)
+    public func downloadAllReachesInBackground(completion: @escaping () -> Void) {
+        reachHelper.downloadAllReachesInBackground(callback: completion)
     }
     
-    public func updateReachDetail(
-        reachId: String,
-        callback: @escaping () -> Void,
-        callbackError: @escaping (Error) -> Void
-    ) {
-        reachHelper.updateReachDetail(
-            reachId: reachId,
-            callback: callback,
-            callbackError: callbackError
-        )
+    public func updateReachDetail(reachId: String, completion: @escaping (Error?) -> Void) {
+        reachHelper.updateReachDetail(reachId: reachId) {
+            completion(nil)
+        } callbackError: {
+            completion($0)
+        }
     }
     
-    public func updateAllReachDistances(callback: @escaping () -> Void) {
-        reachHelper.updateAllReachDistances(callback: callback)
+    public func updateAllReachDistances(completion: @escaping () -> Void) {
+        reachHelper.updateAllReachDistances(callback: completion)
     }
 }

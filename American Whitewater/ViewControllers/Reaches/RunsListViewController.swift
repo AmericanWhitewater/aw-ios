@@ -122,15 +122,16 @@ class RunsListViewController: UIViewController {
         if fromNetwork || isDataStale {
             refreshControl.beginRefreshing()
 
-            func onUpdateSuccessful() {
+            func onCompletion(_ error: Error?) {
                 self.refreshControl.endRefreshing()
+                
+                if let error = error {
+                    self.showToast(message: "Error fetching data: " + error.localizedDescription)
+                    return
+                }
+                
                 DefaultsManager.shared.lastUpdated = Date()
                 self.tableView.reloadData()
-            }
-            
-            func onUpdateFailed(error: Error) {
-                self.refreshControl.endRefreshing()
-                self.showToast(message: "Error fetching data: " + error.localizedDescription)
             }
             
             if filters.isRegion {
@@ -142,25 +143,22 @@ class RunsListViewController: UIViewController {
                     )
                 
                     alert.addAction(.init(title: "Continue", style: .default, handler: { _ in
-                        self.refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
+                        self.refreshByRegion(completion: onCompletion)
                     }))
                     alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
                     present(alert, animated: true)
                 } else {
-                    refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
+                    refreshByRegion(completion: onCompletion)
                 }
             } else {
                 guard let results = fetchedResultsController?.fetchedObjects else {
-                    // FIXME: is this a success or failure?
-                    onUpdateSuccessful()
+                    // FIXME: should this indicate failure?
+                    // By indicating success, lastUpdated gets set
+                    onCompletion(nil)
                     return
                 }
                 
-                API.shared.updateReaches(
-                    reachIds: results.map{ "\($0.id)" },
-                    callback: onUpdateSuccessful,
-                    callbackError: onUpdateFailed
-                )
+                API.shared.updateReaches(reachIds: results.map{ "\($0.id)" }, completion: onCompletion)
             }
         }
     }
@@ -217,13 +215,12 @@ class RunsListViewController: UIViewController {
         tableView.reloadData()
     }
     
-    func refreshByRegion(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    func refreshByRegion(completion: @escaping (Error?) -> Void) {
         print("Updating reaches by region")
         
         API.shared.updateRegionalReaches(
             regionCodes: filters.regionsFilter.count > 0 ? filters.regionsFilter : Region.all.map { $0.code },
-            callback: success,
-            callbackError: failure
+            completion: completion
         )
     }
     
