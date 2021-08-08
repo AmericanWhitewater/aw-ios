@@ -23,23 +23,13 @@ class AWGQLApiHelper
         case notSignedIn
     }
     
-    static let shared = AWGQLApiHelper()
+    private let apollo: ApolloClient
+    private let keychain: KeychainSwift
     
-    private(set) lazy var apollo: ApolloClient = {
-        let url = URL(string: "\(AWGC.AW_BASE_URL)/graphql")!
-        print("Using URL:", "\(url.absoluteString)")
-        
-        let store = ApolloStore()
-        let provider = NetworkInterceptorProvider(
-            client: URLSessionClient(),
-            store: store
-        )
-        let transport = RequestChainNetworkTransport(interceptorProvider: provider, endpointURL: url)
-        
-        return ApolloClient(networkTransport: transport, store: store)
-    }()
-    
-    private let keychain = KeychainSwift()
+    init(apollo: ApolloClient, keychain: KeychainSwift = .init()) {
+        self.apollo = apollo
+        self.keychain = keychain
+    }
     
     public func updateAccountInfo() {
         apollo.fetch(query: UserInfoQuery()) { result in

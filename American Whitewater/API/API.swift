@@ -8,16 +8,18 @@
 
 import Foundation
 import UIKit
+import Apollo
 
 /// Collects and provides access to fetching data from the network
 struct API {
     static let shared = API()
     
     private let reachHelper: AWApiReachHelper
-    private let baseURL = "https://www.americanwhitewater.org/content/"
+    private let baseURL = AWGC.AW_BASE_URL
     
-    private let graphQLHelper = AWGQLApiHelper()
-    private let articleHelper = AWGQLArticleApiHelper.shared
+    private let apollo: ApolloClient
+    private let graphQLHelper: AWGQLApiHelper
+    private let articleHelper: AWGQLArticleApiHelper
     
     private init() {
         reachHelper = .init(
@@ -25,6 +27,22 @@ struct API {
             riverURL: baseURL + "/content/River/search/.json",
             baseGaugeDetailURL: baseURL + "/content/River/detail/id/"
         )
+        
+        let store = ApolloStore()
+        
+        apollo = ApolloClient(
+            networkTransport: RequestChainNetworkTransport(
+                interceptorProvider: NetworkInterceptorProvider(
+                    client: URLSessionClient(),
+                    store: store
+                ),
+                endpointURL: URL(string: "\(baseURL)/graphql")!
+            ),
+            store: ApolloStore()
+        )
+        
+        graphQLHelper = AWGQLApiHelper(apollo: apollo)
+        articleHelper = AWGQLArticleApiHelper(apollo: apollo)
     }
     
     //
@@ -157,4 +175,17 @@ struct API {
     public func getGagesForReach(id: String, gagesInfoCallback: @escaping AWGQLApiHelper.AWGaugesListCallback) {
         graphQLHelper.getGagesForReach(id: id, gagesInfoCallback: gagesInfoCallback)
     }
+    
+    
+    //
+    // MARK: - GraphQL Articles
+    //
+    
+    public func updateArticles(
+        callback: @escaping AWGQLArticleApiHelper.UpdatedNewsCallback,
+        errorCallback: @escaping AWGQLArticleApiHelper.ErrorCallback
+    ) {
+        articleHelper.updateArticles(callback: callback, errorCallback: errorCallback)
+    }
+    
 }

@@ -10,13 +10,11 @@ class AWGQLArticleApiHelper
     typealias ErrorCallback = (Error?) -> Void
     typealias UpdatedNewsCallback = () -> Void
     
-    static let shared = AWGQLArticleApiHelper()
+    private let apollo: ApolloClient
     
-    // Use the same client as the main AWGLApiHelper
-    // This previously created a new client (with copy pasted base URL setting and auth handling)
-    // NB: sharing will mean a shared cache for the requests here and in the main helper, see AWGQLApiHelper.shared.apollo
-    // FIXME: TEMP don't construct an AWGQLHelper here
-    private(set) lazy var apollo: ApolloClient = AWGQLApiHelper().apollo
+    init(apollo: ApolloClient) {
+        self.apollo = apollo
+    }
         
     private func fetchArticles(callback: @escaping NewsArticlesCallback, errorCallback: @escaping AWGraphQLError) {
         apollo.fetch(query: NewsQuery(page_size: 20, page: 0)) { result in
