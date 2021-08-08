@@ -5,11 +5,6 @@ import SwiftyJSON
 import Foundation
 import CoreLocation
 
-/*
- This is the main API helper class for retrieving
- Reaches and storing them in core data
-*/
-
 class AWApiReachHelper {
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
     
@@ -24,7 +19,7 @@ class AWApiReachHelper {
     typealias UpdateReachesCallback = () -> Void
     typealias ReachDetailCallback = (AWReachDetail) -> Void
         
-    func fetchReachesByRegion(regionCode: String, callback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
+    public func fetchReachesByRegion(regionCode: String, callback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
         print("Fetching Reaches by Region: \(regionCode)")
         let urlString = riverURL + "?state=\(regionCode)"
         
@@ -59,18 +54,9 @@ class AWApiReachHelper {
         }
     }
 
-    /*
-     func fetchReachesRecursively(currentIndex: Int, allRegionCodes: [String],
-                                  allRiverJSONdata: [JSON], successCallback: @escaping ReachCallback,
-                                  callbackError: @escaping ReachErrorCallback)
-     
-     This calls each of the regions to be downloaded, then after all are downloaded it
-     processes all of them at once which happens very quickly
-     
-     This is designed to run in the background and update the UI as it goes without delays.
-     Users can still pull/refresh individual data while this is happening.
-    */
-    func fetchReachesRecursively(currentIndex: Int, allRegionCodes: [String], allRiverJSONdata: [JSON], successCallback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
+    /// Calls each of the regions to be downloaded, then after all are downloaded it processes all of them at once which happens very quickly
+    /// This is designed to run in the background and update the UI as it goes without delays. Users can still pull/refresh individual data while this is happening.
+    private func fetchReachesRecursively(currentIndex: Int, allRegionCodes: [String], allRiverJSONdata: [JSON], successCallback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
         
         var allRiverJSON = allRiverJSONdata
         
@@ -120,13 +106,8 @@ class AWApiReachHelper {
         
     }
     
-    /*
-     func fetchReachesByIds(reachIds: [String], callback: @escaping ReachCallback,
-                            callbackError: @escaping ReachErrorCallback)
-     
-     This updates reaches based on their IDs. This is great for updating the favorites, and groups of reaches
-    */
-    func fetchReachesByIds(reachIds: [String], callback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
+    /// Updates reaches based on their IDs. This is great for updating the favorites, and groups of reaches
+    private func fetchReachesByIds(reachIds: [String], callback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
         
         if reachIds.count == 0 {
             print("No reach ids sent")
@@ -170,8 +151,7 @@ class AWApiReachHelper {
         
     }
     
-    
-    func findOrNewReach(newReach: AWReach, context: NSManagedObjectContext) -> Reach {
+    private func findOrNewReach(newReach: AWReach, context: NSManagedObjectContext) -> Reach {
         let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
         //print("nReach name: \(newReach.name ?? "na") ID: \(NSNumber(value: newReach.id ?? 0))")
         guard let id = newReach.id else {
@@ -264,7 +244,7 @@ class AWApiReachHelper {
     
     private (set) static var isFetchingReaches = false
 
-    func updateRegionalReaches(regionCodes: [String], callback: @escaping UpdateReachesCallback, callbackError: @escaping ReachErrorCallback) {
+    public func updateRegionalReaches(regionCodes: [String], callback: @escaping UpdateReachesCallback, callbackError: @escaping ReachErrorCallback) {
         let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         guard Self.isFetchingReaches == false else {
@@ -324,7 +304,7 @@ class AWApiReachHelper {
         }
     }
     
-    func downloadAllReachesInBackground(callback: @escaping UpdateCallback) {
+    public func downloadAllReachesInBackground(callback: @escaping UpdateCallback) {
         let codes = Region.all.map { $0.code }
 
         let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -375,7 +355,7 @@ class AWApiReachHelper {
     }
 
 
-    func updateReaches(reachIds: [String], callback: @escaping UpdateCallback, callbackError: @escaping ReachErrorCallback) {
+    public func updateReaches(reachIds: [String], callback: @escaping UpdateCallback, callbackError: @escaping ReachErrorCallback) {
         
         let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
@@ -421,7 +401,7 @@ class AWApiReachHelper {
         DefaultsManager.shared.lastUpdated = Date()
     }
     
-    func fetchReachDetail(reachId: String,
+    private func fetchReachDetail(reachId: String,
                           callback: @escaping ReachDetailCallback, callbackError: @escaping ReachErrorCallback) {
         let urlString = "\(baseGaugeDetailURL)\(reachId)/.json"
         
@@ -474,7 +454,7 @@ class AWApiReachHelper {
         rapid.reach = reach
     }
     
-    func updateDetail(reachId: String, details: AWReachDetail, context: NSManagedObjectContext) {
+    private func updateDetail(reachId: String, details: AWReachDetail, context: NSManagedObjectContext) {
         
         let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
         request.predicate = NSPredicate(format: "id = %@", reachId)
@@ -518,7 +498,7 @@ class AWApiReachHelper {
         }
     }
     
-    func updateReachDetail(reachId: String,
+    public func updateReachDetail(reachId: String,
                            callback: @escaping UpdateCallback, callbackError: @escaping ReachErrorCallback) {
 
         let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -554,7 +534,7 @@ class AWApiReachHelper {
     }
     
     
-    func updateAllReachDistances(callback: @escaping UpdateCallback) {
+    public func updateAllReachDistances(callback: @escaping UpdateCallback) {
         let coord = DefaultsManager.shared.coordinate
         
         // FIXME: probably CLLocationCoordinate2DIsValid() is what's wanted here?
