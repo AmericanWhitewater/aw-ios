@@ -117,49 +117,52 @@ class RunsListViewController: UIViewController {
         }
         
         // Update from network if requested or if data is more than 1 hour old
-        let lastUpdate = DefaultsManager.shared.lastUpdated
-        let isDataStale = lastUpdate != nil ? lastUpdate! < Date(timeIntervalSinceNow: -60 * 60) : false
-        if fromNetwork || isDataStale {
-            refreshControl.beginRefreshing()
-
-            func onCompletion(_ error: Error?) {
-                self.refreshControl.endRefreshing()
-                
-                if let error = error {
-                    self.showToast(message: "Error fetching data: " + error.localizedDescription)
-                    return
-                }
-                
-                DefaultsManager.shared.lastUpdated = Date()
-                self.tableView.reloadData()
+        guard
+            let lastUpdate = DefaultsManager.shared.lastUpdated,
+            fromNetwork || lastUpdate < Date(timeIntervalSinceNow: -60 * 60)
+        else {
+            return
+        }
+        
+        refreshControl.beginRefreshing()
+        
+        func onCompletion(_ error: Error?) {
+            self.refreshControl.endRefreshing()
+            
+            if let error = error {
+                self.showToast(message: "Error fetching data: " + error.localizedDescription)
+                return
             }
             
-            if filters.isRegion {
-                if filters.regionsFilter.isEmpty {
-                    let alert = UIAlertController(
-                        title: "Pull All Data?",
-                        message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.",
-                        preferredStyle: .alert
-                    )
+            DefaultsManager.shared.lastUpdated = Date()
+            self.tableView.reloadData()
+        }
+        
+        if filters.isRegion {
+            if filters.regionsFilter.isEmpty {
+                let alert = UIAlertController(
+                    title: "Pull All Data?",
+                    message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.",
+                    preferredStyle: .alert
+                )
                 
-                    alert.addAction(.init(title: "Continue", style: .default, handler: { _ in
-                        self.refreshByRegion(completion: onCompletion)
-                    }))
-                    alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-                    present(alert, animated: true)
-                } else {
-                    refreshByRegion(completion: onCompletion)
-                }
+                alert.addAction(.init(title: "Continue", style: .default, handler: { _ in
+                    self.refreshByRegion(completion: onCompletion)
+                }))
+                alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+                present(alert, animated: true)
             } else {
-                guard let results = fetchedResultsController?.fetchedObjects else {
-                    // FIXME: should this indicate failure?
-                    // By indicating success, lastUpdated gets set
-                    onCompletion(nil)
-                    return
-                }
-                
-                API.shared.updateReaches(reachIds: results.map{ "\($0.id)" }, completion: onCompletion)
+                refreshByRegion(completion: onCompletion)
             }
+        } else {
+            guard let reaches = fetchedResultsController?.fetchedObjects else {
+                // FIXME: should this indicate failure?
+                // By indicating success, lastUpdated gets set
+                onCompletion(nil)
+                return
+            }
+            
+            API.shared.updateReaches(reachIds: reaches.map(\.id), completion: onCompletion)
         }
     }
     

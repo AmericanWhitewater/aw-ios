@@ -90,14 +90,16 @@ class FavoritesViewController: UIViewController {
     }
 
     func refresh() {
-        
-        guard let reachIds = (fetchedResultsController?.fetchedObjects?.map { String($0.id) }), reachIds.count > 0 else {
+        guard
+            let reaches = fetchedResultsController?.fetchedObjects,
+            reaches.count > 0
+        else {
             refreshControl.endRefreshing()
             print("no ids")
             return
         }
         
-        API.shared.updateReaches(reachIds: reachIds) { error in
+        API.shared.updateReaches(reachIds: reaches.map(\.id)) { error in
             self.refreshControl.endRefreshing()
             
             if let error = error {

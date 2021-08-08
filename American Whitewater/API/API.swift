@@ -35,12 +35,12 @@ struct API {
         }
     }
     
-    public func updateReaches(reachIds: [String], completion: @escaping (Error?) -> Void) {
-        reachHelper.updateReaches(reachIds: reachIds) {
-            completion(nil)
-        } callbackError: {
-            completion($0)
-        }
+    public func updateReaches(reachIds: [Int16], completion: @escaping (Error?) -> Void) {
+        reachHelper.updateReaches(
+            reachIds: reachIds.map { "\($0)" },
+            callback: { completion(nil) },
+            callbackError: { completion($0) }
+        )
     }
 
     public func updateAllReaches(completion: @escaping () -> Void) {
