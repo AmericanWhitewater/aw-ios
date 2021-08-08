@@ -31,7 +31,7 @@ extension Reach {
     @NSManaged public var gageMin: String?
     @NSManaged public var gageName: String?    
     @NSManaged public var gageUpdated: Date?
-    @NSManaged public var id: Int16
+    @NSManaged public var id: Int
     @NSManaged public var lastGageReading: String?
     @NSManaged public var length: String?
     @NSManaged public var longDescription: String?

@@ -57,7 +57,7 @@ struct API {
         }
     }
     
-    public func updateReaches(reachIds: [Int16], completion: @escaping (Error?) -> Void) {
+    public func updateReaches(reachIds: [Int], completion: @escaping (Error?) -> Void) {
         reachHelper.updateReaches(
             reachIds: reachIds.map { "\($0)" },
             callback: { completion(nil) },
@@ -69,7 +69,7 @@ struct API {
         reachHelper.downloadAllReachesInBackground(callback: completion)
     }
     
-    public func updateReachDetail(reachId: Int16, completion: @escaping (Error?) -> Void) {
+    public func updateReachDetail(reachId: Int, completion: @escaping (Error?) -> Void) {
         reachHelper.updateReachDetail(reachId: "\(reachId)") {
             completion(nil)
         } callbackError: {

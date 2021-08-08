@@ -131,7 +131,7 @@ class AWApiReachHelper {
                 
         guard let result = try? context.fetch(request), result.count > 0 else {
             let reach = Reach(context: context)
-            reach.id = Int16(newReach.id ?? 0)
+            reach.id = newReach.id ?? 0
             return reach
         }
 
@@ -153,7 +153,7 @@ class AWApiReachHelper {
             reach.takeOutLon = newReach.tlon
             reach.currentGageReading = newReach.gauge_reading // ** check
             reach.lastGageReading = newReach.last_gauge_reading
-            reach.id = Int16(newReach.id ?? 0)
+            reach.id = newReach.id ?? 0
             reach.difficulty = newReach.classRating
             reach.condition = newReach.cond
             reach.unit = newReach.unit
