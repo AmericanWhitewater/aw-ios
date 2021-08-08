@@ -89,7 +89,6 @@
 		6394995D246F82F70061552C /* ReviewPhotoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394995C246F82F60061552C /* ReviewPhotoTableViewController.swift */; };
 		63A276D4242961A400EDAD69 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A276D3242961A400EDAD69 /* SignInViewController.swift */; };
 		63A6FD692367730C00148231 /* AWApiReachHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD682367730C00148231 /* AWApiReachHelper.swift */; };
-		63A6FD6B2367748F00148231 /* AWApiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD6A2367748F00148231 /* AWApiLinks.swift */; };
 		63A8B17D23281A8A00FD2E00 /* AWArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8B17C23281A8A00FD2E00 /* AWArticle.swift */; };
 		63B5B48F245756D40062F54B /* AlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B48E245756D40062F54B /* AlertTableViewCell.swift */; };
 		63B5B49E2457B2270062F54B /* AwGraphQLAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B49D2457B2270062F54B /* AwGraphQLAPI.swift */; };
@@ -240,7 +239,6 @@
 		6394995C246F82F60061552C /* ReviewPhotoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPhotoTableViewController.swift; sourceTree = "<group>"; };
 		63A276D3242961A400EDAD69 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		63A6FD682367730C00148231 /* AWApiReachHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiReachHelper.swift; sourceTree = "<group>"; };
-		63A6FD6A2367748F00148231 /* AWApiLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiLinks.swift; sourceTree = "<group>"; };
 		63A8B17C23281A8A00FD2E00 /* AWArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWArticle.swift; sourceTree = "<group>"; };
 		63B5B48E245756D40062F54B /* AlertTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTableViewCell.swift; sourceTree = "<group>"; };
 		63B5B49B2457B1300062F54B /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
@@ -327,7 +325,6 @@
 			isa = PBXGroup;
 			children = (
 				63A6FD682367730C00148231 /* AWApiReachHelper.swift */,
-				63A6FD6A2367748F00148231 /* AWApiLinks.swift */,
 				4AC4685C26C02A840032D68F /* API.swift */,
 			);
 			path = API;
@@ -912,7 +909,6 @@
 			files = (
 				6376508B2487E15100DD0FCE /* ProgressViewController.swift in Sources */,
 				63E90EBD22EAAF2700C8DAA3 /* Segues.swift in Sources */,
-				63A6FD6B2367748F00148231 /* AWApiLinks.swift in Sources */,
 				6394995D246F82F70061552C /* ReviewPhotoTableViewController.swift in Sources */,
 				63F87AD5236A923D0005AA0B /* AWReachDetail.swift in Sources */,
 				63491B03232882170036A906 /* NewsTableViewCell.swift in Sources */,

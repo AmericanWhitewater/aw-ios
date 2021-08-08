@@ -6,8 +6,14 @@ import Foundation
 import CoreLocation
 
 class AWApiReachHelper {
-    init() {
-        
+    private let baseURL: String
+    private let riverURL: String
+    private let baseGaugeDetailURL: String
+
+    init(baseURL: String, riverURL: String, baseGaugeDetailURL: String) {
+        self.baseURL = baseURL
+        self.riverURL = riverURL
+        self.baseGaugeDetailURL = baseGaugeDetailURL
     }
     
     typealias ReachCallback = ([AWReach]) -> Void

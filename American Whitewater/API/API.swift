@@ -11,9 +11,17 @@ import Foundation
 /// Collects and provides access to fetching data from the network
 struct API {
     static let shared = API()
-    private init() {}
-
-    private var reachHelper = AWApiReachHelper()
+    
+    private let reachHelper: AWApiReachHelper
+    private let baseURL = "https://www.americanwhitewater.org/content/"
+    
+    private init() {
+        reachHelper = .init(
+            baseURL: baseURL + "/content",
+            riverURL: baseURL + "/content/River/search/.json",
+            baseGaugeDetailURL: baseURL + "/content/River/detail/id/"
+        )
+    }
     
     //
     // MARK: - Reaches
