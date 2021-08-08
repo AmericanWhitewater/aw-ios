@@ -66,7 +66,6 @@ class NewsTableViewController: UITableViewController {
      fetch the results and reload
     */
     func refresh() {
-        //AWApiArticleHelper.shared.updateArticles(callback: {
         AWGQLArticleApiHelper.shared.updateArticles(callback: {
             self.refreshControl?.endRefreshing()
             

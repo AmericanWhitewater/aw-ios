@@ -87,7 +87,6 @@
 		6394995B246F6EA70061552C /* GlobalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394995A246F6EA70061552C /* GlobalConfig.swift */; };
 		6394995D246F82F70061552C /* ReviewPhotoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394995C246F82F60061552C /* ReviewPhotoTableViewController.swift */; };
 		63A276D4242961A400EDAD69 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A276D3242961A400EDAD69 /* SignInViewController.swift */; };
-		63A6FD672363EEA200148231 /* AWApiArticleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */; };
 		63A6FD692367730C00148231 /* AWApiReachHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD682367730C00148231 /* AWApiReachHelper.swift */; };
 		63A6FD6B2367748F00148231 /* AWApiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD6A2367748F00148231 /* AWApiLinks.swift */; };
 		63A8B17D23281A8A00FD2E00 /* AWArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8B17C23281A8A00FD2E00 /* AWArticle.swift */; };
@@ -238,7 +237,6 @@
 		6394995A246F6EA70061552C /* GlobalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConfig.swift; sourceTree = "<group>"; };
 		6394995C246F82F60061552C /* ReviewPhotoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPhotoTableViewController.swift; sourceTree = "<group>"; };
 		63A276D3242961A400EDAD69 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
-		63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiArticleHelper.swift; sourceTree = "<group>"; };
 		63A6FD682367730C00148231 /* AWApiReachHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiReachHelper.swift; sourceTree = "<group>"; };
 		63A6FD6A2367748F00148231 /* AWApiLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWApiLinks.swift; sourceTree = "<group>"; };
 		63A8B17C23281A8A00FD2E00 /* AWArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWArticle.swift; sourceTree = "<group>"; };
@@ -327,7 +325,6 @@
 			isa = PBXGroup;
 			children = (
 				63A6FD682367730C00148231 /* AWApiReachHelper.swift */,
-				63A6FD662363EEA200148231 /* AWApiArticleHelper.swift */,
 				63A6FD6A2367748F00148231 /* AWApiLinks.swift */,
 			);
 			path = API;
@@ -942,7 +939,6 @@
 				631EFF9A23677C4000BA17F7 /* Article+CoreDataProperties.swift in Sources */,
 				631EFFA42367842300BA17F7 /* DifficultyHelper.swift in Sources */,
 				637D0737236B541000BE90D0 /* UISearchBar+BGColor.swift in Sources */,
-				63A6FD672363EEA200148231 /* AWApiArticleHelper.swift in Sources */,
 				631EFFAB23688A3600BA17F7 /* Reach+CoreDataProperties.swift in Sources */,
 				63E90EAD22EAA14700C8DAA3 /* DefaultsManager.swift in Sources */,
 				4AA3FEFB26B2725100AC4303 /* Filters.swift in Sources */,
