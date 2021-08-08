@@ -42,7 +42,6 @@ class AWGQLApiHelper
     private let keychain = KeychainSwift()
     
     public func updateAccountInfo() {
-        
         apollo.fetch(query: UserInfoQuery()) { result in
             switch result {
                 case .success(let graphQLResult):
@@ -175,9 +174,6 @@ class AWGQLApiHelper
         }
     }
     
-// -----
-    
-    
     public func postGaugeObservationFor(reach_id: Int, metric_id: Int, title: String, dateString: String, reading: Double, callback: @escaping PostObservationsCallback, errorCallback: @escaping AWGraphQLError) {
 
         let newID = NanoID.new(alphabet: .allLettersAndNumbers, size: 21)
@@ -300,12 +296,9 @@ class AWGQLApiHelper
                     print("Error:", error)
             }
         }
-        
     }
     
-
-    func getMetricsForGauge(id: String, metricsCallback: @escaping AWMetricsCallback) {
-                
+    public func getMetricsForGauge(id: String, metricsCallback: @escaping AWMetricsCallback) {
         apollo.fetch(query: GuageMetricsQuery(gauge_id: id) ) { result in
             switch result {
                 case .success(let graphQLResult):
@@ -339,8 +332,7 @@ class AWGQLApiHelper
         }
     }
     
-    func getGagesForReach(id: String, gagesInfoCallback: @escaping AWGaugesListCallback) {
-        
+    public func getGagesForReach(id: String, gagesInfoCallback: @escaping AWGaugesListCallback) {
         apollo.fetch(query: GagesForReachQuery(reach_id: id)) { result in
             switch result {
                 case .success(let graphQLResult):
@@ -383,8 +375,5 @@ class AWGQLApiHelper
                     // TODO: call awerror callback
             }
         }
-        
-        
     }
-    
 }
