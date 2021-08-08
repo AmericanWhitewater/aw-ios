@@ -58,7 +58,7 @@ class RunDetailTableViewController: UITableViewController {
         if let selectedRun = selectedRun {
             updateDetailDisplay(selectedRun)
 
-            API.shared.updateReachDetail(reachId: "\(selectedRun.id)") { error in
+            API.shared.updateReachDetail(reachId: selectedRun.id) { error in
                 if let error = error {
                     // Only show an error state if there aren't details stored locally
                     if selectedRun.longDescription == nil || selectedRun.longDescription?.isEmpty == true {

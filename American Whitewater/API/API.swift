@@ -47,8 +47,8 @@ struct API {
         reachHelper.downloadAllReachesInBackground(callback: completion)
     }
     
-    public func updateReachDetail(reachId: String, completion: @escaping (Error?) -> Void) {
-        reachHelper.updateReachDetail(reachId: reachId) {
+    public func updateReachDetail(reachId: Int16, completion: @escaping (Error?) -> Void) {
+        reachHelper.updateReachDetail(reachId: "\(reachId)") {
             completion(nil)
         } callbackError: {
             completion($0)
