@@ -72,7 +72,6 @@
 		63491B11232933370036A906 /* RunDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B10232933370036A906 /* RunDetailTableViewController.swift */; };
 		63491B16232952E30036A906 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B15232952E30036A906 /* FavoritesViewController.swift */; };
 		635141FB2460947A00B4F974 /* AddAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635141FA2460947A00B4F974 /* AddAlertTableViewController.swift */; };
-		635490F2247FED730082270E /* GQLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635490F1247FED720082270E /* GQLError.swift */; };
 		6375A3A12540A79F005925C1 /* GageDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6375A3A02540A79F005925C1 /* GageDetailsTableViewController.swift */; };
 		6376508B2487E15100DD0FCE /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6376508A2487E15100DD0FCE /* ProgressViewController.swift */; };
 		6376508D2487E8AB00DD0FCE /* AWProgressModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6376508C2487E8AB00DD0FCE /* AWProgressModal.swift */; };
@@ -222,7 +221,6 @@
 		63491B10232933370036A906 /* RunDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDetailTableViewController.swift; sourceTree = "<group>"; };
 		63491B15232952E30036A906 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		635141FA2460947A00B4F974 /* AddAlertTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlertTableViewController.swift; sourceTree = "<group>"; };
-		635490F1247FED720082270E /* GQLError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GQLError.swift; sourceTree = "<group>"; };
 		6375A3A02540A79F005925C1 /* GageDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GageDetailsTableViewController.swift; sourceTree = "<group>"; };
 		6376508A2487E15100DD0FCE /* ProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		6376508C2487E8AB00DD0FCE /* AWProgressModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWProgressModal.swift; sourceTree = "<group>"; };
@@ -430,7 +428,6 @@
 			children = (
 				63B5B49F2457B2750062F54B /* AWGQLApiHelper.swift */,
 				634154C4252BDE1A009DD31D /* AWGQLArticleApiHelper.swift */,
-				635490F1247FED720082270E /* GQLError.swift */,
 				63B5B4A1245872550062F54B /* reach-accidents.graphql */,
 				63B5B4AA245939650062F54B /* alerts.graphql */,
 				63164499246C29A600807E19 /* photos.graphql */,
@@ -924,7 +921,6 @@
 				630F3D222465F4160077130D /* NanoID.swift in Sources */,
 				63D7BD172319980600935693 /* OnboardLocationViewController.swift in Sources */,
 				63B5B48F245756D40062F54B /* AlertTableViewCell.swift in Sources */,
-				635490F2247FED730082270E /* GQLError.swift in Sources */,
 				63E90EBC22EAAF2700C8DAA3 /* Fonts.swift in Sources */,
 				63491B05232897BE0036A906 /* SingleArticleViewController.swift in Sources */,
 				4A26322426C5DC5E001B026B /* CLLocationManager+convenience.swift in Sources */,
