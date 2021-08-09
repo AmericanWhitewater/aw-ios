@@ -94,10 +94,20 @@ struct API {
         reachId: Int,
         first: Int,
         page: Int,
-        callback: @escaping AWGQLApiHelper.AccidentCallback,
-        errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
+        completion: @escaping ([Accident]?, Error?) -> Void
     ) {
-        graphQLHelper.getAccidentsForReach(reach_id: reachId, first: first, page: page, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.getAccidentsForReach(
+            reach_id: reachId,
+            first: first,
+            page: page,
+            callback: {
+                let accidents = ($0 ?? []).map { Accident(datum: $0) }
+                completion(accidents, nil)
+            },
+            
+            // TEMP: fix error callbacks, but for now:
+            errorCallback: { completion(nil, $0 ?? NSError(domain: $1 ?? "Unknown error", code: 0, userInfo: nil)) }
+        )
     }
 
     public func getAlerts(

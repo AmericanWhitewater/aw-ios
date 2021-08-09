@@ -16,6 +16,8 @@
 		4AA3FEFB26B2725100AC4303 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA3FEFA26B2725100AC4303 /* Filters.swift */; };
 		4ABE3B7D26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */; };
 		4AC4685D26C02A840032D68F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4685C26C02A840032D68F /* API.swift */; };
+		4AC4685F26C097060032D68F /* Accident.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4685E26C097060032D68F /* Accident.swift */; };
+		4AC4686126C09FBE0032D68F /* DateFormatter+convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4686026C09FBE0032D68F /* DateFormatter+convenience.swift */; };
 		4AC4BB5A26A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */; };
 		4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */; };
 		4ADE944D26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */; };
@@ -159,6 +161,8 @@
 		4AA3FEFA26B2725100AC4303 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterceptorProvider.swift; sourceTree = "<group>"; };
 		4AC4685C26C02A840032D68F /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		4AC4685E26C097060032D68F /* Accident.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accident.swift; sourceTree = "<group>"; };
+		4AC4686026C09FBE0032D68F /* DateFormatter+convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+convenience.swift"; sourceTree = "<group>"; };
 		4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+difference.swift"; sourceTree = "<group>"; };
@@ -516,6 +520,7 @@
 				4A7F52FF26BA192000DFBDFF /* UIStoryboard+convenience.swift */,
 				4AFEA9C926C4E85400738A62 /* MKMapView+hasLocation.swift */,
 				4A26322326C5DC5E001B026B /* CLLocationManager+convenience.swift */,
+				4AC4686026C09FBE0032D68F /* DateFormatter+convenience.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -537,6 +542,7 @@
 				631EFFAA23688A3600BA17F7 /* Reach+CoreDataProperties.swift */,
 				631EFF9F23677CB600BA17F7 /* Rapid+CoreDataClass.swift */,
 				631EFFA023677CB600BA17F7 /* Rapid+CoreDataProperties.swift */,
+				4AC4685E26C097060032D68F /* Accident.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -932,6 +938,8 @@
 				639350C22475929900577027 /* AddRiverFlowTableViewController.swift in Sources */,
 				4ABE3B7D26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift in Sources */,
 				2FE342D026A2846100352D1E /* LocationHelper.swift in Sources */,
+				2FE342D026A2846100352D1E /* Location.swift in Sources */,
+				4AC4686126C09FBE0032D68F /* DateFormatter+convenience.swift in Sources */,
 				63949955246F0DD40061552C /* AwImageCell.swift in Sources */,
 				4A7F530026BA192000DFBDFF /* UIStoryboard+convenience.swift in Sources */,
 				63FF68C525ACF2A900AF0F37 /* GageGraphCell.swift in Sources */,
@@ -979,6 +987,7 @@
 				63309E43234166BB00E6DBC4 /* FilterViewController.swift in Sources */,
 				63E32B1F2357F3350057DE34 /* FilterDistanceCollectionViewCell.swift in Sources */,
 				63309E32233D965500E6DBC4 /* AboutAWViewController.swift in Sources */,
+				4AC4685F26C097060032D68F /* Accident.swift in Sources */,
 				63491B0B2328A2250036A906 /* RunsListViewController.swift in Sources */,
 				63FF68BF25ACF29700AF0F37 /* GageDetailsCell.swift in Sources */,
 				631644A0246ED6B100807E19 /* UIImage+AsyncURLLoad.swift in Sources */,
