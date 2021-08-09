@@ -112,10 +112,18 @@ struct API {
         reachId: Int,
         page: Int,
         pageSize: Int,
-        callback: @escaping AWGQLApiHelper.AlertsCallback,
-        errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
+        completion: @escaping ([Alert]?, Error?) -> Void
     ) {
-        graphQLHelper.getAlertsForReach(reach_id: reachId, page: page, page_size: pageSize, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.getAlertsForReach(
+            reach_id: reachId,
+            page: page,
+            page_size: pageSize,
+            callback: {
+                let alerts = ($0 ?? []).map { Alert(datum: $0) }
+                completion(alerts, nil)
+            },
+            errorCallback: { completion(nil, $0) }
+        )
     }
     
     public func postAlert(
