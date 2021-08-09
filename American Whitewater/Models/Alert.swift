@@ -13,16 +13,14 @@ struct Alert: Hashable, Equatable {
     var title: String?
     var date: Date?
     var reachId: String?
-    var revision: Int?
     var message: String?
     var poster: String?
     
-    init(id: String?, title: String?, date: Date?, reachId: String?, revision: Int?, detail: String?, userName: String?) {
+    init(id: String?, title: String?, date: Date?, reachId: String?, detail: String?, userName: String?) {
         self.id = id
         self.title = title
         self.date = date
         self.reachId = reachId
-        self.revision = revision
         self.message = detail
         self.poster = userName
     }
@@ -38,9 +36,21 @@ struct Alert: Hashable, Equatable {
             self.date = nil
         }
         self.reachId = datum.reachId
-        self.revision = datum.revision
         self.message = datum.detail
         self.poster = datum.user?.uname
+    }
+    
+    init(postUpdate: PostAlertMutation.Data.PostUpdate) {
+        self.id = postUpdate.id
+        self.title = postUpdate.title
+        if let date = postUpdate.postDate {
+            self.date = Self.dateFormatter.date(from: date)
+        } else {
+            self.date = nil
+        }
+        self.reachId = postUpdate.reachId
+        self.message = postUpdate.detail
+        self.poster = postUpdate.user?.uname
     }
 }
 
@@ -67,7 +77,6 @@ extension Alert {
         self.title = nil
         self.date = Self.dateFormatter.date(from: dict["postDate"] ?? "") ?? nil
         self.reachId = nil
-        self.revision = nil
         self.message = dict["message"]
         self.poster = dict["poster"]
     }

@@ -7,7 +7,7 @@ class AWGQLApiHelper
 {
     typealias AccidentCallback = ([ReachAccidentsQuery.Data.Reach.Accident.Datum]?) -> Void
     typealias AlertsCallback = ([AlertsQuery.Data.Post.Datum]?) -> Void
-    typealias AlertPostCallback = (PostAlertMutation.Data.PostUpdate?) -> Void
+    typealias AlertPostCallback = (PostAlertMutation.Data.PostUpdate) -> Void
     typealias PhotosCallback = ([PhotosQuery.Data.Post.Datum]?) -> Void
     //typealias PhotoUploadCallback = (UploadPhotoFileMutation.Data.PhotoFileCreate) -> Void
     typealias PhotoFileUploadCallback = ()->Void // (PostPhotoWithFileMutation.Data.PhotoFileUpdate, PostPhotoMutation.Data) -> Void

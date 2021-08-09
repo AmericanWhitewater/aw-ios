@@ -129,10 +129,14 @@ struct API {
     public func postAlert(
         reachId: Int,
         message: String,
-        callback: @escaping AWGQLApiHelper.AlertPostCallback,
-        errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
+        completion: @escaping (Alert?, Error?) -> Void
     ) {
-        graphQLHelper.postAlertFor(reach_id: reachId, message: message, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.postAlertFor(
+            reach_id: reachId,
+            message: message,
+            callback: { completion(Alert(postUpdate: $0), nil) },
+            errorCallback: { completion(nil, $0) }
+        )
     }
     
     public func getGaugeObservations(
