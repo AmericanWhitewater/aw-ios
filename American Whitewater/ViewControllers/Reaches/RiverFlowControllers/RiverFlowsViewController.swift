@@ -112,8 +112,8 @@ class RiverFlowsViewController: UIViewController {
                 self.tableView.reloadData()
             }
 
-        }) { (error, message) in
-            print("Error with observations list gql:", error ?? "n/a", message ?? "n/a")
+        }) { (error) in
+            print("Error with observations list gql:", error)
         }
         
     }

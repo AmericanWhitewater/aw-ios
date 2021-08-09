@@ -76,9 +76,12 @@ class ReviewPhotoTableViewController: UITableViewController {
             
             AWProgressModal.shared.show(fromViewController: self, message: "Saving...")
             
-            API.shared.postPhoto(image: image, reachId: Int(selectedRun.id), caption: capText,
-                                                           description: description, photoDate: serverDateString,
-                                                           callback: { (photoFileUpdate, photoPostUpdate) in
+            API.shared.postPhoto(image: image,
+                                 reachId: selectedRun.id,
+                                 caption: capText,
+                                 description: description,
+                                 photoDate: serverDateString,
+                                 callback: { (photoFileUpdate, photoPostUpdate) in
                 AWProgressModal.shared.hide()
                 print("Photo uploaded - callback returned")
                 
@@ -103,16 +106,16 @@ class ReviewPhotoTableViewController: UITableViewController {
                         
                         self.senderVC?.imageLinks.insert(newUri, at: 0)
                     }
-
+                    
                     self.navigationController?.popViewController(animated: true)
                 } else {
                     self.showToast(message: "We were unable to save your photo to the server. Please try again or try another photo.")
-                }                
+                }
                 
-            }) { (error, message) in
+            }) { (error) in
                 AWProgressModal.shared.hide()
-                print("Error: \(error?.localizedDescription ?? "no error object") -- \(message ?? "no message")")
-                self.showToast(message: "An Error Occured: \(error?.localizedDescription ?? "")\n\(message ?? "")")
+                print("Error: \(error.localizedDescription)")
+                self.showToast(message: "An Error Occured: \(error.localizedDescription)")
             }
         }
     }

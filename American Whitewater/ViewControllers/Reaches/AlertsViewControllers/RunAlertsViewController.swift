@@ -85,8 +85,8 @@ class RunAlertsViewController: UIViewController {
             }
 
             self.tableView.reloadData()
-        }) { (error, message) in
-            print("Alert GraphQL Error: \(GQLError.handleGQLError(error: error, altMessage: message))")
+        }) { (error) in
+            print("Alert GraphQL Error: \(error)")
             self.refreshControl.endRefreshing()
             self.tableView.reloadData()
         }

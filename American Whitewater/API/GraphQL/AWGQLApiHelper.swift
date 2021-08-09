@@ -17,12 +17,24 @@ class AWGQLApiHelper
     typealias PostPhotoObservationCallback = (PostObservationPhotoMutation.Data.PhotoFileUpdate, PostObservationMutation.Data) -> Void
     typealias AWMetricsCallback = ([String:String]) -> Void
     typealias AWGaugesListCallback = ([ [String : String] ]) -> Void
-    typealias AWGraphQLError = (Error?, String?) -> Void
+    typealias AWGraphQLError = (Error) -> Void
     
-    enum Errors: Error {
+    enum Errors: Error, LocalizedError {
         case notSignedIn
+        case graphQLError(message: String)
+        
+        // localizedDescription is called on these errors all over the place.
+        // This makes it return the message:
+        var errorDescription: String? {
+            switch self {
+            case .notSignedIn:
+                return "Not signed in."
+            case .graphQLError(let message):
+                return message
+            }
+        }
     }
-    
+
     private let apollo: ApolloClient
     private let keychain: KeychainSwift
     
@@ -64,7 +76,7 @@ class AWGQLApiHelper
                 case.failure(let error):
                     
                     print("GraphQL Error: \(error)")
-                    errorCallback(error, nil)
+                    errorCallback(error)
             }
                 
         }
@@ -87,7 +99,7 @@ class AWGQLApiHelper
                 
                 case .failure(let error):
                     print("GraphQL Error: \(error)")
-                    errorCallback(error, nil)
+                    errorCallback(error)
             }
         }
     }
@@ -129,15 +141,16 @@ class AWGQLApiHelper
                             
                             print("Errors Returned: \(errorMessages)")
                             
-                            errorCallback(nil, errorMessages.count > 0 ? errorMessages : "Unknown Error")
+                            let error = Errors.graphQLError(message: errorMessages.count > 0 ? errorMessages : "Unknown Error")
+                            errorCallback(error)
                         }
                     case .failure(let error):
                         print("GraphQL Error: \(error)")
-                        errorCallback(error, nil)
+                        errorCallback(error)
                 }
             }
         } else {
-            errorCallback(Errors.notSignedIn, nil)
+            errorCallback(Errors.notSignedIn)
         }
     }
     
@@ -159,7 +172,7 @@ class AWGQLApiHelper
 
                 case .failure(let error):
                     print("GraphQL Error: \(error)")
-                    errorCallback(error, nil)
+                    errorCallback(error)
             }
         }
     }
@@ -190,11 +203,11 @@ class AWGQLApiHelper
                         }
                     case .failure(let error):
                         print("GraphQL Error: \(error)")
-                        errorCallback(error, nil)
+                        errorCallback(error)
                 }
             }
         } else {
-            errorCallback(Errors.notSignedIn, nil)
+            errorCallback(Errors.notSignedIn)
         }
     }
     
@@ -208,7 +221,7 @@ class AWGQLApiHelper
                 
                 case .failure(let error):
                     print("GraphQL Error: \(error)")
-                    errorCallback(error, nil)
+                    errorCallback(error)
             }
         }
     }
@@ -260,11 +273,11 @@ class AWGQLApiHelper
                         //callback(photoFileUpdate)
                         self.updatePhotoPost(postId: newID, postInput: postInput, photoResult: photoFileUpdate, callback: callback, errorCallback: errorCallback);
                     } else {
-                        errorCallback(nil, graphQLResult.errors?.debugDescription ?? "n/a")
+                        errorCallback(Errors.graphQLError(message: graphQLResult.errors?.debugDescription ?? "n/a"))
                     }
                 case .failure(let error):
                     print("Error uploading:", error)
-                    errorCallback(error, nil)
+                    errorCallback(error)
             }
             
         }
@@ -280,10 +293,11 @@ class AWGQLApiHelper
                     if let postUpdate = graphQLResult.data?.postUpdate {
                         callback(photoResult, postUpdate)
                     } else {
-                        errorCallback(nil, "Unable to update post after photo upload")
+                        errorCallback(Errors.graphQLError(message: "Unable to update post after photo upload"))
                     }
                 case .failure(let error):
                     print("Error:", error)
+                    errorCallback(error)
             }
         }
     }
@@ -317,7 +331,9 @@ class AWGQLApiHelper
                 
                 case .failure(let error):
                     print("GraphQL Error: \(error)")
-                    //errorCallback(error, nil)
+                
+                // FIXME: shouldn't this API call handle errors?
+//                    errorCallback(error, nil)
             }
         }
     }

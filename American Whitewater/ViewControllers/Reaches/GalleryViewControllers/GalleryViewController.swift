@@ -158,8 +158,8 @@ class GalleryViewController: UIViewController {
                     self.galleryCollectionView.reloadData()
                 }
             }
-        }) { (error, message) in
-            print("Photos GraphQL Error: \(GQLError.handleGQLError(error: error, altMessage: message))")
+        }) { (error) in
+            print("Photos GraphQL Error: \(error)")
             self.refreshControl.endRefreshing()
         }
     }

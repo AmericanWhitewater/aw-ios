@@ -161,17 +161,16 @@ class AddRiverFlowTableViewController: UITableViewController {
             self.showToast(message: "Your flow observation has been reported and saved.")
             self.navigationController?.popViewController(animated: true)
             
-        }) { (error, errorMessage) in
+        }) { (error) in
             AWProgressModal.shared.hide()
-            if let error = error, case AWGQLApiHelper.Errors.notSignedIn = error {
+            
+            if case AWGQLApiHelper.Errors.notSignedIn = error {
                 self.showToast(message: "You must sign in before adding a flow.")
                 self.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
             } else {
-                // AWTODO: handle other errors
-                print("Error posting observation: ", error?.localizedDescription ?? "", errorMessage ?? "")
+                print("Error posting observation: ", error.localizedDescription)
             }
         }
-
     }
     
     func postFlowWithPhoto(_ image: UIImage, reachId: Int, gageId: Int?, metricId: Int, title: String, dateString: String, reading: Double) {
@@ -216,10 +215,10 @@ class AddRiverFlowTableViewController: UITableViewController {
                     self.showToast(message: "We were unable to save your flow report to the server. Please check your connection and try again.")
                 }
             }
-        ) { (error, message) in
+        ) { (error) in
             AWProgressModal.shared.hide()
-            print("Error: \(error?.localizedDescription ?? "no error object") -- \(message ?? "no message")")
-            self.showToast(message: "An Error Occured: \(error?.localizedDescription ?? "")\n\(message ?? "")")
+            print("Error: \(error.localizedDescription)")
+            self.showToast(message: "An Error Occured: \(error.localizedDescription)")
         }
     }
     

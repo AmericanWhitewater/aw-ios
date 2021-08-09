@@ -104,9 +104,7 @@ struct API {
                 let accidents = ($0 ?? []).map { Accident(datum: $0) }
                 completion(accidents, nil)
             },
-            
-            // TEMP: fix error callbacks, but for now:
-            errorCallback: { completion(nil, $0 ?? NSError(domain: $1 ?? "Unknown error", code: 0, userInfo: nil)) }
+            errorCallback: { completion(nil, $0) }
         )
     }
 

@@ -86,19 +86,16 @@ class AddAlertTableViewController: UITableViewController {
             }
             
             self.successAndDismissView()
-            
-        }) { (error, message) in
-            if
-                let error = error,
-                case AWGQLApiHelper.Errors.notSignedIn = error
-            {
+
+        }) { (error) in
+            switch error {
+            case AWGQLApiHelper.Errors.notSignedIn:
                 self.showToast(message: "You must sign in to submit an alert.")
                 self.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
-            } else {
+            default:
                 AWProgressModal.shared.hideWith {
-                    let errorMessage = GQLError.handleGQLError(error: error, altMessage: message)
-                    print("Error:", errorMessage)
-                    self.showToast(message: "Connection error: \(errorMessage)")
+                    print("Error:", error.localizedDescription)
+                    self.showToast(message: "Connection error: \(error.localizedDescription)")
                 }
             }
         }

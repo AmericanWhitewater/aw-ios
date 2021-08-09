@@ -147,8 +147,8 @@ class RunDetailTableViewController: UITableViewController {
             }
 
             //self.tableView.reloadData()
-        }) { (error, message) in
-            print("Photos Error: ", GQLError.handleGQLError(error: error, altMessage: message))
+        }) { (error) in
+            print("Photos Error: ", error.localizedDescription)
         }
     }
     
