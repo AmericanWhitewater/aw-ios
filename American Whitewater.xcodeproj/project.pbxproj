@@ -19,6 +19,7 @@
 		4AC4685F26C097060032D68F /* Accident.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4685E26C097060032D68F /* Accident.swift */; };
 		4AC4686126C09FBE0032D68F /* DateFormatter+convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4686026C09FBE0032D68F /* DateFormatter+convenience.swift */; };
 		4AC4686326C0B15A0032D68F /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4686226C0B15A0032D68F /* Alert.swift */; };
+		4AC4686526C104D70032D68F /* GaugeObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4686426C104D70032D68F /* GaugeObservation.swift */; };
 		4AC4BB5A26A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */; };
 		4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */; };
 		4ADE944D26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */; };
@@ -164,6 +165,7 @@
 		4AC4685E26C097060032D68F /* Accident.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accident.swift; sourceTree = "<group>"; };
 		4AC4686026C09FBE0032D68F /* DateFormatter+convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+convenience.swift"; sourceTree = "<group>"; };
 		4AC4686226C0B15A0032D68F /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		4AC4686426C104D70032D68F /* GaugeObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeObservation.swift; sourceTree = "<group>"; };
 		4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+difference.swift"; sourceTree = "<group>"; };
@@ -543,6 +545,7 @@
 				631EFFA023677CB600BA17F7 /* Rapid+CoreDataProperties.swift */,
 				4AC4685E26C097060032D68F /* Accident.swift */,
 				4AC4686226C0B15A0032D68F /* Alert.swift */,
+				4AC4686426C104D70032D68F /* GaugeObservation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -952,6 +955,7 @@
 				6342A3EB2385AD3500B54365 /* MKMapView+FitAnnotations.swift in Sources */,
 				63DEE01F24ABB3EC00638E84 /* RiverFlowCell.swift in Sources */,
 				63D7BD1923199D1900935693 /* DuffekDialog.swift in Sources */,
+				4AC4686526C104D70032D68F /* GaugeObservation.swift in Sources */,
 				6376508D2487E8AB00DD0FCE /* AWProgressModal.swift in Sources */,
 				4AC4685D26C02A840032D68F /* API.swift in Sources */,
 				63309E452343D9B500E6DBC4 /* NoRiversTableViewCell.swift in Sources */,

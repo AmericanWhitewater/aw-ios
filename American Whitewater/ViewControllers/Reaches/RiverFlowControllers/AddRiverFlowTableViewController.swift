@@ -105,7 +105,6 @@ class AddRiverFlowTableViewController: UITableViewController {
     }
 
     @IBAction func changeUnitsButtonPressed(_ sender: Any) {
-        
         let alert = UIAlertController(title: "Select Units", message: "", preferredStyle: .actionSheet)
         for item in unitOptions {
             let action = UIAlertAction(title: item, style: .default) { (alertAction) in
@@ -121,7 +120,6 @@ class AddRiverFlowTableViewController: UITableViewController {
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
-        
     }
     
     @IBAction func submitFlowButtonPressed(_ sender: Any) {
@@ -192,23 +190,25 @@ class AddRiverFlowTableViewController: UITableViewController {
                 
                 if let imageResult = photoFileUpdate.image, let uri = imageResult.uri {
                     self.showToast(message: "Your flow observation has been reported and saved.")
-                    if let _ = self.senderVC {
-                        var newFlow = [String:String?]()
-                        newFlow["thumb"] = uri.thumb
-                        newFlow["med"] = uri.medium
-                        newFlow["big"] = uri.big
-                        
-                        newFlow["id"] = "\(photoPostUpdate.id ?? photoFileUpdate.id)"
-                        newFlow["title"] = photoFileUpdate.caption ?? photoPostUpdate.title ?? ""
-                        newFlow["description"] = photoFileUpdate.description ?? photoPostUpdate.detail ?? ""
-                        newFlow["reading"] = "\(photoPostUpdate.reading != nil ? "\(photoPostUpdate.reading!)" : "n/a")"
-                        newFlow["author"] = photoFileUpdate.author ?? photoPostUpdate.user?.uname ?? "You"
-                        newFlow["postDate"] = photoFileUpdate.photoDate ?? photoPostUpdate.postDate ?? ""
-                        newFlow["metric"] = photoPostUpdate.metric?.unit ?? ""
-                        // TODO: newFlow["observed"] = ????
-                        
-                        self.senderVC?.riverFlows.insert(newFlow, at: 0)
-                    }
+                    
+                // FIXME: add this back with updated API response
+//                    if let _ = self.senderVC {
+//                        var newFlow = [String:String?]()
+//                        newFlow["thumb"] = uri.thumb
+//                        newFlow["med"] = uri.medium
+//                        newFlow["big"] = uri.big
+//
+//                        newFlow["id"] = "\(photoPostUpdate.id ?? photoFileUpdate.id)"
+//                        newFlow["title"] = photoFileUpdate.caption ?? photoPostUpdate.title ?? ""
+//                        newFlow["description"] = photoFileUpdate.description ?? photoPostUpdate.detail ?? ""
+//                        newFlow["reading"] = "\(photoPostUpdate.reading != nil ? "\(photoPostUpdate.reading!)" : "n/a")"
+//                        newFlow["author"] = photoFileUpdate.author ?? photoPostUpdate.user?.uname ?? "You"
+//                        newFlow["postDate"] = photoFileUpdate.photoDate ?? photoPostUpdate.postDate ?? ""
+//                        newFlow["metric"] = photoPostUpdate.metric?.unit ?? ""
+//                        // TODO: newFlow["observed"] = ????
+//
+//                        self.senderVC?.riverFlows.insert(newFlow, at: 0)
+//                    }
                     
                     self.navigationController?.popViewController(animated: true)
                 } else {

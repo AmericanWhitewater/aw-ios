@@ -143,10 +143,18 @@ struct API {
         reachId: Int,
         page: Int,
         pageSize: Int,
-        callback: @escaping AWGQLApiHelper.ObservationsCallback,
-        errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
+        completion: @escaping ([GaugeObservation]?, Error?) -> Void
     ) {
-        graphQLHelper.getGaugeObservationsForReach(reach_id: reachId, page: page, page_size: pageSize, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.getGaugeObservationsForReach(
+            reach_id: reachId,
+            page: page,
+            page_size: pageSize,
+            callback: { obs in
+                let flows = (obs ?? []).map { GaugeObservation(datum: $0) }
+                completion(flows, nil)
+            },
+            errorCallback: { completion(nil, $0) }
+        )
     }
     
     // FIXME: this doesn't take a gaugeId. Shouldn't it need one to post a gauge observation?!
