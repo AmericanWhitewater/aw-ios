@@ -32,13 +32,11 @@ struct Filters: Equatable {
         classFilter: [1,2,3,4,5],
         runnableFilter: false
     )
-}
-
-//
-// MARK: - Predicates
-//
-
-extension Filters {
+    
+    //
+    // MARK: - Predicates
+    //
+    
     private var runnablePredicate: NSPredicate? {
         guard runnableFilter else {
             return nil
@@ -55,7 +53,7 @@ extension Filters {
         let classPredicates = classFilter.map {
             NSPredicate(format: "difficulty\($0) == TRUE")
         }
-
+        
         return NSCompoundPredicate(orPredicateWithSubpredicates: classPredicates)
     }
     
@@ -76,7 +74,7 @@ extension Filters {
         
         return NSPredicate(format: "state IN[cd] %@", states)
     }
-
+    
     private var distancePredicate: NSPredicate? {
         guard
             showDistanceFilter,
@@ -104,13 +102,11 @@ extension Filters {
         
         return NSCompoundPredicate(andPredicateWithSubpredicates: subPredicates)
     }
-}
-
-//
-// MARK: - Sort descriptors
-//
     
-extension Filters {
+    //
+    // MARK: - Sort descriptors
+    //
+    
     public static let sortByDistanceAndName = [
         NSSortDescriptor(key: "distance", ascending: true),
         NSSortDescriptor(key: "name", ascending: true)
