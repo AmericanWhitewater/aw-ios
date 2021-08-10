@@ -1,11 +1,3 @@
-//
-//  Filters.swift
-//  Filters
-//
-//  Created by Phillip Kast on 7/28/21.
-//  Copyright © 2021 American Whitewater. All rights reserved.
-//
-
 import Foundation
 
 struct Filters: Equatable {
