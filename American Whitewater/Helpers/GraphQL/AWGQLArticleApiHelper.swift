@@ -1,5 +1,4 @@
 import Foundation
-import KeychainSwift
 import Alamofire
 import Apollo
 import CoreData
@@ -13,15 +12,11 @@ class AWGQLArticleApiHelper
     
     static let shared = AWGQLArticleApiHelper()
     
-    private(set) lazy var apollo: ApolloClient = {
-        let httpNetworkTransport = HTTPNetworkTransport(url: URL(string: "\(AWGC.AW_BASE_URL)/graphql")!)
-        print("Using URL:", "\(AWGC.AW_BASE_URL)/graphql")
-        httpNetworkTransport.delegate = self
-        return ApolloClient(networkTransport: httpNetworkTransport)
-    }()
-    
-    private let keychain = KeychainSwift()
-    
+    // Use the same client as the main AWGLApiHelper
+    // This previously created a new client (with copy pasted base URL setting and auth handling)
+    // NB: sharing will mean a shared cache for the requests here and in the main helper, see AWGQLApiHelper.shared.apollo
+    private(set) lazy var apollo: ApolloClient = AWGQLApiHelper.shared.apollo
+        
     private func fetchArticles(callback: @escaping NewsArticlesCallback, errorCallback: @escaping AWGraphQLError) {
         apollo.fetch(query: NewsQuery(page_size: 20, page: 0)) { result in
             switch result {
@@ -74,7 +69,6 @@ class AWGQLArticleApiHelper
             // process articles
             let context = self.getContext()
             let dispatchGroup = DispatchGroup()
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
             dispatchGroup.enter()
             
             context.perform {
@@ -105,7 +99,6 @@ class AWGQLArticleApiHelper
                 dispatchGroup.leave()
             }
             
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             DefaultsManager.shared.articlesLastUpdated = Date()
             
             callback()
@@ -113,18 +106,6 @@ class AWGQLArticleApiHelper
         } errorCallback: { (error, errorMessage) in
             print("Error with fetching news articles: \(error?.localizedDescription ?? errorMessage ?? "No error message available")")
             errorCallback(error) // AWTODO is this correct?
-        }
-    }
-}
-
-extension AWGQLArticleApiHelper: HTTPNetworkTransportPreflightDelegate {
-    func networkTransport(_ networkTransport: HTTPNetworkTransport, shouldSend request: URLRequest) -> Bool {
-        return true
-    }
-    
-    func networkTransport(_ networkTransport: HTTPNetworkTransport, willSend request: inout URLRequest) {
-        if let token = keychain.get(AWGC.AuthKeychainToken) {
-            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
     }
 }

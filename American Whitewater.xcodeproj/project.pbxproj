@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,7 @@
 		4760DD5C0E5548BBA92D25AF /* Pods_American_Whitewater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A750E2F24748D3B54A1DEB84 /* Pods_American_Whitewater.framework */; };
 		4A36D1E726A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */; };
 		4AA3FEFB26B2725100AC4303 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA3FEFA26B2725100AC4303 /* Filters.swift */; };
+		4ABE3B7D26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */; };
 		4AC4BB5A26A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */; };
 		4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */; };
 		4ADE944D26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */; };
@@ -53,7 +54,6 @@
 		634154B925242191009DD31D /* AccountInfo.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 634154B825242191009DD31D /* AccountInfo.graphql */; };
 		634154C1252BDD2E009DD31D /* News.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 634154C0252BDD2E009DD31D /* News.graphql */; };
 		634154C5252BDE1A009DD31D /* AWGQLArticleApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634154C4252BDE1A009DD31D /* AWGQLArticleApiHelper.swift */; };
-		6342A3E92385A3A400B54365 /* UISearchBar+UITextFieldColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6342A3E82385A3A400B54365 /* UISearchBar+UITextFieldColor.swift */; };
 		6342A3EB2385AD3500B54365 /* MKMapView+FitAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6342A3EA2385AD3500B54365 /* MKMapView+FitAnnotations.swift */; };
 		63432D462540DA340037AA37 /* UISegmentedControl+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63432D452540DA340037AA37 /* UISegmentedControl+Colors.swift */; };
 		63491B03232882170036A906 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63491B02232882170036A906 /* NewsTableViewCell.swift */; };
@@ -89,8 +89,6 @@
 		63A6FD6B2367748F00148231 /* AWApiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6FD6A2367748F00148231 /* AWApiLinks.swift */; };
 		63A8B17D23281A8A00FD2E00 /* AWArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8B17C23281A8A00FD2E00 /* AWArticle.swift */; };
 		63B5B48F245756D40062F54B /* AlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B48E245756D40062F54B /* AlertTableViewCell.swift */; };
-		63B5B492245770270062F54B /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 63B5B491245770270062F54B /* Apollo */; };
-		63B5B494245770270062F54B /* ApolloWebSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 63B5B493245770270062F54B /* ApolloWebSocket */; };
 		63B5B49E2457B2270062F54B /* AwGraphQLAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B49D2457B2270062F54B /* AwGraphQLAPI.swift */; };
 		63B5B4A02457B2750062F54B /* AWGQLApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B49F2457B2750062F54B /* AWGQLApiHelper.swift */; };
 		63B5B4A324589EAB0062F54B /* RunAccidentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B4A224589EAB0062F54B /* RunAccidentsViewController.swift */; };
@@ -117,9 +115,7 @@
 		63E90EC022EAB5CC00C8DAA3 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63E90EBE22EAB5CC00C8DAA3 /* OpenSans-Regular.ttf */; };
 		63E90EC122EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63E90EBF22EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf */; };
 		63EDA74F24B3F5AF0020382A /* GaugeMetrics.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 63EDA74E24B3F5AF0020382A /* GaugeMetrics.graphql */; };
-		63EDA75124B4DAF10020382A /* reaches.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 63EDA75024B4DAF10020382A /* reaches.graphql */; };
 		63F712E2238869A50047C8F0 /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F712E1238869A50047C8F0 /* UIImage+Color.swift */; };
-		63F712E4238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */; };
 		63F87AD5236A923D0005AA0B /* AWReachDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F87AD4236A923D0005AA0B /* AWReachDetail.swift */; };
 		63FF68B925ACEE0700AF0F37 /* GageForRunCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF68B825ACEE0700AF0F37 /* GageForRunCell.swift */; };
 		63FF68BF25ACF29700AF0F37 /* GageDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF68BE25ACF29700AF0F37 /* GageDetailsCell.swift */; };
@@ -157,6 +153,7 @@
 		2FE342CF26A2846100352D1E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+FullResolutionEditedImage.swift"; sourceTree = "<group>"; };
 		4AA3FEFA26B2725100AC4303 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
+		4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterceptorProvider.swift; sourceTree = "<group>"; };
 		4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+difference.swift"; sourceTree = "<group>"; };
@@ -203,7 +200,6 @@
 		634154B825242191009DD31D /* AccountInfo.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = AccountInfo.graphql; sourceTree = "<group>"; };
 		634154C0252BDD2E009DD31D /* News.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = News.graphql; sourceTree = "<group>"; };
 		634154C4252BDE1A009DD31D /* AWGQLArticleApiHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWGQLArticleApiHelper.swift; sourceTree = "<group>"; };
-		6342A3E82385A3A400B54365 /* UISearchBar+UITextFieldColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+UITextFieldColor.swift"; sourceTree = "<group>"; };
 		6342A3EA2385AD3500B54365 /* MKMapView+FitAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+FitAnnotations.swift"; sourceTree = "<group>"; };
 		63432D452540DA340037AA37 /* UISegmentedControl+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Colors.swift"; sourceTree = "<group>"; };
 		63491B02232882170036A906 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
@@ -270,9 +266,7 @@
 		63E90EBE22EAB5CC00C8DAA3 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		63E90EBF22EAB5CC00C8DAA3 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		63EDA74E24B3F5AF0020382A /* GaugeMetrics.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GaugeMetrics.graphql; sourceTree = "<group>"; };
-		63EDA75024B4DAF10020382A /* reaches.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = reaches.graphql; sourceTree = "<group>"; };
 		63F712E1238869A50047C8F0 /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
-		63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentControl+PreiOS13.swift"; sourceTree = "<group>"; };
 		63F87AD4236A923D0005AA0B /* AWReachDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWReachDetail.swift; sourceTree = "<group>"; };
 		63FF68B825ACEE0700AF0F37 /* GageForRunCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GageForRunCell.swift; sourceTree = "<group>"; };
 		63FF68BE25ACF29700AF0F37 /* GageDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GageDetailsCell.swift; sourceTree = "<group>"; };
@@ -292,10 +286,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				63309E38233DA2AC00E6DBC4 /* StoreKit.framework in Frameworks */,
-				63B5B492245770270062F54B /* Apollo in Frameworks */,
 				63491B0723289A440036A906 /* WebKit.framework in Frameworks */,
 				63309E3F233E73AA00E6DBC4 /* MapKit.framework in Frameworks */,
-				63B5B494245770270062F54B /* ApolloWebSocket in Frameworks */,
 				63309E3A233DACAD00E6DBC4 /* MessageUI.framework in Frameworks */,
 				4760DD5C0E5548BBA92D25AF /* Pods_American_Whitewater.framework in Frameworks */,
 			);
@@ -424,13 +416,13 @@
 				63B5B4AA245939650062F54B /* alerts.graphql */,
 				63164499246C29A600807E19 /* photos.graphql */,
 				6316449A246C422100807E19 /* createPhotos.graphql */,
-				63EDA75024B4DAF10020382A /* reaches.graphql */,
 				63DEE02224AE7FB700638E84 /* Observations.graphql */,
 				63EDA74E24B3F5AF0020382A /* GaugeMetrics.graphql */,
 				6392147725A634350042E97E /* GageInfoForReach.graphql */,
 				634154B825242191009DD31D /* AccountInfo.graphql */,
 				634154C0252BDD2E009DD31D /* News.graphql */,
 				63B5B49D2457B2270062F54B /* AwGraphQLAPI.swift */,
+				4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -495,12 +487,10 @@
 				63203C0D23694BFF006A4148 /* Reach.swift */,
 				63491B0E2328D72D0036A906 /* UIColor+Hex.swift */,
 				637D0736236B541000BE90D0 /* UISearchBar+BGColor.swift */,
-				6342A3E82385A3A400B54365 /* UISearchBar+UITextFieldColor.swift */,
 				6342A3EA2385AD3500B54365 /* MKMapView+FitAnnotations.swift */,
 				63E0B22B23A3EDDE00A348FC /* MKMapView+FitAll.swift */,
 				63081BF9236B2F8500FC3823 /* OpenTerminal.sh */,
 				63F712E1238869A50047C8F0 /* UIImage+Color.swift */,
-				63F712E3238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift */,
 				63164497246C1C6D00807E19 /* UITextView+HTML.swift */,
 				63B5B4A82459298F0062F54B /* UILabel+HTML.swift */,
 				631644A1246ED80B00807E19 /* UIButton+UrlImageLoad.swift */,
@@ -650,7 +640,7 @@
 			buildPhases = (
 				C5A3EE7F12EB780BAA720589 /* [CP] Check Pods Manifest.lock */,
 				631EFFA9236884FE00BA17F7 /* Custom Highlighting - AWTODO: & FIXME: - Run Script */,
-				63B5B4952457A7800062F54B /* Apollo CLI */,
+				63B5B4952457A7800062F54B /* Generate Apollo GraphQL API */,
 				63387B5B22CDBFFC0089BAA8 /* Sources */,
 				63387B5C22CDBFFC0089BAA8 /* Frameworks */,
 				63387B5D22CDBFFC0089BAA8 /* Resources */,
@@ -666,8 +656,6 @@
 			);
 			name = "American Whitewater";
 			packageProductDependencies = (
-				63B5B491245770270062F54B /* Apollo */,
-				63B5B493245770270062F54B /* ApolloWebSocket */,
 			);
 			productName = "American Whitewater";
 			productReference = 63387B5F22CDBFFC0089BAA8 /* AW.app */;
@@ -698,7 +686,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1110;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1300;
 				ORGANIZATIONNAME = "American Whitewater";
 				TargetAttributes = {
 					63387B5E22CDBFFC0089BAA8 = {
@@ -719,7 +707,6 @@
 			);
 			mainGroup = 63387B5622CDBFFC0089BAA8;
 			packageReferences = (
-				63B5B490245770270062F54B /* XCRemoteSwiftPackageReference "apollo-ios" */,
 			);
 			productRefGroup = 63387B6022CDBFFC0089BAA8 /* Products */;
 			projectDirPath = "";
@@ -752,7 +739,6 @@
 				63EDA74F24B3F5AF0020382A /* GaugeMetrics.graphql in Resources */,
 				6392147825A634350042E97E /* GageInfoForReach.graphql in Resources */,
 				631B3573237C722200738889 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
-				63EDA75124B4DAF10020382A /* reaches.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -843,7 +829,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
-		63B5B4952457A7800062F54B /* Apollo CLI */ = {
+		63B5B4952457A7800062F54B /* Generate Apollo GraphQL API */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -852,14 +838,14 @@
 			);
 			inputPaths = (
 			);
-			name = "Apollo CLI";
+			name = "Generate Apollo GraphQL API";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Go to the build root and search up the chain to find the Derived Data Path where the source packages are checked out.\nDERIVED_DATA_CANDIDATE=\"${BUILD_ROOT}\"\n\nwhile ! [ -d \"${DERIVED_DATA_CANDIDATE}/SourcePackages\" ]; do\n  if [ \"${DERIVED_DATA_CANDIDATE}\" = / ]; then\n    echo >&2 \"error: Unable to locate SourcePackages directory from BUILD_ROOT: '${BUILD_ROOT}'\"\n    exit 1\n  fi\n\n  DERIVED_DATA_CANDIDATE=\"$(dirname \"${DERIVED_DATA_CANDIDATE}\")\"\ndone\n\n# Grab a reference to the directory where scripts are checked out\nSCRIPT_PATH=\"${DERIVED_DATA_CANDIDATE}/SourcePackages/checkouts/apollo-ios/scripts\"\n\nif [ -z \"${SCRIPT_PATH}\" ]; then\n    echo >&2 \"error: Couldn't find the CLI script in your checked out SPM packages; make sure to add the framework to your project.\"\n    exit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\n# Creates API.swift file for accessing GraphQL from Swift\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"schema.json\" AwGraphQLAPI.swift\n\n# Local Site: Used to download an updated schema.json on Local\n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"http://aw.local/graphql/\"\n\n# Beta Site: https://beta.americanwhitewater.org/graphql/ \n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"https://beta.americanwhitewater.org/graphql/\"\n\n# Live Site: https://www.americanwhitewater.org/graphql/ \n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"https://www.americanwhitewater.org/graphql/\"\n";
+			shellScript = "SCRIPT_PATH=\"${PODS_ROOT}/Apollo/scripts\"\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\n# Creates API.swift file for accessing GraphQL from Swift\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"schema.json\" AwGraphQLAPI.swift\n\n# Local Site: Used to download an updated schema.json on Local\n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"http://aw.local/graphql/\"\n\n# Beta Site: https://beta.americanwhitewater.org/graphql/ \n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"https://beta.americanwhitewater.org/graphql/\"\n\n# Live Site: https://www.americanwhitewater.org/graphql/ \n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"https://www.americanwhitewater.org/graphql/\"\n";
 		};
 		C5A3EE7F12EB780BAA720589 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -930,11 +916,11 @@
 				63309E3D233E739C00E6DBC4 /* MapViewController.swift in Sources */,
 				63E32B1D2357F3260057DE34 /* FilterClassCollectionViewCell.swift in Sources */,
 				639350C22475929900577027 /* AddRiverFlowTableViewController.swift in Sources */,
+				4ABE3B7D26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift in Sources */,
 				2FE342D026A2846100352D1E /* Location.swift in Sources */,
 				63949955246F0DD40061552C /* AwImageCell.swift in Sources */,
 				63FF68C525ACF2A900AF0F37 /* GageGraphCell.swift in Sources */,
 				631EFF9A23677C4000BA17F7 /* Article+CoreDataProperties.swift in Sources */,
-				6342A3E92385A3A400B54365 /* UISearchBar+UITextFieldColor.swift in Sources */,
 				631EFFA42367842300BA17F7 /* DifficultyHelper.swift in Sources */,
 				637D0737236B541000BE90D0 /* UISearchBar+BGColor.swift in Sources */,
 				63A6FD672363EEA200148231 /* AWApiArticleHelper.swift in Sources */,
@@ -961,7 +947,6 @@
 				63A8B17D23281A8A00FD2E00 /* AWArticle.swift in Sources */,
 				6389BFB0234E311500DE7D6C /* RunMapAnnotation.swift in Sources */,
 				63B5B4A724591A460062F54B /* RunAccidentDetailsTableViewController.swift in Sources */,
-				63F712E4238869EB0047C8F0 /* UISegmentControl+PreiOS13.swift in Sources */,
 				635141FB2460947A00B4F974 /* AddAlertTableViewController.swift in Sources */,
 				63309E36233DA29000E6DBC4 /* MoreTableViewController.swift in Sources */,
 				63B5B4A92459298F0062F54B /* UILabel+HTML.swift in Sources */,
@@ -1066,6 +1051,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1091,7 +1077,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1127,6 +1113,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1146,7 +1133,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1167,7 +1154,7 @@
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = Z2H33QQ8P7;
 				INFOPLIST_FILE = "American Whitewater/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1191,7 +1178,7 @@
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = Z2H33QQ8P7;
 				INFOPLIST_FILE = "American Whitewater/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1214,7 +1201,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = Z2H33QQ8P7;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1238,7 +1225,7 @@
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = Z2H33QQ8P7;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1284,30 +1271,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		63B5B490245770270062F54B /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.26.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		63B5B491245770270062F54B /* Apollo */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 63B5B490245770270062F54B /* XCRemoteSwiftPackageReference "apollo-ios" */;
-			productName = Apollo;
-		};
-		63B5B493245770270062F54B /* ApolloWebSocket */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 63B5B490245770270062F54B /* XCRemoteSwiftPackageReference "apollo-ios" */;
-			productName = ApolloWebSocket;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		63C1DABF235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld */ = {

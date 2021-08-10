@@ -29,7 +29,6 @@ class FilterViewController: UIViewController {
         
         self.locationManager.delegate = self
              
-        filterSegmentControl.fallBackToPreIOS13Layout(using: UIColor.white)
         let selectedSegTitle = [NSAttributedString.Key.foregroundColor: UIColor(named: "primary") ?? UIColor.black]
                                 as [NSAttributedString.Key : Any]
         filterSegmentControl.setTitleTextAttributes(selectedSegTitle, for: .selected)

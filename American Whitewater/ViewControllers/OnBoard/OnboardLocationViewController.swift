@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreLocation
-import AlamofireNetworkActivityIndicator
 
 class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate {
 

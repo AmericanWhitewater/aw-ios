@@ -61,7 +61,7 @@ class SingleArticleViewController: UIViewController, WKNavigationDelegate  {
                 articleAuthorDateLabel.text = ""
             }
             
-            print("Contents: ", article.contents)
+            print("Contents: \(String(describing: article.contents))")
             if let content = article.contents {
                 var headerString = "<header><meta name='viewport' content='width=device-width, initial-scale=2.0, maximum-scale=1.0, minimum-scale=1.0'></header>"
                 headerString.append(content)

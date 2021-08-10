@@ -162,7 +162,7 @@ class RunsListViewController: UIViewController {
     }
     
     private var searchPredicate: NSPredicate? {
-        guard let searchText = searchBar.textField?.text, searchText.count > 0 else { return nil }
+        guard let searchText = searchBar.searchTextField.text, searchText.count > 0 else { return nil }
         
         let searchName = NSPredicate(format: "name contains[cd] %@", searchText)
         let searchSection = NSPredicate(format: "section contains[cd] %@", searchText)
@@ -229,8 +229,8 @@ class RunsListViewController: UIViewController {
     }
     
     @objc func dismissKeyboard() {
-        self.searchBar.textField?.resignFirstResponder()
-        self.searchBar.textField?.endEditing(true)
+        self.searchBar.searchTextField.resignFirstResponder()
+        self.searchBar.searchTextField.endEditing(true)
     }
     
     @IBAction func runnableFilterChanged(_ runnableSwitch: UISwitch) {
@@ -239,30 +239,6 @@ class RunsListViewController: UIViewController {
         DefaultsManager.shared.filters = filters
         
         updateData()
-    }
-
-    /// Returns the distance from the last saved user location to a location given as lat/long strings, in miles (approximately)
-    private func calculateDistanceToRiver(riverLatString: String?, riverLonString: String?) -> Double? {
-        // get river info
-        guard
-            let riverLat = Double(riverLatString ?? ""),
-            let riverLon = Double(riverLonString ?? "")
-        else {
-            return nil
-        }
-        
-        let riverLocation = CLLocation(latitude: riverLat, longitude: riverLon)
-        
-        // get user location and check it
-        let location = DefaultsManager.shared.location
-        
-        // FIXME: why is this check here? how does this check validity?
-        // Perhaps what is wanted instead is CLLocationCoordinate2DIsValid(), but I'm not sure what the intent is
-        if location.coordinate.latitude > 1 && location.coordinate.longitude < 0 {
-            return location.distance(from: riverLocation) / 1609
-        }
-        
-        return nil
     }
     
     // MARK: - Get Filter Information
@@ -453,7 +429,7 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
                 lastUpdatedMessage = "Last Updated: \(dateFormatter.string(from: lastUpdatedDate))"
             }
             
-            view.backgroundColor = UIColor.groupTableViewBackground
+            view.backgroundColor = UIColor.systemGroupedBackground
             
             label.text = lastUpdatedMessage
             label.textAlignment = .center
@@ -490,7 +466,7 @@ extension RunsListViewController: UISearchBarDelegate {
         searchBar.isTranslucent = true
         searchBar.setTextField(color: UIColor.white)
         searchBar.tintColor = UIColor(named: "primary") ?? UIColor.AW.Unknown
-        searchBar.textField?.textColor = UIColor.AW.Unknown
+        searchBar.searchTextField.textColor = UIColor.AW.Unknown
         searchBar.placeholder = "Search for a Run"
         searchBar.enablesReturnKeyAutomatically = false
         searchBar.returnKeyType = .done
@@ -504,7 +480,7 @@ extension RunsListViewController: UISearchBarDelegate {
     }
     
     @objc func clearButtonPressed() {
-        searchBar.textField?.resignFirstResponder()
+        searchBar.searchTextField.resignFirstResponder()
         updateData()
     }
 

@@ -56,8 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DefaultsManager.shared.filters = Filters.defaultByRegionFilters
         }
         
-        // make Status Bar white
-        UINavigationBar.appearance().barStyle = .blackOpaque
+        // This sets preferred status bar style to .lightContent within our nav controllers
+        UINavigationBar.appearance().barStyle = .black
         
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: "primary")!], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)

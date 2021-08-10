@@ -1,24 +1,25 @@
 PODS:
-  - Alamofire (5.4.0)
-  - AlamofireImage (4.1.0):
-    - Alamofire (~> 5.1)
-  - AlamofireNetworkActivityIndicator (3.1.0):
-    - Alamofire (~> 5.1)
+  - Alamofire (5.4.3)
+  - AlamofireImage (4.2.0):
+    - Alamofire (~> 5.4)
+  - Apollo (0.45.0):
+    - Apollo/Core (= 0.45.0)
+  - Apollo/Core (0.45.0)
   - Charts (3.6.0):
     - Charts/Core (= 3.6.0)
   - Charts/Core (3.6.0)
-  - Firebase/Analytics (8.3.0):
+  - Firebase/Analytics (8.4.0):
     - Firebase/Core
-  - Firebase/Core (8.3.0):
+  - Firebase/Core (8.4.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (~> 8.3.0)
-  - Firebase/CoreOnly (8.3.0):
-    - FirebaseCore (= 8.3.0)
-  - Firebase/Crashlytics (8.3.0):
+    - FirebaseAnalytics (~> 8.4.0)
+  - Firebase/CoreOnly (8.4.0):
+    - FirebaseCore (= 8.4.0)
+  - Firebase/Crashlytics (8.4.0):
     - Firebase/CoreOnly
-    - FirebaseCrashlytics (~> 8.3.0)
-  - FirebaseAnalytics (8.3.0):
-    - FirebaseAnalytics/AdIdSupport (= 8.3.0)
+    - FirebaseCrashlytics (~> 8.4.0)
+  - FirebaseAnalytics (8.4.0):
+    - FirebaseAnalytics/AdIdSupport (= 8.4.0)
     - FirebaseCore (~> 8.0)
     - FirebaseInstallations (~> 8.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
@@ -26,16 +27,16 @@ PODS:
     - GoogleUtilities/Network (~> 7.4)
     - "GoogleUtilities/NSData+zlib (~> 7.4)"
     - nanopb (~> 2.30908.0)
-  - FirebaseAnalytics/AdIdSupport (8.3.0):
+  - FirebaseAnalytics/AdIdSupport (8.4.0):
     - FirebaseCore (~> 8.0)
     - FirebaseInstallations (~> 8.0)
-    - GoogleAppMeasurement (= 8.3.0)
+    - GoogleAppMeasurement (= 8.4.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
     - GoogleUtilities/MethodSwizzler (~> 7.4)
     - GoogleUtilities/Network (~> 7.4)
     - "GoogleUtilities/NSData+zlib (~> 7.4)"
     - nanopb (~> 2.30908.0)
-  - FirebaseCore (8.3.0):
+  - FirebaseCore (8.4.0):
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
@@ -44,25 +45,26 @@ PODS:
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
     - nanopb (~> 2.30908.0)
-  - FirebaseCrashlytics (8.3.0):
+  - FirebaseCrashlytics (8.4.0):
     - FirebaseCore (~> 8.0)
     - FirebaseInstallations (~> 8.0)
     - GoogleDataTransport (~> 9.0)
+    - GoogleUtilities/Environment (~> 7.4)
     - nanopb (~> 2.30908.0)
-    - PromisesObjC (~> 1.2)
-  - FirebaseInstallations (8.3.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - FirebaseInstallations (8.4.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/UserDefaults (~> 7.4)
-    - PromisesObjC (~> 1.2)
-  - GoogleAppMeasurement (8.3.0):
-    - GoogleAppMeasurement/AdIdSupport (= 8.3.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleAppMeasurement (8.4.0):
+    - GoogleAppMeasurement/AdIdSupport (= 8.4.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
     - GoogleUtilities/MethodSwizzler (~> 7.4)
     - GoogleUtilities/Network (~> 7.4)
     - "GoogleUtilities/NSData+zlib (~> 7.4)"
     - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (8.3.0):
+  - GoogleAppMeasurement/AdIdSupport (8.4.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
     - GoogleUtilities/MethodSwizzler (~> 7.4)
     - GoogleUtilities/Network (~> 7.4)
@@ -100,15 +102,15 @@ PODS:
   - nanopb/encode (2.30908.0)
   - netfox (1.19.0)
   - NYAlertViewController (1.3.0)
-  - OAuthSwift (2.1.0)
-  - OneSignalXCFramework (3.5.3)
-  - PromisesObjC (1.2.12)
-  - SwiftyJSON (5.0.0)
+  - OAuthSwift (2.2.0)
+  - OneSignalXCFramework (3.6.0)
+  - PromisesObjC (2.0.0)
+  - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
   - Alamofire (~> 5.4.0)
   - AlamofireImage (~> 4.1)
-  - AlamofireNetworkActivityIndicator (~> 3.1.0)
+  - Apollo (~> 0.45)
   - Charts (~> 3.6.0)
   - Firebase/Analytics
   - Firebase/Crashlytics
@@ -116,7 +118,7 @@ DEPENDENCIES:
   - KeychainSwift (~> 19.0)
   - netfox
   - NYAlertViewController (~> 1.3.0)
-  - OAuthSwift (~> 2.1.0)
+  - OAuthSwift (~> 2)
   - OneSignalXCFramework
   - SwiftyJSON (~> 5.0.0)
 
@@ -124,7 +126,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AlamofireImage
-    - AlamofireNetworkActivityIndicator
+    - Apollo
     - Charts
     - Firebase
     - FirebaseAnalytics
@@ -154,17 +156,17 @@ CHECKOUT OPTIONS:
     :git: https://github.com/duffek/IQKeyboardManager.git
 
 SPEC CHECKSUMS:
-  Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
-  AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
-  AlamofireNetworkActivityIndicator: 6564782bd7b9e6c430ae67d9277af01907b01ca4
+  Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
+  AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
+  Apollo: 241254e8b26f49dc180e3be848f0b3fc5699e6f4
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
-  Firebase: 817b9171d0d51dccc458b94a5e8edff6b1dd323d
-  FirebaseAnalytics: 456f2c51599870a15ded4548d1f1f7b2cabf65a7
-  FirebaseCore: a6dba751680d7033b9d3831e1cfc95ead0605118
+  Firebase: 54cdc8bc9c9b3de54f43dab86e62f5a76b47034f
+  FirebaseAnalytics: 4751d6a49598a2b58da678cc07df696bcd809ab9
+  FirebaseCore: 31f389c37ac1ea52454a53d3081f2d7019485a4a
   FirebaseCoreDiagnostics: cad03be1904b975f845e632f2720c3337da27faf
-  FirebaseCrashlytics: 3d83f2e8a47f476f47c82ff4536b169df6781271
-  FirebaseInstallations: b69db7680870dbac17bba7a51fc0b5c4b365baa7
-  GoogleAppMeasurement: de70802583dedceb0bca18172b345307e8f410b8
+  FirebaseCrashlytics: c9eb562b2f6bd5ee5e880144fd5ef1bfe46c5dc5
+  FirebaseInstallations: 1585729afc787877763208c2088ed84221161f77
+  GoogleAppMeasurement: 6b6a08fd9c71f4dbc89e0e812acca81d797aa342
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
@@ -172,11 +174,11 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   netfox: efeec1d23406df6cd605212f09a40957bb5654eb
   NYAlertViewController: b93f82e2c1fc6d5e9485512ddbe7b481f463a074
-  OAuthSwift: ab1675598273e04355e0282459c328e65c9ddacd
-  OneSignalXCFramework: 4e08d8353adec161c3d9174e2572c849e1225c9f
-  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+  OAuthSwift: 75efbb5bd9a4b2b71a37bd7e986bf3f55ddd54c6
+  OneSignalXCFramework: ba3a7daeafd11bd6af8dd47e5689870911357d52
+  PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 46b7b87b3438bcf204b9c6b32ff0f4c56e8befff
+PODFILE CHECKSUM: 41f6a188fa059afac29ce5cad7a5aeca7c5eb35c
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.2
