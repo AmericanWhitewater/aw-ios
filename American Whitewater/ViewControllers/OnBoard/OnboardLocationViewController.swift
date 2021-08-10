@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import AlamofireNetworkActivityIndicator
 
-class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate {
+class OnboardLocationViewController: UIViewController {
 
     @IBOutlet weak var zipcodeTextField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
@@ -90,24 +90,10 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
                         return
                 }
                 
-                print("Location found: \(coordinate.latitude), \(coordinate.longitude)")
-                print("Place: \(String(describing: place.administrativeArea))")
-                
-                DefaultsManager.shared.coordinate = coordinate
-                DefaultsManager.shared.onboardingCompleted = true
-                DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
-                
-                var filters = DefaultsManager.shared.filters
-                // Reset distance filter to 100 miles
-                // FIXME: should this be changing showDistanceFilter vs showRegionFilter?
-                filters.distanceFilter = 100
-                
-                // Set region code from admin area if available
-                if let adminArea = place.administrativeArea, let region = Region.regionByCode(code: "st\(adminArea)") {
-                    filters.regionsFilter = [region.code]
-                }
-                
-                DefaultsManager.shared.filters = filters
+                self.updateDefaults(
+                    coordinate: coordinate,
+                    regionCodes: self.regionCodes(placemarks: placemarks)
+                )
                 
                 // dismiss this view controller and tell the referencing ViewController to refresh
                 // AWTODO: Post a notification about this instead of coupling to the runs list controller
@@ -120,40 +106,59 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
         }
     }
     
-    /*
-     locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-     handles location updates and when we get the latest update we use it to find the users location
-     and zip code so we can find a default region for them to see
-    */
+    /// Make all the changes to DefaultsManager that are the result of this
+    /// Giving a location in onboarding indicates the filters should reset to the default distance filter
+    /// That should match the user's expectation as they exit onboarding: they gave a location, and the app will show things around that location
+    private func updateDefaults(coordinate: CLLocationCoordinate2D, regionCodes: [String]? = nil) {
+        var filters = Filters.defaultByDistanceFilters
+        
+        // Set the region code if available, but otherwise avoid clobbering anything that was already set
+        filters.regionsFilter = regionCodes ?? DefaultsManager.shared.filters.regionsFilter
+        
+        DefaultsManager.shared.filters = filters
+        DefaultsManager.shared.coordinate = coordinate
+        DefaultsManager.shared.onboardingCompleted = true
+        
+        // FIXME: why is this the onboarding controller's job?
+        DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
+    }
+    
+    private func regionCodes(placemarks: [CLPlacemark]?) -> [String]? {
+        guard
+            let placemark = placemarks?.first,
+            let adminArea = placemark.administrativeArea,
+            let region = Region.regionByCode(code: "st\(adminArea)")
+        else {
+            return nil
+        }
+        
+        return [region.code]
+    }
+}
+
+extension OnboardLocationViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else {
             return
         }
-
-        print("Got the latest location: \(location.debugDescription)")
-        // stop updating
+        
         locationManager.stopUpdatingLocation()
         
-        // store the location for future use
-        DefaultsManager.shared.coordinate = location.coordinate
+        self.updateDefaults(
+            coordinate: location.coordinate,
+            regionCodes: nil
+        )
         
-        DefaultsManager.shared.filters = Filters.defaultByDistanceFilters
-
-        DefaultsManager.shared.onboardingCompleted = true
-        DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
-        
-        // reverse geocode the users location so we can get the admin area so we can request this location first
-        let decoder = CLGeocoder()
-        decoder.reverseGeocodeLocation(location) { (placemarks, error) in
-            if
-                error == nil,
-                let placemark = placemarks?.first,
-                let adminArea = placemark.administrativeArea,
-                let region = Region.regionByCode(code: "st\(adminArea)")
-            {
-                // FIXME: this updates the regions filter after dismissing the view controller, notifying the parent. Is this a problem?
-                DefaultsManager.shared.filters.regionsFilter = [region.code]
+        // Reverse geocode to set the regionsFilter
+        CLGeocoder().reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
+            guard
+                let self = self,
+                let codes = self.regionCodes(placemarks: placemarks)
+            else {
+                return
             }
+            
+            DefaultsManager.shared.filters.regionsFilter = codes
         }
         
         // dismiss this modal view controller and tell the referencing ViewController to refresh
