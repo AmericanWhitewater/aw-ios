@@ -13,8 +13,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
     
+    private var filters: Filters { DefaultsManager.shared.filters }
+    
     let locationManager = CLLocationManager()
     var lastLocation: CLLocation? = nil
+    
+    private var notificationObservers = [NSObjectProtocol]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,13 +32,30 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         
         self.locationManager.delegate = self
+        
+        updateFilterButton()
+        fetchReachesFromCoreData()
+        
+        notificationObservers.append(
+            NotificationCenter.default.addObserver(
+                forName: .filtersDidChange,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                self?.fetchReachesFromCoreData()
+            }
+        )
+    }
+    
+    deinit {
+        // Have to deregister block-based notification observers or they will continue to call their blocks:
+        notificationObservers.forEach {
+            NotificationCenter.default.removeObserver($0)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        updateFilterButton();
-        fetchReachesFromCoreData()
         
         if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
             showUserLocation()
@@ -45,9 +66,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.viewWillDisappear(animated)
         
         mapView.showsUserLocation = false
-        
-        fetchedResultsController?.delegate = nil
-        fetchedResultsController = nil
     }
 
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
@@ -66,7 +84,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             print("Updating distances of reaches")
             
             AWApiReachHelper.shared.updateAllReachDistances(callback: {
-                self.fetchReachesFromCoreData();
+                self.fetchReachesFromCoreData()
             })
         }
         
@@ -76,27 +94,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func updateFilterButton() {
         navigationItem.rightBarButtonItem?.title = ""
-        if DefaultsManager.shared.classFilter.count < 5 || DefaultsManager.shared.showDistanceFilter == true {
-            navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: "filterOn"), for: .normal, barMetrics: .default)
-        } else {
-            navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: "filterOff"), for: .normal, barMetrics: .default)
-        }
+        
+        let imageName = (filters.classFilter.count < 5 || filters.showDistanceFilter) ? "filterOn" : "filterOff"
+        navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: imageName), for: .normal, barMetrics: .default)
     }
     
     func fetchReachesFromCoreData() {
         print("Fetching reaches")
-        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
+        let request = Reach.reachFetchRequest()
         
-        // setup sort filters
-        request.sortDescriptors = [
-            NSSortDescriptor(key: "distance", ascending: true),
-            NSSortDescriptor(key: "name", ascending: true)
-        ]
+        // Map view always sorts by distance
+        request.sortDescriptors = Filters.sortByDistanceAndName
         
-        // based on our filtering settings (distance, region, or class) we request Reaches that
-        // match these settings
-        let combinedPredicates: [NSPredicate] = filterPredicates().compactMap { $0 }
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: combinedPredicates)
+        // FIXME: this filters with the runnableFilter, which isn't settable from the map view. Is that wrong to do? Could resolve by providing a way to set, or by not applying that filter here.
+        request.predicate = filters.combinedPredicate()
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
                                                       managedObjectContext: managedObjectContext,
@@ -203,65 +214,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             }
         }
     }
-    
-    // MARK: - Filtering Predicates
-    
-    func difficultiesPredicate() -> NSCompoundPredicate? {
-    
-        var classPredicates: [NSPredicate] = []
-
-        for difficulty in DefaultsManager.shared.classFilter {
-            classPredicates.append(NSPredicate(format: "difficulty\(difficulty) == TRUE"))
-        }
-
-        if classPredicates.count == 0 {
-            return nil
-        }
-
-        return NSCompoundPredicate(orPredicateWithSubpredicates: classPredicates)
-    }
-    
-    func regionsPredicate() -> NSPredicate? {
-        // if we are filtering by distance then ignore regions
-        if DefaultsManager.shared.showDistanceFilter {
-            return nil
-        }
-        
-        let regionCodes = DefaultsManager.shared.regionsFilter
-        var states:[String] = []
-        for regionCode in regionCodes {
-            if let region = Region.regionByCode(code: regionCode) {
-                states.append(region.apiResponse)
-            }
-        }
-
-        if states.count == 0 {
-            return nil
-        }
-        return NSPredicate(format: "state IN[cd] %@", states)
-    }
-
-    func distancePredicate() -> NSPredicate? {
-        // check if user is using the distance filter or if
-        // they have turned it off
-        if !DefaultsManager.shared.showDistanceFilter { return nil }
-        
-        let distance = DefaultsManager.shared.distanceFilter
-        if distance == 0 { return nil }
-        let predicates: [NSPredicate] = [
-            NSPredicate(format: "distance <= %lf", distance),
-            NSPredicate(format: "distance != 0")] // hide invalid distances
-        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-    }
-    
-    func filterPredicates() -> [NSPredicate?] {
-        if DefaultsManager.shared.showDistanceFilter == true {
-            return [distancePredicate()]
-        } else {
-            return [regionsPredicate()]
-        }
-    }
-    
     
     // MARK: - Navigation
 

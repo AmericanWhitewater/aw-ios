@@ -3,6 +3,10 @@ import SwiftyJSON
 import KeychainSwift
 import CoreLocation
 
+extension Notification.Name {
+    static let filtersDidChange = Notification.Name("filtersDidChange")
+}
+
 class DefaultsManager {
     public static let shared = DefaultsManager()
     
@@ -77,17 +81,49 @@ class DefaultsManager {
     // MARK: - Filters
     //
     
-    var showDistanceFilter: Bool {
+    public var filters: Filters {
+        get {
+            .init(
+                showDistanceFilter: showDistanceFilter,
+                showRegionFilter: showRegionFilter,
+                regionsFilter: regionsFilter,
+                distanceFilter: distanceFilter,
+                classFilter: classFilter,
+                runnableFilter: runnableFilter
+            )
+        }
+        
+        set {
+            // Don't set/notify on duplicates:
+            guard newValue != filters else {
+                return
+            }
+            
+            showDistanceFilter = newValue.showDistanceFilter
+            showRegionFilter = newValue.showRegionFilter
+            regionsFilter = newValue.regionsFilter
+            distanceFilter = newValue.distanceFilter
+            classFilter = newValue.classFilter
+            runnableFilter = newValue.runnableFilter
+            
+            // Post a notification to make it easier to respond to a change in filters
+            // This could be also be done with combine (filters could be @Published)
+            // but this is a smaller change to the app:
+            NotificationCenter.default.post(name: .filtersDidChange, object: newValue)
+        }
+    }
+    
+    private var showDistanceFilter: Bool {
         get { defaults.bool(forKey: Keys.showDistanceFilter) }
         set { defaults.set(newValue, forKey: Keys.showDistanceFilter) }
     }
 
-    var showRegionFilter: Bool {
+    private var showRegionFilter: Bool {
         get { defaults.bool(forKey: Keys.showRegionFilter) }
         set { defaults.set(newValue, forKey: Keys.showRegionFilter) }
     }
     
-    var regionsFilter: [String] {
+    private var regionsFilter: [String] {
         get {
             (defaults.array(forKey: Keys.regionsFilter) as? [String]) ??
             []
@@ -95,7 +131,7 @@ class DefaultsManager {
         set { defaults.set(newValue, forKey: Keys.regionsFilter) }
     }
 
-    var distanceFilter: Double {
+    private var distanceFilter: Double {
         get {
             (defaults.object(forKey: Keys.distanceFilter) as? Double) ??
             100
@@ -105,7 +141,7 @@ class DefaultsManager {
         }
     }
     
-    var classFilter: [Int] {
+    private var classFilter: [Int] {
         get {
             (defaults.array(forKey: Keys.classFilter) as? [Int]) ??
             []
@@ -113,7 +149,7 @@ class DefaultsManager {
         set { defaults.set(newValue, forKey: Keys.classFilter) }
     }
     
-    var runnableFilter: Bool {
+    private var runnableFilter: Bool {
         get { defaults.bool(forKey: Keys.runnableFilter) }
         set { defaults.set(newValue, forKey: Keys.runnableFilter) }
     }
@@ -148,11 +184,6 @@ class DefaultsManager {
     var signedInAuth: String? {
         get { defaults.string(forKey: Keys.signedInAuth) }
         set { defaults.set(newValue, forKey: Keys.signedInAuth) }
-    }
-    
-    var signInAlertCount: Int {
-        get { defaults.integer(forKey: Keys.signInAlertCount) }
-        set { defaults.set(newValue, forKey: Keys.signInAlertCount) }
     }
     
     var signInLastShown: Date? {

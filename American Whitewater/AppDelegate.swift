@@ -53,10 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // setting first values for first run
         if !DefaultsManager.shared.completedFirstRun {
-            DefaultsManager.shared.showRegionFilter = true
-            DefaultsManager.shared.showDistanceFilter = false
-            DefaultsManager.shared.distanceFilter = 100
-            DefaultsManager.shared.classFilter = [1,2,3,4,5]
+            DefaultsManager.shared.filters = Filters.defaultByRegionFilters
         }
         
         // make Status Bar white

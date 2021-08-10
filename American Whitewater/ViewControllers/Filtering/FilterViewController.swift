@@ -1,25 +1,28 @@
 import UIKit
 import CoreLocation
 
-class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, CLLocationManagerDelegate,
-                            UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    
+class FilterViewController: UIViewController {
     @IBOutlet weak var contentCollectionView: UICollectionView!
-    
     @IBOutlet weak var filterSegmentControl: UISegmentedControl!
-       
+    @IBOutlet weak var regionsContainerView: UIView!
+
     let locationManager = CLLocationManager()
     let geoCoder = CLGeocoder()
     
-    var selectedRegions:[Region] = []
-    var selectedRegionsOrig:[Region] = []
+    /// States, filtered by search query
     var usaRegions = Region.states
+    
+    /// Intl regions, filtered by search query
     var internationalRegions = Region.international
-    var classFilters:[Int] = DefaultsManager.shared.classFilter
-
-    @IBOutlet weak var regionsContainerView: UIView!
-        
-    var regionsTableViewRef: UITableView?
+    
+    /// The filters currently being edited
+    var filters = DefaultsManager.shared.filters
+    
+    /// A reference to the regions table, so it can be refreshed independently of the collection view
+    weak var regionsTableView: UITableView? = nil
+    
+    /// A reference to the label under the distance slider, so it can be updated independently of the collection view
+    weak var distanceFilterLabel: UILabel? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,27 +33,10 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let selectedSegTitle = [NSAttributedString.Key.foregroundColor: UIColor(named: "primary") ?? UIColor.black]
                                 as [NSAttributedString.Key : Any]
         filterSegmentControl.setTitleTextAttributes(selectedSegTitle, for: .selected)
-
-    }
-
-    func imageWithColor(color: UIColor) -> UIImage? {
-        let rect = CGRect(origin: .zero, size: CGSize(width: 1, height: 1))
-        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
-        color.setFill()
-        
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-
-        guard let img = image else { return nil }
-
-        return img
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        loadRegions()
 
         contentCollectionView.reloadData()
         
@@ -59,35 +45,133 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    // Filter Type Changed changes the filter category (region/class/distance)
-    // and auto scrolls to the correct view for interaction
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Commit any changes that were made.
+        // In the future, we could move this, and have a cancel button to allow discarding changes:
+        DefaultsManager.shared.filters = filters
+    }
+    
+    /// Changes the filter category (region/class/distance) and auto scrolls to the correct view for interaction
     @IBAction func filterTypeChanged(_ segmentControl: UISegmentedControl) {
-        
-        contentCollectionView.scrollToItem(at: IndexPath(item: segmentControl.selectedSegmentIndex, section: 0), at: .left, animated: true)
-        
+        contentCollectionView.scrollToItem(
+            at: IndexPath(item: segmentControl.selectedSegmentIndex, section: 0),
+            at: .left,
+            animated: true
+        )
     }
     
     
     //
-    // MARK - Regional Filtering
+    // MARK -
     //
     
+    private var selectedRegionsString: String {
+        filters.regionsFilter
+            .compactMap { Region.regionByCode(code: $0)?.title }
+            .sorted() // List regions alphabetically
+            .joined(separator: ", ")
+    }
     
-    // Clears regions from search and local storage
-    @objc func clearRegionsButtonPressed(_ sender: Any) {
+    private var distanceFilterDescription: String {
+        if filters.distanceFilter == 0 {
+            return "Search Any Distance"
+        } else {
+            return "\(Int(filters.distanceFilter)) miles"
+        }
+    }
+    
+    /// Clears regions from search and local storage
+    @objc func didTapClearRegions(_ sender: Any) {
+        filters.regionsFilter.removeAll()
+        regionsTableView?.reloadData()
+        contentCollectionView.reloadData()
+    }
+    
+    func toggle(region: Region) {
+        if filters.regionsFilter.contains(region.code) {
+            filters.regionsFilter.removeAll { $0 == region.code }
+        } else {
+            filters.regionsFilter.append(region.code)
+        }
         
-        selectedRegions.removeAll()
-        DefaultsManager.shared.regionsFilter.removeAll()
+        // This used to write to DefaultsManager to try and indicate that the region filter had changed
+        // AWTODO: should this broadcast changes? Use a Notification if so
+    }
+    
+    //
+    // MARK - Class Filtering
+    //
+    
+    /// Adds or removes a class filter based on the switch
+    /// Note: this depends on tags beign set to the right number in the storyboard, and will break if that changes
+    @objc func classFilterChanged(classSwitch: UISwitch) {
+        let filterClass = classSwitch.tag
+
+        if filters.classFilter.contains(filterClass) {
+            filters.classFilter.removeAll { $0 == filterClass}
+        } else {
+            filters.classFilter.append(filterClass)
+        }
+    }
+
+    
+    //
+    // MARK - Distance Filtering
+    //
+    
+    @objc func updateLocationButtonPressed(_ sender: Any) {
+        if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func updateFilterBy(shouldFilterByRegion: Bool) {
+        if shouldFilterByRegion {
+            filters.showRegionFilter = true
+            filters.showDistanceFilter = false
+        } else {
+            filters.showRegionFilter = false
+            filters.showDistanceFilter = true
+        }
         
         contentCollectionView.reloadData()
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+    @objc func filterByRegionSwitchChanged(_ regionSwitch: UISwitch) {
+        updateFilterBy(shouldFilterByRegion: regionSwitch.isOn)
     }
     
-    // MARK - Collection View Delegate / Datasource functions
+    @objc func filterByDistanceSwitchChanged(_ distanceSwitch: UISwitch) {
+        updateFilterBy(shouldFilterByRegion: !distanceSwitch.isOn)
+    }
     
+    @objc func distanceSliderChanged(distanceSlider: UISlider) {
+        filters.distanceFilter = Double(distanceSlider.value)
+        distanceFilterLabel?.text = distanceFilterDescription
+    }
+    
+    //
+    // MARK - Navigation
+    //
+    
+    @IBAction func doneButtonPressed(_ sender: Any) {
+        // FIXME: why isn't this OK for the user to do?
+        if filters.showRegionFilter, filters.regionsFilter.isEmpty {
+            DuffekDialog.shared.showOkDialog(title: "Region Required", message: "Please select a region or choose to filter by Distance before continuing")
+            
+            return
+        }
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+//
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
+//
+extension FilterViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: contentCollectionView.frame.width, height: contentCollectionView.frame.height)
     }
@@ -102,34 +186,21 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if indexPath.row == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterRegionCell", for: indexPath) as! FilterRegionCollectionViewCell
 
-            cell.clearRegionsButton.addTarget(self, action: #selector(clearRegionsButtonPressed(_:)), for: .touchUpInside)
+            cell.selectedRegionsLabel.text = "Selected Regions: \(selectedRegionsString)"
+            
+            cell.clearRegionsButton.isEnabled = !filters.regionsFilter.isEmpty
+            cell.clearRegionsButton.addTarget(self, action: #selector(didTapClearRegions(_:)), for: .touchUpInside)
             
             cell.searchBar.delegate = self
             cell.regionTableView.delegate = self
             cell.regionTableView.dataSource = self
-            regionsTableViewRef = cell.regionTableView
+            regionsTableView = cell.regionTableView
+            cell.regionTableView.reloadData()
             
-            // setup selected regions
-            var selectedRegionsString = ""
-            for item in selectedRegions {
-                if item.code == selectedRegions.first?.code {
-                    selectedRegionsString = "\(item.title)"
-                } else {
-                    selectedRegionsString = "\(selectedRegionsString), \(item.title)"
-                }
-            }
-            
-            cell.selectedRegionsLabel.text = "Selected Regions: \(selectedRegionsString)"
-
             // only show region info if we are using region filters
-            cell.showRegionsViewSwitch.isOn = DefaultsManager.shared.showRegionFilter
+            cell.regionContainerView.isHidden = !filters.showRegionFilter
+            cell.showRegionsViewSwitch.isOn = filters.showRegionFilter
             cell.showRegionsViewSwitch.addTarget(self, action: #selector(filterByRegionSwitchChanged(_:)), for: .valueChanged)
-            
-            if cell.showRegionsViewSwitch.isOn {
-                cell.regionContainerView.isHidden = false
-            } else {
-                cell.regionContainerView.isHidden = true
-            }
             
             return cell
             
@@ -138,24 +209,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         else if indexPath.row == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterClassCell", for: indexPath) as! FilterClassCollectionViewCell
             
-             classFilters = DefaultsManager.shared.classFilter
-            
-             for classFilter in classFilters {
-                if classFilter == 1 {
-                    cell.classSwitch1.isOn = true
-                } else if classFilter == 2 {
-                    cell.classSwitch2.isOn = true
-                } else if classFilter == 3 {
-                    cell.classSwitch3.isOn = true
-                } else if classFilter == 4 {
-                    cell.classSwitch4.isOn = true
-                } else if classFilter == 5 {
-                    cell.classSwitch5.isOn = true
-                }
-            }
-             
-            print("ClassFilters: \(classFilters)")
-
+            cell.classSwitch1.isOn = filters.classFilter.contains(1)
+            cell.classSwitch2.isOn = filters.classFilter.contains(2)
+            cell.classSwitch3.isOn = filters.classFilter.contains(3)
+            cell.classSwitch4.isOn = filters.classFilter.contains(4)
+            cell.classSwitch5.isOn = filters.classFilter.contains(5)
             
             cell.classSwitch1.addTarget(self, action: #selector(classFilterChanged(classSwitch:)), for: .valueChanged)
             cell.classSwitch2.addTarget(self, action: #selector(classFilterChanged(classSwitch:)), for: .valueChanged)
@@ -180,7 +238,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.currentLocationAddressLabel.text = ""
             
             // setup filter switch and visibility as needed
-            if DefaultsManager.shared.showDistanceFilter == false {
+            if !filters.showDistanceFilter {
                 cell.filterByDistanceSwitch.isOn = false
                 cell.currentLocationViewContainer.isHidden = true
                 cell.filterDistanceSliderViewContainer.isHidden = true
@@ -193,7 +251,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
 
             // set the filter to the correct value and show on UI
-            cell.distanceFilterSlider.value = Float(Int(DefaultsManager.shared.distanceFilter))
+            cell.distanceFilterSlider.value = Float(Int(filters.distanceFilter))
             
             cell.currentLocationActivityIndicator.isHidden = false
             cell.currentLocationActivityIndicator.startAnimating()
@@ -220,182 +278,119 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     locationManager.startUpdatingLocation()
                 }
             }
-
-            DefaultsManager.shared.distanceFilter = Double(cell.distanceFilterSlider.value)
             
-            if cell.distanceFilterSlider.value == 0 {
-                cell.distanceFilterLabel.text = "Search Any Distance"
-            } else {
-                cell.distanceFilterLabel.text = "\(Int(cell.distanceFilterSlider.value)) miles"
-            }
-
+            distanceFilterLabel = cell.distanceFilterLabel
+            
+            cell.distanceFilterLabel.text = distanceFilterDescription
+            cell.distanceFilterSlider.isContinuous = true
             cell.distanceFilterSlider.addTarget(self, action: #selector(distanceSliderChanged(distanceSlider:)), for: .valueChanged)
             cell.filterByDistanceSwitch.addTarget(self, action: #selector(filterByDistanceSwitchChanged(_:)), for: .valueChanged)
             
             return cell
         }
     }
-    
+}
+
+//
+// MARK: - UIScrollViewDelegate
+//
+extension FilterViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if let indexPath = contentCollectionView.indexPathsForVisibleItems.first {
-            
             filterSegmentControl.selectedSegmentIndex = indexPath.row
-            
         }
     }
-
+}
     
-    
-    // MARK - Region UITableViewDelegate Functions
-    
+//
+// MARK: - UITableViewDelegate, UITableViewDataSource
+//
+extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        switch section {
+        case 0:
             return usaRegions.count
-        } else {
+        case 1:
             return internationalRegions.count
+        default:
+            return 0
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
+        switch section {
+        case 0:
             return "USA Regions:"
-        } else {
+        case 1:
             return "International Regions:"
+        default:
+            return nil
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let region = indexPath.section == 0 ? usaRegions[indexPath.row] : internationalRegions[indexPath.row]
-        
+        let region = region(for: indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: "RegionCell", for: indexPath)
         
         cell.textLabel?.text = "\(region.title), \(region.country)"
-        
-        if selectedRegions.contains(where: { $0.code == region.code }) {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
+        cell.accessoryType = filters.regionsFilter.contains(region.code) ? .checkmark : .none
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let regions = indexPath.section == 0 ? usaRegions : internationalRegions
-        let region = regions[indexPath.row]
-        
-        if selectedRegions.contains(where: { $0.code == region.code }) {
-            selectedRegions.removeAll { $0.code == region.code }
-        } else {
-            selectedRegions.append(region)
-        }
-                
-        // save regions
-        saveRegionChoices()
-        
-        // reloading the table view
-        guard let tableView = regionsTableViewRef else { return }
-        tableView.reloadData()
-        
+        toggle(region: region(for: indexPath))
         contentCollectionView.reloadData()
     }
     
-    func saveRegionChoices() {
-        var regionCodes:[String] = []
-        for item in selectedRegions {
-            regionCodes.append(item.code)
+    private func region(for indexPath: IndexPath) -> Region {
+        if indexPath.section == 0 {
+            return usaRegions[indexPath.row]
+        } else {
+            return internationalRegions[indexPath.row]
         }
-        
-        DefaultsManager.shared.regionsFilter = regionCodes
-        
-        // This used to write to DefaultsManager to try and indicate that the region filter had changed
-        // AWTODO: should this broadcast changes? Use a Notification if so
     }
-    
-    func loadRegions() {
-        selectedRegions.removeAll()
-        
-        let regionStrings:[String] = DefaultsManager.shared.regionsFilter
-        for item in regionStrings {
-            let region = Region.regionByCode(code: item)
-            if let region = region {
-                selectedRegions.append(region)
-            }
-        }
-        
-        selectedRegionsOrig = selectedRegions
+}
+
+//
+// MARK: - UISearchBarDelegate
+//
+extension FilterViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        usaRegions = search(Region.states, by: searchText)
+        internationalRegions = search(Region.international, by: searchText)
         
-        if searchText.count == 0 {
-            usaRegions = Region.states
-            internationalRegions = Region.international
-        } else {
-            usaRegions = Region.states.filter {
-                
-                let codeIndex = $0.code.index($0.code.endIndex, offsetBy: -2)
-                let codeString = String($0.code.suffix(from: codeIndex))
-                
-                return $0.title.uppercased().contains(searchText.uppercased()) || $0.country.uppercased().contains(searchText.uppercased()) ||  codeString.uppercased().contains(searchText.uppercased())
-            }
-                    
-            internationalRegions = Region.international.filter {
-                let codeIndex = $0.code.index($0.code.endIndex, offsetBy: -2)
-                let codeString = String($0.code.suffix(from: codeIndex))
-                
-                return $0.title.uppercased().contains(searchText.uppercased()) || $0.country.uppercased().contains(searchText.uppercased()) || codeString.uppercased().contains(searchText.uppercased())
-            }
-        }
-
-        guard let tableView = regionsTableViewRef else { return }
-        tableView.reloadData()
+        // Only reload the regions table; reloading the whole collection view would remove focus from the search bar
+        regionsTableView?.reloadData()
     }
     
-    
-    //
-    // MARK - Class Filtering
-    //
-    
-
-    // Update the switch and store changes in UserDefaults
-    @objc func classFilterChanged(classSwitch: UISwitch) {
-        addRemoveClassFilter(filterClass: classSwitch.tag)
-    }
-    
-    
-    // Checks if class filter exists and adds / removes
-    // as needed - then stores in persistent storage
-    func addRemoveClassFilter(filterClass: Int) {
-
-        if classFilters.contains(filterClass) {
-            if let removeIndex = classFilters.firstIndex(of: filterClass) {
-                classFilters.remove(at: removeIndex)
-            }
-        } else {
-            classFilters.append(filterClass)
+    private func search(_ regions: [Region], by query: String) -> [Region] {
+        guard !query.isEmpty else {
+            return regions
         }
         
-        // store any changes in user defaults
-        DefaultsManager.shared.classFilter = classFilters
-    }
-
-    
-    //
-    // MARK - Distance Filtering
-    //
-    @objc func updateLocationButtonPressed(_ sender: Any) {
-        if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
-            locationManager.startUpdatingLocation()
+        let q = query.uppercased()
+        
+        return regions.filter {
+            $0.title.uppercased().contains(q) ||
+            $0.country.uppercased().contains(q) ||
+            $0.abbreviation.uppercased().contains(q)
         }
     }
-    
+}
+
+//
+// MARK: - CLLocationManagerDelegate
+//
+extension FilterViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             locationManager.stopUpdatingLocation()
@@ -413,57 +408,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             locationManager.startUpdatingLocation()
         }
     }
-
-    func updateFilterBy(shouldFilterByRegion: Bool) {
-        if shouldFilterByRegion {
-            DefaultsManager.shared.showRegionFilter = true
-            DefaultsManager.shared.showDistanceFilter = false
-        } else {
-            DefaultsManager.shared.showRegionFilter = false
-            DefaultsManager.shared.showDistanceFilter = true
-        }
-        
-        contentCollectionView.reloadData()
-    }
-    
-    @objc func filterByRegionSwitchChanged(_ regionSwitch: UISwitch) {
-
-        updateFilterBy(shouldFilterByRegion: regionSwitch.isOn)
-        
-        regionsTableViewRef?.reloadData()
-    }
-    
-    @objc func filterByDistanceSwitchChanged(_ distanceSwitch: UISwitch) {
-        
-        updateFilterBy(shouldFilterByRegion: !distanceSwitch.isOn)
-        
-        contentCollectionView.reloadData()
-    }
-    
-    @objc func distanceSliderChanged(distanceSlider: UISlider) {
-        
-        DefaultsManager.shared.distanceFilter = Double(distanceSlider.value)
-        
-        contentCollectionView.reloadData()
-    }
-    
-    
-    //
-    // MARK - Navigation
-    //
-    
-    @IBAction func doneButtonPressed(_ sender: Any) {
-        if DefaultsManager.shared.showRegionFilter && DefaultsManager.shared.regionsFilter.count == 0 {
-            DuffekDialog.shared.showOkDialog(title: "Region Required", message: "Please select a region or choose to filter by Distance before continuing")
-        }
-        
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
 }
+
+
