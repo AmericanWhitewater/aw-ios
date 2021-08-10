@@ -20,8 +20,6 @@ class OnboardLocationViewController: UIViewController {
     let geoCoder = CLGeocoder()
     var userLocation:CLLocation?
     
-    var referenceViewController: UIViewController?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -95,13 +93,7 @@ class OnboardLocationViewController: UIViewController {
                     regionCodes: self.regionCodes(placemarks: placemarks)
                 )
                 
-                // dismiss this view controller and tell the referencing ViewController to refresh
-                // AWTODO: Post a notification about this instead of coupling to the runs list controller
-                self.dismiss(animated: true, completion: {
-                    if let viewVC = self.referenceViewController as? RunsListViewController {
-                        viewVC.updateData()
-                    }
-                })
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }
@@ -161,13 +153,7 @@ extension OnboardLocationViewController: CLLocationManagerDelegate {
             DefaultsManager.shared.filters.regionsFilter = codes
         }
         
-        // dismiss this modal view controller and tell the referencing ViewController to refresh
-        // AWTODO: Post a notification about this instead of coupling to the runs list controller
-        self.dismiss(animated: true, completion: {
-            if let viewVC = self.referenceViewController as? RunsListViewController {
-                viewVC.updateData()
-            }
-        })
+        self.dismiss(animated: true, completion: nil)
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

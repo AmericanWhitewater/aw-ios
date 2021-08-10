@@ -56,12 +56,12 @@ class RunsListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        updateData();
+        updateData()
         
         showOnboardingIfNeeded()
 
         // check if user is logged in
-        let keychain = KeychainSwift();
+        let keychain = KeychainSwift()
         //keychain.set(credential.oauthToken, forKey: "ios-aw-auth-key")
         //keychain.delete("ios-aw-auth-key") // for sign out
         if keychain.get(AWGC.AuthKeychainToken) == nil || DefaultsManager.shared.signedInAuth == nil {
@@ -86,8 +86,7 @@ class RunsListViewController: UIViewController {
             return
         }
  
-        modalOnboardingVC.modalPresentationStyle = .overCurrentContext
-        modalOnboardingVC.referenceViewController = self
+        modalOnboardingVC.modalPresentationStyle = .fullScreen
         tabBarController?.present(modalOnboardingVC, animated: true, completion: nil)
     }
 
