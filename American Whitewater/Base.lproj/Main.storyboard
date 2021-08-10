@@ -1403,6 +1403,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="b3h-Tz-mMT">
                                     <rect key="frame" x="0.0" y="496.00000076293941" width="375" height="1"/>
+                                    <rect key="frame" x="0.0" y="622.00000076293941" width="375" height="1"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
@@ -2859,11 +2860,7 @@ and check your internet connection.</string>
                     </view>
                     <navigationItem key="navigationItem" id="nT0-Ge-RoP">
                         <nil key="title"/>
-                        <barButtonItem key="backBarButtonItem" title=" " id="iAe-YN-hef"/>
-                        <barButtonItem key="leftBarButtonItem" image="infoButton" id="5in-xj-xjg">
-                            <color key="tintColor" name="white"/>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="F" image="filter" style="plain" id="zvs-6E-Syr">
+                        <barButtonItem key="rightBarButtonItem" title="Filters" image="filter" style="plain" id="zvs-6E-Syr">
                             <connections>
                                 <action selector="selectFiltersPressed:" destination="Q0W-x7-WVJ" id="H1i-Ig-wSg"/>
                             </connections>
@@ -5832,7 +5829,6 @@ Don't worry, you'll be checking levels in no time!</string>
         <image name="icon_news_selected" width="22" height="22"/>
         <image name="icon_runs" width="22" height="22"/>
         <image name="icon_runs_selected" width="22" height="22"/>
-        <image name="infoButton" width="22" height="22"/>
         <image name="location_arrow" width="16" height="15"/>
         <image name="lowPin" width="19" height="28"/>
         <image name="map" width="171" height="171"/>

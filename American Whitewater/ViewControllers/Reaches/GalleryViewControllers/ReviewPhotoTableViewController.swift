@@ -65,12 +65,6 @@ class ReviewPhotoTableViewController: UITableViewController {
 
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        
-        if captionTextField.text?.count == 0 || captionTextField.text == CAPTION_PLACEHOLDER {
-            DuffekDialog.shared.showOkDialog(title: "Caption Required", message: "Please enter a valid caption before saving your photo.")
-            return
-        }
-        
         if let image = takenImage, let selectedRun = selectedRun, let capText = captionTextField.text {
             
             var description = ""
