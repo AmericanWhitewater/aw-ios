@@ -147,27 +147,32 @@ class AddRiverFlowTableViewController: UITableViewController {
     }
 
     // FIXME: this doesn't send flowObservationValue
+    // FIXME: gageId is dropped on the floor, see API.swift
     func postFlowWithoutPhoto(reachId: Int, gageId: Int?, metricId: Int, title: String, dateString: String, reading: Double) {
-        API.shared.postGaugeObservation(reachId: reachId, metricId: metricId, title: title, dateString: dateString, reading: reading, callback: { (postResult) in
-            // handle post result
-            AWProgressModal.shared.hide()
-                        
-            if let postResult = postResult {
-                print("Flow Posted: \(postResult.title ?? "no title") -- \(postResult.postDate ?? "no date")")
+        API.shared.postGaugeObservation(reachId: reachId, metricId: metricId, title: title, dateString: dateString, reading: reading) { (postResult, error) in
+            defer {
+                AWProgressModal.shared.hide()
             }
+            
+            
+            if let error = error {
+                switch error {
+                case AWGQLApiHelper.Errors.notSignedIn:
+                    self.showToast(message: "You must sign in before adding a flow.")
+                    self.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
+                default:
+                    print("Error posting observation: ", error.localizedDescription)
+                }
+                
+                return
+            }
+            
+            guard let postResult = postResult else { return }
+            
+            print("Flow Posted: \(postResult.title ?? "no title") -- \(String(describing: postResult.date))")
             
             self.showToast(message: "Your flow observation has been reported and saved.")
             self.navigationController?.popViewController(animated: true)
-            
-        }) { (error) in
-            AWProgressModal.shared.hide()
-            
-            if case AWGQLApiHelper.Errors.notSignedIn = error {
-                self.showToast(message: "You must sign in before adding a flow.")
-                self.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
-            } else {
-                print("Error posting observation: ", error.localizedDescription)
-            }
         }
     }
     

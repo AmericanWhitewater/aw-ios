@@ -52,4 +52,35 @@ struct GaugeObservation: Hashable, Equatable {
         }
     }
     
+    init(postUpdate: PostObservationMutation.Data.PostUpdate) {
+        self.id = postUpdate.id
+        self.title = postUpdate.title
+        self.detail = postUpdate.detail
+        self.uid = postUpdate.uid
+        self.author = postUpdate.user?.uname
+        if let date = postUpdate.postDate {
+            self.date = Self.dateFormatter.date(from: date)
+        } else {
+            self.date = nil
+        }
+        self.reachId = postUpdate.reachId
+        self.gaugeId = postUpdate.gaugeId
+        self.metric = postUpdate.metric?.unit
+        self.reading = postUpdate.reading
+    
+        self.photos = postUpdate.photos.compactMap { photo in
+            guard
+                let image = photo.image,
+                let uri = image.uri,
+                let thumb = uri.thumb,
+                let medium = uri.medium,
+                let big = uri.big
+            else {
+                return nil
+            }
+            
+            return Photo(thumb: thumb, med: medium, big: big)
+        }
+    }
+    
 }

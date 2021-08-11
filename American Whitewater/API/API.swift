@@ -164,10 +164,22 @@ struct API {
         title: String,
         dateString: String,
         reading: Double,
-        callback: @escaping AWGQLApiHelper.PostObservationsCallback,
-        errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
+        completion: @escaping (GaugeObservation?, Error?) -> Void
     ) {
-        graphQLHelper.postGaugeObservationFor(reach_id: reachId, metric_id: metricId, title: title, dateString: dateString, reading: reading, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.postGaugeObservationFor(
+            reach_id: reachId,
+            metric_id: metricId,
+            title: title,
+            dateString: dateString,
+            reading: reading,
+            callback: {
+                let obs = GaugeObservation(postUpdate: $0)
+                completion(obs, nil)
+            },
+            errorCallback: {
+                completion(nil, $0)
+            }
+        )
     }
     
     public func getPhotos(

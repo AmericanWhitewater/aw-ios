@@ -13,7 +13,7 @@ class AWGQLApiHelper
     typealias PhotoFileUploadCallback = ()->Void // (PostPhotoWithFileMutation.Data.PhotoFileUpdate, PostPhotoMutation.Data) -> Void
     typealias PhotoUploadCallback = (PhotoUploadWithPropsMutation.Data.PhotoFileUpdate, PhotoPostUpdateMutation.Data.PostUpdate) -> Void
     typealias ObservationsCallback = ([Observations2Query.Data.Post.Datum]?) -> Void
-    typealias PostObservationsCallback = (PostObservationMutation.Data.PostUpdate?) -> Void
+    typealias PostObservationsCallback = (PostObservationMutation.Data.PostUpdate) -> Void
     typealias PostPhotoObservationCallback = (PostObservationPhotoMutation.Data.PhotoFileUpdate, PostObservationMutation.Data) -> Void
     typealias AWMetricsCallback = ([String:String]) -> Void
     typealias AWGaugesListCallback = ([ [String : String] ]) -> Void
@@ -195,11 +195,13 @@ class AWGQLApiHelper
                 print("Posting alert with gql...")
                 switch result {
                     case .success(let graphQLResult):
-                        if let data = graphQLResult.data, let postUpdate = data.postUpdate {
+                    if let postUpdate = graphQLResult.data?.postUpdate {
                             print("PostUpdate: ", postUpdate)
                             callback(postUpdate)
                         } else {
                             print("nil response: \(graphQLResult)")
+                            // FIXME: is this actually a success? can the server succeed and not return data.postUpdate
+                            errorCallback(Errors.graphQLError(message: "No update returned"))
                         }
                     case .failure(let error):
                         print("GraphQL Error: \(error)")
