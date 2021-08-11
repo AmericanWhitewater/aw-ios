@@ -11,10 +11,8 @@ import AVFoundation
 import SafariServices
 
 class GalleryViewController: UIViewController {
-
     var selectedRun: Reach?
     var imageLinks = [[String:String?]]()
-    var selectedImageUrl = ""
     
     @IBOutlet weak var runNameLabel: UILabel!
     @IBOutlet weak var runSectionLabel: UILabel!
@@ -25,24 +23,36 @@ class GalleryViewController: UIViewController {
     @IBOutlet weak var captionLabel: UILabel!
     @IBOutlet weak var riverObservationLabel: UILabel!
     
+    // Expand photo button is implemented as a button and an image that's not a child of the button:
+    @IBOutlet weak var expandPhotoIcon: UIImageView!
+    @IBOutlet weak var expandPhotoButton: UIButton!
+    
     var awImagePicker: AWImagePicker!
     
     var refreshControl = UIRefreshControl()
     
+    private var selectedImageUrl: URL? = nil {
+        didSet {
+            self.expandPhotoIcon.isHidden = selectedImageUrl == nil
+            self.expandPhotoButton.isHidden = selectedImageUrl == nil
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        expandPhotoIcon.isHidden = true
+        expandPhotoButton.isHidden = true
 
         runNameLabel.text = selectedRun?.name
         runSectionLabel.text = selectedRun?.section
         
         awImagePicker = AWImagePicker(presentationController: self, delegate: self)
         
-        if let selectedRun = selectedRun, let photoUrl = selectedRun.photoUrl,
-            let url = URL(string: photoUrl) {
+        if let url = initialPhotoURL {
+            selectedImageUrl = url
             selectedImageView.load(url: url)
-            selectedImageUrl = photoUrl
         }
-
         
         // setup pull to refresh
         refreshControl.addTarget(self, action: #selector(refreshPictures), for: .valueChanged)
@@ -52,17 +62,7 @@ class GalleryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // if nothing is selected we try and load one
-        if let selectedRun = selectedRun, selectedRun.photoUrl == nil, imageLinks.count > 0 {
-            if let firstImage = imageLinks.first, let imgLink = firstImage["med"] as? String {
-                selectedImageUrl = "\(AWGC.AW_BASE_URL)\(imgLink)"
-                print("Trying to load url: \(selectedImageUrl)")
-                if let firstUrl = URL(string: selectedImageUrl) {
-                    selectedImageView.load(url: firstUrl)
-                }
-            }
-        }
-        
+
         // reload local data while we wait for
         // API data
         galleryCollectionView.reloadData()
@@ -72,22 +72,13 @@ class GalleryViewController: UIViewController {
     }
 
     @IBAction func expandPhotoButtonPressed(_ sender: Any) {
-        
-        let errorTitle = "Image Issue"
-        let errorMessage = "Unfortunately this image has an issue that is preventing us from displaying it in a larger view. Please contact us to correct this issue."
-        
-        if !selectedImageUrl.contains("https://") && !selectedImageUrl.contains("http://") {
-            DuffekDialog.shared.showOkDialog(title: errorTitle, message: errorMessage)
+        guard let url = selectedImageUrl else {
             return
         }
         
-        if let url = URL(string: selectedImageUrl) {
-            let config = SFSafariViewController.Configuration()
-            let vc = SFSafariViewController(url: url, configuration: config)
-            present(vc, animated: true)
-        } else {
-            DuffekDialog.shared.showOkDialog(title: errorTitle, message: errorMessage)
-        }
+        let config = SFSafariViewController.Configuration()
+        let vc = SFSafariViewController(url: url, configuration: config)
+        present(vc, animated: true)
     }
     
     @objc @IBAction func addPhotoButtonPressed(_ sender: UIButton) {
@@ -124,7 +115,7 @@ class GalleryViewController: UIViewController {
     }
 
     
-    @objc func refreshPictures() {
+    @objc private func refreshPictures() {
         guard let selectedRun = selectedRun else { print("selected run is nil"); return }
                 
         AWGQLApiHelper.shared.getPhotosForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 100, callback: { (photoResults) in
@@ -173,7 +164,7 @@ class GalleryViewController: UIViewController {
         }
     }
 
-    func alreadyHavePhoto(thumb: String) -> Bool {
+    private func alreadyHavePhoto(thumb: String) -> Bool {
         for image in imageLinks {
             if image["thumb"] as? String == thumb {
                 return true
@@ -182,24 +173,82 @@ class GalleryViewController: UIViewController {
         return false
     }
     
+    private var initialPhotoURL: URL? {
+        // Prefer the selectedRun's photoURL
+        if let photoUrl = selectedRun?.photoUrl, let url = URL(string: photoUrl) {
+            return url
+        }
+        
+        // Otherwise, take the first photo from imageLinks
+        if
+            let imgLink = imageLinks.first?["med"] as? String,
+            let url = URL(string: "\(AWGC.AW_BASE_URL)\(imgLink)")
+        {
+            return url
+        }
+        
+        // Otherwise, there's no initial photo
+        return nil
+    }
+    
+    /// Set the selected image and all its associated labels, failing if an image URL can't be constructed
+    private func setSelectedImage(_ imageDict: [String: String?]){
+        guard
+            let medUrlString = imageDict["med"] as? String,
+            let url = URL(string: "\(AWGC.AW_BASE_URL)\(medUrlString)")
+        else {
+            return
+        }
+        
+        selectedImageUrl = url
+        
+        if let author = imageDict["author"] as? String {
+            self.postedByLabel.text = "Posted by: \(author.count > 0 ? author : "n/a")"
+        } else {
+            self.postedByLabel.text = ""
+        }
+        
+        if let postedDate = imageDict["photoDate"] as? String {
+            self.postedDateLabel.text = "Date: \(postedDate.count > 0 ? postedDate : "n/a")"
+        } else {
+            self.postedDateLabel.text = ""
+        }
+        
+        if let caption = imageDict["caption"] as? String {
+            self.captionLabel.text = caption.count > 0 ? caption : "No Caption Available"
+        } else {
+            self.captionLabel.text = "No Caption Available"
+        }
+        
+        if let description = imageDict["description"] as? String {
+            self.captionLabel.text = "\(self.captionLabel.text ?? "")\n\(description)"
+        }
+        
+        if let reading = imageDict["reading"] as? String {
+            self.riverObservationLabel.text = reading.count > 0 ? reading : ""
+        } else {
+            self.riverObservationLabel.text = ""
+        }
+    }
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == Segue.reviewPhotoSeg.rawValue {
-            let reviewVC = segue.destination as? ReviewPhotoTableViewController
-            if let image = sender as? UIImage {
-                reviewVC?.takenImage = image
-                reviewVC?.selectedRun = selectedRun
-                reviewVC?.senderVC = self
-            }
+        guard
+            segue.identifier == Segue.reviewPhotoSeg.rawValue,
+            let reviewVC = segue.destination as? ReviewPhotoTableViewController,
+            let image = sender as? UIImage
+        else {
+            return
         }
+        
+        reviewVC.takenImage = image
+        reviewVC.selectedRun = selectedRun
+        reviewVC.senderVC = self
     }
 }
 
 extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
             return CGSize(width: 335, height: 45)
@@ -258,37 +307,7 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
         if indexPath.section == 0 { return }
         if indexPath.section == 1 && imageLinks.count == 0 { return }
         
-        let image = imageLinks[indexPath.row]
-        
-        if let author = image["author"] as? String {
-            self.postedByLabel.text = "Posted by: \(author.count > 0 ? author : "n/a")"
-        } else {
-            self.postedByLabel.text = ""
-        }
-        
-        if let postedDate = image["photoDate"] as? String {
-            self.postedDateLabel.text = "Date: \(postedDate.count > 0 ? postedDate : "n/a")"
-        } else {
-            self.postedDateLabel.text = ""
-        }
-        
-        if let caption = image["caption"] as? String {
-            self.captionLabel.text = caption.count > 0 ? caption : "No Caption Available"
-        } else {
-            self.captionLabel.text = "No Caption Available"
-        }
-        
-        if let description = image["description"] as? String {
-            self.captionLabel.text = "\(self.captionLabel.text ?? "")\n\(description)"
-        }
-        
-        if let reading = image["reading"] as? String {
-            self.riverObservationLabel.text = reading.count > 0 ? reading : ""
-        } else {
-            self.riverObservationLabel.text = ""
-        }
-        
-        selectedImageUrl = "\(AWGC.AW_BASE_URL)\(imageLinks[indexPath.row]["med"] as? String ?? "")"
+        setSelectedImage(imageLinks[indexPath.row])
         
         if let cell = collectionView.cellForItem(at: indexPath) as? AwImageCell {
             selectedImageView.image = cell.imageView.image
