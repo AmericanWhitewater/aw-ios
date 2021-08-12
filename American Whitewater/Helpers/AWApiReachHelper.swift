@@ -217,11 +217,8 @@ class AWApiReachHelper {
             reach.gageMin = newReach.gauge_min
             reach.state = newReach.state
             
-            if let altName = newReach.altname, !altName.isEmpty {
-                reach.section = altName
-            } else {
-               reach.section = newReach.section
-            }
+            reach.altname = newReach.altname
+            reach.section = newReach.section
 
             // API returns the total seconds before the present time as a string
             // converting this to a Date
