@@ -7,35 +7,18 @@ class Location {
     static let shared = Location()
     private init() {}
     
-    // User takes an action that requires location, like clicking on the my location button.
-    func checkLocationStatusOnUserAction(manager: CLLocationManager) -> Bool {
-        switch CLLocationManager.authorizationStatus() {
-        case .authorizedAlways, .authorizedWhenInUse:
-            return true
-        case .notDetermined:
-            manager.requestWhenInUseAuthorization()
-        case .denied:
-            showLocationDeniedMessage()
-        case .restricted:
-            // TODO: should this also show the location denied message?
-            // (it indicates that location services aren't available, but probably for circumstances the user can't control)
-            break
-        
-        @unknown default:
-            break
-        }
-        
-        return false
-    }
-
     // App needs location data, but not from a direct user action.
-    func checkLocationStatusInBackground(manager: CLLocationManager) -> Bool {
+    func checkLocationStatus(manager: CLLocationManager, notifyDenied: Bool = false) -> Bool {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse, .authorizedAlways:
             return true
         case .notDetermined:
             manager.requestWhenInUseAuthorization()
-        case .restricted, .denied:
+        case .denied:
+            if notifyDenied {
+                showLocationDeniedMessage()
+            }
+        case .restricted:
             break
         @unknown default:
             break

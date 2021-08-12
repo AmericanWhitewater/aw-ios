@@ -57,7 +57,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
+        if Location.shared.checkLocationStatus(manager: locationManager) {
             showUserLocation()
         }
     }
@@ -204,7 +204,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     @IBAction func showUserLocationPressed(_ sender: Any) {
-        if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
+        if Location.shared.checkLocationStatus(manager: locationManager, notifyDenied: true) {
             showUserLocation()
             
             if let mapView = mapView {

@@ -67,7 +67,7 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
     @IBAction func nextButtonPressed(_ sender: Any) {
         
         if nextButton.titleLabel?.text == "Use Your Current Location" {
-            if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
+            if Location.shared.checkLocationStatus(manager: locationManager, notifyDenied: true) {
                 locationManager.startUpdatingLocation()
             }
         } else if nextButton.titleLabel?.text == "Use Entered Zipcode" {

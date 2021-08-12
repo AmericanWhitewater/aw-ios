@@ -39,7 +39,7 @@ class FilterViewController: UIViewController {
 
         contentCollectionView.reloadData()
         
-        if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
+        if Location.shared.checkLocationStatus(manager: locationManager) {
             locationManager.startUpdatingLocation()
         }
     }
@@ -121,7 +121,7 @@ class FilterViewController: UIViewController {
     //
     
     @objc func updateLocationButtonPressed(_ sender: Any) {
-        if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
+        if Location.shared.checkLocationStatus(manager: locationManager, notifyDenied: true) {
             locationManager.startUpdatingLocation()
         }
     }
@@ -273,7 +273,7 @@ extension FilterViewController: UICollectionViewDelegate, UICollectionViewDataSo
                     }
                 }                
             } else {
-                if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
+                if Location.shared.checkLocationStatus(manager: locationManager) {
                     locationManager.startUpdatingLocation()
                 }
             }
