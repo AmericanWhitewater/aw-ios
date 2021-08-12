@@ -11,55 +11,7 @@ class DuffekDialog {
     var alertViewController: NYAlertViewController?
     private var datePicker: UIDatePicker?
     
-    /// Shows a simple Alert Dialog with an Ok Button added
-    /// Auto closes and allows for tap and swipe to close gestures
-    ///
-    /// - Parameters:
-    ///   - title: title of the dialog
-    ///   - message: the message to display
-    func showOkDialog(title: String, message: String) {
-        
-        // setup standard alert dialog
-        alertViewController = styledAlert()
-        
-        if let alertViewController = alertViewController {
-            alertViewController.title = title
-            alertViewController.message = "\n\(message)\n"
-            alertViewController.swipeDismissalGestureEnabled = true
-            alertViewController.backgroundTapDismissalGestureEnabled = true
-            
-            let okAction = NYAlertAction(title: "Ok", style: UIAlertAction.Style.default) { (action) in
-                alertViewController.dismiss(animated: true, completion: nil)
-            }
-            
-            alertViewController.addAction(okAction)
-            
-            self.displayAlert(alertController: alertViewController)
-        }
-    }
-    
-    func showOkDialog(title: String, message: String, completion: (()->Void)?) {
-        
-        // setup standard alert dialog
-        alertViewController = styledAlert()
-        
-        if let alertViewController = alertViewController {
-            alertViewController.title = title
-            alertViewController.message = "\n\(message)\n"
-            alertViewController.swipeDismissalGestureEnabled = true
-            alertViewController.backgroundTapDismissalGestureEnabled = true
-            
-            let okAction = NYAlertAction(title: "Ok", style: UIAlertAction.Style.default) { (action) in
-                alertViewController.dismiss(animated: true, completion: completion)
-            }
-            
-            alertViewController.addAction(okAction)
-            
-            self.displayAlert(alertController: alertViewController)
-        }
-    }
-    
-    
+
     /// Shows a basic alert and the user can specify standard and cancel buttons
     ///
     /// - Parameters:
@@ -94,33 +46,6 @@ class DuffekDialog {
             self.displayAlert(alertController: alertViewController)
         }
     }
-    
-    
-    func showStandardDialogWithSuccessCompletion(title: String, message: String, buttonTitle: String, successCompletion: @escaping ()->Void) {
-        
-        // setup standard alert dialog
-        alertViewController = styledAlert()
-        
-        if let alertViewController = alertViewController {
-            alertViewController.title = title
-            alertViewController.message = "\n\(message)\n"
-            
-            // add users defined actions
-            let buttonAction = NYAlertAction(title: buttonTitle, style: .default) { (_) in
-                self.alertViewController?.dismiss(animated: true, completion: successCompletion)
-            }
-            alertViewController.addAction(buttonAction)
-            
-            let cancelAction = NYAlertAction(title: "Cancel", style: .cancel) { (_) in
-                self.alertViewController?.dismiss(animated: true, completion: nil)
-            }
-            alertViewController.addAction(cancelAction)
-            
-            self.displayAlert(alertController: alertViewController)
-        }
-    }
-    
-  
     
     func showPickerDialog(pickerDataSource:UIPickerViewDataSource, pickerDelegate: UIPickerViewDelegate, title: String, message: String, selectedActionPressed: @escaping ()->Void) {
         
