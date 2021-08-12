@@ -17,6 +17,7 @@
 		4AC4BB5A26A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */; };
 		4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */; };
 		4ADE944D26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */; };
+		4AFEA9CA26C4E85400738A62 /* MKMapView+hasLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFEA9C926C4E85400738A62 /* MKMapView+hasLocation.swift */; };
 		630586642350428800A436BE /* RunRapidDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */; };
 		63081BF8236B2EDE00FC3823 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63081BF7236B2EDE00FC3823 /* GoogleService-Info.plist */; };
 		63081BFA236B2F8500FC3823 /* OpenTerminal.sh in Resources */ = {isa = PBXBuildFile; fileRef = 63081BF9236B2F8500FC3823 /* OpenTerminal.sh */; };
@@ -159,6 +160,7 @@
 		4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+difference.swift"; sourceTree = "<group>"; };
+		4AFEA9C926C4E85400738A62 /* MKMapView+hasLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+hasLocation.swift"; sourceTree = "<group>"; };
 		630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunRapidDetailsTableViewController.swift; sourceTree = "<group>"; };
 		63081BF6236B2E7500FC3823 /* AW.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AW.entitlements; sourceTree = "<group>"; };
 		63081BF7236B2EDE00FC3823 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 				2FE342CD26A1FF8100352D1E /* UIViewController+Toast.swift */,
 				4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */,
 				4A7F52FF26BA192000DFBDFF /* UIStoryboard+convenience.swift */,
+				4AFEA9C926C4E85400738A62 /* MKMapView+hasLocation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -964,6 +967,7 @@
 				63DEE01D24ABB35600638E84 /* RiverFlowsViewController.swift in Sources */,
 				63E32B1A2357F2A40057DE34 /* FilterRegionCollectionViewCell.swift in Sources */,
 				63FF68FE25AE249100AF0F37 /* ChartXAxisFormatter.swift in Sources */,
+				4AFEA9CA26C4E85400738A62 /* MKMapView+hasLocation.swift in Sources */,
 				63309E43234166BB00E6DBC4 /* FilterViewController.swift in Sources */,
 				63E32B1F2357F3350057DE34 /* FilterDistanceCollectionViewCell.swift in Sources */,
 				63309E32233D965500E6DBC4 /* AboutAWViewController.swift in Sources */,

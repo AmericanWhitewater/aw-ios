@@ -205,10 +205,8 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         if Location.shared.checkLocationStatus(manager: locationManager, notifyDenied: true) {
             showUserLocation()
             
-            if let mapView = mapView {
-                if Location.shared.hasLocation(mapView: mapView) {
-                    mapView.setCenter(mapView.userLocation.coordinate, animated: true)
-                }
+            if let mapView = mapView, mapView.hasLocation {
+                mapView.setCenter(mapView.userLocation.coordinate, animated: true)
             }
         }
     }
