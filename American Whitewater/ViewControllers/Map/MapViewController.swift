@@ -94,8 +94,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func updateFilterButton() {
         navigationItem.rightBarButtonItem?.title = ""
-        
-        let imageName = (filters.classFilter.count < 5 || filters.showDistanceFilter) ? "filterOn" : "filterOff"
+
+        let imageName = (filters.classFilter.count < 5 || filters.isDistance) ? "filterOn" : "filterOff"
         navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: imageName), for: .normal, barMetrics: .default)
     }
     

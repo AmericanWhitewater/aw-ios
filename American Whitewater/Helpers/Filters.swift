@@ -1,10 +1,12 @@
 import Foundation
 
+enum FilterType: String {
+    case region
+    case distance
+}
+
 struct Filters: Equatable {
-    // FIXME: currently it appears that the app tries to treat these as a toggle, i.e. if showDistanceFilter = true, showRegionFilter must be false and vice versa. So why have both? Or should it be an enum?
-    // (See below, the predicates mostly
-    var showDistanceFilter: Bool
-    var showRegionFilter: Bool
+    var filterType: FilterType
     
     var regionsFilter: [String]
     var distanceFilter: Double
@@ -15,9 +17,8 @@ struct Filters: Equatable {
     // MARK: - Some defaults for first run or resetting
     //
     
-    static let defaultByRegionFilters = Filters(        
-        showDistanceFilter: false,
-        showRegionFilter: true,
+    static let defaultByRegionFilters = Filters(
+        filterType: .region,
         regionsFilter: [], // FIXME?
         distanceFilter: 100,
         classFilter: [1,2,3,4,5],
@@ -25,13 +26,19 @@ struct Filters: Equatable {
     )
     
     static let defaultByDistanceFilters = Filters(
-        showDistanceFilter: true,
-        showRegionFilter: false,
+        filterType: .distance,
         regionsFilter: [],
         distanceFilter: 100,
         classFilter: [1,2,3,4,5],
         runnableFilter: false
     )
+    public var isRegion: Bool {
+        return filterType == .region
+    }
+    
+    public var isDistance: Bool {
+        return filterType == .distance
+    }
     
     //
     // MARK: - Predicates
@@ -58,9 +65,7 @@ struct Filters: Equatable {
     }
     
     private var regionsPredicate: NSPredicate? {
-        // if we are filtering by distance then ignore regions
-        // FIXME: surely this should be changed to `guard showRegionFilter else { return nil }`? (but see fixme above about these props)
-        if showDistanceFilter {
+        if !isRegion {
             return nil
         }
         
@@ -77,7 +82,7 @@ struct Filters: Equatable {
     
     private var distancePredicate: NSPredicate? {
         guard
-            showDistanceFilter,
+            isDistance,
             distanceFilter > 0
         else {
             return nil
@@ -118,7 +123,7 @@ struct Filters: Equatable {
     ]
     
     public var sortDescriptors: [NSSortDescriptor] {
-        if showDistanceFilter, distanceFilter > 0 {
+        if isDistance, distanceFilter > 0 {
             return Self.sortByDistanceAndName
         } else {
             return Self.sortByName
