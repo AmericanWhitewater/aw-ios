@@ -1,8 +1,8 @@
 import Foundation
 
 enum FilterType: String {
-    case Region = "region"
-    case Distance = "distance"
+    case region
+    case distance
 }
 
 struct Filters: Equatable {
@@ -18,7 +18,7 @@ struct Filters: Equatable {
     //
     
     static let defaultByRegionFilters = Filters(
-        filterType: FilterType.Region,
+        filterType: .region,
         regionsFilter: [], // FIXME?
         distanceFilter: 100,
         classFilter: [1,2,3,4,5],
@@ -26,18 +26,18 @@ struct Filters: Equatable {
     )
     
     static let defaultByDistanceFilters = Filters(
-        filterType: FilterType.Distance,
+        filterType: .distance,
         regionsFilter: [],
         distanceFilter: 100,
         classFilter: [1,2,3,4,5],
         runnableFilter: false
     )
     public var isRegion: Bool {
-        return filterType == FilterType.Region
+        return filterType == .region
     }
     
     public var isDistance: Bool {
-        return filterType == FilterType.Distance
+        return filterType == .distance
     }
     
     //

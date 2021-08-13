@@ -127,7 +127,7 @@ class FilterViewController: UIViewController {
     }
     
     func updateFilterBy(shouldFilterByRegion: Bool) {
-        filters.filterType = shouldFilterByRegion ? FilterType.Region : FilterType.Distance
+        filters.filterType = shouldFilterByRegion ? FilterType.region : FilterType.distance
         
         contentCollectionView.reloadData()
     }

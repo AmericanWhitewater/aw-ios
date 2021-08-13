@@ -108,7 +108,7 @@ class DefaultsManager {
     
     private var filterType: FilterType {
         get {
-            let raw = defaults.string(forKey: Keys.filterType) ?? FilterType.Region.rawValue
+            let raw = defaults.string(forKey: Keys.filterType) ?? FilterType.region.rawValue
             return FilterType(rawValue: raw)!
         }
         set(newFilterType) {
