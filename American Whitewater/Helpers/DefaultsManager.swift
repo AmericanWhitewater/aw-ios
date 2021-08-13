@@ -79,8 +79,7 @@ class DefaultsManager {
     public var filters: Filters {
         get {
             .init(
-                showDistanceFilter: showDistanceFilter,
-                showRegionFilter: showRegionFilter,
+                filterType: filterType,
                 regionsFilter: regionsFilter,
                 distanceFilter: distanceFilter,
                 classFilter: classFilter,
@@ -94,8 +93,7 @@ class DefaultsManager {
                 return
             }
             
-            showDistanceFilter = newValue.showDistanceFilter
-            showRegionFilter = newValue.showRegionFilter
+            filterType = newValue.filterType
             regionsFilter = newValue.regionsFilter
             distanceFilter = newValue.distanceFilter
             classFilter = newValue.classFilter
@@ -108,14 +106,15 @@ class DefaultsManager {
         }
     }
     
-    private var showDistanceFilter: Bool {
-        get { defaults.bool(forKey: Keys.showDistanceFilter) }
-        set { defaults.set(newValue, forKey: Keys.showDistanceFilter) }
-    }
-
-    private var showRegionFilter: Bool {
-        get { defaults.bool(forKey: Keys.showRegionFilter) }
-        set { defaults.set(newValue, forKey: Keys.showRegionFilter) }
+    private var filterType: FilterType {
+        get {
+            let raw = defaults.string(forKey: Keys.filterType) ?? FilterType.Region.rawValue
+            return FilterType(rawValue: raw)!
+        }
+        set(newFilterType) {
+            let raw = newFilterType.rawValue
+            defaults.set(raw, forKey: Keys.filterType)
+        }
     }
     
     private var regionsFilter: [String] {
@@ -139,7 +138,7 @@ class DefaultsManager {
     private var classFilter: [Int] {
         get {
             (defaults.array(forKey: Keys.classFilter) as? [Int]) ??
-            []
+                [1,2,3,4,5]
         }
         set { defaults.set(newValue, forKey: Keys.classFilter) }
     }
@@ -239,8 +238,7 @@ class DefaultsManager {
         static let onboardingCompleted = "onboardingCompletedKey"
         static let regionsFilter = "regionsFilterKey"
         static let distanceFilter = "distanceFilterKey"
-        static let showDistanceFilter = "showDistanceFilterKey"
-        static let showRegionFilter = "showRegionFilterKey"
+        static let filterType = "filterType"
         static let latitude = "latitudeKey"
         static let longitude = "longitudeKey"
         static let classFilter = "classFilterKey"

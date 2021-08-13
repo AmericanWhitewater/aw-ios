@@ -135,7 +135,7 @@ class RunsListViewController: UIViewController {
                 self.showToast(message: "Error fetching data: " + error.localizedDescription)
             }
             
-            if filters.showRegionFilter {
+            if filters.isRegion {
                 if filters.regionsFilter.isEmpty {
                     DuffekDialog.shared.showStandardDialog(title: "Pull All Data?", message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.", buttonTitle: "Continue", buttonFunction: {
                         self.refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)

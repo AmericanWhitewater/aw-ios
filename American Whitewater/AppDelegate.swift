@@ -51,11 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // This nice library moves text fields out of the way of the keyboard automagically
         IQKeyboardManager.shared.enable = true
         
-        // setting first values for first run
-        if !DefaultsManager.shared.completedFirstRun {
-            DefaultsManager.shared.filters = Filters.defaultByRegionFilters
-        }
-        
         // This sets preferred status bar style to .lightContent within our nav controllers
         UINavigationBar.appearance().barStyle = .black
         

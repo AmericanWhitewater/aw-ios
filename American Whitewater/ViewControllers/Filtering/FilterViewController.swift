@@ -127,13 +127,7 @@ class FilterViewController: UIViewController {
     }
     
     func updateFilterBy(shouldFilterByRegion: Bool) {
-        if shouldFilterByRegion {
-            filters.showRegionFilter = true
-            filters.showDistanceFilter = false
-        } else {
-            filters.showRegionFilter = false
-            filters.showDistanceFilter = true
-        }
+        filters.filterType = shouldFilterByRegion ? FilterType.Region : FilterType.Distance
         
         contentCollectionView.reloadData()
     }
@@ -156,8 +150,8 @@ class FilterViewController: UIViewController {
     //
     
     @IBAction func doneButtonPressed(_ sender: Any) {
-        // FIXME: why isn't this OK for the user to do?
-        if filters.showRegionFilter, filters.regionsFilter.isEmpty {
+        // We want to encourage people to choose a region, and not accidentally get data for the whole country, which is slow
+        if filters.isRegion, filters.regionsFilter.isEmpty {
             DuffekDialog.shared.showOkDialog(title: "Region Required", message: "Please select a region or choose to filter by Distance before continuing")
             
             return
@@ -197,8 +191,8 @@ extension FilterViewController: UICollectionViewDelegate, UICollectionViewDataSo
             cell.regionTableView.reloadData()
             
             // only show region info if we are using region filters
-            cell.regionContainerView.isHidden = !filters.showRegionFilter
-            cell.showRegionsViewSwitch.isOn = filters.showRegionFilter
+            cell.regionContainerView.isHidden = !filters.isRegion
+            cell.showRegionsViewSwitch.isOn = filters.isRegion
             cell.showRegionsViewSwitch.addTarget(self, action: #selector(filterByRegionSwitchChanged(_:)), for: .valueChanged)
             
             return cell
@@ -237,7 +231,7 @@ extension FilterViewController: UICollectionViewDelegate, UICollectionViewDataSo
             cell.currentLocationAddressLabel.text = ""
             
             // setup filter switch and visibility as needed
-            if !filters.showDistanceFilter {
+            if !filters.isDistance {
                 cell.filterByDistanceSwitch.isOn = false
                 cell.currentLocationViewContainer.isHidden = true
                 cell.filterDistanceSliderViewContainer.isHidden = true
