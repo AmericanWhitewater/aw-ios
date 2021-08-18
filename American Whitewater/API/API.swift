@@ -186,10 +186,23 @@ struct API {
         reachId: Int,
         page: Int,
         pageSize: Int,
-        callback: @escaping AWGQLApiHelper.PhotosCallback,
-        errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
+        completion: @escaping ([Photo]?, Error?) -> Void
     ) {
-        graphQLHelper.getPhotosForReach(reach_id: reachId, page: page, page_size: pageSize, callback: callback, errorCallback: errorCallback)
+        graphQLHelper.getPhotosForReach(
+            reach_id: reachId,
+            page: page,
+            page_size: pageSize,
+            callback: { result in
+                let photos = (result ?? []).flatMap { post in
+                    post.photos.map {
+                        Photo(photo: $0)
+                    }
+                }
+                
+                completion(photos, nil)
+            },
+            errorCallback: { completion(nil, $0) }
+        )
     }
     
     public func postPhoto(

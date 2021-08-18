@@ -30,7 +30,7 @@ class RunDetailTableViewController: UITableViewController {
     
     let dateFormatter = DateFormatter()
     
-    var imageLinks = [ [String:String?] ]()
+    var imageLinks = [Photo]()
     
     private let detailTextMaxCount = 400
     
@@ -118,37 +118,22 @@ class RunDetailTableViewController: UITableViewController {
     
     func queryPhotos() {
         guard let selectedRun = selectedRun else { print("selected run is nil"); return }
-                
-        API.shared.getPhotos(reachId: selectedRun.id, page: 1, pageSize: 100 , callback: { (photoResults) in
-            if let photoResults = photoResults {
-                print("Photo Posts count: \(photoResults.count)")
-                self.imageLinks.removeAll()
-                for result in photoResults {
-                    let photos = result.photos
-                    for photo in photos {
-                        if let image = photo.image, let uri = image.uri,
-                           let thumb = uri.thumb, let medium = uri.medium, let big = uri.big {
-                            
-                            var uri = [String:String?]()
-                            uri["thumb"] = thumb
-                            uri["med"] = medium
-                            uri["big"] = big
-                            uri["caption"] = photo.caption ?? ""
-                            uri["author"] = photo.author ?? ""
-                            uri["photoDate"] = photo.photoDate ?? ""
-                            self.imageLinks.append(uri)
-                        }
-                    }
-                }
-                
-                self.updateImagePreviews()
-            } else {
-                print("No photos returned")
+        
+        API.shared.getPhotos(reachId: selectedRun.id, page: 1, pageSize: 100) { (photos, error) in
+            guard
+                let photos = photos,
+                error == nil
+            else {
+                print("Photos Error: \(String(describing: error?.localizedDescription))")
+                return
             }
-
+            
+            print("Photo Posts count: \(photos.count)")
+            self.imageLinks = photos
+            
+            self.updateImagePreviews()
+            
             //self.tableView.reloadData()
-        }) { (error) in
-            print("Photos Error: ", error.localizedDescription)
         }
     }
     
@@ -177,23 +162,20 @@ class RunDetailTableViewController: UITableViewController {
     }
     
     func updateImagePreviews() {
-
-        if imageLinks.count >= 3 {
-            if let thumb = imageLinks[2]["thumb"] as? String, let url = URL(string: "\(AWGC.AW_BASE_URL)\(thumb)") {
-                preview3ImageView.load(url: url)
-            }
+        let thumbs = imageLinks
+            .compactMap(\.thumbURL)
+            .prefix(3)
+        
+        if thumbs.count > 2 {
+            preview3ImageView.load(url: thumbs[2])
         }
         
-        if imageLinks.count >= 2 {
-            if let thumb = imageLinks[1]["thumb"] as? String, let url = URL(string: "\(AWGC.AW_BASE_URL)\(thumb)") {
-                preview2ImageView.load(url: url)
-            }
+        if imageLinks.count > 1 {
+            preview2ImageView.load(url: thumbs[1])
         }
 
         if imageLinks.count > 0 {
-            if let thumb = imageLinks[0]["thumb"] as? String, let url = URL(string: "\(AWGC.AW_BASE_URL)\(thumb)") {
-                preview1ImageView.load(url: url)
-            }
+            preview1ImageView.load(url: thumbs[0])
         }
     }
     
