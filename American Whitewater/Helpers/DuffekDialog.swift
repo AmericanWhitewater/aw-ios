@@ -3,14 +3,6 @@ import NYAlertViewController
 import Contacts
 
 class DuffekDialog {
-    
-    static let shared = DuffekDialog()
-    
-    private init() {} //This prevents others from using the default '()' initializer for this class.
-    
-    var alertViewController: NYAlertViewController?
-    private var datePicker: UIDatePicker?
-    
     static func pickerDialog(
         pickerDataSource:UIPickerViewDataSource,
         pickerDelegate: UIPickerViewDelegate,
@@ -44,7 +36,6 @@ class DuffekDialog {
         return alertViewController
     }
     
-    
     static func datePickerDialog(
         title: String,
         message: String,
@@ -77,33 +68,6 @@ class DuffekDialog {
         return alertViewController
     }
     
-    /// Displays alert dialog on currently viewed window
-    ///
-    /// - Parameter alertController: displays the alert to the rootViewController
-    private func displayAlert(alertController: UIViewController) {
-        
-        // the rootViewController may change based on where they are in the app
-        // all views will be a tabViewController or NavigationViewController
-        var rootViewController = UIApplication.shared.keyWindow?.rootViewController
-        
-        if let navigationController = rootViewController as? UINavigationController {
-            rootViewController = navigationController.viewControllers.first
-        }
-        
-        if let tabBarController = rootViewController as? UITabBarController {
-            rootViewController = tabBarController.selectedViewController
-        }
-        
-        // Whoops, if there's already a presented view controller this won't work
-        // In that case, it's necessary to present on the presented controller (which can define itself as the 'presentation context', which allows nested modal presentation
-        if let presented = rootViewController?.presentedViewController {
-            rootViewController = presented
-        }
-        
-        // Display the chosen view
-        rootViewController?.present(alertController, animated: true, completion: nil)
-    }
-    
     // Returns a NYAlertViewController that is styled in BrewFund colors and
     // has rounded corners, etc.
     private static func styledAlert() -> NYAlertViewController {
@@ -130,8 +94,7 @@ class DuffekDialog {
         // Transition Style
         alert.transitionStyle = .fade
         
-        return alert
-        
+        return alert   
     }
 }
 
