@@ -181,11 +181,8 @@ extension RiverFlowsViewController: UITableViewDataSource, UITableViewDelegate {
 //        let cellType = flow.photos.isEmpty ? "RiverFlowNoPicCell" : "RiverFlowCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: "RiverFlowCell", for: indexPath) as! RiverFlowCell
         
-        if
-            let imageLink = flow.photos.first?.med,
-            !imageLink.isEmpty
-        {
-            cell.postedImageView.load(url: URL(string: "\(AWGC.AW_BASE_URL)\(imageLink)")!)
+        if let url = flow.photos.first?.mediumURL {
+            cell.postedImageView.load(url: url)
         }
 
         cell.postedTitleLabel.text = flow.title
@@ -215,26 +212,17 @@ extension RiverFlowsViewController: UITableViewDataSource, UITableViewDelegate {
     @objc func expandButtonPressed(_ sender: UIButton) {
         print("Button pressed, tag:", sender.tag)
         let flow = riverFlows[sender.tag]
-        if let imageLink = flow.photos.first?.med {
+        
+        if let url = flow.photos.first?.mediumURL {
+            let config = SFSafariViewController.Configuration()
+            let vc = SFSafariViewController(url: url, configuration: config)
+            present(vc, animated: true)
+        } else {
             let errorTitle = "Image Issue"
             let errorMessage = "Unfortunately this image has an issue that is preventing us from displaying it in a larger view. Please contact us to correct this issue."
-
-            let imagePath = "\(AWGC.AW_BASE_URL)\(imageLink)"
             
-            if !imagePath.contains("https://") && !imagePath.contains("http://") {
-                self.showToast(message: "Connection Error: " + errorMessage)
-                print("imagePath issue: ", imagePath)
-                return
-            }
-
-            if let url = URL(string: imagePath) {
-                let config = SFSafariViewController.Configuration()
-                let vc = SFSafariViewController(url: url, configuration: config)
-                present(vc, animated: true)
-            } else {
-                self.showToast(message: errorTitle + " " + errorMessage)
-                print("imagePath issue: ", imagePath)
-            }
+            self.showToast(message: errorTitle + " " + errorMessage)
+            print("imagePath issue: ", flow)
         }
     }
 }

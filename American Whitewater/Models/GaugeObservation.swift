@@ -1,12 +1,6 @@
 import Foundation
 
 struct GaugeObservation: Hashable, Equatable {
-    struct Photo: Hashable, Equatable {
-        let thumb: String?
-        let med: String?
-        let big: String?
-    }
-    
     var id: String?
     var title: String?
     var detail: String?
@@ -37,49 +31,48 @@ struct GaugeObservation: Hashable, Equatable {
         self.metric = datum.metric?.unit
         self.reading = datum.reading
     
-        self.photos = datum.photos.compactMap { photo in
-            guard
-                let image = photo.image,
-                let uri = image.uri,
-                let thumb = uri.thumb,
-                let medium = uri.medium,
-                let big = uri.big
-            else {
-                return nil
-            }
-            
-            return Photo(thumb: thumb, med: medium, big: big)
+        let postDate = datum.postDate != nil ? Self.dateFormatter.date(from: datum.postDate!) : nil
+        self.date = postDate
+        
+        self.photos = datum.photos.compactMap {
+            Photo(
+                id: $0.id,
+                author: nil,
+                date: postDate,
+                caption: nil,
+                description: nil,
+                thumbPath: $0.image?.uri?.thumb,
+                mediumPath: $0.image?.uri?.medium,
+                bigPath: $0.image?.uri?.big
+            )
         }
     }
     
     init(postUpdate: PostObservationMutation.Data.PostUpdate) {
-        self.id = postUpdate.id
-        self.title = postUpdate.title
-        self.detail = postUpdate.detail
-        self.uid = postUpdate.uid
-        self.author = postUpdate.user?.uname
-        if let date = postUpdate.postDate {
-            self.date = Self.dateFormatter.date(from: date)
-        } else {
-            self.date = nil
-        }
-        self.reachId = postUpdate.reachId
-        self.gaugeId = postUpdate.gaugeId
-        self.metric = postUpdate.metric?.unit
-        self.reading = postUpdate.reading
+        id = postUpdate.id
+        title = postUpdate.title
+        detail = postUpdate.detail
+        uid = postUpdate.uid
+        author = postUpdate.user?.uname
+        reachId = postUpdate.reachId
+        gaugeId = postUpdate.gaugeId
+        metric = postUpdate.metric?.unit
+        reading = postUpdate.reading
     
-        self.photos = postUpdate.photos.compactMap { photo in
-            guard
-                let image = photo.image,
-                let uri = image.uri,
-                let thumb = uri.thumb,
-                let medium = uri.medium,
-                let big = uri.big
-            else {
-                return nil
-            }
-            
-            return Photo(thumb: thumb, med: medium, big: big)
+        let postDate = postUpdate.postDate != nil ? Self.dateFormatter.date(from: postUpdate.postDate!) : nil
+        self.date = postDate
+        
+        photos = postUpdate.photos.map {
+            Photo(
+                id: $0.id,
+                author: $0.author,
+                date: postDate,
+                caption: $0.caption,
+                description: $0.description,
+                thumbPath: $0.image?.uri?.thumb,
+                mediumPath: $0.image?.uri?.medium,
+                bigPath: $0.image?.uri?.big
+            )
         }
     }
     

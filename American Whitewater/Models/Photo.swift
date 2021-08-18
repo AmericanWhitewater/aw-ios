@@ -10,7 +10,7 @@ extension URL {
     }
 }
 
-struct Photo {
+struct Photo: Hashable, Equatable {
     var id: String
     var author: String?
     var date: Date?
