@@ -11,19 +11,21 @@ class DuffekDialog {
     var alertViewController: NYAlertViewController?
     private var datePicker: UIDatePicker?
     
-    func showPickerDialog(pickerDataSource:UIPickerViewDataSource, pickerDelegate: UIPickerViewDelegate, title: String, message: String, selectedActionPressed: @escaping ()->Void) {
-        
-        alertViewController = styledAlert()
-        guard let alertViewController = alertViewController else {
-            print("Error creating alertViewController");
-            return;
-        }
+    static func pickerDialog(
+        pickerDataSource:UIPickerViewDataSource,
+        pickerDelegate: UIPickerViewDelegate,
+        initialSelection: (Int, Int) = (0, 0), // initial (row, component) to select
+        title: String,
+        message: String,
+        selectedActionPressed: @escaping ()->Void = {}
+    ) -> NYAlertViewController {
+        let alertViewController = styledAlert()
         
         alertViewController.title = title
         alertViewController.message = "\n\(message)\n"
         
         let selectAction = NYAlertAction(title: "Select", style: .default) { (_) in
-            self.alertViewController?.dismiss(animated: true, completion: nil)
+            alertViewController.dismiss(animated: true, completion: nil)
             
             // Send selected option from picker view
             selectedActionPressed()
@@ -31,55 +33,48 @@ class DuffekDialog {
         
         alertViewController.addAction(selectAction)
         
-        // setup contact picker view
         let picker = UIPickerView()
         picker.dataSource = pickerDataSource
         picker.delegate = pickerDelegate
+        picker.selectRow(initialSelection.0, inComponent: initialSelection.1, animated: false)
         
         // add picker view to alertViewControllers content view
         alertViewController.alertViewContentView = picker
         
-        // show the alert
-        self.displayAlert(alertController: alertViewController)
-        
-        // select the first row in case the user hasn't already chosen an item by default
-        picker.selectRow(0, inComponent: 0, animated: false)
-        if let delegate = picker.delegate {
-            delegate.pickerView?(picker, didSelectRow: 0, inComponent: 0)
-        }
+        return alertViewController
     }
     
     
-    func showDatePickerDialog(title: String, message: String, showTime: Bool? = nil, selectedActionPressed: @escaping (Date?)->Void) {
-        
-        alertViewController = styledAlert()
-        guard let alertViewController = alertViewController else {
-            print("Error creating alertViewController");
-            return;
-        }
-        
+    static func datePickerDialog(
+        title: String,
+        message: String,
+        initialDate: Date? = nil,
+        selectedActionPressed: @escaping (Date) -> Void
+    ) -> NYAlertViewController {
+        let alertViewController = styledAlert()
         alertViewController.title = title
         alertViewController.message = "\n\(message)\n"
         
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .dateAndTime
+        
+        if let initialDate = initialDate {
+            datePicker.setDate(initialDate, animated: false)
+        }
+        
         let selectAction = NYAlertAction(title: "Select", style: .default) { (_) in
-            self.alertViewController?.dismiss(animated: true, completion: nil)
+            alertViewController.dismiss(animated: true, completion: nil)
             
             // Send selected option from picker view
-            selectedActionPressed(self.datePicker?.date ?? nil)
+            selectedActionPressed(datePicker.date)
         }
         
         alertViewController.addAction(selectAction)
         
-        if self.datePicker == nil {
-            self.datePicker = UIDatePicker()
-            self.datePicker?.datePickerMode = .dateAndTime
-        }
-        
         // add picker view to alertViewControllers content view
-        alertViewController.alertViewContentView = self.datePicker
+        alertViewController.alertViewContentView = datePicker
         
-        // show the alert
-        self.displayAlert(alertController: alertViewController)
+        return alertViewController
     }
     
     /// Displays alert dialog on currently viewed window
@@ -111,8 +106,7 @@ class DuffekDialog {
     
     // Returns a NYAlertViewController that is styled in BrewFund colors and
     // has rounded corners, etc.
-    private func styledAlert() -> NYAlertViewController {
-        
+    private static func styledAlert() -> NYAlertViewController {
         let alert = NYAlertViewController()
         
         // Corder Radius

@@ -9,7 +9,6 @@
 import UIKit
 
 class ReviewPhotoTableViewController: UITableViewController {
-
     var selectedRun: Reach?
     var takenImage: UIImage?
     var senderVC: GalleryViewController?
@@ -27,6 +26,7 @@ class ReviewPhotoTableViewController: UITableViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var descriptionContainerView: UIView!
     
+    private var approxDate = Date()
     
     @IBOutlet weak var saveButton: UIButton!
     
@@ -57,7 +57,7 @@ class ReviewPhotoTableViewController: UITableViewController {
         descriptionContainerView.layer.cornerRadius = 15
         descriptionTextView.delegate = self
             
-        approxDateTimeLabel.text = dateFormatter.string(from: Date())
+        approxDateTimeLabel.text = dateFormatter.string(from: approxDate)
         
         saveButton.layer.cornerRadius = saveButton.frame.height / 2
         
@@ -71,19 +71,8 @@ class ReviewPhotoTableViewController: UITableViewController {
             if let desc = descriptionTextView.text, desc != DESCRIPTION_PLACEHOLDER {
                 description = desc
             }
-            
-            // AWTODO: what's this alert mean? fix date parsing, supply a default, or indicate how to fix.
-            let dateString = self.approxDateTimeLabel.text!
-            guard let date = dateFormatter.date(from: dateString) else {
-                let alert = UIAlertController(
-                    title: "Invalid Date Issue",
-                    message: "There was an issue with the date/time for this post. Please contact us about this problem.",
-                    preferredStyle: .alert)
-                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                return
-            }
 
-            let serverDateString = serverDateFormatter.string(from: date)
+            let serverDateString = serverDateFormatter.string(from: approxDate)
             
             AWProgressModal.shared.show(fromViewController: self, message: "Saving...")
             
@@ -147,16 +136,27 @@ extension ReviewPhotoTableViewController : UITextViewDelegate {
 }
 
 extension ReviewPhotoTableViewController {
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 && indexPath.row == 0 {
-            DuffekDialog.shared.showDatePickerDialog(title: "Select Date and Time", message: "") { (date) in
-                if let date = date {
-                    self.approxDateTimeLabel.text = self.dateFormatter.string(from: date)
-                }
+            let alert = DuffekDialog.datePickerDialog(
+                title: "Select Date and Time",
+                message: "",
+                initialDate: self.approxDate
+            ) { (date) in
+                self.approxDate = date
+                self.approxDateTimeLabel.text = self.dateFormatter.string(from: date)
             }
+            
+            present(alert, animated: true)
         } else if indexPath.section == 1 && indexPath.row == 1 {
-            DuffekDialog.shared.showPickerDialog(pickerDataSource: self, pickerDelegate: self, title: "Describe the Flow", message: "Please choose from the following options:") {}
+            let alert = DuffekDialog.pickerDialog(
+                pickerDataSource: self,
+                pickerDelegate: self,
+                title: "Describe the Flow",
+                message: "Please choose from the following options:")
+            
+            
+            present(alert, animated: true)
         }
     }
 }

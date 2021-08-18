@@ -26,8 +26,30 @@ class AddRiverFlowTableViewController: UITableViewController {
         
     @IBOutlet weak var submitFlowButton: UIButton!
     
-    //let reportingOptions = ["Low", "Low Runnable", "Runnable", "High Runnable", "Too High"]
-    let reportingOptions = [ ["Low":-1], ["Low Runnable":0.1], ["Runnable": 0.45], ["High Runnable": 0.8], ["Too High":1.5] ]
+    // AWTODO: this should be part of models
+    enum FlowOptions: CaseIterable, Equatable {
+        case low, lowRunnable, runnable, highRunnable, tooHigh
+        
+        var title: String {
+            switch self {
+            case .low: return "Low"
+            case .lowRunnable: return "Low Runnable"
+            case .runnable: return "Runnable"
+            case .highRunnable: return "High Runnable"
+            case .tooHigh: return "Too High"
+            }
+        }
+        
+        var value: Double {
+            switch self {
+            case .low: return -1
+            case .lowRunnable: return 0.1
+            case .runnable: return 0.45
+            case .highRunnable: return 0.8
+            case .tooHigh: return 1.5
+            }
+        }
+    }
     
     var unitOptions = ["cfs", "ft", "in"]
     var availableMetrics = [String:String]()
@@ -35,9 +57,25 @@ class AddRiverFlowTableViewController: UITableViewController {
     let dateFormatter = DateFormatter()
     var awImagePicker: AWImagePicker!
     
-    var flowObservationValue: Double? = nil
+    // AWTODO: This is the state for the storyboard placeholder that was being shown by default. Is it the correct default?
+    var flowObservation: FlowOptions = .runnable
+    
+    /// Currently selected reportingOption as an index for the picker, in the format (row, component)
+    var selectedPickerItem: (Int, Int) {
+        // The force unwrap is safe here because we're checking the index of an enum in its cases:
+        let row = FlowOptions.allCases.firstIndex(where: { $0 == flowObservation })!
+        return (row, 0)
+    }
+    
+    private var dateObserved = Date()
     
     public var senderVC: RiverFlowsViewController?
+    
+    private static let isoDateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "YYYY-MM-dd h:mm:ss"
+        return f
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,8 +90,10 @@ class AddRiverFlowTableViewController: UITableViewController {
         riverNameLabel?.text = selectedRun.name
         riverSectionLabel?.text = selectedRun.section
         
-        dateObservedLabel?.text = dateFormatter.string(from: Date())
+        dateObservedLabel?.text = dateFormatter.string(from: dateObserved)
         observedGaugeUnitsLabel?.text = selectedRun.unit ?? "cfs"
+        
+        flowDescriptionLabel.text = flowObservation.title
         
         if availableMetrics.count > 0 {
             self.unitOptions = Array(availableMetrics.keys)
@@ -90,11 +130,7 @@ class AddRiverFlowTableViewController: UITableViewController {
         let reachId = Int(selectedRun.id)
         let gageId: String? = selectedRun.gageId == -1 ? nil : "\(selectedRun.gageId)"
         let title = observationTitleTextField.text ?? ""
-        
-        let isoDateFormatter = DateFormatter()
-        isoDateFormatter.dateFormat = "YYYY-MM-dd h:mm:ss"
-        let date = dateFormatter.date(from: dateObservedLabel.text!)
-        let dateString = isoDateFormatter.string(from: date ?? Date())
+        let dateString = Self.isoDateFormatter.string(from: dateObserved)
         let reading = Double(observedGaugeLevelTextField.text ?? "0") ?? 0
         let metricIdString = availableMetrics[observedGaugeUnitsLabel.text ?? ""] ?? "0"
         let metricId = Int(metricIdString) ?? 0
@@ -108,6 +144,7 @@ class AddRiverFlowTableViewController: UITableViewController {
         }
     }
 
+    // FIXME: this doesn't send flowObservationValue
     func postFlowWithoutPhoto(reachId: Int, gageId: String?, metricId: Int, title: String, dateString: String, reading: Double) {
         AWGQLApiHelper.shared.postGaugeObservationFor(reach_id: reachId, metric_id: metricId, title: title, dateString: dateString, reading: reading, callback: { (postResult) in
             // handle post result
@@ -138,7 +175,7 @@ class AddRiverFlowTableViewController: UITableViewController {
         
         AWGQLApiHelper.shared.postPhotoForReach(photoPostType: .gaugeObservation, image: image, reach_id: reachId, caption: title,
                                                        description: "", photoDate: dateString,
-                                                       reachObservation: flowObservationValue, gauge_id: gageId, metric_id: metricId,
+                                                reachObservation: flowObservation.value, gauge_id: gageId, metric_id: metricId,
                                                        reachReading: reading,
                                                        callback: { (photoFileUpdate, photoPostUpdate) in
             AWProgressModal.shared.hide()
@@ -208,58 +245,58 @@ class AddRiverFlowTableViewController: UITableViewController {
     }
 }
 
-extension AddRiverFlowTableViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    // MARK: - UITableView Overrides Delegate / Datasource
-    
+// MARK: - UITableView Overrides Delegate / Datasource
+extension AddRiverFlowTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             
             if indexPath.row == 3 {
                 tableView.deselectRow(at: indexPath, animated: true)
                 
-                DuffekDialog.shared.showPickerDialog(pickerDataSource: self, pickerDelegate: self, title: "Describe the Flow", message: "Please choose from the following options:") {}
+                let alert = DuffekDialog.pickerDialog(
+                    pickerDataSource: self,
+                    pickerDelegate: self,
+                    initialSelection: selectedPickerItem,
+                    title: "Describe the Flow",
+                    message: "Please choose from the following options:"
+                )
+                
+                present(alert, animated: true)
             } else if indexPath.row == 4 {
                 tableView.deselectRow(at: indexPath, animated: true)
                 
                 // show date picker
-                DuffekDialog.shared.showDatePickerDialog(title: "Please Select a Date", message: "") { (date) in
-                    if let date = date {
-                        //print("Date Chosen:", dateFormatter.string(from: date))
+                let alert = DuffekDialog.datePickerDialog(
+                    title: "Please Select a Date",
+                    message: "",
+                    initialDate: self.dateObserved
+                ) { (date) in
+                        self.dateObserved = date
                         self.dateObservedLabel.text = self.dateFormatter.string(from: date)
-                    } else {
-                        print("Date was nil - using current date and time")
-                        self.dateObservedLabel.text = self.dateFormatter.string(from: Date())
-                    }
                 }
+                
+                present(alert, animated: true)
             }
         }
     }
-    
-    // MARK: - UIPickerView Delegates / Datasource
-    
+}
+
+extension AddRiverFlowTableViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return reportingOptions.count
+        return FlowOptions.allCases.count
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return reportingOptions[row].keys.first
+        return FlowOptions.allCases[row].title
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let option = reportingOptions[row]
-        let keys = Array(option.keys)
-        if let title = keys.first {
-            print("Selected:", title)
-            flowDescriptionLabel.text = title
-            flowObservationValue = option[title]
-        }
-                
-        print("flowObservationValue:", flowObservationValue ?? -99);
+        flowDescriptionLabel.text = FlowOptions.allCases[row].title
+        flowObservation = FlowOptions.allCases[row]
     }
 }
 
