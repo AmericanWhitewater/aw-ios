@@ -11,42 +11,6 @@ class DuffekDialog {
     var alertViewController: NYAlertViewController?
     private var datePicker: UIDatePicker?
     
-
-    /// Shows a basic alert and the user can specify standard and cancel buttons
-    ///
-    /// - Parameters:
-    ///   - title: title of the dialog
-    ///   - message: the message to be displayed
-    ///   - buttonAction: positive action handler
-    ///   - cancelAction: cancel action handler
-    func showStandardDialog(title: String, message: String, buttonTitle: String, buttonFunction: @escaping ()->Void, cancelFunction: @escaping ()->Void) {
-        
-        // setup standard alert dialog
-        alertViewController = styledAlert()
-        
-        if let alertViewController = alertViewController {
-            alertViewController.title = title
-            alertViewController.message = "\n\(message)\n"
-            
-            // add users defined actions
-            let buttonAction = NYAlertAction(title: buttonTitle, style: .default) { (_) in
-                self.alertViewController?.dismiss(animated: true, completion: nil)
-                
-                buttonFunction()
-            }
-            alertViewController.addAction(buttonAction)
-            
-            let cancelAction = NYAlertAction(title: "Cancel", style: .cancel) { (_) in
-                self.alertViewController?.dismiss(animated: true, completion: nil)
-                
-                cancelFunction()
-            }
-            alertViewController.addAction(cancelAction)
-            
-            self.displayAlert(alertController: alertViewController)
-        }
-    }
-    
     func showPickerDialog(pickerDataSource:UIPickerViewDataSource, pickerDelegate: UIPickerViewDelegate, title: String, message: String, selectedActionPressed: @escaping ()->Void) {
         
         alertViewController = styledAlert()
