@@ -3,7 +3,7 @@ import MapKit
 import CoreLocation
 import SwiftyJSON
 
-class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class RunMapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var userLocationButton: UIButton!
@@ -13,7 +13,7 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     
     var selectedRun: Reach?
     
-    let locationManager = CLLocationManager()
+    private let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,13 +39,15 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         mapView.mapType = .hybrid
         mapView.delegate = self
         
-        self.locationManager.delegate = self
+        locationManager.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if Location.shared.checkLocationStatus(manager: locationManager) {
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.isAuthorized {
             showUserLocation()
         }
         
@@ -187,12 +189,6 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         mapView.showsUserLocation = true
     }
 
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
-            showUserLocation()
-        }
-    }
-    
     @IBAction func mapTypeButtonPressed(_ sender: Any) {
         if mapView.mapType == .standard {
             mapView.mapType = .hybrid
@@ -202,12 +198,16 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     }
     
     @IBAction func showUserLocationPressed(_ sender: Any) {
-        if Location.shared.checkLocationStatus(manager: locationManager, notifyDenied: true) {
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.isAuthorized {
             showUserLocation()
             
             if let mapView = mapView, mapView.hasLocation {
                 mapView.setCenter(mapView.userLocation.coordinate, animated: true)
             }
+        } else if CLLocationManager.isDenied {
+            present(LocationHelper.locationDeniedAlert(), animated: true)
         }
     }
     
@@ -223,6 +223,14 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         if segue.identifier == Segue.mapRapidDetails.rawValue {
             let destVC = segue.destination as! RunRapidDetailsTableViewController
             destVC.selectedRapid = sender as? Rapid
+        }
+    }
+}
+
+extension RunMapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            showUserLocation()
         }
     }
 }
