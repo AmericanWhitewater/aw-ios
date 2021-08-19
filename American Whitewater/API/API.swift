@@ -21,6 +21,8 @@ struct API {
     private let graphQLHelper: AWGQLApiHelper
     private let articleHelper: AWGQLArticleApiHelper
     
+    private let isoFormatter = ISO8601DateFormatter()
+    
     private init() {
         reachHelper = .init(
             baseURL: baseURL + "/content",
@@ -216,8 +218,7 @@ struct API {
         gaugeId: Int? = nil,
         metricId: Int? = nil,
         reachReading: Double? = nil,
-        callback: @escaping AWGQLApiHelper.PhotoUploadCallback,
-        errorCallback: @escaping AWGQLApiHelper.AWGraphQLError
+        completion: @escaping (Photo?, Error?) -> Void
     ) {
         graphQLHelper.postPhotoForReach(
             photoPostType: photoPostType,
@@ -230,8 +231,23 @@ struct API {
             gauge_id: gaugeId != nil ? "\(gaugeId!)" : nil,
             metric_id: metricId,
             reachReading: reachReading,
-            callback: callback,
-            errorCallback: errorCallback
+            callback: { (photoFileUpdate, photoPostUpdate) in
+                let photo = Photo(
+                    id: photoFileUpdate.id,
+                    author: photoFileUpdate.author,
+                    date: self.isoFormatter.date(from: photoFileUpdate.photoDate ?? ""),
+                    caption: photoFileUpdate.caption,
+                    description: photoFileUpdate.description,
+                    thumbPath: photoFileUpdate.image?.uri?.thumb,
+                    mediumPath: photoFileUpdate.image?.uri?.medium,
+                    bigPath: photoFileUpdate.image?.uri?.big
+                )
+                
+                completion(photo, nil)
+            },
+            errorCallback: {
+                completion(nil, $0)
+            }
         )
     }
     

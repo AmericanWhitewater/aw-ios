@@ -80,37 +80,27 @@ class ReviewPhotoTableViewController: UITableViewController {
                                  reachId: selectedRun.id,
                                  caption: capText,
                                  description: description,
-                                 photoDate: serverDateString,
-                                 callback: { (photoFileUpdate, photoPostUpdate) in
-                AWProgressModal.shared.hide()
-                print("Photo uploaded - callback returned")
-                
-                if let imageResult = photoFileUpdate.image, let uri = imageResult.uri {
-                    self.showToast(message: "Your photo has been successfully saved.")
-                    if let _ = self.senderVC {
-                        let photo = Photo(
-                            id: photoFileUpdate.id,
-                            author: "You", // ???
-                            date: self.approxDate,
-                            caption: self.captionTextField.text,
-                            description: self.descriptionTextView.text,
-                            thumbPath: uri.thumb,
-                            mediumPath: uri.medium,
-                            bigPath: uri.big
-                        )
-                        
-                        self.senderVC?.imageLinks.insert(photo, at: 0)
-                    }
-                    
-                    self.navigationController?.popViewController(animated: true)
-                } else {
-                    self.showToast(message: "We were unable to save your photo to the server. Please try again or try another photo.")
+                                 photoDate: serverDateString
+            ) { (photo, error) in
+                defer {
+                    AWProgressModal.shared.hide()
                 }
                 
-            }) { (error) in
-                AWProgressModal.shared.hide()
-                print("Error: \(error.localizedDescription)")
-                self.showToast(message: "An Error Occured: \(error.localizedDescription)")
+                guard let photo = photo, error == nil else {
+                    print("Error: \(String(describing:error?.localizedDescription))")
+                    self.showToast(message: "An Error Occured: \(String(describing:error?.localizedDescription))")
+                    
+                    // FIXME: also had a path that showed this error, which is correct to show the user?
+                    // self.showToast(message: "We were unable to save your photo to the server. Please try again or try another photo.")
+                    
+                    return
+                }
+                
+                print("Photo uploaded - callback returned")
+                
+                self.showToast(message: "Your photo has been successfully saved.")
+                self.senderVC?.imageLinks.insert(photo, at: 0)
+                self.navigationController?.popViewController(animated: true)
             }
         }
     }

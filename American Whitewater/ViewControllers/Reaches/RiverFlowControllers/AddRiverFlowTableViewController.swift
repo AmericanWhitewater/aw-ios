@@ -188,42 +188,49 @@ class AddRiverFlowTableViewController: UITableViewController {
             reachObservation: flowObservation?.value,
             gaugeId: gageId,
             metricId: metricId,
-            reachReading: reading,
-            callback: { (photoFileUpdate, photoPostUpdate) in
+            reachReading: reading
+        ) { (photo, error) in
+            defer {
                 AWProgressModal.shared.hide()
-                print("Photo uploaded - callback returned")
-                
-                if let imageResult = photoFileUpdate.image, let uri = imageResult.uri {
-                    self.showToast(message: "Your flow observation has been reported and saved.")
-                    
-                // FIXME: add this back with updated API response
-//                    if let _ = self.senderVC {
-//                        var newFlow = [String:String?]()
-//                        newFlow["thumb"] = uri.thumb
-//                        newFlow["med"] = uri.medium
-//                        newFlow["big"] = uri.big
-//
-//                        newFlow["id"] = "\(photoPostUpdate.id ?? photoFileUpdate.id)"
-//                        newFlow["title"] = photoFileUpdate.caption ?? photoPostUpdate.title ?? ""
-//                        newFlow["description"] = photoFileUpdate.description ?? photoPostUpdate.detail ?? ""
-//                        newFlow["reading"] = "\(photoPostUpdate.reading != nil ? "\(photoPostUpdate.reading!)" : "n/a")"
-//                        newFlow["author"] = photoFileUpdate.author ?? photoPostUpdate.user?.uname ?? "You"
-//                        newFlow["postDate"] = photoFileUpdate.photoDate ?? photoPostUpdate.postDate ?? ""
-//                        newFlow["metric"] = photoPostUpdate.metric?.unit ?? ""
-//                        // TODO: newFlow["observed"] = ????
-//
-//                        self.senderVC?.riverFlows.insert(newFlow, at: 0)
-//                    }
-                    
-                    self.navigationController?.popViewController(animated: true)
-                } else {
-                    self.showToast(message: "We were unable to save your flow report to the server. Please check your connection and try again.")
-                }
             }
-        ) { (error) in
-            AWProgressModal.shared.hide()
-            print("Error: \(error.localizedDescription)")
-            self.showToast(message: "An Error Occured: \(error.localizedDescription)")
+            
+            guard
+                let photo = photo,
+                error == nil
+            else {
+                print("Error: \(error?.localizedDescription)")
+                self.showToast(message: "An Error Occured: \(error?.localizedDescription)")
+                
+                // FIXME: older version could also do this error, if no error was returned but also no object. This should return an error too (could it even happen?) but which is the correct message to show the user?
+//                self.showToast(message: "We were unable to save your flow report to the server. Please check your connection and try again.")
+                return
+            }
+            
+            print("Photo uploaded - callback returned")
+            self.showToast(message: "Your flow observation has been reported and saved.")
+                
+                // FIXME: add this back with updated API response
+                // FIXME: This is attempting to make a GaugeObservation out of the response... perhaps it should be calling a distinct API method to indicate that's what it wants
+            
+                //                    if let _ = self.senderVC {
+                //                        var newFlow = [String:String?]()
+                //                        newFlow["thumb"] = uri.thumb
+                //                        newFlow["med"] = uri.medium
+                //                        newFlow["big"] = uri.big
+                //
+                //                        newFlow["id"] = "\(photoPostUpdate.id ?? photoFileUpdate.id)"
+                //                        newFlow["title"] = photoFileUpdate.caption ?? photoPostUpdate.title ?? ""
+                //                        newFlow["description"] = photoFileUpdate.description ?? photoPostUpdate.detail ?? ""
+                //                        newFlow["reading"] = "\(photoPostUpdate.reading != nil ? "\(photoPostUpdate.reading!)" : "n/a")"
+                //                        newFlow["author"] = photoFileUpdate.author ?? photoPostUpdate.user?.uname ?? "You"
+                //                        newFlow["postDate"] = photoFileUpdate.photoDate ?? photoPostUpdate.postDate ?? ""
+                //                        newFlow["metric"] = photoPostUpdate.metric?.unit ?? ""
+                //                        // TODO: newFlow["observed"] = ????
+                //
+                //                        self.senderVC?.riverFlows.insert(newFlow, at: 0)
+                //                    }
+                
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
