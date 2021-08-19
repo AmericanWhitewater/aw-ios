@@ -62,8 +62,7 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
             
             // FEEDBACK - via email
     
-            // AWTODO: is this still the right email to use?
-            let toAddress = "evan@americanwhitewater.org"
+            let toAddress = AWGC.feedbackAddress
             
             if MFMailComposeViewController.canSendMail() {
                 let mail = MFMailComposeViewController()

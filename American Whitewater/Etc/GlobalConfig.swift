@@ -8,7 +8,10 @@
 
 import Foundation
 
-class AWGC {
+struct AWGC {
+    
+    /// Email address to send app feedback to
+    public static let feedbackAddress =  "evan@americanwhitewater.org"
     
     //public static let AW_BASE_URL: String = "http://aw.local"
     //public static let AW_BASE_URL: String = "https://beta.americanwhitewater.org" // beta
