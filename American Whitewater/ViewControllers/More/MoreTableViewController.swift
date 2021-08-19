@@ -37,11 +37,7 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
     }
     
     func showLoginScreen() {
-        if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
-            modalSignInVC.modalPresentationStyle = .overCurrentContext
-            modalSignInVC.referenceViewController = self
-            tabBarController?.present(modalSignInVC, animated: true, completion: nil)
-        }
+        tabBarController?.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
     }
 
     
@@ -65,17 +61,25 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
         } else if indexPath.row == 3 {
             
             // FEEDBACK - via email
+    
+            let toAddress = AWGC.feedbackAddress
+            
             if MFMailComposeViewController.canSendMail() {
-                    
                 let mail = MFMailComposeViewController()
                 mail.mailComposeDelegate = self
-                mail.setToRecipients(["evan@americanwhitewater.org"])
+                mail.setToRecipients([toAddress])
                 mail.setMessageBody("<p>Here is some feedback for the AW iOS App:</p><br/>", isHTML: true)
 
                 present(mail, animated: true)
             
             } else {
-                DuffekDialog.shared.showOkDialog(title: "Feedback Issue ", message: "Please setup a valid email account before attempting to contact us.")
+                let alert = UIAlertController(
+                    title: "Feedback Issue",
+                    message: "Please email your feedback to \(toAddress)",
+                    preferredStyle: .alert
+                )
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                present(alert, animated: true)
             }
         } else if indexPath.row == 4 {
             

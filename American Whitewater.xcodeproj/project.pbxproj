@@ -8,14 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		2FE342CE26A1FF8100352D1E /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE342CD26A1FF8100352D1E /* UIViewController+Toast.swift */; };
-		2FE342D026A2846100352D1E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE342CF26A2846100352D1E /* Location.swift */; };
+		2FE342D026A2846100352D1E /* LocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE342CF26A2846100352D1E /* LocationHelper.swift */; };
 		4760DD5C0E5548BBA92D25AF /* Pods_American_Whitewater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A750E2F24748D3B54A1DEB84 /* Pods_American_Whitewater.framework */; };
+		4A26322426C5DC5E001B026B /* CLLocationManager+convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A26322326C5DC5E001B026B /* CLLocationManager+convenience.swift */; };
 		4A36D1E726A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */; };
+		4A7F530026BA192000DFBDFF /* UIStoryboard+convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F52FF26BA192000DFBDFF /* UIStoryboard+convenience.swift */; };
 		4AA3FEFB26B2725100AC4303 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA3FEFA26B2725100AC4303 /* Filters.swift */; };
 		4ABE3B7D26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */; };
 		4AC4BB5A26A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */; };
 		4AC4BB5B26A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */; };
 		4ADE944D26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */; };
+		4AFEA9CA26C4E85400738A62 /* MKMapView+hasLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFEA9C926C4E85400738A62 /* MKMapView+hasLocation.swift */; };
 		630586642350428800A436BE /* RunRapidDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */; };
 		63081BF8236B2EDE00FC3823 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63081BF7236B2EDE00FC3823 /* GoogleService-Info.plist */; };
 		63081BFA236B2F8500FC3823 /* OpenTerminal.sh in Resources */ = {isa = PBXBuildFile; fileRef = 63081BF9236B2F8500FC3823 /* OpenTerminal.sh */; };
@@ -150,13 +153,16 @@
 
 /* Begin PBXFileReference section */
 		2FE342CD26A1FF8100352D1E /* UIViewController+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Toast.swift"; sourceTree = "<group>"; };
-		2FE342CF26A2846100352D1E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		2FE342CF26A2846100352D1E /* LocationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHelper.swift; sourceTree = "<group>"; };
+		4A26322326C5DC5E001B026B /* CLLocationManager+convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+convenience.swift"; sourceTree = "<group>"; };
 		4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+FullResolutionEditedImage.swift"; sourceTree = "<group>"; };
+		4A7F52FF26BA192000DFBDFF /* UIStoryboard+convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+convenience.swift"; sourceTree = "<group>"; };
 		4AA3FEFA26B2725100AC4303 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterceptorProvider.swift; sourceTree = "<group>"; };
 		4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewsArticle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+difference.swift"; sourceTree = "<group>"; };
+		4AFEA9C926C4E85400738A62 /* MKMapView+hasLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+hasLocation.swift"; sourceTree = "<group>"; };
 		630586632350428800A436BE /* RunRapidDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunRapidDetailsTableViewController.swift; sourceTree = "<group>"; };
 		63081BF6236B2E7500FC3823 /* AW.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AW.entitlements; sourceTree = "<group>"; };
 		63081BF7236B2EDE00FC3823 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -498,6 +504,9 @@
 				63432D452540DA340037AA37 /* UISegmentedControl+Colors.swift */,
 				2FE342CD26A1FF8100352D1E /* UIViewController+Toast.swift */,
 				4ADE944C26B0A8D6004D498D /* CLLocationCoordinate2D+difference.swift */,
+				4A7F52FF26BA192000DFBDFF /* UIStoryboard+convenience.swift */,
+				4AFEA9C926C4E85400738A62 /* MKMapView+hasLocation.swift */,
+				4A26322326C5DC5E001B026B /* CLLocationManager+convenience.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -605,7 +614,7 @@
 				63164495246C08AA00807E19 /* AWProgress.swift */,
 				6376508C2487E8AB00DD0FCE /* AWProgressModal.swift */,
 				63FF68FD25AE249100AF0F37 /* ChartXAxisFormatter.swift */,
-				2FE342CF26A2846100352D1E /* Location.swift */,
+				2FE342CF26A2846100352D1E /* LocationHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -908,6 +917,7 @@
 				635490F2247FED730082270E /* GQLError.swift in Sources */,
 				63E90EBC22EAAF2700C8DAA3 /* Fonts.swift in Sources */,
 				63491B05232897BE0036A906 /* SingleArticleViewController.swift in Sources */,
+				4A26322426C5DC5E001B026B /* CLLocationManager+convenience.swift in Sources */,
 				63203C0E23694BFF006A4148 /* Reach.swift in Sources */,
 				63FF68B925ACEE0700AF0F37 /* GageForRunCell.swift in Sources */,
 				63387B6322CDBFFC0089BAA8 /* AppDelegate.swift in Sources */,
@@ -917,8 +927,9 @@
 				63E32B1D2357F3260057DE34 /* FilterClassCollectionViewCell.swift in Sources */,
 				639350C22475929900577027 /* AddRiverFlowTableViewController.swift in Sources */,
 				4ABE3B7D26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift in Sources */,
-				2FE342D026A2846100352D1E /* Location.swift in Sources */,
+				2FE342D026A2846100352D1E /* LocationHelper.swift in Sources */,
 				63949955246F0DD40061552C /* AwImageCell.swift in Sources */,
+				4A7F530026BA192000DFBDFF /* UIStoryboard+convenience.swift in Sources */,
 				63FF68C525ACF2A900AF0F37 /* GageGraphCell.swift in Sources */,
 				631EFF9A23677C4000BA17F7 /* Article+CoreDataProperties.swift in Sources */,
 				631EFFA42367842300BA17F7 /* DifficultyHelper.swift in Sources */,
@@ -960,6 +971,7 @@
 				63DEE01D24ABB35600638E84 /* RiverFlowsViewController.swift in Sources */,
 				63E32B1A2357F2A40057DE34 /* FilterRegionCollectionViewCell.swift in Sources */,
 				63FF68FE25AE249100AF0F37 /* ChartXAxisFormatter.swift in Sources */,
+				4AFEA9CA26C4E85400738A62 /* MKMapView+hasLocation.swift in Sources */,
 				63309E43234166BB00E6DBC4 /* FilterViewController.swift in Sources */,
 				63E32B1F2357F3350057DE34 /* FilterDistanceCollectionViewCell.swift in Sources */,
 				63309E32233D965500E6DBC4 /* AboutAWViewController.swift in Sources */,

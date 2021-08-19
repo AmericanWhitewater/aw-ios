@@ -6,8 +6,8 @@ class FilterViewController: UIViewController {
     @IBOutlet weak var filterSegmentControl: UISegmentedControl!
     @IBOutlet weak var regionsContainerView: UIView!
 
-    let locationManager = CLLocationManager()
-    let geoCoder = CLGeocoder()
+    private let locationManager = CLLocationManager()
+    private let geoCoder = CLGeocoder()
     
     /// States, filtered by search query
     var usaRegions = Region.states
@@ -27,7 +27,7 @@ class FilterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.locationManager.delegate = self
+        locationManager.delegate = self
              
         let selectedSegTitle = [NSAttributedString.Key.foregroundColor: UIColor(named: "primary") ?? UIColor.black]
                                 as [NSAttributedString.Key : Any]
@@ -39,7 +39,9 @@ class FilterViewController: UIViewController {
 
         contentCollectionView.reloadData()
         
-        if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.isAuthorized {
             locationManager.startUpdatingLocation()
         }
     }
@@ -121,8 +123,12 @@ class FilterViewController: UIViewController {
     //
     
     @objc func updateLocationButtonPressed(_ sender: Any) {
-        if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.isAuthorized {
             locationManager.startUpdatingLocation()
+        } else if CLLocationManager.isDenied {
+            present(LocationHelper.locationDeniedAlert(), animated: true)
         }
     }
     
@@ -152,8 +158,14 @@ class FilterViewController: UIViewController {
     @IBAction func doneButtonPressed(_ sender: Any) {
         // We want to encourage people to choose a region, and not accidentally get data for the whole country, which is slow
         if filters.isRegion, filters.regionsFilter.isEmpty {
-            DuffekDialog.shared.showOkDialog(title: "Region Required", message: "Please select a region or choose to filter by Distance before continuing")
-            
+            let alert = UIAlertController(
+                title: "Region Required",
+                message: "Please select a region or choose to filter by Distance before continuing",
+                preferredStyle: .alert
+            )
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+
             return
         }
         
@@ -266,10 +278,8 @@ extension FilterViewController: UICollectionViewDelegate, UICollectionViewDataSo
                         }
                     }
                 }                
-            } else {
-                if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
-                    locationManager.startUpdatingLocation()
-                }
+            } else if CLLocationManager.isAuthorized {
+                locationManager.startUpdatingLocation()
             }
             
             distanceFilterLabel = cell.distanceFilterLabel

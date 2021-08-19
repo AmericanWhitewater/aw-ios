@@ -1402,7 +1402,6 @@
                                 <rect key="frame" x="0.0" y="85" width="375" height="404"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="b3h-Tz-mMT">
-                                    <rect key="frame" x="0.0" y="496.00000076293941" width="375" height="1"/>
                                     <rect key="frame" x="0.0" y="622.00000076293941" width="375" height="1"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2055,6 +2054,8 @@ Description: n/a</string>
                     </navigationItem>
                     <connections>
                         <outlet property="captionLabel" destination="YVU-yh-mwD" id="VPY-LF-B4u"/>
+                        <outlet property="expandPhotoButton" destination="sfA-AC-Tjs" id="SlM-IR-hRo"/>
+                        <outlet property="expandPhotoIcon" destination="2BD-W2-ftc" id="OmA-dI-4uC"/>
                         <outlet property="galleryCollectionView" destination="W4m-9n-bFo" id="cgW-x4-Zty"/>
                         <outlet property="postedByLabel" destination="HLA-DE-6Yw" id="s2H-rH-d9R"/>
                         <outlet property="postedDateLabel" destination="KhD-BF-zxl" id="Fno-GC-wjU"/>
@@ -3122,7 +3123,7 @@ and check your internet connection.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="zTT-Se-xoI">
-                            <rect key="frame" x="0.0" y="301" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="300.5" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Q0f-Tk-yCb">
@@ -3255,14 +3256,14 @@ and check your internet connection.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="mb0-8w-R5d">
-                                        <rect key="frame" x="0.0" y="235.5" width="375" height="47.5"/>
+                                        <rect key="frame" x="0.0" y="235.5" width="375" height="47"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mb0-8w-R5d" id="6ss-zz-Tt2">
-                                            <rect key="frame" x="0.0" y="0.0" width="350" height="47.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="350" height="47"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N0g-Nm-CE2">
-                                                    <rect key="frame" x="61" y="11" width="103" height="24.5"/>
+                                                    <rect key="frame" x="61" y="11" width="103" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="103" id="Gjd-zq-ZBB"/>
                                                     </constraints>
@@ -4587,21 +4588,21 @@ Special thanks to the following people for making this app a reality:       
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterDistanceCell" id="eHV-N2-hyO" customClass="FilterDistanceCollectionViewCell" customModule="AW" customModuleProvider="target">
                                         <rect key="frame" x="750" y="0.0" width="375" height="574"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="mJ7-6L-elQ">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="mJ7-6L-elQ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0o4-Jp-iDP">
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0o4-Jp-iDP">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter by Distance:" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="eRF-8X-sK0">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Filter by Distance:" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="eRF-8X-sK0">
                                                             <rect key="frame" x="15" y="0.0" width="288" height="80"/>
                                                             <color key="backgroundColor" name="white"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="23"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ojr-5H-RQy">
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ojr-5H-RQy">
                                                             <rect key="frame" x="311" y="24.5" width="51" height="31"/>
                                                             <color key="onTintColor" name="blue_oval"/>
                                                         </switch>
@@ -4617,15 +4618,15 @@ Special thanks to the following people for making this app a reality:       
                                                         <constraint firstAttribute="trailing" secondItem="ojr-5H-RQy" secondAttribute="trailing" constant="15" id="qad-LW-CQf"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XUC-FX-v6b">
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XUC-FX-v6b">
                                                     <rect key="frame" x="0.0" y="95" width="375" height="128"/>
                                                     <subviews>
-                                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="250" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="339-LC-zX2">
+                                                        <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="250" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="339-LC-zX2">
                                                             <rect key="frame" x="28" y="62" width="319" height="34"/>
                                                             <color key="tintColor" name="font_clickable"/>
                                                             <color key="thumbTintColor" name="blue_oval"/>
                                                         </slider>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How From From Your Current Location:" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="FEz-SH-YES">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="How From From Your Current Location:" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="FEz-SH-YES">
                                                             <rect key="frame" x="15" y="8" width="345" height="39"/>
                                                             <color key="backgroundColor" name="white"/>
                                                             <constraints>
@@ -4635,7 +4636,7 @@ Special thanks to the following people for making this app a reality:       
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search Any Distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PBV-J9-TB7">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Search Any Distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PBV-J9-TB7">
                                                             <rect key="frame" x="30" y="103" width="315" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="17" id="t6c-Og-BhX"/>
@@ -4659,10 +4660,10 @@ Special thanks to the following people for making this app a reality:       
                                                         <constraint firstAttribute="height" constant="128" id="xv6-sp-EzN"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BNS-ZV-dAd">
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BNS-ZV-dAd">
                                                     <rect key="frame" x="0.0" y="238" width="375" height="118"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Current Location:" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2LY-CD-cTO">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Your Current Location:" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2LY-CD-cTO">
                                                             <rect key="frame" x="15" y="15" width="345" height="28"/>
                                                             <color key="backgroundColor" name="white"/>
                                                             <constraints>
@@ -4679,19 +4680,19 @@ Special thanks to the following people for making this app a reality:       
                                                                 <constraint firstAttribute="width" constant="19" id="mPl-OH-pk1"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qo8-5B-MEM">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Location Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qo8-5B-MEM">
                                                             <rect key="frame" x="42" y="45" width="318" height="22"/>
                                                             <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="16"/>
                                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address or Geopoints" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i4E-S9-oP1">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Address or Geopoints" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i4E-S9-oP1">
                                                             <rect key="frame" x="42" y="65" width="318" height="18"/>
                                                             <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="13"/>
                                                             <color key="textColor" name="font_grey"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="ccW-5C-G4h">
+                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="ccW-5C-G4h">
                                                             <rect key="frame" x="169" y="40.5" width="37" height="37"/>
                                                             <color key="color" name="blue_oval"/>
                                                         </activityIndicatorView>
@@ -4714,7 +4715,7 @@ Special thanks to the following people for making this app a reality:       
                                                         <constraint firstAttribute="trailing" secondItem="Qo8-5B-MEM" secondAttribute="trailing" constant="15" id="ykt-Bg-2tm"/>
                                                     </constraints>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J6o-b6-X3J">
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J6o-b6-X3J">
                                                     <rect key="frame" x="15" y="371" width="345" height="45"/>
                                                     <color key="backgroundColor" name="primary"/>
                                                     <constraints>
@@ -5800,8 +5801,8 @@ Don't worry, you'll be checking levels in no time!</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="WuA-iS-hol"/>
-        <segue reference="4rq-Cg-hJK"/>
+        <segue reference="wgc-JB-VGN"/>
+        <segue reference="fet-7n-7sr"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="CoastGuardLogo" width="79" height="28.5"/>

@@ -10,7 +10,15 @@ class SignInViewController: UIViewController {
         
     var oauthswift: OAuthSwift?
     
-    var referenceViewController: UIViewController?
+    static func fromStoryboard() -> SignInViewController {
+        let signinController = UIStoryboard.main.instantiateViewController(withIdentifier: "ModalOnboardLogin") as! SignInViewController
+        
+        // Set the presentation style that's generally used
+        signinController.modalPresentationStyle = .overCurrentContext
+        
+        return signinController
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +42,18 @@ class SignInViewController: UIViewController {
     }
     
     
+    // AWTODO: should this open the page in a safari controller?
     @IBAction func createAccountButtonPressed(_ sender: Any) {
         if let url = URL(string: "https://www.americanwhitewater.org/content/User/login") {
             UIApplication.shared.open(url)
         } else {
-            DuffekDialog.shared.showOkDialog(title: "Unable to Create Account", message: "Please visit: https://americanwhitewater.org to create an account.")
+            let alert = UIAlertController(
+                title: "Unable to Create Account",
+                message: "Please visit: https://americanwhitewater.org to create an account.",
+                preferredStyle: .alert
+            )
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
         }
     }
 

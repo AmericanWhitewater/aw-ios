@@ -95,15 +95,13 @@ class RunsListViewController: UIViewController {
         guard
             let lastShown = DefaultsManager.shared.signInLastShown,
             // Only show once per day
-            lastShown < Date(timeIntervalSinceNow: -24 * 60 * 60),
-            let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController
+            lastShown < Date(timeIntervalSinceNow: -24 * 60 * 60)
         else {
             return
         }
 
-        modalSignInVC.modalPresentationStyle = .overCurrentContext
-        modalSignInVC.referenceViewController = self
-        tabBarController?.present(modalSignInVC, animated: true, completion: nil)
+        // AWTODO: why not present on self?
+        tabBarController?.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
     }
     
     // Contract for updating data
@@ -137,11 +135,17 @@ class RunsListViewController: UIViewController {
             
             if filters.isRegion {
                 if filters.regionsFilter.isEmpty {
-                    DuffekDialog.shared.showStandardDialog(title: "Pull All Data?", message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.", buttonTitle: "Continue", buttonFunction: {
+                    let alert = UIAlertController(
+                        title: "Pull All Data?",
+                        message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.",
+                        preferredStyle: .alert
+                    )
+                
+                    alert.addAction(.init(title: "Continue", style: .default, handler: { _ in
                         self.refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
-                    }, cancelFunction: {
-                        self.refreshControl.endRefreshing()
-                    })
+                    }))
+                    alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+                    present(alert, animated: true)
                 } else {
                     refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
                 }

@@ -105,11 +105,8 @@ class RunAlertsViewController: UIViewController {
     }
     
     func showLoginScreen() {
-        if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
-            modalSignInVC.modalPresentationStyle = .overCurrentContext
-            modalSignInVC.referenceViewController = self
-            tabBarController?.present(modalSignInVC, animated: true, completion: nil)
-        }
+        // AWTODO: why not present on self?
+        tabBarController?.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
     }
     
     

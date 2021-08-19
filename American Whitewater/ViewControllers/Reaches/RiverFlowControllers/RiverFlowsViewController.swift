@@ -167,20 +167,28 @@ class RiverFlowsViewController: UIViewController {
     }
     
     func showLoginScreen() {
-        if let modalSignInVC = self.storyboard?.instantiateViewController(withIdentifier: "ModalOnboardLogin") as? SignInViewController {
-            modalSignInVC.modalPresentationStyle = .overCurrentContext
-            modalSignInVC.referenceViewController = self
-            tabBarController?.present(modalSignInVC, animated: true, completion: nil)
-        }
+        let modalSignInVC = SignInViewController.fromStoryboard()
+        // AWTODO: why not present on self?
+        tabBarController?.present(modalSignInVC, animated: true, completion: nil)
     }
     
     // MARK: - Navigation
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        switch identifier {
+        case Segue.addRiverFlowSeg.rawValue:
+            return selectedRun != nil
+        default:
+            return true
+        }
+        
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.identifier == Segue.addRiverFlowSeg.rawValue {
             let addFlowVC = segue.destination as? AddRiverFlowTableViewController
-            addFlowVC?.selectedRun = self.selectedRun
+            addFlowVC?.selectedRun = self.selectedRun!
             addFlowVC?.senderVC = self
             addFlowVC?.availableMetrics = self.availableMetrics
         }

@@ -3,7 +3,7 @@ import MapKit
 import CoreLocation
 import SwiftyJSON
 
-class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class RunMapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var userLocationButton: UIButton!
@@ -13,7 +13,7 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     
     var selectedRun: Reach?
     
-    let locationManager = CLLocationManager()
+    private let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,13 +39,15 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         mapView.mapType = .hybrid
         mapView.delegate = self
         
-        self.locationManager.delegate = self
+        locationManager.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.isAuthorized {
             showUserLocation()
         }
         
@@ -138,15 +140,18 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
             if annotation.title?.lowercased().contains("Put-In".lowercased()) == true ||
                annotation.title?.lowercased().contains("Take-Out".lowercased()) == true {
                 
-                DuffekDialog.shared.showStandardDialog(title: "Open in Maps?", message: "Would you like directions to the \(annotation.title ?? "River")", buttonTitle: "Get Directions", buttonFunction: {
+                let alert = UIAlertController(
+                    title: "Open in Maps?",
+                    message: "Would you like directions to the \(annotation.title ?? "River")",
+                    preferredStyle: .alert
+                )
+                alert.addAction(.init(title: "Get Directions", style: .default, handler: { _ in
                     // take them to Apple Maps
                     let url = "http://maps.apple.com/maps?daddr=\(annotation.coordinate.latitude),\(annotation.coordinate.longitude)"
                     UIApplication.shared.open(URL(string: url)!, options: [:], completionHandler: nil)
-
-                }, cancelFunction: {
-                    // handle cancel
-                })
-            
+                }))
+                alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+                present(alert, animated: true)
             } else {
                 
                 // open detail view
@@ -184,12 +189,6 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         mapView.showsUserLocation = true
     }
 
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
-            showUserLocation()
-        }
-    }
-    
     @IBAction func mapTypeButtonPressed(_ sender: Any) {
         if mapView.mapType == .standard {
             mapView.mapType = .hybrid
@@ -199,14 +198,16 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
     }
     
     @IBAction func showUserLocationPressed(_ sender: Any) {
-        if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.isAuthorized {
             showUserLocation()
             
-            if let mapView = mapView {
-                if Location.shared.hasLocation(mapView: mapView) {
-                    mapView.setCenter(mapView.userLocation.coordinate, animated: true)
-                }
+            if let mapView = mapView, mapView.hasLocation {
+                mapView.setCenter(mapView.userLocation.coordinate, animated: true)
             }
+        } else if CLLocationManager.isDenied {
+            present(LocationHelper.locationDeniedAlert(), animated: true)
         }
     }
     
@@ -222,6 +223,14 @@ class RunMapViewController: UIViewController, MKMapViewDelegate, CLLocationManag
         if segue.identifier == Segue.mapRapidDetails.rawValue {
             let destVC = segue.destination as! RunRapidDetailsTableViewController
             destVC.selectedRapid = sender as? Rapid
+        }
+    }
+}
+
+extension RunMapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            showUserLocation()
         }
     }
 }

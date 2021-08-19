@@ -9,15 +9,13 @@
 import UIKit
 import CoreLocation
 
-class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate {
-
+class OnboardLocationViewController: UIViewController {
     @IBOutlet weak var zipcodeTextField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var locationImageView: UIImageView!
     
-    let locationManager = CLLocationManager()
-    let geoCoder = CLGeocoder()
-    var userLocation:CLLocation?
+    private let locationManager = CLLocationManager()
+    private let geoCoder = CLGeocoder()
     
     var referenceViewController: UIViewController?
     
@@ -31,7 +29,7 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
         nextButton.layer.cornerRadius = 22.5
         
         // For presenting dialogs
-        self.locationManager.delegate = self
+        locationManager.delegate = self
     }
     
     /*
@@ -58,72 +56,81 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
         }
     }
     
-    /*
-     nextButtonPressed(_ sender: Any)
-     When user presses next the app decides to grab their
-     location automatically or it'll use any manually entered
-     zip code to find the users default region
-    */
+    //
+    // MARK: - Next button/finishing
+    //
+    
     @IBAction func nextButtonPressed(_ sender: Any) {
-        
         if nextButton.titleLabel?.text == "Use Your Current Location" {
-            if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
-                locationManager.startUpdatingLocation()
-            }
+            continueForLocation()
         } else if nextButton.titleLabel?.text == "Use Entered Zipcode" {
-            
-            // Geocode the zip code so we can get the region from the
-            // administrative Area property
-            let decoder = CLGeocoder()
-            decoder.geocodeAddressString(zipcodeTextField.text!) { (placemarks, error) in
-                guard error == nil,
-                    let placemarks = placemarks,
-                    let place = placemarks.first,
-                    let coordinate = place.location?.coordinate else {
-                        
-                        // some sort of error so show message and reset view
-                        DuffekDialog.shared.showOkDialog(title: "Unable to Find Location", message: "We are unable to find that location. Please check your connection or enter a new zip code to try again.")
-                        self.zipcodeTextField.text = ""
-                        self.nextButton.setTitle("Use Your Current Location", for: .normal)
-                        self.locationImageView.isHidden = false
-                        return
-                }
-                
-                print("Location found: \(coordinate.latitude), \(coordinate.longitude)")
-                print("Place: \(String(describing: place.administrativeArea))")
-                
-                DefaultsManager.shared.coordinate = coordinate
-                DefaultsManager.shared.onboardingCompleted = true
-                DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
-                
-                var filters = DefaultsManager.shared.filters
-                // Reset distance filter to 100 miles
-                // FIXME: should this be changing showDistanceFilter vs showRegionFilter?
-                filters.distanceFilter = 100
-                
-                // Set region code from admin area if available
-                if let adminArea = place.administrativeArea, let region = Region.regionByCode(code: "st\(adminArea)") {
-                    filters.regionsFilter = [region.code]
-                }
-                
-                DefaultsManager.shared.filters = filters
-                
-                // dismiss this view controller and tell the referencing ViewController to refresh
-                // AWTODO: Post a notification about this instead of coupling to the runs list controller
-                self.dismiss(animated: true, completion: {
-                    if let viewVC = self.referenceViewController as? RunsListViewController {
-                        viewVC.updateData()
-                    }
-                })
-            }
+            continueForZipcode()
         }
     }
     
-    /*
-     locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-     handles location updates and when we get the latest update we use it to find the users location
-     and zip code so we can find a default region for them to see
-    */
+    fileprivate func continueForLocation() {
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.isAuthorized {
+            locationManager.startUpdatingLocation()
+        } else if CLLocationManager.isDenied {
+            present(LocationHelper.locationDeniedAlert(), animated: true)
+        }
+    }
+    
+    fileprivate func continueForZipcode() {
+        // Geocode the zip code so we can get the region from the
+        // administrative Area property
+        geoCoder.geocodeAddressString(zipcodeTextField.text!) { (placemarks, error) in
+            guard error == nil,
+                  let placemarks = placemarks,
+                  let place = placemarks.first,
+                  let coordinate = place.location?.coordinate else {
+                      let alert = UIAlertController(
+                        title: "Unable to Find Location",
+                        message: "We are unable to find that location. Please check your connection or enter a new zip code to try again.",
+                        preferredStyle: .alert)
+                      alert.addAction(.init(title: "Dismiss", style: .default, handler: nil))
+                      self.present(alert, animated: true)
+                      
+                      self.zipcodeTextField.text = ""
+                      self.nextButton.setTitle("Use Your Current Location", for: .normal)
+                      self.locationImageView.isHidden = false
+                      return
+                  }
+            
+            print("Location found: \(coordinate.latitude), \(coordinate.longitude)")
+            print("Place: \(String(describing: place.administrativeArea))")
+            
+            DefaultsManager.shared.coordinate = coordinate
+            DefaultsManager.shared.onboardingCompleted = true
+            DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
+            
+            var filters = DefaultsManager.shared.filters
+            // Reset distance filter to 100 miles
+            // FIXME: should this be changing showDistanceFilter vs showRegionFilter?
+            filters.distanceFilter = 100
+            
+            // Set region code from admin area if available
+            if let adminArea = place.administrativeArea, let region = Region.regionByCode(code: "st\(adminArea)") {
+                filters.regionsFilter = [region.code]
+            }
+            
+            DefaultsManager.shared.filters = filters
+            
+            // dismiss this view controller and tell the referencing ViewController to refresh
+            // AWTODO: Post a notification about this instead of coupling to the runs list controller
+            self.dismiss(animated: true, completion: {
+                if let viewVC = self.referenceViewController as? RunsListViewController {
+                    viewVC.updateData()
+                }
+            })
+        }
+    }
+}
+
+extension OnboardLocationViewController: CLLocationManagerDelegate {
+    /// When we get the latest update we use it to find the users location and zip code so we can find a default region for them to see
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else {
             return
@@ -142,8 +149,7 @@ class OnboardLocationViewController: UIViewController, CLLocationManagerDelegate
         DefaultsManager.shared.appVersion = Double( (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "" ) ?? 0.0
         
         // reverse geocode the users location so we can get the admin area so we can request this location first
-        let decoder = CLGeocoder()
-        decoder.reverseGeocodeLocation(location) { (placemarks, error) in
+        geoCoder.reverseGeocodeLocation(location) { (placemarks, error) in
             if
                 error == nil,
                 let placemark = placemarks?.first,

@@ -2,7 +2,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -30,8 +30,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.delegate = self
         
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        
-        self.locationManager.delegate = self
+        locationManager.delegate = self
         
         updateFilterButton()
         fetchReachesFromCoreData()
@@ -57,7 +56,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if Location.shared.checkLocationStatusInBackground(manager: locationManager) {
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.isAuthorized {
             showUserLocation()
         }
     }
@@ -184,12 +185,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func showUserLocation() {
         mapView.showsUserLocation = true
     }
-
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
-            showUserLocation()
-        }
-    }
     
     @IBAction func filterButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: Segue.showFiltersMap.rawValue, sender: nil)
@@ -204,14 +199,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     @IBAction func showUserLocationPressed(_ sender: Any) {
-        if Location.shared.checkLocationStatusOnUserAction(manager: locationManager) {
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.isAuthorized {
             showUserLocation()
             
-            if let mapView = mapView {
-                if Location.shared.hasLocation(mapView: mapView) {
-                    mapView.setCenter(mapView.userLocation.coordinate, animated: true)
-                }
+            if let mapView = mapView, mapView.hasLocation {
+                mapView.setCenter(mapView.userLocation.coordinate, animated: true)
             }
+        } else if CLLocationManager.isDenied {
+            present(LocationHelper.locationDeniedAlert(), animated: true)
         }
     }
     
@@ -254,6 +251,14 @@ extension MapViewController: NSFetchedResultsControllerDelegate {
                 print("reach moved: \(reach.name ?? "unknown reach")) - \(reach.section ?? "unknown section")")
             default:
                 break
+        }
+    }
+}
+
+extension MapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            showUserLocation()
         }
     }
 }
