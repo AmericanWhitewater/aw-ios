@@ -58,11 +58,15 @@ class AddRiverFlowTableViewController: UITableViewController {
     var awImagePicker: AWImagePicker!
     
     // AWTODO: This is the state for the storyboard placeholder that was being shown by default. Is it the correct default?
-    var flowObservation: FlowOptions = .runnable
+    var flowObservation: FlowOptions? = nil
     
-    /// Currently selected reportingOption as an index for the picker, in the format (row, component)
+    /// Returns the currently selected reportingOption as an index for the picker, in the format (row, component), or the first row if no selection
     var selectedPickerItem: (Int, Int) {
-        // The force unwrap is safe here because we're checking the index of an enum in its cases:
+        guard let flowObservation = flowObservation else {
+            return (0, 0)
+        }
+
+        // The force unwrap is safe because we're checking the index of an enum in its cases:
         let row = FlowOptions.allCases.firstIndex(where: { $0 == flowObservation })!
         return (row, 0)
     }
@@ -93,7 +97,7 @@ class AddRiverFlowTableViewController: UITableViewController {
         dateObservedLabel?.text = dateFormatter.string(from: dateObserved)
         observedGaugeUnitsLabel?.text = selectedRun.unit ?? "cfs"
         
-        flowDescriptionLabel.text = flowObservation.title
+        flowDescriptionLabel.text = flowObservation?.title
         
         if availableMetrics.count > 0 {
             self.unitOptions = Array(availableMetrics.keys)
@@ -175,7 +179,7 @@ class AddRiverFlowTableViewController: UITableViewController {
         
         AWGQLApiHelper.shared.postPhotoForReach(photoPostType: .gaugeObservation, image: image, reach_id: reachId, caption: title,
                                                        description: "", photoDate: dateString,
-                                                reachObservation: flowObservation.value, gauge_id: gageId, metric_id: metricId,
+                                                reachObservation: flowObservation?.value, gauge_id: gageId, metric_id: metricId,
                                                        reachReading: reading,
                                                        callback: { (photoFileUpdate, photoPostUpdate) in
             AWProgressModal.shared.hide()
