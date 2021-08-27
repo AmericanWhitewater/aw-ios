@@ -56,45 +56,7 @@ class RunDetailTableViewController: UITableViewController {
         let selectedSegTitle = [NSAttributedString.Key.foregroundColor: UIColor(named: "primary") ?? UIColor.black]
                                 as [NSAttributedString.Key : Any]
         viewSegmentControl.setTitleTextAttributes(selectedSegTitle, for: .selected)
-        
-        
         dateFormatter.dateFormat = "MMM dd, yyyy h:mm:ss a"
-        
-        favoriteButton.image = favoriteImage
-        
-        runNameLabel.text = selectedRun?.name ?? "Unknown"
-        runSectionLabel.text = selectedRun?.section ?? ""
-        lastUpdateLabel.text = dateFormatter.string(from: Date())
-        
-        runLevelLabel.text = selectedRun?.currentGageReading ?? "n/a"
-        runUnitsLabel.text = selectedRun?.unit ?? ""
-        runGaugeDeltaLabel.text = selectedRun?.delta ?? ""
-        
-        runClassLabel.text = selectedRun?.difficulty ?? "n/a"
-        runLengthLabel.text = "n/a" //selectedRun. how do we get this?
-        runGradientLabel.text = "n/a" // need to find this one too
-        
-        if let cond = selectedRun?.condition {
-            if cond == "low" {
-                runLevelLabel.textColor = UIColor.AW.Low
-                runGaugeDeltaLabel.textColor = UIColor.AW.Low
-            } else if cond == "med" {
-                runLevelLabel.textColor = UIColor.AW.Med
-                runGaugeDeltaLabel.textColor = UIColor.AW.Med
-            } else if cond == "high" {
-                runLevelLabel.textColor = UIColor.AW.High
-                runGaugeDeltaLabel.textColor = UIColor.AW.High
-            } else {
-                runLevelLabel.textColor = UIColor.AW.Unknown
-                runGaugeDeltaLabel.textColor = UIColor.AW.Unknown
-            }
-        }
-        
-        if selectedRun?.condition == nil || selectedRun?.currentGageReading == nil {
-            seeGaugeInfoCell.isHidden = true
-        } else {
-            seeGaugeInfoCell.isHidden = false
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -105,6 +67,8 @@ class RunDetailTableViewController: UITableViewController {
         viewSegmentControl.selectedSegmentIndex = 0
         
         if let selectedRun = selectedRun {
+            updateDetailDisplay(selectedRun)
+            
             AWApiReachHelper.shared.updateReachDetail(reachId: "\(selectedRun.id)", callback: {
                 self.fetchDetailsFromCoreData()
             }) { (error) in
@@ -158,7 +122,6 @@ class RunDetailTableViewController: UITableViewController {
 
     
     func queryPhotos() {
-        
         guard let selectedRun = selectedRun else { print("selected run is nil"); return }
                 
         AWGQLApiHelper.shared.getPhotosForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 100 , callback: { (photoResults) in
@@ -256,20 +219,41 @@ class RunDetailTableViewController: UITableViewController {
             return
         }
         
-        self.runLengthLabel.text = fetchedReach.length ?? "n/a"
-        self.runGradientLabel.text = fetchedReach.avgGradient == 0 ? "\(fetchedReach.avgGradient) fpm" : "n/a fpm"
-        if var details = fetchedReach.longDescription {
+        self.selectedRun = fetchedReach
+        
+        updateDetailDisplay(fetchedReach)
+    }
+    
+    private func updateDetailDisplay(_ reach: Reach) {
+        runNameLabel.text = reach.name ?? "Unknown"
+        runSectionLabel.text = reach.section ?? ""
+        
+        // FIXME: Date()
+        lastUpdateLabel.text = dateFormatter.string(from: Date())
+        
+        runUnitsLabel.text = selectedRun?.unit ?? ""
+        runGaugeDeltaLabel.text = selectedRun?.delta ?? ""
+        runClassLabel.text = selectedRun?.difficulty ?? "n/a"
+        runLevelLabel.text = selectedRun?.currentGageReading ?? "n/a"
+        runLevelLabel.textColor = reach.conditionColor
+        runGaugeDeltaLabel.textColor = reach.conditionColor
+    
+        seeGaugeInfoCell.isHidden = selectedRun?.condition == nil || selectedRun?.currentGageReading == nil
+        
+        runLengthLabel.text = reach.length ?? "n/a"
+        runGradientLabel.text = reach.avgGradient == 0 ? "\(reach.avgGradient) fpm" : "n/a fpm"
+        
+        if let details = reach.longDescription {
             originalDetailsDescription = details
             
-            let maxCount = detailTextMaxCount > details.count ? details.count : detailTextMaxCount
-            details = String(details.prefix(maxCount))
-            runDetailInfoTextView.set(html: details)
-            
+            let maxCount = min(details.count, detailTextMaxCount)
+            let truncatedDetails = String(details.prefix(maxCount))
+            runDetailInfoTextView.set(html: truncatedDetails)
         } else {
             runDetailInfoTextView.set(html: "<h3>No additional details provided</h3>")
         }
         
-        self.favoriteButton.image = favoriteImage
+        self.favoriteButton.image = favoriteImage(selected: reach.favorite)
         
         checkBannerImages()
         self.tableView.reloadData()
@@ -332,10 +316,10 @@ class RunDetailTableViewController: UITableViewController {
         reach.favorite.toggle()
         try? managedObjectContext.save()
         
-        favoriteButton.image = favoriteImage
+        favoriteButton.image = favoriteImage(selected: reach.favorite)
     }
     
-    private var favoriteImage: UIImage {
+    private func favoriteImage(selected: Bool) -> UIImage {
         let isFavorite = selectedRun?.favorite ?? false
         return UIImage(named: isFavorite ? "icon_favorite_selected" : "icon_favorite")!
     }
