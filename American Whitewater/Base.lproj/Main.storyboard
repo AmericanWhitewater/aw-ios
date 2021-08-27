@@ -1340,7 +1340,7 @@
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title=" " id="kjV-Zw-pbm"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="XJm-oK-aBb">
-                            <rect key="frame" x="87.5" y="5.5" width="200" height="33"/>
+                            <rect key="frame" x="66" y="5.5" width="200" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <segments>
@@ -1353,14 +1353,24 @@
                                 <action selector="detailViewSegmentChanged:" destination="mFc-ar-6ha" eventType="valueChanged" id="vLE-fK-l8Y"/>
                             </connections>
                         </segmentedControl>
-                        <barButtonItem key="rightBarButtonItem" image="share" id="sO4-p2-JAV">
-                            <connections>
-                                <action selector="shareButtonPressed" destination="mFc-ar-6ha" id="dNE-NT-RAK"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="share" id="sO4-p2-JAV" userLabel="Share">
+                                <connections>
+                                    <action selector="shareButtonPressed" destination="mFc-ar-6ha" id="dNE-NT-RAK"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Favorite" id="1tq-8q-Fy8" userLabel="Favorite">
+                                <imageReference key="image" image="star" catalog="system"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="didTapFavoriteButton" destination="mFc-ar-6ha" id="8ZH-Gx-jG8"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="addPhotoButton" destination="ojo-oj-UgF" id="hZj-Tk-bwW"/>
+                        <outlet property="favoriteButton" destination="1tq-8q-Fy8" id="Wse-U2-HBL"/>
                         <outlet property="lastUpdateLabel" destination="QHd-61-ClA" id="RPr-0x-KWa"/>
                         <outlet property="preview1ImageView" destination="7kS-su-VAK" id="ISc-s0-lc1"/>
                         <outlet property="preview2ImageView" destination="Jfj-6P-yun" id="NUy-dT-cTC"/>
@@ -5846,6 +5856,7 @@ Don't worry, you'll be checking levels in no time!</string>
         <image name="rateApp" width="30" height="29"/>
         <image name="runnablePin" width="19" height="28"/>
         <image name="share" width="19" height="20"/>
+        <image name="star" catalog="system" width="128" height="116"/>
         <image name="tmpImageGray" width="171" height="171"/>
         <image name="xmark.circle" catalog="system" width="128" height="121"/>
         <namedColor name="accent">

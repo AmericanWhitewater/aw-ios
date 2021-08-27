@@ -8,6 +8,8 @@ class RunDetailTableViewController: UITableViewController {
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
     
+    @IBOutlet weak var favoriteButton: UIBarButtonItem!
+    
     @IBOutlet weak var runNameLabel: UILabel!
     @IBOutlet weak var runSectionLabel: UILabel!
     @IBOutlet weak var lastUpdateLabel: UILabel!
@@ -57,6 +59,8 @@ class RunDetailTableViewController: UITableViewController {
         
         
         dateFormatter.dateFormat = "MMM dd, yyyy h:mm:ss a"
+        
+        favoriteButton.image = favoriteImage
         
         runNameLabel.text = selectedRun?.name ?? "Unknown"
         runSectionLabel.text = selectedRun?.section ?? ""
@@ -265,6 +269,8 @@ class RunDetailTableViewController: UITableViewController {
             runDetailInfoTextView.set(html: "<h3>No additional details provided</h3>")
         }
         
+        self.favoriteButton.image = favoriteImage
+        
         checkBannerImages()
         self.tableView.reloadData()
     }
@@ -316,6 +322,22 @@ class RunDetailTableViewController: UITableViewController {
         
         let vc = UIActivityViewController(activityItems: [shareLink], applicationActivities: [])
         present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func didTapFavoriteButton() {
+        guard let reach = selectedRun else {
+            return
+        }
+        
+        reach.favorite.toggle()
+        try? managedObjectContext.save()
+        
+        favoriteButton.image = favoriteImage
+    }
+    
+    private var favoriteImage: UIImage {
+        let isFavorite = selectedRun?.favorite ?? false
+        return UIImage(named: isFavorite ? "icon_favorite_selected" : "icon_favorite")!
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
