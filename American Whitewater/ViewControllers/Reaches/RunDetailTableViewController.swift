@@ -104,7 +104,10 @@ class RunDetailTableViewController: UITableViewController {
             AWApiReachHelper.shared.updateReachDetail(reachId: "\(selectedRun.id)", callback: {
                 self.fetchDetailsFromCoreData()
             }) { (error) in
-                self.isShowingError = true
+                // Only show an error state if there aren't details stored locally
+                if selectedRun.longDescription == nil || selectedRun.longDescription?.isEmpty == true {
+                    self.isShowingError = true
+                }
                 print("Error: \(error.localizedDescription)")
             }
         }
