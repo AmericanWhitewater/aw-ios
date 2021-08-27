@@ -2,37 +2,27 @@ import UIKit
 import CoreData
 
 class RunDetailTableViewController: UITableViewController {
-
     var selectedRun:Reach?
     
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    private var fetchedResultsController: NSFetchedResultsController<Reach>?
     
     @IBOutlet weak var favoriteButton: UIBarButtonItem!
-    
     @IBOutlet weak var runNameLabel: UILabel!
     @IBOutlet weak var runSectionLabel: UILabel!
     @IBOutlet weak var lastUpdateLabel: UILabel!
     @IBOutlet weak var runLevelLabel: UILabel!
     @IBOutlet weak var runUnitsLabel: UILabel!
     @IBOutlet weak var runGaugeDeltaLabel: UILabel!
-    
     @IBOutlet weak var runBannerImageCell: UITableViewCell!
     @IBOutlet weak var runBannerImageView: UIImageView!
-    
-    
     @IBOutlet weak var runSectionInfoLabel: UILabel!
     @IBOutlet weak var runDetailInfoTextView: UITextView!
     @IBOutlet weak var tapForMoreButton: UIButton!
-    
     @IBOutlet weak var runClassLabel: UILabel!
     @IBOutlet weak var runLengthLabel: UILabel!
     @IBOutlet weak var runGradientLabel: UILabel!
-    
     @IBOutlet weak var viewSegmentControl: UISegmentedControl!
-    
     @IBOutlet weak var seeGaugeInfoCell: UITableViewCell!
-    
     @IBOutlet weak var addPhotoButton: UIButton!
     @IBOutlet weak var preview1ImageView: UIImageView!
     @IBOutlet weak var preview2ImageView: UIImageView!
@@ -42,8 +32,7 @@ class RunDetailTableViewController: UITableViewController {
     
     var imageLinks = [ [String:String?] ]()
     
-    var detailTextMaxCount = 400
-    var originalDetailsDescription = ""
+    private let detailTextMaxCount = 400
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +77,11 @@ class RunDetailTableViewController: UITableViewController {
     
     
     @IBAction func tapForMoreButtonPressed(_ sender: Any) {
-        runDetailInfoTextView.set(html: originalDetailsDescription)
+        guard let longDescription = selectedRun?.longDescription else {
+            return
+        }
+        
+        runDetailInfoTextView.set(html: longDescription)
         tapForMoreButton.isHidden = true
         self.tableView.reloadData()
     }
@@ -119,8 +112,6 @@ class RunDetailTableViewController: UITableViewController {
         return l
     }
     
-
-    
     func queryPhotos() {
         guard let selectedRun = selectedRun else { print("selected run is nil"); return }
                 
@@ -147,7 +138,6 @@ class RunDetailTableViewController: UITableViewController {
                 }
                 
                 self.updateImagePreviews()
-                
             } else {
                 print("No photos returned")
             }
@@ -183,7 +173,7 @@ class RunDetailTableViewController: UITableViewController {
     }
     
     func updateImagePreviews() {
-        
+
         if imageLinks.count >= 3 {
             if let thumb = imageLinks[2]["thumb"] as? String, let url = URL(string: "\(AWGC.AW_BASE_URL)\(thumb)") {
                 preview3ImageView.load(url: url)
@@ -207,7 +197,6 @@ class RunDetailTableViewController: UITableViewController {
         self.performSegue(withIdentifier: Segue.gallerySeg.rawValue, sender: nil)
     }
     
-    
     func fetchDetailsFromCoreData() {
         guard let selectedRun = self.selectedRun else { return }
         
@@ -228,7 +217,8 @@ class RunDetailTableViewController: UITableViewController {
         runNameLabel.text = reach.name ?? "Unknown"
         runSectionLabel.text = reach.section ?? ""
         
-        // FIXME: Date()
+        // FIXME: Date() is not the right date to use
+        // Reach.detailUpdated is a property in the CD model, but it is never set
         lastUpdateLabel.text = dateFormatter.string(from: Date())
         
         runUnitsLabel.text = selectedRun?.unit ?? ""
@@ -246,8 +236,6 @@ class RunDetailTableViewController: UITableViewController {
         runGradientLabel.text = reach.avgGradient == 0 ? "\(reach.avgGradient) fpm" : "n/a fpm"
         
         if let details = reach.longDescription {
-            originalDetailsDescription = details
-            
             let maxCount = min(details.count, detailTextMaxCount)
             let truncatedDetails = String(details.prefix(maxCount))
             runDetailInfoTextView.set(html: truncatedDetails)
@@ -260,7 +248,6 @@ class RunDetailTableViewController: UITableViewController {
         checkBannerImages()
         self.tableView.reloadData()
     }
-    
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         isShowingError ? 1 : 4
@@ -278,26 +265,27 @@ class RunDetailTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 3 {
-            
-            // check what option the user selected
-            if indexPath.row == 0 {
+            switch indexPath.row {
+            case 0:
+                // Alerts
                 self.performSegue(withIdentifier: Segue.riverAlertsSeg.rawValue, sender: nil)
-            } else if indexPath.row == 1 {
+            case 1:
+                // Accidents
                 self.performSegue(withIdentifier: Segue.riverAccidentsSeg.rawValue, sender: nil)
-            } else if indexPath.row == 2 {
-                // Handle 'See Gauge Info'
+            case 2:
+                // Gauge Info
                 self.performSegue(withIdentifier: Segue.gaugeDetail.rawValue, sender: nil)
-            } else if indexPath.row == 3 {
-                
+            case 3:
                 // Handle go to website view
                 guard let run = selectedRun,
                       let url = URL(string: "https://www.americanwhitewater.org/content/River/detail/id/\(run.id)/") else { return }
                 
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                
-            } else if indexPath.row == 4 {
-                // Handle share button pressed
+            case 4:
+                // Share
                 shareButtonPressed()
+            default:
+                break
             }
         }
     }
@@ -327,7 +315,6 @@ class RunDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         if cell == runBannerImageCell {
             if runBannerImageCell.isHidden {
@@ -340,37 +327,38 @@ class RunDetailTableViewController: UITableViewController {
         return UITableView.automaticDimension
     }
     
-    
     @IBAction func detailViewSegmentChanged(_ segmentControl: UISegmentedControl) {
         performSegue(withIdentifier: Segue.reachMapEmbed.rawValue, sender: nil)
     }
     
     
-
-    
+    //
     // MARK: - Navigation
+    //
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Segue.gaugeDetail.rawValue {
-            let gaugeVC = segue.destination as? GageDetailsTableViewController //GaugeDetailViewController
+        switch segue.identifier {
+        case Segue.gaugeDetail.rawValue:
+            let gaugeVC = segue.destination as? GageDetailsTableViewController
             gaugeVC?.selectedRun = selectedRun
-        } else if segue.identifier == Segue.reachMapEmbed.rawValue {
+        case Segue.reachMapEmbed.rawValue:
             let mapVC = segue.destination as? RunMapViewController
             mapVC?.selectedRun = selectedRun
-        } else if segue.identifier == Segue.riverAlertsSeg.rawValue {
+        case Segue.riverAlertsSeg.rawValue:
             let alertsVC = segue.destination as? RunAlertsViewController
             alertsVC?.selectedRun = selectedRun
-        } else if segue.identifier == Segue.riverAccidentsSeg.rawValue {
+        case Segue.riverAccidentsSeg.rawValue:
             let accidentsVC = segue.destination as? RunAccidentsViewController
             accidentsVC?.selectedRun = selectedRun
-        } else if segue.identifier == Segue.gallerySeg.rawValue {
+        case Segue.gallerySeg.rawValue:
             let galleryVC = segue.destination as? GalleryViewController
             galleryVC?.selectedRun = selectedRun
             galleryVC?.imageLinks = self.imageLinks
-        } else if segue.identifier == Segue.showFlowsSeg.rawValue {
+        case Segue.showFlowsSeg.rawValue:
             let addFlowVC = segue.destination as? RiverFlowsViewController
             addFlowVC?.selectedRun = self.selectedRun
+        default:
+            break
         }
     }
 }
