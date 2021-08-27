@@ -361,21 +361,9 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
             cell.runLevelAndClassLabel.text = "Level: \(level)\(reach.unit ?? "") Class: \(reach.difficulty ?? "n/a")"
             
             // set highlight color
-            if let status = reach.condition {
-                if status == "low" {
-                    cell.runStatusLeftBar.backgroundColor = UIColor.AW.Low
-                    cell.runLevelAndClassLabel.textColor = UIColor.AW.Low
-                } else if status == "med" {
-                    cell.runStatusLeftBar.backgroundColor = UIColor.AW.Med
-                    cell.runLevelAndClassLabel.textColor = UIColor.AW.Med
-                } else if status == "high" || status == "hi" {
-                    cell.runStatusLeftBar.backgroundColor = UIColor.AW.High
-                    cell.runLevelAndClassLabel.textColor = UIColor.AW.High
-                } else {
-                    cell.runStatusLeftBar.backgroundColor = UIColor.AW.Unknown
-                    cell.runLevelAndClassLabel.textColor = UIColor.AW.Unknown
-                }
-            }
+            let color = reach.conditionColor
+            cell.runStatusLeftBar.backgroundColor = color
+            cell.runLevelAndClassLabel.textColor = color
             
             // show star filled or not filled if it's a favorite
             if reach.favorite {
