@@ -104,6 +104,7 @@ class RunDetailTableViewController: UITableViewController {
             AWApiReachHelper.shared.updateReachDetail(reachId: "\(selectedRun.id)", callback: {
                 self.fetchDetailsFromCoreData()
             }) { (error) in
+                self.isShowingError = true
                 print("Error: \(error.localizedDescription)")
             }
         }
@@ -121,6 +122,33 @@ class RunDetailTableViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
+    
+    //
+    // MARK: - Error state
+    //
+    
+    /// Shows a loading error message instead of the default state ("no details available")
+    /// Pretty kludgy way to do it, but since this is a UITableViewController with static cells, it's less straightforward to replace the tableview with an error view.
+    /// See also numberOfSections(in:) below...
+    private var isShowingError = false {
+        didSet {
+            tableView.tableFooterView = isShowingError ? loadingErrorLabel() : nil
+            tableView.reloadData()
+        }
+    }
+    
+    private func loadingErrorLabel() -> UILabel {
+        let l = UILabel()
+        l.text = "Couldn't load details: please check your connection and try again"
+        l.font = UIFont.preferredFont(forTextStyle: .title2)
+        l.textColor = .secondaryLabel
+        l.textAlignment = .center
+        l.numberOfLines = 0
+        l.frame = CGRect(x: 0, y: 0, width: 0, height: 300)
+        return l
+    }
+    
+
     
     func queryPhotos() {
         
@@ -239,6 +267,9 @@ class RunDetailTableViewController: UITableViewController {
     }
     
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        isShowingError ? 1 : 4
+    }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10
