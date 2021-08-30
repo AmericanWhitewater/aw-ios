@@ -65,43 +65,48 @@ class ReviewPhotoTableViewController: UITableViewController {
 
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        if let image = takenImage, let selectedRun = selectedRun, let capText = captionTextField.text {
-            
-            var description = ""
-            if let desc = descriptionTextView.text, desc != DESCRIPTION_PLACEHOLDER {
-                description = desc
+        guard
+            let image = takenImage,
+            let selectedRun = selectedRun,
+            let capText = captionTextField.text
+        else {
+            return
+        }
+        
+        var description = ""
+        if let desc = descriptionTextView.text, desc != DESCRIPTION_PLACEHOLDER {
+            description = desc
+        }
+        
+        let serverDateString = serverDateFormatter.string(from: approxDate)
+        
+        AWProgressModal.shared.show(fromViewController: self, message: "Saving...")
+        
+        API.shared.postPhoto(image: image,
+                             reachId: selectedRun.id,
+                             caption: capText,
+                             description: description,
+                             photoDate: serverDateString
+        ) { (photo, error) in
+            defer {
+                AWProgressModal.shared.hide()
             }
-
-            let serverDateString = serverDateFormatter.string(from: approxDate)
             
-            AWProgressModal.shared.show(fromViewController: self, message: "Saving...")
-            
-            API.shared.postPhoto(image: image,
-                                 reachId: selectedRun.id,
-                                 caption: capText,
-                                 description: description,
-                                 photoDate: serverDateString
-            ) { (photo, error) in
-                defer {
-                    AWProgressModal.shared.hide()
-                }
+            guard let photo = photo, error == nil else {
+                print("Error: \(String(describing:error?.localizedDescription))")
+                self.showToast(message: "An Error Occured: \(String(describing:error?.localizedDescription))")
                 
-                guard let photo = photo, error == nil else {
-                    print("Error: \(String(describing:error?.localizedDescription))")
-                    self.showToast(message: "An Error Occured: \(String(describing:error?.localizedDescription))")
-                    
-                    // FIXME: also had a path that showed this error, which is correct to show the user?
-                    // self.showToast(message: "We were unable to save your photo to the server. Please try again or try another photo.")
-                    
-                    return
-                }
+                // FIXME: also had a path that showed this error, which is correct to show the user?
+                // self.showToast(message: "We were unable to save your photo to the server. Please try again or try another photo.")
                 
-                print("Photo uploaded - callback returned")
-                
-                self.showToast(message: "Your photo has been successfully saved.")
-                self.senderVC?.imageLinks.insert(photo, at: 0)
-                self.navigationController?.popViewController(animated: true)
+                return
             }
+            
+            print("Photo uploaded - callback returned")
+            
+            self.showToast(message: "Your photo has been successfully saved.")
+            self.senderVC?.imageLinks.insert(photo, at: 0)
+            self.navigationController?.popViewController(animated: true)
         }
     }
 }
