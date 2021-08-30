@@ -361,7 +361,7 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
             cell.runLevelAndClassLabel.text = "Level: \(level)\(reach.unit ?? "") Class: \(reach.difficulty ?? "n/a")"
             
             // set highlight color
-            let color = reach.conditionColor
+            let color = reach.runnabilityColor
             cell.runStatusLeftBar.backgroundColor = color
             cell.runLevelAndClassLabel.textColor = color
             

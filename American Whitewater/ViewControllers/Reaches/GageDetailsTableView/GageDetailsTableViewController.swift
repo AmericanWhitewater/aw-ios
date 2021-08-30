@@ -185,7 +185,7 @@ class GageDetailsTableViewController: UITableViewController {
             cell.reachGageDeltaLabel.text = selectedRun?.delta ?? ""
             cell.lastUpdatedLabel.text = dateFormatter.string(from: Date())
             
-            let color = selectedRun?.conditionColor
+            let color = selectedRun?.runnabilityColor
             cell.reachLevelLabel.textColor = color
             cell.reachGageDeltaLabel.textColor = color
             

@@ -226,7 +226,7 @@ class RunDetailTableViewController: UITableViewController {
         runClassLabel.text = selectedRun?.difficulty ?? "n/a"
         runLevelLabel.text = selectedRun?.currentGageReading ?? "n/a"
         
-        let color = reach.conditionColor
+        let color = reach.runnabilityColor
         runLevelLabel.textColor = color
         runGaugeDeltaLabel.textColor = color
     

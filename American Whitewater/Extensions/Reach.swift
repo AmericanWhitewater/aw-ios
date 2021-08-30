@@ -53,7 +53,7 @@ extension Reach {
     }
     
     /// Returns the 'runnability' color for a reaches condition
-    var conditionColor: UIColor {
+    var runnabilityColor: UIColor {
         switch condition {
         case "low": return UIColor.AW.Low
         case "med": return UIColor.AW.Med

@@ -162,7 +162,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         cell.runLevelAndClassLabel.text = "Level: \(level) Class: \(favorite.difficulty ?? "n/a")"
         
         // set highlight color
-        let color = favorite.conditionColor
+        let color = favorite.runnabilityColor
         cell.runStatusLeftBar.backgroundColor = color
         cell.runLevelAndClassLabel.textColor = color
         

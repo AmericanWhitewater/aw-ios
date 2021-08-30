@@ -40,7 +40,7 @@ class RiverFlowsViewController: UIViewController {
         riverUnitsLabel.text = selectedRun?.unit
         riverGaugeDeltaLabel.text = selectedRun?.delta
         
-        if let color = selectedRun?.conditionColor {
+        if let color = selectedRun?.runnabilityColor {
             riverLevelLabel.textColor = color
             riverGaugeDeltaLabel.textColor = color
         }
