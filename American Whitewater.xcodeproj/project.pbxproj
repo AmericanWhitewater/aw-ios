@@ -13,6 +13,7 @@
 		4A26322426C5DC5E001B026B /* CLLocationManager+convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A26322326C5DC5E001B026B /* CLLocationManager+convenience.swift */; };
 		4A36D1E726A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */; };
 		4A74F7B426DC7B4B00637A88 /* API+GaugeGraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74F7B326DC7B4B00637A88 /* API+GaugeGraphData.swift */; };
+		4A74F7B626DC85D700637A88 /* GaugeDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74F7B526DC85D700637A88 /* GaugeDataPoint.swift */; };
 		4A7F530026BA192000DFBDFF /* UIStoryboard+convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F52FF26BA192000DFBDFF /* UIStoryboard+convenience.swift */; };
 		4AA01D3C26CDA6F00041BB4B /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA01D3B26CDA6F00041BB4B /* Photo.swift */; };
 		4AA3FEFB26B2725100AC4303 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA3FEFA26B2725100AC4303 /* Filters.swift */; };
@@ -161,6 +162,7 @@
 		4A26322326C5DC5E001B026B /* CLLocationManager+convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+convenience.swift"; sourceTree = "<group>"; };
 		4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+FullResolutionEditedImage.swift"; sourceTree = "<group>"; };
 		4A74F7B326DC7B4B00637A88 /* API+GaugeGraphData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+GaugeGraphData.swift"; sourceTree = "<group>"; };
+		4A74F7B526DC85D700637A88 /* GaugeDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeDataPoint.swift; sourceTree = "<group>"; };
 		4A7F52FF26BA192000DFBDFF /* UIStoryboard+convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+convenience.swift"; sourceTree = "<group>"; };
 		4AA01D3B26CDA6F00041BB4B /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		4AA3FEFA26B2725100AC4303 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
@@ -552,6 +554,7 @@
 				4AC4686226C0B15A0032D68F /* Alert.swift */,
 				4AC4686426C104D70032D68F /* GaugeObservation.swift */,
 				4AA01D3B26CDA6F00041BB4B /* Photo.swift */,
+				4A74F7B526DC85D700637A88 /* GaugeDataPoint.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -966,6 +969,7 @@
 				6376508D2487E8AB00DD0FCE /* AWProgressModal.swift in Sources */,
 				4AC4685D26C02A840032D68F /* API.swift in Sources */,
 				63309E452343D9B500E6DBC4 /* NoRiversTableViewCell.swift in Sources */,
+				4A74F7B626DC85D700637A88 /* GaugeDataPoint.swift in Sources */,
 				630F7EC825C3439000F17D8A /* LoadingRiversCell.swift in Sources */,
 				631EFFA223677CB600BA17F7 /* Rapid+CoreDataProperties.swift in Sources */,
 				63B5B4A324589EAB0062F54B /* RunAccidentsViewController.swift in Sources */,

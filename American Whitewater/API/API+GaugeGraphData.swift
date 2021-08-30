@@ -17,7 +17,7 @@ extension API {
         }
         
         /// Retrieves gauge data
-        static func get(gaugeId: Int, dateInterval: DateInterval, resolution: Int, completion: @escaping ([[String: Any?]]?, Error?) -> Void) {
+        static func get(gaugeId: Int, dateInterval: DateInterval, resolution: Int, completion: @escaping ([GaugeDataPoint]?, Error?) -> Void) {
             let start = Int(round(dateInterval.start.timeIntervalSince1970))
             let end = Int(round(dateInterval.end.timeIntervalSince1970))
             
@@ -26,40 +26,26 @@ extension API {
                 return
             }
             
-            AF.request(url).responseJSON { (response) in
-                
+            AF.request(url).responseData { (response) in
                 switch response.result {
                 case .success(let value):
-                    
-                    var flowData = [[String:Any?]]()
-                    
-                    let json = JSON(value)
-                    
-                    if let flowArray = json.array {
-                        for flow in flowArray {
-                            var flowDict = [String: Any?]()
-                            flowDict["gauge_id"] = flow["gauge_id"].intValue
-                            flowDict["metric"] = flow["metric"].intValue
-                            flowDict["nv"] = flow["nv"].doubleValue
-                            flowDict["reading"] = flow["reading"].stringValue
-                            flowDict["updated"] = flow["updated"].doubleValue
-                            flowDict["id"] = flow["id"].int32Value
-                            flowData.append(flowDict)
-                        }
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+
+                    do {
+                        let points = try decoder.decode([GaugeDataPoint].self, from: value)
+                        
+                        print("Total flow data points from server: \(points.count)")
+                        
+                        // TODO: convert epoch date/times to date objects (which keys?)
+                        
+                        completion(points, nil)
+                    } catch {
+                        completion(nil, error)
+                        return
                     }
-                    
-                    print("Total flow data points from server: \(json.count)")
-                    
-                    // convert epoc date/times to date objects
-                    
-                    completion(flowData, nil)
-                    
                 case .failure(let error):
-                    print("Failed trying to call: \(url)")
-                    print("Response: \(response)")
-                    print("Response Description: \(response.debugDescription)")
-                    print("HTTP Response: \(response.response.debugDescription)")
-                    print("Error:", error)
+                    completion(nil, error)
                 }
                 
             }

@@ -265,7 +265,7 @@ struct API {
         )
     }
     
-    public func getGaugeGraphData(gaugeId: Int, dateInterval: DateInterval, resolution: Int, completion: @escaping ([[String: Any?]]?, Error?) -> Void) {
+    public func getGaugeGraphData(gaugeId: Int, dateInterval: DateInterval, resolution: Int, completion: @escaping ([GaugeDataPoint]?, Error?) -> Void) {
         GaugeGraphData.get(gaugeId: gaugeId, dateInterval: dateInterval, resolution: resolution, completion: completion)
     }
     

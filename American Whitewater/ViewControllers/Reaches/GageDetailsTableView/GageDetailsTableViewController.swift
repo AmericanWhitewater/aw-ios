@@ -5,7 +5,7 @@ class GageDetailsTableViewController: UITableViewController {
 
     var selectedRun: Reach?
     var gagesList: [ [String: String] ]?
-    var gageFlowData = [[String:Any?]]()
+    var gageFlowData = [GaugeDataPoint]()
     
                         //Day,  Week, Month, Year
     let graphResolutions = [1, 21600, 86400, 172800]
@@ -57,7 +57,7 @@ class GageDetailsTableViewController: UITableViewController {
                 let results = results,
                 error == nil
             else {
-                // TODO: handle error
+                print("Error getting gauge data: \(error)")
                 return
             }
             

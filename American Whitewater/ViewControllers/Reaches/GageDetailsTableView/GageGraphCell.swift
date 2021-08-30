@@ -17,9 +17,7 @@ class GageGraphCell: UITableViewCell {
     
     enum TimePeriod { case Day, Week, Month, Year }
     
-    var gageFlowData:[ [String:Any?] ]?
-    var flowReadings = [Double]()
-    var timeStamps = [Double]()
+    var gageFlowData = [GaugeDataPoint]()
     var currentTimePeriod = TimePeriod.Day
     
     override func awakeFromNib() {
@@ -37,30 +35,10 @@ class GageGraphCell: UITableViewCell {
     }
     
     func updateChart() {
-        guard let gageFlowData = gageFlowData else { print("No gage data yet"); return }
-
-        //print("GageFlowData:", gageFlowData)
-        
-        flowReadings.removeAll()
-        timeStamps.removeAll()
-        
-        for flow in gageFlowData {
-            // get readings
-            //print("Flow Reading: \((flow["reading"] as? String) ?? "n/a")")
-            if let reading = flow["reading"] as? String {
-                //print("Reading: \(reading)")
-                flowReadings.append(Double(reading) ?? 0.0)
-            }
-            
-            // get timestamps as strings
-            //print("TimeStamp:", flow["updated"] ?? "n/a"    )
-            if let timeStamp = flow["updated"] as? Double {
-                timeStamps.append(timeStamp)
-            }
-        }
-        //print("Time Stamps:", timeStamps.debugDescription)
-        
-        self.setChart(dataPoints: timeStamps, values: flowReadings)
+        self.setChart(
+            dataPoints: gageFlowData.map(\.updated),
+            values: gageFlowData.map(\.reading)
+        )
     }
     
     func epochToDateString(epoch: Double) -> String {
@@ -72,12 +50,12 @@ class GageGraphCell: UITableViewCell {
         let localDate = dateFormatter.string(from: date)
         return localDate
     }
-    
+
     func setChart(dataPoints: [Double], values: [Double]) {
         var dataEntries: [ChartDataEntry] = []
                 
         var referenceTimeInterval: TimeInterval = 0
-        if let minTimeInterval = timeStamps.min() {
+        if let minTimeInterval = dataPoints.min() {
             referenceTimeInterval = minTimeInterval
         }
         
@@ -121,19 +99,17 @@ class GageGraphCell: UITableViewCell {
         
         for i in 0..<dataPoints.count {
             let xValue = (dataPoints[i] - referenceTimeInterval) / (3600*24)
-            print("X-vlaue:", xValue)
             let dataEntry = ChartDataEntry(x: xValue, y: values[i])
             dataEntries.append(dataEntry)
         }
 
         let primaryColor = UIColor(named: "primary") ?? UIColor.red
-        let colors = [NSUIColor(cgColor: primaryColor.cgColor)]
         
         let line1 = LineChartDataSet(entries: dataEntries, label: "Number")
-        line1.colors = colors
+        line1.colors = [primaryColor]
+        line1.circleColors = [primaryColor]
         line1.circleRadius = 2
         line1.drawCircleHoleEnabled = false
-        line1.circleColors = colors
         line1.mode = .cubicBezier
         line1.drawValuesEnabled = false
         
@@ -150,12 +126,7 @@ class GageGraphCell: UITableViewCell {
         gageLineChart.legend.enabled = false
         gageLineChart.xAxis.drawAxisLineEnabled = false
         gageLineChart.animate(xAxisDuration: 0.4, yAxisDuration: 0.0, easingOption: .linear)
-        
-        
         gageLineChart.xAxis.labelPosition = .bottom
-     
-        
-        
     }
 
 }
