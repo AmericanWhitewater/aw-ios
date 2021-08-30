@@ -265,6 +265,7 @@ struct API {
         )
     }
     
+    /// Gets data points for a gauge over a particular date interval, suitable for use in a chart or other detailed display
     public func getGaugeGraphData(gaugeId: Int, dateInterval: DateInterval, resolution: Int, completion: @escaping ([GaugeDataPoint]?, Error?) -> Void) {
         GaugeGraphData.get(gaugeId: gaugeId, dateInterval: dateInterval, resolution: resolution, completion: completion)
     }

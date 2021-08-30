@@ -160,13 +160,13 @@ class GageDetailsTableViewController: UITableViewController {
     
     func setTimePeriodForIndex(cell: GageGraphCell) {
         if currentResolutionIndex == 0 {
-            cell.currentTimePeriod = .Day
+            cell.currentTimePeriod = .day
         } else if currentResolutionIndex == 1 {
-            cell.currentTimePeriod = .Week
+            cell.currentTimePeriod = .week
         } else if currentResolutionIndex == 2 {
-            cell.currentTimePeriod = .Month
+            cell.currentTimePeriod = .month
         } else {
-            cell.currentTimePeriod = .Year
+            cell.currentTimePeriod = .year
         }
     }
 

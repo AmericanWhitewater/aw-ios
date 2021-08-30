@@ -15,10 +15,24 @@ class GageGraphCell: UITableViewCell {
     @IBOutlet weak var gageTimeSegmentControl: UISegmentedControl!
     @IBOutlet weak var gageLineChart: LineChartView!
     
-    enum TimePeriod { case Day, Week, Month, Year }
+    enum TimePeriod {
+        case day, week, month, year
+        
+        var dateFormatter: DateFormatter {
+            let formatter = DateFormatter()
+            switch self {
+            case .year: formatter.dateFormat = "yyyy"
+            case .month: formatter.dateFormat = "M/d"
+            case .week: formatter.dateFormat = "M/d"
+            case .day: formatter.dateFormat = "M/d h:mma"
+            }
+            formatter.locale = Locale.current
+            return formatter
+        }
+    }
     
     var gageFlowData = [GaugeDataPoint]()
-    var currentTimePeriod = TimePeriod.Day
+    var currentTimePeriod = TimePeriod.day
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,7 +50,7 @@ class GageGraphCell: UITableViewCell {
     
     func updateChart() {
         self.setChart(
-            dataPoints: gageFlowData.map(\.updated),
+            dataPoints: gageFlowData.map(\.date),
             values: gageFlowData.map(\.reading)
         )
     }
@@ -51,29 +65,10 @@ class GageGraphCell: UITableViewCell {
         return localDate
     }
 
-    func setChart(dataPoints: [Double], values: [Double]) {
-        var dataEntries: [ChartDataEntry] = []
-                
-        var referenceTimeInterval: TimeInterval = 0
-        if let minTimeInterval = dataPoints.min() {
-            referenceTimeInterval = minTimeInterval
-        }
+    func setChart(dataPoints: [Date], values: [Double]) {
+        let referenceTimeInterval = dataPoints.min()?.timeIntervalSince1970 ?? 0
+        let formatter = currentTimePeriod.dateFormatter
         
-        let formatter = DateFormatter()
-        if currentTimePeriod == .Year {
-            formatter.dateFormat = "yyyy"
-        } else if currentTimePeriod == .Month {
-            formatter.dateFormat = "M/d"
-        } else if currentTimePeriod == .Week {
-            formatter.dateFormat = "M/d"
-        } else {
-            formatter.dateFormat = "M/d h:mma"
-        }
-        
-        
-        //formatter.dateFormat = "h:mma"
-        formatter.locale = Locale.current
-
         let xAxis = gageLineChart.xAxis
         xAxis.labelPosition = .bottom
         xAxis.labelCount = 8
@@ -81,7 +76,7 @@ class GageGraphCell: UITableViewCell {
         xAxis.drawLimitLinesBehindDataEnabled = true
         xAxis.avoidFirstLastClippingEnabled = false
         xAxis.wordWrapEnabled = false
-        if currentTimePeriod == .Day {
+        if currentTimePeriod == .day {
             xAxis.labelRotationAngle =  30
         } else {
             xAxis.labelRotationAngle = 0
@@ -90,22 +85,18 @@ class GageGraphCell: UITableViewCell {
 
         // Set the x values date formatter
         let xValuesNumberFormatter = ChartXAxisFormatter(referenceTimeInterval: referenceTimeInterval, dateFormatter: formatter)
-
-        xValuesNumberFormatter.dateFormatter = formatter
         xAxis.valueFormatter = xValuesNumberFormatter
 
-        gageLineChart.leftAxis.axisMinimum = 0
-        gageLineChart.leftAxis.axisMaximum = (values.max() ?? 1.0) + (values.max() ?? 1.0) / 2
-        
-        for i in 0..<dataPoints.count {
-            let xValue = (dataPoints[i] - referenceTimeInterval) / (3600*24)
-            let dataEntry = ChartDataEntry(x: xValue, y: values[i])
-            dataEntries.append(dataEntry)
+        let entries = zip(dataPoints, values).map { (date, value) in
+            ChartDataEntry(
+                x: (date.timeIntervalSince1970 - referenceTimeInterval) / (3600*24),
+                y: value
+            )
         }
-
+        
         let primaryColor = UIColor(named: "primary") ?? UIColor.red
         
-        let line1 = LineChartDataSet(entries: dataEntries, label: "Number")
+        let line1 = LineChartDataSet(entries: entries, label: "Number")
         line1.colors = [primaryColor]
         line1.circleColors = [primaryColor]
         line1.circleRadius = 2
@@ -117,6 +108,8 @@ class GageGraphCell: UITableViewCell {
         data.addDataSet(line1)
         gageLineChart.data = data
         
+        gageLineChart.leftAxis.axisMinimum = 0
+        gageLineChart.leftAxis.axisMaximum = (values.max() ?? 1.0) + (values.max() ?? 1.0) / 2
         //gageLineChart.chartDescription?.text = "River Gage Data"
         gageLineChart.chartDescription?.enabled = false
         gageLineChart.dragEnabled = true

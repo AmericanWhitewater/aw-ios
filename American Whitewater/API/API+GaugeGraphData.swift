@@ -34,15 +34,9 @@ extension API {
 
                     do {
                         let points = try decoder.decode([GaugeDataPoint].self, from: value)
-                        
-                        print("Total flow data points from server: \(points.count)")
-                        
-                        // TODO: convert epoch date/times to date objects (which keys?)
-                        
                         completion(points, nil)
                     } catch {
                         completion(nil, error)
-                        return
                     }
                 case .failure(let error):
                     completion(nil, error)

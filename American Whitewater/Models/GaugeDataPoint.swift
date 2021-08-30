@@ -15,7 +15,7 @@ struct GaugeDataPoint {
     var metric: Int
     var nv: Double
     var reading: Double
-    var updated: Double
+    var date: Date
 }
 
 extension GaugeDataPoint: Decodable {
@@ -39,9 +39,10 @@ extension GaugeDataPoint: Decodable {
         let readingString = try values.decode(String.self, forKey: .reading)
         reading = Double(readingString) ?? 0
         
-        // Sometimes the API call returns a number for updated, sometimes it returns a string:
+        // Sometimes the API call returns a number for updated, sometimes it returns a string
+        // In any case, these are given as a unix time but are more useful as a Date
         if let d = try? values.decode(Double.self, forKey: .updated) {
-            updated = d
+            date = Date(timeIntervalSince1970: d)
         } else {
             let dStr = try values.decode(String.self, forKey: .updated)
             
@@ -49,7 +50,7 @@ extension GaugeDataPoint: Decodable {
                 throw Errors.invalidUpdatedString(dStr)
             }
             
-            updated = d
+            date = Date(timeIntervalSince1970: d)
         }
     }
 }
