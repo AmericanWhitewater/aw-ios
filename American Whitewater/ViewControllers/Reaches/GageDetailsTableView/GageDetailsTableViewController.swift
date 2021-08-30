@@ -1,6 +1,4 @@
 import UIKit
-import Alamofire
-import SwiftyJSON
 import Foundation
 
 class GageDetailsTableViewController: UITableViewController {
@@ -46,93 +44,42 @@ class GageDetailsTableViewController: UITableViewController {
     }
     
     func refreshGraphData() {
-        getGageGraphData { (results) in
+        guard let gageId = selectedRun?.gageId else { print("no gage for this river"); return }
+        
+        let currentResolution = graphResolutions[currentResolutionIndex]
+        
+        API.shared.getGaugeGraphData(
+            gaugeId: Int(gageId),
+            dateInterval: dateInterval(index: currentResolutionIndex),
+            resolution: currentResolution
+        ) { (results, error) in
+            guard
+                let results = results,
+                error == nil
+            else {
+                // TODO: handle error
+                return
+            }
+            
             self.gageFlowData = results
             print("Refreshing table data: \(results.count)")
             self.tableView.reloadData()
         }
     }
     
-    func getDateSpan(index: Int) -> [Int]? {
-        let now = Date()
-        var dayComponent = DateComponents()
-        let theCalendar = Calendar.current
-        
-        // Day
-        if index == 0 {
-            dayComponent.day = -1
-        }
-        // Week
-        else if index == 1 {
-            dayComponent.day = -7
-        }
-        // Month
-        else if index == 2 {
-            dayComponent.day = -30
-        }
-        // Year
-        else {
-            dayComponent.day = -365
+    func dateInterval(index: Int) -> DateInterval {
+        let days: Int
+        switch index {
+        case 0: days = 1 // Day
+        case 1: days = 7 // Week
+        case 2: days = 30 // Month (lol, sort of)
+        default: days = 365 // Year
         }
         
-        let startDate = theCalendar.date(byAdding: dayComponent, to: now)
-        let startDateEpoch = Int(round(startDate!.timeIntervalSince1970))
-        let endDateEpoch = Int(round(now.timeIntervalSince1970))
-        print("startDate Epoch: \(startDateEpoch)")
-        print("now Epoch: \(endDateEpoch)")
-
-        return [startDateEpoch, endDateEpoch]
-
-    }
-    
-    func getGageGraphData(callback: @escaping ([ [String: Any?] ]) -> Void ) {
-        
-        guard let gageId = selectedRun?.gageId else { print("no gage for this river"); return }
-        
-        let selectedIndex = currentResolutionIndex
-        let currentResolution = graphResolutions[selectedIndex]
-        guard let dateSpan = getDateSpan(index: selectedIndex) else { print("unable to get epoch dates"); return}
-                
-        let urlString = "https://www.americanwhitewater.org/api/gauge/\(gageId)/flows/2?from=\(dateSpan[0])&to=\(dateSpan[1])&resolution=\(currentResolution)"
-        print(urlString)
-        
-        AF.request(urlString).responseJSON { (response) in
-            
-            switch response.result {
-                case .success(let value):
-
-                    var flowData = [[String:Any?]]()
-                             
-                    let json = JSON(value)
-                    
-                    if let flowArray = json.array {
-                        for flow in flowArray {
-                            var flowDict = [String: Any?]()
-                            flowDict["gauge_id"] = flow["gauge_id"].intValue
-                            flowDict["metric"] = flow["metric"].intValue
-                            flowDict["nv"] = flow["nv"].doubleValue
-                            flowDict["reading"] = flow["reading"].stringValue
-                            flowDict["updated"] = flow["updated"].doubleValue 
-                            flowDict["id"] = flow["id"].int32Value
-                            flowData.append(flowDict)
-                        }
-                    }
-                    
-                    print("Total flow data points from server: \(json.count)")
-                                        
-                    // convert epoc date/times to date objects
-                
-                    callback(flowData)
-
-                case .failure(let error):
-                    print("Failed trying to call: \(urlString)")
-                    print("Response: \(response)")
-                    print("Response Description: \(response.debugDescription)")
-                    print("HTTP Response: \(response.response.debugDescription)")
-                    print("Error:", error)
-            }
-            
-        }
+        return .init(
+            start: Calendar.current.date(byAdding: .day, value: -days, to: Date())!,
+            end: Date()
+        )
     }
 
     @IBAction func graphResolutionChanged(segment: UISegmentedControl) {
