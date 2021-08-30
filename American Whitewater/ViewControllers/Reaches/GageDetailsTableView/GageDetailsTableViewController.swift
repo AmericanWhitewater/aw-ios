@@ -185,21 +185,9 @@ class GageDetailsTableViewController: UITableViewController {
             cell.reachGageDeltaLabel.text = selectedRun?.delta ?? ""
             cell.lastUpdatedLabel.text = dateFormatter.string(from: Date())
             
-            if let cond = selectedRun?.condition {
-                if cond == "low" {
-                    cell.reachLevelLabel.textColor = UIColor.AW.Low
-                    cell.reachGageDeltaLabel.textColor = UIColor.AW.Low
-                } else if cond == "med" {
-                    cell.reachLevelLabel.textColor = UIColor.AW.Med
-                    cell.reachGageDeltaLabel.textColor = UIColor.AW.Med
-                } else if cond == "high" {
-                    cell.reachLevelLabel.textColor = UIColor.AW.High
-                    cell.reachGageDeltaLabel.textColor = UIColor.AW.High
-                } else {
-                    cell.reachLevelLabel.textColor = UIColor.AW.Unknown
-                    cell.reachGageDeltaLabel.textColor = UIColor.AW.Unknown
-                }
-            }
+            let color = selectedRun?.runnabilityColor
+            cell.reachLevelLabel.textColor = color
+            cell.reachGageDeltaLabel.textColor = color
             
             return cell
         

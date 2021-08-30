@@ -39,21 +39,10 @@ class RiverFlowsViewController: UIViewController {
         riverLevelLabel.text = selectedRun?.currentGageReading
         riverUnitsLabel.text = selectedRun?.unit
         riverGaugeDeltaLabel.text = selectedRun?.delta
-        //print(selectedRun)
-        if let cond = selectedRun?.condition {
-            if cond == "low" {
-                riverLevelLabel.textColor = UIColor.AW.Low
-                riverGaugeDeltaLabel.textColor = UIColor.AW.Low
-            } else if cond == "med" {
-                riverLevelLabel.textColor = UIColor.AW.Med
-                riverGaugeDeltaLabel.textColor = UIColor.AW.Med
-            } else if cond == "high" {
-                riverLevelLabel.textColor = UIColor.AW.High
-                riverGaugeDeltaLabel.textColor = UIColor.AW.High
-            } else {
-                riverLevelLabel.textColor = UIColor.AW.Unknown
-                riverGaugeDeltaLabel.textColor = UIColor.AW.Unknown
-            }
+        
+        if let color = selectedRun?.runnabilityColor {
+            riverLevelLabel.textColor = color
+            riverGaugeDeltaLabel.textColor = color
         }
         
         if let guageId = selectedRun?.gageId {

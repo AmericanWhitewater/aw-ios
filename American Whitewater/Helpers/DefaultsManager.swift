@@ -185,51 +185,6 @@ class DefaultsManager {
         set { defaults.set(newValue, forKey: Keys.signInLastShown) }
     }
     
-    // for now we'll store all the users favorites in the preferences
-    // eventually we'll move it back over to CoreData
-    var userFavorites: [AWReach] {
-        get {
-            // grab [String] from user defaults, convert to [AWReach]
-            let favStrings = defaults.array(forKey: Keys.userFavorites) as? [String]
-            var favsArray:[AWReach] = []
-            
-            if let favStrings = favStrings {
-                for fav in favStrings {
-                    let favData = fav.data(using: .utf8, allowLossyConversion: false)
-                    if let favData = favData {
-                        
-                        do {
-                            let favJSON = try JSON(data: favData)
-                            let newReach = AWReach(json: favJSON)
-                            favsArray.append(newReach)
-                        } catch {
-                            print("Can't convert string to json: \(fav)")
-                            continue
-                        }
-                    }
-                }
-            }
-           
-            return favsArray
-        }
-        
-        // grab [AWReach] array and convert to [String] for storage
-        set {
-            
-            var userFavStrings:[String] = []
-            
-            for item in newValue {
-                let itemString = item.getString()
-                if let itemString = itemString {
-                    userFavStrings.append(itemString)
-                }
-            }
-            
-            defaults.set(userFavStrings, forKey: Keys.userFavorites)
-        }
-        
-    }
-    
     private struct Keys {
         static let appVersion = "appVersionKey"
         static let userAccountId = "userAccountId"
@@ -249,6 +204,5 @@ class DefaultsManager {
         static let reachAlerts = "reachAlertsKey"
         static let signedInAuth = "signedInUserIdKey"
         static let signInLastShown = "signInLastShownKey"
-        static let userFavorites = "userFavoritesKey"
     }
 }

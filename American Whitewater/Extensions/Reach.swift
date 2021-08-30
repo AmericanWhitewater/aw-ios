@@ -51,6 +51,16 @@ extension Reach {
             return ""
         }
     }
+    
+    /// Returns the 'runnability' color for a reaches condition
+    var runnabilityColor: UIColor {
+        switch condition {
+        case "low": return UIColor.AW.Low
+        case "med": return UIColor.AW.Med
+        case "high": return UIColor.AW.High
+        default: return UIColor.AW.Unknown
+        }
+    }
 
     var url: URL? {
         return URL(string: "https://www.americanwhitewater.org/content/River/detail/id/\( id )/")

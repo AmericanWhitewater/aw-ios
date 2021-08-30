@@ -162,21 +162,9 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         cell.runLevelAndClassLabel.text = "Level: \(level) Class: \(favorite.difficulty ?? "n/a")"
         
         // set highlight color
-        if let status = favorite.condition {
-            if status == "low" {
-                cell.runStatusLeftBar.backgroundColor = UIColor.AW.Low
-                cell.runLevelAndClassLabel.textColor = UIColor.AW.Low
-            } else if status == "med" {
-                cell.runStatusLeftBar.backgroundColor = UIColor.AW.Med
-                cell.runLevelAndClassLabel.textColor = UIColor.AW.Med
-            } else if status == "high" || status == "hi" {
-                cell.runStatusLeftBar.backgroundColor = UIColor.AW.High
-                cell.runLevelAndClassLabel.textColor = UIColor.AW.High
-            } else {
-                cell.runStatusLeftBar.backgroundColor = UIColor.AW.Unknown
-                cell.runLevelAndClassLabel.textColor = UIColor.AW.Unknown
-            }
-        }
+        let color = favorite.runnabilityColor
+        cell.runStatusLeftBar.backgroundColor = color
+        cell.runLevelAndClassLabel.textColor = color
         
         cell.runFavoritesButton.setImage(UIImage(named: "icon_favorite_selected"), for: .normal)
         
