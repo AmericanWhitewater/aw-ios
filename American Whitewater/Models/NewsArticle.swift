@@ -9,9 +9,7 @@
 import Foundation
 import CoreData
 
-
-extension NewsArticle {
-
+public class NewsArticle: NSManagedObject {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<NewsArticle> {
         return NSFetchRequest<NewsArticle>(entityName: "NewsArticle")
     }

@@ -1,9 +1,7 @@
 import Foundation
 import CoreData
 
-
-extension Reach {
-
+public class Reach: NSManagedObject {
     @nonobjc public class func reachFetchRequest() -> NSFetchRequest<Reach> {
         return NSFetchRequest<Reach>(entityName: "Reach")
     }
