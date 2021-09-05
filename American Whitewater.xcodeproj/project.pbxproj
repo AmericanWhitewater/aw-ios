@@ -40,8 +40,6 @@
 		631644A0246ED6B100807E19 /* UIImage+AsyncURLLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316449F246ED6B100807E19 /* UIImage+AsyncURLLoad.swift */; };
 		631644A2246ED80C00807E19 /* UIButton+UrlImageLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631644A1246ED80B00807E19 /* UIButton+UrlImageLoad.swift */; };
 		631B3573237C722200738889 /* OpenSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 631B3572237C722200738889 /* OpenSans-ExtraBoldItalic.ttf */; };
-		631EFF9923677C4000BA17F7 /* Article+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFF9723677C4000BA17F7 /* Article+CoreDataClass.swift */; };
-		631EFF9A23677C4000BA17F7 /* Article+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFF9823677C4000BA17F7 /* Article+CoreDataProperties.swift */; };
 		631EFF9D23677C8900BA17F7 /* Reach+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFF9B23677C8800BA17F7 /* Reach+CoreDataClass.swift */; };
 		631EFFA123677CB600BA17F7 /* Rapid+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFF9F23677CB600BA17F7 /* Rapid+CoreDataClass.swift */; };
 		631EFFA223677CB600BA17F7 /* Rapid+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EFFA023677CB600BA17F7 /* Rapid+CoreDataProperties.swift */; };
@@ -192,8 +190,6 @@
 		6316449F246ED6B100807E19 /* UIImage+AsyncURLLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+AsyncURLLoad.swift"; sourceTree = "<group>"; };
 		631644A1246ED80B00807E19 /* UIButton+UrlImageLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+UrlImageLoad.swift"; sourceTree = "<group>"; };
 		631B3572237C722200738889 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
-		631EFF9723677C4000BA17F7 /* Article+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Article+CoreDataClass.swift"; sourceTree = "<group>"; };
-		631EFF9823677C4000BA17F7 /* Article+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Article+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		631EFF9B23677C8800BA17F7 /* Reach+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reach+CoreDataClass.swift"; sourceTree = "<group>"; };
 		631EFF9F23677CB600BA17F7 /* Rapid+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Rapid+CoreDataClass.swift"; sourceTree = "<group>"; };
 		631EFFA023677CB600BA17F7 /* Rapid+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Rapid+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -552,8 +548,6 @@
 				63C1DABF235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld */,
 				4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */,
 				4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */,
-				631EFF9723677C4000BA17F7 /* Article+CoreDataClass.swift */,
-				631EFF9823677C4000BA17F7 /* Article+CoreDataProperties.swift */,
 				631EFF9B23677C8800BA17F7 /* Reach+CoreDataClass.swift */,
 				631EFFAA23688A3600BA17F7 /* Reach+CoreDataProperties.swift */,
 				631EFF9F23677CB600BA17F7 /* Rapid+CoreDataClass.swift */,
@@ -964,7 +958,6 @@
 				4A7F530026BA192000DFBDFF /* UIStoryboard+convenience.swift in Sources */,
 				63FF68C525ACF2A900AF0F37 /* GageGraphCell.swift in Sources */,
 				4AC4686326C0B15A0032D68F /* Alert.swift in Sources */,
-				631EFF9A23677C4000BA17F7 /* Article+CoreDataProperties.swift in Sources */,
 				631EFFA42367842300BA17F7 /* DifficultyHelper.swift in Sources */,
 				637D0737236B541000BE90D0 /* UISearchBar+BGColor.swift in Sources */,
 				631EFFAB23688A3600BA17F7 /* Reach+CoreDataProperties.swift in Sources */,
@@ -997,7 +990,6 @@
 				63309E36233DA29000E6DBC4 /* MoreTableViewController.swift in Sources */,
 				63B5B4A92459298F0062F54B /* UILabel+HTML.swift in Sources */,
 				63949957246F107A0061552C /* GalleryViewController.swift in Sources */,
-				631EFF9923677C4000BA17F7 /* Article+CoreDataClass.swift in Sources */,
 				63432D462540DA340037AA37 /* UISegmentedControl+Colors.swift in Sources */,
 				63491B0D2328A2800036A906 /* RunsListTableViewCell.swift in Sources */,
 				63164494246C07C700807E19 /* UIRefreshControl+ManualRefresh.swift in Sources */,
