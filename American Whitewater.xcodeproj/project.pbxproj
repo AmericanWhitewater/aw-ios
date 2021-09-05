@@ -333,12 +333,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4AABF7F626E52D9C0002CE6F /* Reaches (non-gql) */ = {
+			isa = PBXGroup;
+			children = (
+				63A6FD682367730C00148231 /* AWApiReachHelper.swift */,
+				63491B082328A1DF0036A906 /* AWReach.swift */,
+				63F87AD4236A923D0005AA0B /* AWReachDetail.swift */,
+				633117082373172100D5EEFB /* AWRapid.swift */,
+			);
+			path = "Reaches (non-gql)";
+			sourceTree = "<group>";
+		};
 		4AC4685B26C02A3E0032D68F /* API */ = {
 			isa = PBXGroup;
 			children = (
 				4AC4685C26C02A840032D68F /* API.swift */,
 				4A74F7B326DC7B4B00637A88 /* API+GaugeGraphData.swift */,
-				63A6FD682367730C00148231 /* AWApiReachHelper.swift */,
+				4AABF7F626E52D9C0002CE6F /* Reaches (non-gql) */,
 				63B5B4982457AE800062F54B /* GraphQL */,
 			);
 			path = API;
@@ -538,9 +549,6 @@
 			children = (
 				63203C0F23694C59006A4148 /* Runnable.swift */,
 				63A8B17C23281A8A00FD2E00 /* AWArticle.swift */,
-				63491B082328A1DF0036A906 /* AWReach.swift */,
-				63F87AD4236A923D0005AA0B /* AWReachDetail.swift */,
-				633117082373172100D5EEFB /* AWRapid.swift */,
 				63C1DABF235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld */,
 				4AC4BB5826A0F5B50058D8B7 /* NewsArticle+CoreDataClass.swift */,
 				4AC4BB5926A0F5B50058D8B7 /* NewsArticle+CoreDataProperties.swift */,
