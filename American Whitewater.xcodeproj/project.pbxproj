@@ -15,6 +15,8 @@
 		4A74F7B426DC7B4B00637A88 /* API+GaugeGraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74F7B326DC7B4B00637A88 /* API+GaugeGraphData.swift */; };
 		4A74F7B626DC85D700637A88 /* GaugeDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74F7B526DC85D700637A88 /* GaugeDataPoint.swift */; };
 		4A7F530026BA192000DFBDFF /* UIStoryboard+convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F52FF26BA192000DFBDFF /* UIStoryboard+convenience.swift */; };
+		4A93B75126E6682A00497603 /* Gauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A93B75026E6682A00497603 /* Gauge.swift */; };
+		4A93B75326E66C2800497603 /* Metric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A93B75226E66C2800497603 /* Metric.swift */; };
 		4AA01D3C26CDA6F00041BB4B /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA01D3B26CDA6F00041BB4B /* Photo.swift */; };
 		4AA3FEFB26B2725100AC4303 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA3FEFA26B2725100AC4303 /* Filters.swift */; };
 		4ABE3B7D26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */; };
@@ -158,6 +160,8 @@
 		4A74F7B326DC7B4B00637A88 /* API+GaugeGraphData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+GaugeGraphData.swift"; sourceTree = "<group>"; };
 		4A74F7B526DC85D700637A88 /* GaugeDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeDataPoint.swift; sourceTree = "<group>"; };
 		4A7F52FF26BA192000DFBDFF /* UIStoryboard+convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+convenience.swift"; sourceTree = "<group>"; };
+		4A93B75026E6682A00497603 /* Gauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gauge.swift; sourceTree = "<group>"; };
+		4A93B75226E66C2800497603 /* Metric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metric.swift; sourceTree = "<group>"; };
 		4AA01D3B26CDA6F00041BB4B /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		4AA3FEFA26B2725100AC4303 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		4ABE3B7C26B4DA5E007CD0BE /* NetworkInterceptorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterceptorProvider.swift; sourceTree = "<group>"; };
@@ -543,8 +547,10 @@
 				4AC4685E26C097060032D68F /* Accident.swift */,
 				4AC4686226C0B15A0032D68F /* Alert.swift */,
 				4AC4686426C104D70032D68F /* GaugeObservation.swift */,
-				4AA01D3B26CDA6F00041BB4B /* Photo.swift */,
 				4A74F7B526DC85D700637A88 /* GaugeDataPoint.swift */,
+				4AA01D3B26CDA6F00041BB4B /* Photo.swift */,
+				4A93B75026E6682A00497603 /* Gauge.swift */,
+				4A93B75226E66C2800497603 /* Metric.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -987,8 +993,10 @@
 				63309E43234166BB00E6DBC4 /* FilterViewController.swift in Sources */,
 				63E32B1F2357F3350057DE34 /* FilterDistanceCollectionViewCell.swift in Sources */,
 				63309E32233D965500E6DBC4 /* AboutAWViewController.swift in Sources */,
+				4A93B75126E6682A00497603 /* Gauge.swift in Sources */,
 				4AC4685F26C097060032D68F /* Accident.swift in Sources */,
 				63491B0B2328A2250036A906 /* RunsListViewController.swift in Sources */,
+				4A93B75326E66C2800497603 /* Metric.swift in Sources */,
 				63FF68BF25ACF29700AF0F37 /* GageDetailsCell.swift in Sources */,
 				631644A0246ED6B100807E19 /* UIImage+AsyncURLLoad.swift in Sources */,
 				4AA01D3C26CDA6F00041BB4B /* Photo.swift in Sources */,

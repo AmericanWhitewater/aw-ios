@@ -257,12 +257,17 @@ struct API {
             metricsCallback: metricsCallback
         )
     }
-
-    public func getGauges(reachId: Int, gagesInfoCallback: @escaping AWGQLApiHelper.AWGaugesListCallback) {
-        graphQLHelper.getGagesForReach(
-            id: "\(reachId)",
-            gagesInfoCallback: gagesInfoCallback
-        )
+    
+    public func getGauges(reachId: Int, completion: @escaping ([Gauge]?, Error?) -> Void) {
+        graphQLHelper.getGagesForReach(id: "\(reachId)") { (data, error) in
+            guard let data = data, error == nil else {
+                completion(nil, error)
+                return
+            }
+            
+            let gauges = data.compactMap { Gauge(datum: $0) }
+            completion(gauges, nil)
+        }
     }
     
     /// Gets data points for a gauge over a particular date interval, suitable for use in a chart or other detailed display

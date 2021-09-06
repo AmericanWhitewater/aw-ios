@@ -4,36 +4,32 @@ import Foundation
 class GageDetailsTableViewController: UITableViewController {
 
     var selectedRun: Reach?
-    var gagesList: [ [String: String] ]?
+    var gauges = [Gauge]()
     var gageFlowData = [GaugeDataPoint]()
     
                         //Day,  Week, Month, Year
     let graphResolutions = [1, 21600, 86400, 172800]
     var currentResolutionIndex = 0
     
-    var dateFormatter = DateFormatter();
+    var dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         dateFormatter.dateFormat = "MMM dd, yyyy h:mm:ss a"
     }
-    
 
     override func viewDidAppear(_ animated: Bool) {
         if let selectedRun = selectedRun{
             print("Selected Run ReachID: \(selectedRun.id)")
-            API.shared.getGauges(reachId: selectedRun.id) { (gagesResult) in
-                
-                self.gagesList = gagesResult
-                self.tableView.reloadData()
-                
-                for gage in gagesResult {
-                    print("Gage: \(gage["gageName"] ?? "n/a")")
-                    print("-> \(gage["source"] ?? "n/a")")
-                    print("-> \(gage["metricName"] ?? "n/a")")
-                    print("-> \(gage["unit"] ?? "n/a")")
+            API.shared.getGauges(reachId: selectedRun.id) { (gauges, error) in
+                guard let gauges = gauges, error == nil else {
+                    print("Error getting gauges: \(String(describing: error))")
+                    return
                 }
+                
+                self.gauges = gauges
+                self.tableView.reloadData()
             }
         } else {
             print("Selected run issue")
@@ -57,7 +53,7 @@ class GageDetailsTableViewController: UITableViewController {
                 let results = results,
                 error == nil
             else {
-                print("Error getting gauge data: \(error)")
+                print("Error getting gauge data: \(String(describing: error))")
                 return
             }
             
@@ -89,7 +85,6 @@ class GageDetailsTableViewController: UITableViewController {
     
     // MARK: - Table view data source
 
-    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 20
     }
@@ -109,13 +104,11 @@ class GageDetailsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if section == 0 || section == 1 {
             return 1
         } else {
-            return gagesList?.count ?? 0
+            return gauges.count
         }
-        
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -145,14 +138,11 @@ class GageDetailsTableViewController: UITableViewController {
             return cell
             
         } else { //if indexPath.section == 2
-            let gage = gagesList?[indexPath.row]
-            
+            let gage = gauges[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "GageForRunCell", for: indexPath) as! GageForRunCell
             
-            if let gage = gage {
-                cell.gageTitleLabel.text = gage["gageName"] ?? ""
-                cell.gageDetailsLabel.text = "Type: \(gage["source"] ?? "n/a") - Metric: \(gage["metricName"] ?? "n/a") - Unit: \(gage["unit"] ?? "n/a")"
-            }
+            cell.gageTitleLabel.text = gage.name
+            cell.gageDetailsLabel.text = "Type: \(gage.source ?? "n/a") - Metric: \(gage.metric?.name ?? "n/a") - Unit: \(gage.metric?.unit ?? "n/a")"
 
             return cell
         }
@@ -169,13 +159,4 @@ class GageDetailsTableViewController: UITableViewController {
             cell.currentTimePeriod = .year
         }
     }
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-
-    }
-
 }
