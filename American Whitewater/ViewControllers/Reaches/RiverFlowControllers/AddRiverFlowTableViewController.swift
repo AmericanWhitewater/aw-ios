@@ -51,8 +51,15 @@ class AddRiverFlowTableViewController: UITableViewController {
         }
     }
     
-    var unitOptions = ["cfs", "ft", "in"]
-    var availableMetrics = [String:String]()
+    var availableMetrics = [Metric]()
+    
+    var unitOptions: [String] {
+        if availableMetrics.isEmpty {
+            return ["cfs", "ft", "in"]
+        } else {
+            return availableMetrics.map(\.unit)
+        }
+    }
     
     let dateFormatter = DateFormatter()
     var awImagePicker: AWImagePicker!
@@ -98,10 +105,6 @@ class AddRiverFlowTableViewController: UITableViewController {
         observedGaugeUnitsLabel?.text = selectedRun.unit ?? "cfs"
         
         flowDescriptionLabel.text = flowObservation?.title
-        
-        if availableMetrics.count > 0 {
-            self.unitOptions = Array(availableMetrics.keys)
-        }
     }
 
     @IBAction func changeUnitsButtonPressed(_ sender: Any) {
@@ -134,7 +137,9 @@ class AddRiverFlowTableViewController: UITableViewController {
         let title = observationTitleTextField.text ?? ""
         let dateString = Self.isoDateFormatter.string(from: dateObserved)
         let reading = Double(observedGaugeLevelTextField.text ?? "0") ?? 0
-        let metricIdString = availableMetrics[observedGaugeUnitsLabel.text ?? ""] ?? "0"
+        
+        // FIXME: unitOptions may return a default list if no metrics are available, but in that case, it will be sent with metricId = 0, dropping the user's intended unit
+        let metricIdString = availableMetrics.first(where: { $0.unit == observedGaugeUnitsLabel.text })?.id ?? "0"
         let metricId = Int(metricIdString) ?? 0
         
         if let image = flowImageView.image {

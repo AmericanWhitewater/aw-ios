@@ -14,7 +14,7 @@ class RiverFlowsViewController: UIViewController {
     
     var selectedRun:Reach?
     var riverFlows = [GaugeObservation]()
-    var availableMetrics = [String:String]()
+    var availableMetrics = [Metric]()
 
     var dateFormatter = DateFormatter()
     
@@ -43,11 +43,15 @@ class RiverFlowsViewController: UIViewController {
             riverGaugeDeltaLabel.textColor = color
         }
         
-        if let guageId = selectedRun?.gageId {
-            API.shared.getMetrics(gaugeId: Int(guageId), metricsCallback: { reachGageMetrics in
-                //let keys = Array(availableMetrics.keys)
-                self.availableMetrics = reachGageMetrics
-            })
+        if let id = selectedRun?.gageId {
+            API.shared.getMetrics(gaugeId: Int(id)) { metrics, error in
+                guard let metrics = metrics, error == nil else {
+                    self.availableMetrics = []
+                    return
+                }
+                
+                self.availableMetrics = metrics
+            }
         }
     }
     

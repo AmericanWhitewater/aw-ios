@@ -15,8 +15,6 @@ class AWGQLApiHelper
     typealias ObservationsCallback = ([Observations2Query.Data.Post.Datum]?) -> Void
     typealias PostObservationsCallback = (PostObservationMutation.Data.PostUpdate) -> Void
     typealias PostPhotoObservationCallback = (PostObservationPhotoMutation.Data.PhotoFileUpdate, PostObservationMutation.Data) -> Void
-    typealias AWMetricsCallback = ([String:String]) -> Void
-    typealias AWGaugesListCallback = ([ [String : String] ]) -> Void
     typealias AWGraphQLError = (Error) -> Void
     
     enum Errors: Error, LocalizedError {
@@ -304,38 +302,15 @@ class AWGQLApiHelper
         }
     }
     
-    public func getMetricsForGauge(id: String, metricsCallback: @escaping AWMetricsCallback) {
+    public func getMetricsForGauge(id: String, metricsCallback: @escaping ([GuageMetricsQuery.Data.Gauge.Update.Metric]?, Error?) -> Void) {
         apollo.fetch(query: GuageMetricsQuery(gauge_id: id) ) { result in
             switch result {
-                case .success(let graphQLResult):
-                    print(graphQLResult)
-                    
-                    if let data = graphQLResult.data, let gauge = data.gauge {
-                        print(gauge.id ?? "no id")
-                        print(gauge.name ?? "no name")
-                        print(gauge.source ?? "no source")
-                        
-                        var availableMetrics = [String:String]()
-                        if let updates = gauge.updates {
-                            for update in updates {
-                                print("Metric Name: \(update?.metric?.name ?? "no metric name")")
-                                print("Metric ID: \(update?.metric?.id ?? "no metric id")")
-                                print("Metric Format: \(update?.metric?.format ?? "no metric format")")
-                                print("Metric Unit: \(update?.metric?.unit ?? "no metric unit")")
-                                if let update = update, let metric = update.metric, let unit = metric.unit, let id = metric.id {
-                                    availableMetrics[unit] = id
-                                }
-                            }
-                        }
-                        
-                        metricsCallback(availableMetrics)
-                    }
-                
-                case .failure(let error):
-                    print("GraphQL Error: \(error)")
-                
-                // FIXME: shouldn't this API call handle errors?
-//                    errorCallback(error, nil)
+            case .success(let result):
+                let metrics = result.data?.gauge?.updates?.compactMap { $0?.metric } ?? []
+                metricsCallback(metrics, nil)
+            case .failure(let error):
+                print("GraphQL Error: \(error)")
+                metricsCallback(nil, error)
             }
         }
     }

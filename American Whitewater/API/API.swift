@@ -251,11 +251,23 @@ struct API {
         )
     }
     
-    public func getMetrics(gaugeId: Int, metricsCallback: @escaping AWGQLApiHelper.AWMetricsCallback) {
-        graphQLHelper.getMetricsForGauge(
-            id: "\(gaugeId)",
-            metricsCallback: metricsCallback
-        )
+    public func getMetrics(gaugeId: Int, metricsCallback: @escaping ([Metric]?, Error?) -> Void) {
+        graphQLHelper.getMetricsForGauge(id: "\(gaugeId)") { result, error in
+            guard let result = result, error == nil else {
+                metricsCallback(nil, error)
+                return
+            }
+            
+            let metrics = result.compactMap { m -> Metric? in
+                guard let id = m.id, let name = m.name, let unit = m.unit else {
+                    return nil
+                }
+                
+                return Metric(id: id, name: name, unit: unit)
+            }
+            
+            metricsCallback(metrics, nil)
+        }
     }
     
     public func getGauges(reachId: Int, completion: @escaping ([Gauge]?, Error?) -> Void) {
