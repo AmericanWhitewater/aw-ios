@@ -41,110 +41,76 @@ class AWGQLApiHelper
         self.keychain = keychain
     }
     
+    // FIXME: fire and forget, has no way to report errors or result
     public func updateAccountInfo() {
         apollo.fetch(query: UserInfoQuery()) { result in
             switch result {
-                case .success(let graphQLResult):
-                    if let userResult = graphQLResult.data?.me {
-                        DefaultsManager.shared.userAccountId = userResult.uid
-                        DefaultsManager.shared.uname = userResult.uname
-                        print("Stored uid: \(userResult.uid) and uname: \(userResult.uname)")
-                    }
-                case .failure(let error):
-                    print(error)
+            case .success(let graphQLResult):
+                if let userResult = graphQLResult.data?.me {
+                    DefaultsManager.shared.userAccountId = userResult.uid
+                    DefaultsManager.shared.uname = userResult.uname
+                }
+            case .failure(let error):
+                print(error)
             }
         }
     }
     
     public func getAccidentsForReach(reach_id: Int, first: Int, page: Int, callback: @escaping AccidentCallback, errorCallback: @escaping AWGraphQLError) {
-        
         apollo.fetch(query: ReachAccidentsQuery(reach_id: GraphQLID(reach_id), first: first, page: page)) { result in
             switch result {
                 case .success(let graphQLResult):
-                    
-                    var accidentsList: [ReachAccidentsQuery.Data.Reach.Accident.Datum]?
-                    accidentsList = graphQLResult.data?.reach?.accidents?.data
-                    if let accidentsList = accidentsList, let accident = accidentsList.first {
-                        print("Accident 0: \(accident.river ?? "Unknown River")")
-                        print("Accidents Count: \(accidentsList.count)")
-                    }
-                    
                     callback(graphQLResult.data?.reach?.accidents?.data)
-                
                 case.failure(let error):
-                    
-                    print("GraphQL Error: \(error)")
                     errorCallback(error)
             }
-                
         }
     }
     
     public func getAlertsForReach(reach_id: Int, page: Int, page_size: Int, callback: @escaping AlertsCallback, errorCallback: @escaping AWGraphQLError) {
-        print("Getting alerts for reach: \(reach_id)")
         apollo.fetch(query: AlertsQuery(page_size: page_size, reach_id: "\(reach_id)", page: page, post_types: [PostType.warning])) { result in
-            print("finished querying alerts...processing...")
             switch result {
                 case .success(let graphQLResult):
-                    
-                    if let data = graphQLResult.data, let posts = data.posts {                        
-                        for item in posts.data {
-                            print(item.id ?? 0)
-                        }
-                    }
-                    
                     callback(graphQLResult.data?.posts?.data)
-                
                 case .failure(let error):
-                    print("GraphQL Error: \(error)")
                     errorCallback(error)
             }
         }
     }
     
     public func postAlertFor(reach_id: Int, message: String, callback: @escaping AlertPostCallback, errorCallback: @escaping AWGraphQLError) {
-
         let newID = NanoID.new(alphabet: .allLettersAndNumbers, size: 21)
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = dateFormatter.string(from: Date())
         
-        let newAlert = PostInput(title: nil,
-                                detail: message,
-                              postType: PostType.warning,
-                              postDate: dateString,
-                               reachId: "\(reach_id)",
-                               gaugeId: nil,
-                                userId: nil,
-                              metricId: nil,
-                               reading: nil)
-        
+        let newAlert = PostInput(
+            title: nil,
+            detail: message,
+            postType: PostType.warning,
+            postDate: dateString,
+            reachId: "\(reach_id)",
+            gaugeId: nil,
+            userId: nil,
+            metricId: nil,
+            reading: nil
+        )
         
         if keychain.get(AWGC.AuthKeychainToken) != nil {
             apollo.perform(mutation: PostAlertMutation(id: newID, post: newAlert)) { result in
-                print("Posting alert with gql...")
                 switch result {
-                    case .success(let graphQLResult):
-                        if let data = graphQLResult.data, let postUpdate = data.postUpdate {
-                            print("PostUpdate: ", postUpdate)
-                            callback(postUpdate)
-                        } else {
-                            print("Received nil response: " +
-                                " \(graphQLResult.data == nil ? "data is nil" : "data is not nil: \(graphQLResult.data.debugDescription)") " +
-                                " \(graphQLResult.data?.postUpdate == nil ? "postUpdate is nil" : "postUpdate is not nil") " +
-                                "GraphQLResult is: \(graphQLResult)")
-                            var errorMessages = ""
-                            let _ = graphQLResult.errors?.map { errorMessages = errorMessages + "\($0)"}
-                            
-                            print("Errors Returned: \(errorMessages)")
-                            
-                            let error = Errors.graphQLError(message: errorMessages.count > 0 ? errorMessages : "Unknown Error")
-                            errorCallback(error)
-                        }
-                    case .failure(let error):
-                        print("GraphQL Error: \(error)")
+                case .success(let graphQLResult):
+                    if let data = graphQLResult.data, let postUpdate = data.postUpdate {
+                        callback(postUpdate)
+                    } else {
+                        // FIXME: is this what's intended? A human readable list of error messages that can be passed up then displayed:
+                        let errorMessages = graphQLResult.errors?.map { $0.localizedDescription }.joined(separator: ", ") ?? "Unknown Error"
+                        let error = Errors.graphQLError(message: errorMessages)
                         errorCallback(error)
+                    }
+                case .failure(let error):
+                    errorCallback(error)
                 }
             }
         } else {
@@ -154,23 +120,12 @@ class AWGQLApiHelper
     
 
     public func getGaugeObservationsForReach(reach_id: Int, page: Int, page_size: Int, callback: @escaping ObservationsCallback, errorCallback: @escaping AWGraphQLError) {
-        print("Getting observations for reach: \(reach_id)")
         apollo.fetch(query: Observations2Query(page_size: page_size, reach_id: "\(reach_id)", page: page, post_types: [PostType.gaugeObservation])) { result in
-            print("finished querying Observations...processing...")
             switch result {
-                case .success(let graphQLResult):
-
-                    if let data = graphQLResult.data, let posts = data.posts {
-                        for item in posts.data {
-                            print("Observation:", item.id ?? 0, item.title ?? "no title")
-                        }
-                    }
-
-                    callback(graphQLResult.data?.posts?.data)
-
-                case .failure(let error):
-                    print("GraphQL Error: \(error)")
-                    errorCallback(error)
+            case .success(let graphQLResult):
+                callback(graphQLResult.data?.posts?.data)
+            case .failure(let error):
+                errorCallback(error)
             }
         }
     }
@@ -190,20 +145,16 @@ class AWGQLApiHelper
 
         if keychain.get(AWGC.AuthKeychainToken) != nil {
             apollo.perform(mutation: PostObservationMutation(id: newID, post: newObservation)) { result in
-                print("Posting alert with gql...")
                 switch result {
-                    case .success(let graphQLResult):
+                case .success(let graphQLResult):
                     if let postUpdate = graphQLResult.data?.postUpdate {
-                            print("PostUpdate: ", postUpdate)
-                            callback(postUpdate)
-                        } else {
-                            print("nil response: \(graphQLResult)")
-                            // FIXME: is this actually a success? can the server succeed and not return data.postUpdate
-                            errorCallback(Errors.graphQLError(message: "No update returned"))
-                        }
-                    case .failure(let error):
-                        print("GraphQL Error: \(error)")
-                        errorCallback(error)
+                        callback(postUpdate)
+                    } else {
+                        // FIXME: is this actually a success? can the server succeed and not return data.postUpdate
+                        errorCallback(Errors.graphQLError(message: "No update returned"))
+                    }
+                case .failure(let error):
+                    errorCallback(error)
                 }
             }
         } else {
@@ -212,23 +163,30 @@ class AWGQLApiHelper
     }
     
     public func getPhotosForReach(reach_id: Int, page: Int, page_size: Int, callback: @escaping PhotosCallback, errorCallback: @escaping AWGraphQLError) {
-        print("Getting alerts for reach: \(reach_id)")
         apollo.fetch(query: PhotosQuery(page_size: page_size, reach_id: "\(reach_id)", page: page, post_types: [PostType.photoPost, PostType.journal])) { result in
-            print("finished querying alerts...processing...")
             switch result {
-                case .success(let graphQLResult):
-                    callback(graphQLResult.data?.posts?.data)
-                
-                case .failure(let error):
-                    print("GraphQL Error: \(error)")
-                    errorCallback(error)
+            case .success(let graphQLResult):
+                callback(graphQLResult.data?.posts?.data)
+            case .failure(let error):
+                errorCallback(error)
             }
         }
     }
     
-    public func postPhotoForReach(photoPostType: PostType = PostType.photoPost, image: UIImage, reach_id: Int, caption: String, description: String, photoDate: String,
-                                         reachObservation: Double? = nil, gauge_id: String? = nil, metric_id: Int? = nil, reachReading: Double? = nil,
-                                         callback: @escaping PhotoUploadCallback, errorCallback: @escaping AWGraphQLError) {
+    public func postPhotoForReach(
+        photoPostType: PostType = PostType.photoPost,
+        image: UIImage,
+        reach_id: Int,
+        caption: String,
+        description: String,
+        photoDate: String,
+        reachObservation: Double? = nil,
+        gauge_id: String? = nil,
+        metric_id: Int? = nil,
+        reachReading: Double? = nil,
+        callback: @escaping PhotoUploadCallback,
+        errorCallback: @escaping AWGraphQLError
+    ) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
@@ -257,27 +215,30 @@ class AWGQLApiHelper
         // AWTODO: ask what the difference between a PostInput reading vs observation is? Should Observation be a string? Why Double?
         // is this a mistake on the server?
         
-        guard let imageData = image.jpegData(compressionQuality: 1) else { print("can't get image data from UIImage for gallery post"); return; }
+        guard let imageData = image.jpegData(compressionQuality: 1) else {
+            errorCallback(Errors.graphQLError(message: "Can't read image data"))
+            return
+        }
         
         let file = GraphQLFile(fieldName: "file", originalName: photoName, mimeType: "image/jpeg", data: imageData)
         
         apollo.upload(operation: PhotoUploadWithPropsMutation(id: newID, file: photoName, photoSectionType: PhotoSectionsType.post, photoTypeId: newID, photoInput: photoInput), files: [file]) { result in
             
             switch result {
-                case .success(let graphQLResult):
-                    print("Successful upload!")
-                    print("GQL Result:", graphQLResult)
-                    if let photoFileUpdate = graphQLResult.data?.photoFileUpdate {
-                        print("Post id: \(photoFileUpdate.postId ?? "n/a") and \(photoFileUpdate.post.debugDescription)")
-                                                
-                        //callback(photoFileUpdate)
-                        self.updatePhotoPost(postId: newID, postInput: postInput, photoResult: photoFileUpdate, callback: callback, errorCallback: errorCallback);
-                    } else {
-                        errorCallback(Errors.graphQLError(message: graphQLResult.errors?.debugDescription ?? "n/a"))
-                    }
-                case .failure(let error):
-                    print("Error uploading:", error)
-                    errorCallback(error)
+            case .success(let graphQLResult):
+                if let photoFileUpdate = graphQLResult.data?.photoFileUpdate {
+                    self.updatePhotoPost(
+                        postId: newID,
+                        postInput: postInput,
+                        photoResult: photoFileUpdate,
+                        callback: callback,
+                        errorCallback: errorCallback
+                    )
+                } else {
+                    errorCallback(Errors.graphQLError(message: graphQLResult.errors?.debugDescription ?? "n/a"))
+                }
+            case .failure(let error):
+                errorCallback(error)
             }
             
         }
@@ -289,14 +250,12 @@ class AWGQLApiHelper
         apollo.perform(mutation: PhotoPostUpdateMutation(id: postId, post: postInput)) { postUpdateResult in
             switch postUpdateResult {
                 case .success(let graphQLResult):
-                    print("updatePhotoPost:", graphQLResult)
                     if let postUpdate = graphQLResult.data?.postUpdate {
                         callback(photoResult, postUpdate)
                     } else {
                         errorCallback(Errors.graphQLError(message: "Unable to update post after photo upload"))
                     }
                 case .failure(let error):
-                    print("Error:", error)
                     errorCallback(error)
             }
         }
@@ -309,7 +268,6 @@ class AWGQLApiHelper
                 let metrics = result.data?.gauge?.updates?.compactMap { $0?.metric } ?? []
                 metricsCallback(metrics, nil)
             case .failure(let error):
-                print("GraphQL Error: \(error)")
                 metricsCallback(nil, error)
             }
         }
@@ -322,7 +280,6 @@ class AWGQLApiHelper
                 let gauges = result.data?.gauges?.gauges?.compactMap({ $0 }) ?? []
                 callback(gauges, nil)
             case .failure(let error):
-                print("GraphQL Error: \(error)")
                 callback(nil, error)
             }
         }
