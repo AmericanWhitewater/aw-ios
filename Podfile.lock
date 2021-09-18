@@ -93,6 +93,9 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.5.0):
     - GoogleUtilities/Logger
+  - GRDB.swift (5.11.0):
+    - GRDB.swift/standard (= 5.11.0)
+  - GRDB.swift/standard (5.11.0)
   - IQKeyboardManagerSwift (6.5.5)
   - KeychainSwift (19.0.0)
   - nanopb (2.30908.0):
@@ -114,6 +117,7 @@ DEPENDENCIES:
   - Charts (~> 3.6.0)
   - Firebase/Analytics
   - Firebase/Crashlytics
+  - GRDB.swift
   - IQKeyboardManagerSwift (from `https://github.com/duffek/IQKeyboardManager.git`)
   - KeychainSwift (~> 19.0)
   - netfox
@@ -137,6 +141,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
+    - GRDB.swift
     - KeychainSwift
     - nanopb
     - netfox
@@ -169,6 +174,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 6b6a08fd9c71f4dbc89e0e812acca81d797aa342
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
+  GRDB.swift: 9a33d9680cd3c870c82f48a6cbc73d3cfbb235eb
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
   KeychainSwift: a06190cf933ad46b1e0abc3d77d29c06331715c7
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
@@ -179,6 +185,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 41f6a188fa059afac29ce5cad7a5aeca7c5eb35c
+PODFILE CHECKSUM: baef11cd18d6207d3e74af4efc8b2d147bf49f2b
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.2

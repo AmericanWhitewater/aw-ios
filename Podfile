@@ -24,6 +24,8 @@ target 'American Whitewater' do
   # GraphQL client
   pod 'Apollo', '~> 0.45'
   
+  pod 'GRDB.swift'
+  
   # OAuth and Secure Storge for Auth Keys
   pod 'OAuthSwift', '~> 2', :inhibit_warnings => true
   pod 'KeychainSwift', '~> 19.0'

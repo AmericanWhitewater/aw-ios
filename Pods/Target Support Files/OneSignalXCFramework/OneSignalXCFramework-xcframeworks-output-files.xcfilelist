@@ -1,1 +1,1 @@
-${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignal
+${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignal.framework
