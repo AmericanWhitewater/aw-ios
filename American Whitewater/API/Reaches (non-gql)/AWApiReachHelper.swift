@@ -135,7 +135,7 @@ class AWApiReachHelper {
         )
     }
     
-    private func fetchReachDetail(reachId: String, callback: @escaping ReachDetailCallback, callbackError: @escaping ReachErrorCallback) {
+    public func getReachDetail(reachId: Int, callback: @escaping ReachDetailCallback, callbackError: @escaping ReachErrorCallback) {
         let urlString = "\(baseGaugeDetailURL)\(reachId)/.json"
         
         AF.request(urlString).responseJSON { (response) in
@@ -147,93 +147,6 @@ class AWApiReachHelper {
                 case .failure(let error):
                     callbackError(error)
             }
-        }
-    }
-    
-    private func createOrUpdateRapid(awRapid: AWRapid, reach: Reach, context: NSManagedObjectContext) {
-        let predicate = NSPredicate(format: "id == %i", awRapid.rapidId)
-        let request = Rapid.fetchRequest() as NSFetchRequest<Rapid>
-        request.predicate = predicate
-        
-        let rapid: Rapid
-        
-        if let result = try? context.fetch(request), result.count > 0, let first = result.first {
-            rapid = first
-        } else {
-            rapid = Rapid(context: context)
-            rapid.id = Int32(awRapid.rapidId)
-        }
-        
-        if let lat = awRapid.rapidLatitude, let lon = awRapid.rapidLongitude, let latitude = Double(lat), let longitude = Double(lon) {
-            rapid.lat = latitude
-            rapid.lon = longitude
-        }
-        
-        rapid.rapidDescription = awRapid.description
-        rapid.name = awRapid.name
-        rapid.difficulty = awRapid.difficulty
-        rapid.isHazard = awRapid.isHazard
-        rapid.isPutIn = awRapid.isPutIn
-        rapid.isPortage = awRapid.isPortage
-        rapid.isTakeOut = awRapid.isTakeOut
-        rapid.isPlaySpot = awRapid.isPlaySpot
-        rapid.isWaterfall = awRapid.isWaterfall
-        
-        rapid.reach = reach
-    }
-    
-    private func updateDetail(reachId: String, details: AWReachDetail, context: NSManagedObjectContext) {
-        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
-        request.predicate = NSPredicate(format: "id = %@", reachId)
-        
-        do {
-            let reaches = try context.fetch(request)
-            
-            // update the information if it came back correctly
-            if let reach = reaches.first {
-                
-                reach.avgGradient = Int16(details.detailAverageGradient ?? 0)
-                reach.photoId = Int32(details.detailPhotoId ?? 0)
-                reach.maxGradient = Int16(details.detailMaxGradient ?? 0)
-                reach.length = details.detailLength
-                reach.longDescription = details.detailDescription
-                reach.shuttleDetails = details.detailShuttleDescription
-                reach.gageName = details.detailGageName
-                
-                // foreach rapid
-                // -- create, attach, and store it
-                if let rapidsList = details.detailRapids {
-                    for rapid in rapidsList {
-                        createOrUpdateRapid(awRapid: rapid, reach: reach, context: context)
-                    }
-                }
-                
-                do {
-                    try context.save()
-                    print("Saved Reach Detail Context")
-                } catch {
-                    let error = error as NSError
-                    print("Error saving reach detail context: \(error), \(error.userInfo)")
-                }
-            } else {
-                print("Can't update reach, no matching one found with ID: \(reachId)")
-            }
-            
-        } catch {
-            let error = error as NSError
-            print("Error updateDetail: \(error), \(error.userInfo)")
-        }
-    }
-    
-    public func updateReachDetail(reachId: String, callback: @escaping UpdateCallback, callbackError: @escaping ReachErrorCallback) {
-        fetchReachDetail(reachId: reachId, callback: { (reachDetail) in
-            let context = self.privateQueueContext()
-            context.perform {
-                self.updateDetail(reachId: reachId, details: reachDetail, context: context)
-                self.mergeMainContext(completion: callback, errorCallback: callbackError)
-            }
-        }) { (error) in
-            callbackError(error)
         }
     }
     

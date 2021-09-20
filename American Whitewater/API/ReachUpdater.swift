@@ -94,7 +94,29 @@ class ReachUpdater {
     /// Requests reach detail for a single reach, and updates the locally stored Reach
     // TODO: split this into a ReachDetail model
     public func updateReachDetail(reachId: Int, completion: @escaping (Error?) -> Void) {
-        api.updateReachDetail(reachId: reachId, completion: completion)
+        api.getReachDetail(reachId: reachId) { detail, error in
+            guard
+                let detail = detail,
+                error == nil
+            else {
+                completion(error)
+                return
+            }
+            
+            let context = self.privateQueueContext()
+            context.perform {
+                do {
+                    try self.updateDetail(reachId: reachId, details: detail, context: context)
+                    try context.save()
+                    self.mergeMainContext(
+                        completion: { completion(nil) },
+                        errorCallback: completion
+                    )
+                } catch {
+                    completion(error)
+                }
+            }
+        }
     }
     
     /// Updates local reach distances based on the user's current location. This method should be removed
@@ -243,11 +265,71 @@ class ReachUpdater {
         return result.first!
     }
     
+    private func updateDetail(reachId: Int, details: AWApiReachHelper.AWReachDetail, context: NSManagedObjectContext) throws {
+        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
+        request.predicate = NSPredicate(format: "id = %i", reachId)
+        
+        let reaches = try context.fetch(request)
+        
+        // update the information if it came back correctly
+        guard let reach = reaches.first else {
+            throw Errors.noMatchingReach
+        }
+        
+        reach.avgGradient = Int16(details.detailAverageGradient ?? 0)
+        reach.photoId = Int32(details.detailPhotoId ?? 0)
+        reach.maxGradient = Int16(details.detailMaxGradient ?? 0)
+        reach.length = details.detailLength
+        reach.longDescription = details.detailDescription
+        reach.shuttleDetails = details.detailShuttleDescription
+        reach.gageName = details.detailGageName
+        
+        if let rapidsList = details.detailRapids {
+            for rapid in rapidsList {
+                createOrUpdateRapid(awRapid: rapid, reach: reach, context: context)
+            }
+        }
+    }
+    
+    // FIXME: doesn't look like this handles rapid deletion on the server
+    private func createOrUpdateRapid(awRapid: AWApiReachHelper.AWRapid, reach: Reach, context: NSManagedObjectContext) {
+        let predicate = NSPredicate(format: "id == %i", awRapid.rapidId)
+        let request = Rapid.fetchRequest() as NSFetchRequest<Rapid>
+        request.predicate = predicate
+        
+        let rapid: Rapid
+        
+        if let result = try? context.fetch(request), result.count > 0, let first = result.first {
+            rapid = first
+        } else {
+            rapid = Rapid(context: context)
+            rapid.id = Int32(awRapid.rapidId)
+        }
+        
+        if let lat = awRapid.rapidLatitude, let lon = awRapid.rapidLongitude, let latitude = Double(lat), let longitude = Double(lon) {
+            rapid.lat = latitude
+            rapid.lon = longitude
+        }
+        
+        rapid.rapidDescription = awRapid.description
+        rapid.name = awRapid.name
+        rapid.difficulty = awRapid.difficulty
+        rapid.isHazard = awRapid.isHazard
+        rapid.isPutIn = awRapid.isPutIn
+        rapid.isPortage = awRapid.isPortage
+        rapid.isTakeOut = awRapid.isTakeOut
+        rapid.isPlaySpot = awRapid.isPlaySpot
+        rapid.isWaterfall = awRapid.isWaterfall
+        
+        rapid.reach = reach
+    }
+    
     //
     // MARK: - Errors
     //
     
     enum Errors: Error {
         case alreadyFetchingReaches
+        case noMatchingReach
     }
 }

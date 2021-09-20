@@ -69,11 +69,11 @@ struct API {
         )
     }
     
-    public func updateReachDetail(reachId: Int, completion: @escaping (Error?) -> Void) {
-        reachHelper.updateReachDetail(reachId: "\(reachId)") {
-            completion(nil)
+    public func getReachDetail(reachId: Int, completion: @escaping (AWApiReachHelper.AWReachDetail?, Error?) -> Void) {
+        reachHelper.getReachDetail(reachId: reachId) {
+            completion($0, nil)
         } callbackError: {
-            completion($0)
+            completion(nil, $0)
         }
     }
     
