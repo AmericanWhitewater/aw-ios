@@ -75,7 +75,6 @@ class AWApiReachHelper {
                 }
                 
                 successCallback(riversList)
-                
             } else {
                 // keep er going
                 self.fetchReachesRecursively(currentIndex: newIndex, allRegionCodes: allRegionCodes, allRiverJSONdata: allRiverJSON, successCallback: successCallback, callbackError: callbackError)
@@ -85,7 +84,7 @@ class AWApiReachHelper {
     }
     
     /// Updates reaches based on their IDs. This is great for updating the favorites, and groups of reaches
-    private func fetchReachesByIds(reachIds: [String], callback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
+    public func getReaches(reachIds: [String], callback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
         if reachIds.isEmpty {
             print("No reach ids sent")
             callback([])
@@ -97,7 +96,6 @@ class AWApiReachHelper {
         AF.request(urlString).responseJSON { (response) in
             switch response.result {
                 case .success(let value):
-
                     var riversList: [AWReach] = []
                                         
                     let json = JSON(value)
@@ -162,28 +160,6 @@ class AWApiReachHelper {
             }
         }) { (error) in
             print("Error with getting all reaches: \(error.localizedDescription)")
-        }
-    }
-
-    public func updateReaches(reachIds: [String], callback: @escaping UpdateCallback, callbackError: @escaping ReachErrorCallback) {
-        fetchReachesByIds(reachIds: reachIds, callback: { (reaches) in
-            let context = self.privateQueueContext()
-            context.perform {
-                self.createOrUpdateReaches(newReaches: reaches, context: context)
-                
-                do {
-                    try context.save()
-                    self.mergeMainContext(completion: {
-                        DefaultsManager.shared.lastUpdated = Date()
-                        callback()
-                    }, errorCallback: callbackError)
-                } catch {
-                    let error = error as NSError
-                    print("Unable to save background context \(error) \(error.userInfo)")
-                }
-            }
-        }) { (error) in
-            callbackError(error)
         }
     }
     

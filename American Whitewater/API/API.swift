@@ -25,7 +25,7 @@ struct API {
     
     private init() {
         reachHelper = .init(
-            baseURL: baseURL + "/content",
+            baseURL: baseURL + "/content/",
             riverURL: baseURL + "/content/River/search/.json",
             baseGaugeDetailURL: baseURL + "/content/River/detail/id/"
         )
@@ -61,11 +61,11 @@ struct API {
         }
     }
     
-    public func updateReaches(reachIds: [Int], completion: @escaping (Error?) -> Void) {
-        reachHelper.updateReaches(
+    public func updateReaches(reachIds: [Int], completion: @escaping ([AWApiReachHelper.AWReach]?, Error?) -> Void) {
+        reachHelper.getReaches(
             reachIds: reachIds.map { "\($0)" },
-            callback: { completion(nil) },
-            callbackError: { completion($0) }
+            callback: { completion($0, nil) },
+            callbackError: { completion(nil, $0) }
         )
     }
 

@@ -44,11 +44,10 @@ class ReachUpdater {
                     self.createOrUpdateReaches(newReaches: awReaches, context: context)
                     try context.save()
                     
-                    self.mergeMainContext {
-                        completion(nil)
-                    } errorCallback: {
-                        completion($0)
-                    }
+                    self.mergeMainContext(
+                        completion: { completion(nil) },
+                        errorCallback: completion
+                    )
                     
                     Self.isFetchingReaches = false
                 } catch {
@@ -60,7 +59,34 @@ class ReachUpdater {
     
     /// Requests reaches with the given `reachIds` from the network and creates or updates the local copies
     public func updateReaches(reachIds: [Int], completion: @escaping (Error?) -> Void) {
-        api.updateReaches(reachIds: reachIds, completion: completion)
+        api.updateReaches(reachIds: reachIds) { awReaches, error in
+            guard
+                let awReaches = awReaches,
+                error == nil
+            else {
+                completion(error)
+                return
+            }
+            
+            let context = self.privateQueueContext()
+            context.perform {
+                do {
+                    self.createOrUpdateReaches(newReaches: awReaches, context: context)
+                    try context.save()
+                    
+                    self.mergeMainContext(
+                        completion: {
+                            // FIXME: this should be set consistently by all the update reach methods
+                            DefaultsManager.shared.lastUpdated = Date()
+                            completion(nil)
+                        },
+                        errorCallback: completion
+                    )
+                } catch {
+                    completion(error)
+                }
+            }
+        }
     }
     
     /// Requests all reaches from the network and creates or updates local copies. Potentially slow/heavy on the wire
