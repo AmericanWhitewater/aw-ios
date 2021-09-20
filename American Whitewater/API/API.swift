@@ -51,11 +51,13 @@ struct API {
     // MARK: - Reaches
     //
     
-    public func updateReaches(regionCodes: [String], completion: @escaping (Error?) -> Void) {
-        reachHelper.updateRegionalReaches(regionCodes: regionCodes) {
-            completion(nil)
+    /// Retrieves a list of reaches from the network
+    // TODO: For now, while CoreData is being used, this must return [AWReach], intended to be a private type, because it needs a non-uniqued and non-persisted type to return
+    public func getReaches(regionCodes: [String], completion: @escaping ([AWApiReachHelper.AWReach]?, Error?) -> Void) {
+        reachHelper.getReaches(regionCodes: regionCodes) {
+            completion($0, nil)
         } callbackError: {
-            completion($0)
+            completion(nil, $0)
         }
     }
     

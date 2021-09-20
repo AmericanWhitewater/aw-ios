@@ -126,132 +126,15 @@ class AWApiReachHelper {
         }
         
     }
-    
-    private func findOrNewReach(newReach: AWReach, context: NSManagedObjectContext) -> Reach {
-        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
-        //print("nReach name: \(newReach.name ?? "na") ID: \(NSNumber(value: newReach.id ?? 0))")
-        guard let id = newReach.id else {
-            print("invalid id: \(newReach.id ?? -1)")
-            return Reach(context: context)            
-        }
-        
-        request.predicate = NSPredicate(format: "id == %i", id)
-                
-        guard let result = try? context.fetch(request), result.count > 0 else {
-            let reach = Reach(context: context)
-            reach.id = newReach.id ?? 0
-            return reach
-        }
 
-        return result.first!
-    }
-
-    private func createOrUpdateReaches(newReaches: [AWReach], context: NSManagedObjectContext) {
-        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        
-        for newReach in newReaches {
-            let reach = findOrNewReach(newReach: newReach, context: context)
-
-            reach.name = newReach.name
-            reach.sortName = newReach.section
-            reach.putInLat = newReach.plat
-            reach.putInLon = newReach.plon
-            reach.takeOutLat = newReach.tlat
-            reach.takeOutLon = newReach.tlon
-            reach.currentGageReading = newReach.gauge_reading // ** check
-            reach.lastGageReading = newReach.last_gauge_reading
-            reach.id = newReach.id ?? 0
-            reach.difficulty = newReach.classRating
-            reach.condition = newReach.cond
-            reach.unit = newReach.unit
-            reach.rc = newReach.rc
-            reach.delta = newReach.reading_delta
-            reach.gageId = Int32(newReach.gauge_id ?? -1)
-            reach.gageMetric = Int16(newReach.gauge_metric ?? -1)
-            reach.gageMax = newReach.gauge_max
-            reach.gageMin = newReach.gauge_min
-            reach.state = newReach.state
-            
-            reach.altname = newReach.altname
-            reach.section = newReach.section
-
-            // API returns the total seconds before the present time as a string
-            // converting this to a Date
-            if let updatedSecondsString = newReach.last_gauge_updated,
-                let updatedSecondsAgo = Int(updatedSecondsString) {
-                reach.gageUpdated = Date().addingTimeInterval(TimeInterval(-updatedSecondsAgo))
-            }
-            
-            // calculate the distance from the user
-            if let distance = newReach.distanceFrom(location: DefaultsManager.shared.location) {
-                reach.distance = distance / 1609
-            } else {
-                reach.distance = 999999
-            }
-            
-            let difficultyRange = DifficultyHelper.parseDifficulty(difficulty: newReach.classRating ?? "")
-            if difficultyRange.contains(1) {
-                reach.difficulty1 = true
-            }
-            if difficultyRange.contains(2) {
-                reach.difficulty2 = true
-            }
-            if difficultyRange.contains(3) {
-                reach.difficulty3 = true
-            }
-            if difficultyRange.contains(4) {
-                reach.difficulty4 = true
-            }
-            if difficultyRange.contains(5) {
-                reach.difficulty5 = true
-            }
-        }
-        
-        // now save all the new reaches to the context
-        print("Saving after updating reaches")
-        do {
-            try context.save()
-        } catch {
-            let error = error as NSError
-            print("Unable to save reaches in core data: \(error), \(error.localizedDescription)")
-        }
-    }
-    
-    private (set) static var isFetchingReaches = false
-
-    public func updateRegionalReaches(regionCodes: [String], callback: @escaping UpdateReachesCallback, callbackError: @escaping ReachErrorCallback) {
-        
-        guard !Self.isFetchingReaches else {
-            print("Already fetching reaches...")
-            callback()
-            return
-        }
-        
-        print("Fetching region codes: \(regionCodes.description)")
-        
-        Self.isFetchingReaches = true
-        
-        fetchReachesRecursively(currentIndex: 0, allRegionCodes: regionCodes, allRiverJSONdata: [], successCallback: { (reaches) in
-            let context = self.privateQueueContext()
-            context.perform {
-                print("Processing \(reaches.count) reaches")
-                self.createOrUpdateReaches(newReaches: reaches, context: context)
-
-                do {
-                    try context.save()
-                    self.mergeMainContext(completion: callback, errorCallback: callbackError)
-                    Self.isFetchingReaches = false
-                } catch {
-                    let error = error as NSError
-                    print("Unable to save reaches in coredata: \(error), \(error.localizedDescription)")
-                    Self.isFetchingReaches = false
-                    callbackError(error)
-                }
-            }
-        }) { (error) in
-            Self.isFetchingReaches = false
-            callbackError(error)
-        }
+    public func getReaches(regionCodes: [String], callback: @escaping ([AWReach]) -> Void, callbackError: @escaping ReachErrorCallback) {
+        fetchReachesRecursively(
+            currentIndex: 0,
+            allRegionCodes: regionCodes,
+            allRiverJSONdata: [],
+            successCallback: callback,
+            callbackError: callbackError
+        )
     }
     
     // FIXME: downloadAllReachesInBackground doesnt do error handling
@@ -404,6 +287,91 @@ class AWApiReachHelper {
         }) { (error) in
             callbackError(error)
         }
+    }
+    
+    //
+    // MARK: - Duplicated in ReachUpdater -- remove when done
+    //
+    
+    private func createOrUpdateReaches(newReaches: [AWApiReachHelper.AWReach], context: NSManagedObjectContext) {
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        
+        for newReach in newReaches {
+            let reach = findOrNewReach(newReach: newReach, context: context)
+            
+            reach.name = newReach.name
+            reach.sortName = newReach.section
+            reach.putInLat = newReach.plat
+            reach.putInLon = newReach.plon
+            reach.takeOutLat = newReach.tlat
+            reach.takeOutLon = newReach.tlon
+            reach.currentGageReading = newReach.gauge_reading // ** check
+            reach.lastGageReading = newReach.last_gauge_reading
+            reach.id = newReach.id ?? 0
+            reach.difficulty = newReach.classRating
+            reach.condition = newReach.cond
+            reach.unit = newReach.unit
+            reach.rc = newReach.rc
+            reach.delta = newReach.reading_delta
+            reach.gageId = Int32(newReach.gauge_id ?? -1)
+            reach.gageMetric = Int16(newReach.gauge_metric ?? -1)
+            reach.gageMax = newReach.gauge_max
+            reach.gageMin = newReach.gauge_min
+            reach.state = newReach.state
+            
+            reach.altname = newReach.altname
+            reach.section = newReach.section
+            
+            // API returns the total seconds before the present time as a string
+            // converting this to a Date
+            if let updatedSecondsString = newReach.last_gauge_updated,
+               let updatedSecondsAgo = Int(updatedSecondsString) {
+                reach.gageUpdated = Date().addingTimeInterval(TimeInterval(-updatedSecondsAgo))
+            }
+            
+            // calculate the distance from the user
+            if let distance = newReach.distanceFrom(location: DefaultsManager.shared.location) {
+                reach.distance = distance / 1609
+            } else {
+                reach.distance = 999999
+            }
+            
+            let difficultyRange = DifficultyHelper.parseDifficulty(difficulty: newReach.classRating ?? "")
+            if difficultyRange.contains(1) {
+                reach.difficulty1 = true
+            }
+            if difficultyRange.contains(2) {
+                reach.difficulty2 = true
+            }
+            if difficultyRange.contains(3) {
+                reach.difficulty3 = true
+            }
+            if difficultyRange.contains(4) {
+                reach.difficulty4 = true
+            }
+            if difficultyRange.contains(5) {
+                reach.difficulty5 = true
+            }
+        }
+    }
+    
+    private func findOrNewReach(newReach: AWApiReachHelper.AWReach, context: NSManagedObjectContext) -> Reach {
+        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
+        //print("nReach name: \(newReach.name ?? "na") ID: \(NSNumber(value: newReach.id ?? 0))")
+        guard let id = newReach.id else {
+            print("invalid id: \(newReach.id ?? -1)")
+            return Reach(context: context)
+        }
+        
+        request.predicate = NSPredicate(format: "id == %i", id)
+                
+        guard let result = try? context.fetch(request), result.count > 0 else {
+            let reach = Reach(context: context)
+            reach.id = newReach.id ?? 0
+            return reach
+        }
+
+        return result.first!
     }
     
     private func mergeMainContext(completion: @escaping () -> Void, errorCallback: ((Error) -> Void)? = nil) {
