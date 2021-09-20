@@ -5,8 +5,7 @@ class RunDetailTableViewController: UITableViewController {
     var selectedRun:Reach?
     
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    private let reachUpdater = ReachUpdater()
+    private lazy var reachUpdater = ReachUpdater(managedObjectContext: managedObjectContext)
     
     @IBOutlet weak var favoriteButton: UIBarButtonItem!
     @IBOutlet weak var runNameLabel: UILabel!

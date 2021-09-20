@@ -12,8 +12,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
-    
-    private let reachUpdater = ReachUpdater()
+    private lazy var reachUpdater = ReachUpdater(managedObjectContext: managedObjectContext)
     
     private var filters: Filters { DefaultsManager.shared.filters }
     

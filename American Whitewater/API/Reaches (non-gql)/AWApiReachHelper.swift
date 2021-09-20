@@ -406,47 +406,6 @@ class AWApiReachHelper {
         }
     }
     
-    
-    public func updateAllReachDistances(callback: @escaping UpdateCallback) {
-        let coord = DefaultsManager.shared.coordinate
-        
-        // FIXME: probably CLLocationCoordinate2DIsValid() is what's wanted here?
-        if coord.latitude == 0.0 || coord.longitude == 0.0 {
-            print("Unable to update distance - user location is \(coord.latitude)x\(coord.longitude)")
-            return
-        }
-        
-        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        
-        if let results = try? managedObjectContext.fetch(request), results.count > 0 {
-            for reach in results {
-                guard let lat = reach.putInLat, let latitude = Double(lat),
-                    let lon = reach.putInLon, let longitude = Double(lon) else { print("Update: Invalid reach: \(reach.name ?? "?")  location \(reach.putInLat ?? "?")x\(reach.putInLat ?? "?")"); continue; }
-            
-                let reachLocation = CLLocation(latitude: latitude, longitude: longitude)
-
-                guard CLLocationCoordinate2DIsValid(reachLocation.coordinate) else { continue }
-
-                let distance = reachLocation.distance(from: DefaultsManager.shared.location)
-                print("Distance: \(distance / 1609)")
-                reach.distance = distance / 1609
-            }
-            
-            // save changes
-            do {
-                try managedObjectContext.save()
-                print("Saved Global Context")
-                callback()
-            } catch {
-                let error = error as NSError
-                print("Unable to save main view context: \(error), \(error.userInfo)")
-            }
-            
-            DefaultsManager.shared.lastUpdated = Date()
-        }
-    }
-    
     private func mergeMainContext(completion: @escaping () -> Void, errorCallback: ((Error) -> Void)? = nil) {
         let context = managedObjectContext
         DispatchQueue.main.async {

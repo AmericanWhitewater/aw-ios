@@ -79,11 +79,6 @@ struct API {
         }
     }
     
-    // FIXME: this should not exist
-    public func updateAllReachDistances(completion: @escaping () -> Void) {
-        reachHelper.updateAllReachDistances(callback: completion)
-    }
-    
     //
     // MARK: - GraphQL based
     //
