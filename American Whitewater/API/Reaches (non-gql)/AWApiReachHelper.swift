@@ -135,34 +135,6 @@ class AWApiReachHelper {
         )
     }
     
-    // FIXME: downloadAllReachesInBackground doesnt do error handling
-    public func downloadAllReachesInBackground(callback: @escaping UpdateCallback) {
-        let codes = Region.all.map { $0.code }
-        
-        fetchReachesRecursively(currentIndex: 0, allRegionCodes: codes, allRiverJSONdata: [], successCallback: { (reaches) in
-            let context = self.privateQueueContext()
-            context.perform {
-                self.createOrUpdateReaches(newReaches: reaches, context: context)
-
-                do {
-                    try context.save()
-                    
-                    self.mergeMainContext {
-                        DefaultsManager.shared.lastUpdated = Date()
-                        DefaultsManager.shared.favoritesLastUpdated = Date()
-                        
-                        callback()
-                    }
-                } catch {
-                    let error = error as NSError
-                    print("Unable to save reaches in coredata: \(error), \(error.localizedDescription)")
-                }
-            }
-        }) { (error) in
-            print("Error with getting all reaches: \(error.localizedDescription)")
-        }
-    }
-    
     private func fetchReachDetail(reachId: String, callback: @escaping ReachDetailCallback, callbackError: @escaping ReachErrorCallback) {
         let urlString = "\(baseGaugeDetailURL)\(reachId)/.json"
         

@@ -37,20 +37,24 @@ class RunsListViewController: UIViewController {
         runnableSwitch.isOn = filters.runnableFilter
         API.shared.updateAccountInfo()
         
-        // AWTODO loading UI states
+        // AWTODO: loading UI states
+        // TODO: respect returned error -- should this not set completedFirstRun? That will retry the initial fetch next time but may have other effects
         if !DefaultsManager.shared.completedFirstRun {
             print("downloading all reaches")
-            reachUpdater.updateAllReaches {
-                print("Completed downloading all data")
-
-                do {
-                    try self.updateFetchedResultsController()
-                } catch {
-                    print("Error in updateFetchedResultsController: \(error)")
+            reachUpdater.updateReaches(
+                regionCodes: Region.all.map({ $0.code }),
+                completion: { error in
+                    print("Completed downloading all data")
+                    
+                    do {
+                        try self.updateFetchedResultsController()
+                    } catch {
+                        print("Error in updateFetchedResultsController: \(error)")
+                    }
+                    
+                    DefaultsManager.shared.completedFirstRun = true
                 }
-                
-                DefaultsManager.shared.completedFirstRun = true
-            }
+            )
         }
     }
     

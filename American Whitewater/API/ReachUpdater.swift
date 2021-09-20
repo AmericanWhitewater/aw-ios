@@ -78,6 +78,8 @@ class ReachUpdater {
                         completion: {
                             // FIXME: this should be set consistently by all the update reach methods
                             DefaultsManager.shared.lastUpdated = Date()
+                            DefaultsManager.shared.favoritesLastUpdated = Date()
+
                             completion(nil)
                         },
                         errorCallback: completion
@@ -87,11 +89,6 @@ class ReachUpdater {
                 }
             }
         }
-    }
-    
-    /// Requests all reaches from the network and creates or updates local copies. Potentially slow/heavy on the wire
-    public func updateAllReaches(completion: @escaping () -> Void) {
-        api.updateAllReaches(completion: completion)
     }
     
     /// Requests reach detail for a single reach, and updates the locally stored Reach
