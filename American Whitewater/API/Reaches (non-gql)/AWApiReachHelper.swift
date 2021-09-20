@@ -26,6 +26,12 @@ class AWApiReachHelper {
         (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     }
     
+    private func privateQueueContext() -> NSManagedObjectContext {
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.parent = self.managedObjectContext
+        return context
+    }
+    
     /// Calls each of the regions to be downloaded, then after all are downloaded it processes all of them at once which happens very quickly
     /// This is designed to run in the background and update the UI as it goes without delays. Users can still pull/refresh individual data while this is happening.
     private func fetchReachesRecursively(currentIndex: Int, allRegionCodes: [String], allRiverJSONdata: [JSON], successCallback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
@@ -80,8 +86,7 @@ class AWApiReachHelper {
     
     /// Updates reaches based on their IDs. This is great for updating the favorites, and groups of reaches
     private func fetchReachesByIds(reachIds: [String], callback: @escaping ReachCallback, callbackError: @escaping ReachErrorCallback) {
-        
-        if reachIds.count == 0 {
+        if reachIds.isEmpty {
             print("No reach ids sent")
             callback([])
             return
@@ -90,7 +95,6 @@ class AWApiReachHelper {
         let urlString = baseURL + "River/list/list/\(reachIds.joined(separator: ":"))/.json"
         
         AF.request(urlString).responseJSON { (response) in
-            
             switch response.result {
                 case .success(let value):
 
@@ -146,7 +150,6 @@ class AWApiReachHelper {
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         
         for newReach in newReaches {
-
             let reach = findOrNewReach(newReach: newReach, context: context)
 
             reach.name = newReach.name
@@ -218,7 +221,7 @@ class AWApiReachHelper {
 
     public func updateRegionalReaches(regionCodes: [String], callback: @escaping UpdateReachesCallback, callbackError: @escaping ReachErrorCallback) {
         
-        guard Self.isFetchingReaches == false else {
+        guard !Self.isFetchingReaches else {
             print("Already fetching reaches...")
             callback()
             return
@@ -227,131 +230,89 @@ class AWApiReachHelper {
         print("Fetching region codes: \(regionCodes.description)")
         
         Self.isFetchingReaches = true
-        let dispatchGroup = DispatchGroup()
-        print("Dispatch group enter")
-        dispatchGroup.enter()
         
         fetchReachesRecursively(currentIndex: 0, allRegionCodes: regionCodes, allRiverJSONdata: [], successCallback: { (reaches) in
-            // success
-            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-            context.parent = self.managedObjectContext
-
+            let context = self.privateQueueContext()
             context.perform {
                 print("Processing \(reaches.count) reaches")
                 self.createOrUpdateReaches(newReaches: reaches, context: context)
 
                 do {
                     try context.save()
+                    self.mergeMainContext(completion: callback, errorCallback: callbackError)
+                    Self.isFetchingReaches = false
                 } catch {
                     let error = error as NSError
                     print("Unable to save reaches in coredata: \(error), \(error.localizedDescription)")
+                    Self.isFetchingReaches = false
                     callbackError(error)
                 }
-                dispatchGroup.leave()
             }
-            
         }) { (error) in
-            callbackError(error)
-            return
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            self.mergeMainContext(completion: callback, errorCallback: callbackError)
-            
-//            DefaultsManager.lastUpdated = Date()
-//            DefaultsManager.favoritesLastUpdated = Date()
             Self.isFetchingReaches = false
+            callbackError(error)
         }
     }
     
+    // FIXME: downloadAllReachesInBackground doesnt do error handling
     public func downloadAllReachesInBackground(callback: @escaping UpdateCallback) {
         let codes = Region.all.map { $0.code }
         
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
-        
         fetchReachesRecursively(currentIndex: 0, allRegionCodes: codes, allRiverJSONdata: [], successCallback: { (reaches) in
-            // success
-            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-            context.parent = self.managedObjectContext
-
+            let context = self.privateQueueContext()
             context.perform {
-                print("Processing \(reaches.count) reaches")
                 self.createOrUpdateReaches(newReaches: reaches, context: context)
 
-                print("Saving context")
                 do {
                     try context.save()
+                    
+                    self.mergeMainContext {
+                        DefaultsManager.shared.lastUpdated = Date()
+                        DefaultsManager.shared.favoritesLastUpdated = Date()
+                        
+                        callback()
+                    }
                 } catch {
                     let error = error as NSError
                     print("Unable to save reaches in coredata: \(error), \(error.localizedDescription)")
                 }
-                dispatchGroup.leave()
             }
-            
         }) { (error) in
             print("Error with getting all reaches: \(error.localizedDescription)")
         }
-        
-        dispatchGroup.notify(queue: .main) {
-            self.mergeMainContext(completion: callback) // downloadAllReachesInBackground doesnt do error handling
-            
-            DefaultsManager.shared.lastUpdated = Date()
-            DefaultsManager.shared.favoritesLastUpdated = Date()
-        }
     }
 
-
     public func updateReaches(reachIds: [String], callback: @escaping UpdateCallback, callbackError: @escaping ReachErrorCallback) {
-        
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
-        
         fetchReachesByIds(reachIds: reachIds, callback: { (reaches) in
-            // success
-            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-            context.parent = self.managedObjectContext
-
+            let context = self.privateQueueContext()
             context.perform {
-                //for reach in reaches {
                 self.createOrUpdateReaches(newReaches: reaches, context: context)
-                //}
                 
                 do {
                     try context.save()
+                    self.mergeMainContext(completion: {
+                        DefaultsManager.shared.lastUpdated = Date()
+                        callback()
+                    }, errorCallback: callbackError)
                 } catch {
                     let error = error as NSError
                     print("Unable to save background context \(error) \(error.userInfo)")
                 }
-                dispatchGroup.leave()
             }
-
         }) { (error) in
             callbackError(error)
         }
-        
-        dispatchGroup.notify(queue: .main) {
-            self.mergeMainContext(completion: callback, errorCallback: callbackError)
-        }
-        
-        DefaultsManager.shared.lastUpdated = Date()
     }
     
-    private func fetchReachDetail(reachId: String,
-                          callback: @escaping ReachDetailCallback, callbackError: @escaping ReachErrorCallback) {
+    private func fetchReachDetail(reachId: String, callback: @escaping ReachDetailCallback, callbackError: @escaping ReachErrorCallback) {
         let urlString = "\(baseGaugeDetailURL)\(reachId)/.json"
         
         AF.request(urlString).responseJSON { (response) in
-            
             switch response.result {
                 case .success(let value):
-
                     let json = JSON(value)
-
                     let reachDetails = AWReachDetail(detailsJson: json)
-                    
                     callback(reachDetails)
-                
                 case .failure(let error):
                     callbackError(error)
             }
@@ -391,7 +352,6 @@ class AWApiReachHelper {
     }
     
     private func updateDetail(reachId: String, details: AWReachDetail, context: NSManagedObjectContext) {
-        
         let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
         request.predicate = NSPredicate(format: "id = %@", reachId)
         
@@ -434,25 +394,15 @@ class AWApiReachHelper {
         }
     }
     
-    public func updateReachDetail(reachId: String,
-                           callback: @escaping UpdateCallback, callbackError: @escaping ReachErrorCallback) {
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
+    public func updateReachDetail(reachId: String, callback: @escaping UpdateCallback, callbackError: @escaping ReachErrorCallback) {
         fetchReachDetail(reachId: reachId, callback: { (reachDetail) in
-
-            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-            context.parent = self.managedObjectContext
-
+            let context = self.privateQueueContext()
             context.perform {
                 self.updateDetail(reachId: reachId, details: reachDetail, context: context)
-                dispatchGroup.leave()
+                self.mergeMainContext(completion: callback, errorCallback: callbackError)
             }
         }) { (error) in
             callbackError(error)
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            self.mergeMainContext(completion: callback, errorCallback: callbackError)
         }
     }
     
@@ -499,6 +449,7 @@ class AWApiReachHelper {
     
     private func mergeMainContext(completion: @escaping () -> Void, errorCallback: ((Error) -> Void)? = nil) {
         let context = managedObjectContext
+        DispatchQueue.main.async {
             context.perform {
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 do {
@@ -508,5 +459,6 @@ class AWApiReachHelper {
                     errorCallback?(error)
                 }
             }
+        }
     }
 }
