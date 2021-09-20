@@ -6,6 +6,8 @@ class RunDetailTableViewController: UITableViewController {
     
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    private let reachUpdater = ReachUpdater()
+    
     @IBOutlet weak var favoriteButton: UIBarButtonItem!
     @IBOutlet weak var runNameLabel: UILabel!
     @IBOutlet weak var runSectionLabel: UILabel!
@@ -58,7 +60,7 @@ class RunDetailTableViewController: UITableViewController {
         if let selectedRun = selectedRun {
             updateDetailDisplay(selectedRun)
 
-            API.shared.updateReachDetail(reachId: selectedRun.id) { error in
+            reachUpdater.updateReachDetail(reachId: selectedRun.id) { error in
                 if let error = error {
                     // Only show an error state if there aren't details stored locally
                     if selectedRun.longDescription == nil || selectedRun.longDescription?.isEmpty == true {

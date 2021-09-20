@@ -10,6 +10,8 @@ class FavoritesViewController: UIViewController {
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
     
+    private let reachUpdater = ReachUpdater()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -99,7 +101,7 @@ class FavoritesViewController: UIViewController {
             return
         }
         
-        API.shared.updateReaches(reachIds: reaches.map(\.id)) { error in
+        reachUpdater.updateReaches(reachIds: reaches.map(\.id)) { error in
             self.refreshControl.endRefreshing()
             
             if let error = error {

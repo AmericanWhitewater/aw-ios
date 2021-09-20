@@ -6,6 +6,7 @@ import CoreLocation
 import KeychainSwift
 
 class RunsListViewController: UIViewController {
+    private let reachUpdater = ReachUpdater()
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
     
@@ -39,7 +40,7 @@ class RunsListViewController: UIViewController {
         // AWTODO loading UI states
         if !DefaultsManager.shared.completedFirstRun {
             print("downloading all reaches")
-            API.shared.updateAllReaches {
+            reachUpdater.updateAllReaches {
                 print("Completed downloading all data")
 
                 do {
@@ -162,7 +163,7 @@ class RunsListViewController: UIViewController {
                 return
             }
             
-            API.shared.updateReaches(reachIds: reaches.map(\.id), completion: onCompletion)
+            reachUpdater.updateReaches(reachIds: reaches.map(\.id), completion: onCompletion)
         }
     }
     
@@ -221,7 +222,7 @@ class RunsListViewController: UIViewController {
     func refreshByRegion(completion: @escaping (Error?) -> Void) {
         print("Updating reaches by region")
         
-        API.shared.updateReaches(
+        reachUpdater.updateReaches(
             regionCodes: filters.regionsFilter.count > 0 ? filters.regionsFilter : Region.all.map { $0.code },
             completion: completion
         )
