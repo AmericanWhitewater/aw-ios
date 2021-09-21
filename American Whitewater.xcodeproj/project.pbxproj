@@ -12,6 +12,7 @@
 		4760DD5C0E5548BBA92D25AF /* Pods_American_Whitewater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A750E2F24748D3B54A1DEB84 /* Pods_American_Whitewater.framework */; };
 		4A26322426C5DC5E001B026B /* CLLocationManager+convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A26322326C5DC5E001B026B /* CLLocationManager+convenience.swift */; };
 		4A36D1E726A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */; };
+		4A4F6EBA26FA6EEE00AC82F6 /* ArticleUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6EB926FA6EEE00AC82F6 /* ArticleUpdater.swift */; };
 		4A5684B726F8F7800088D15E /* ReachUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5684B626F8F7800088D15E /* ReachUpdater.swift */; };
 		4A74F7B426DC7B4B00637A88 /* API+GaugeGraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74F7B326DC7B4B00637A88 /* API+GaugeGraphData.swift */; };
 		4A74F7B626DC85D700637A88 /* GaugeDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74F7B526DC85D700637A88 /* GaugeDataPoint.swift */; };
@@ -158,6 +159,7 @@
 		2FE342CF26A2846100352D1E /* LocationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHelper.swift; sourceTree = "<group>"; };
 		4A26322326C5DC5E001B026B /* CLLocationManager+convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+convenience.swift"; sourceTree = "<group>"; };
 		4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+FullResolutionEditedImage.swift"; sourceTree = "<group>"; };
+		4A4F6EB926FA6EEE00AC82F6 /* ArticleUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleUpdater.swift; sourceTree = "<group>"; };
 		4A5684B626F8F7800088D15E /* ReachUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachUpdater.swift; sourceTree = "<group>"; };
 		4A74F7B326DC7B4B00637A88 /* API+GaugeGraphData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+GaugeGraphData.swift"; sourceTree = "<group>"; };
 		4A74F7B526DC85D700637A88 /* GaugeDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeDataPoint.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				4AABF7F626E52D9C0002CE6F /* Reaches (non-gql) */,
 				63B5B4982457AE800062F54B /* GraphQL */,
 				4A5684B626F8F7800088D15E /* ReachUpdater.swift */,
+				4A4F6EB926FA6EEE00AC82F6 /* ArticleUpdater.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -934,6 +937,7 @@
 				630F3D222465F4160077130D /* NanoID.swift in Sources */,
 				63D7BD172319980600935693 /* OnboardLocationViewController.swift in Sources */,
 				63B5B48F245756D40062F54B /* AlertTableViewCell.swift in Sources */,
+				4A4F6EBA26FA6EEE00AC82F6 /* ArticleUpdater.swift in Sources */,
 				63E90EBC22EAAF2700C8DAA3 /* Fonts.swift in Sources */,
 				63491B05232897BE0036A906 /* SingleArticleViewController.swift in Sources */,
 				4A74F7B426DC7B4B00637A88 /* API+GaugeGraphData.swift in Sources */,

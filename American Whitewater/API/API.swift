@@ -285,11 +285,16 @@ struct API {
     // MARK: - GraphQL Articles
     //
     
-    public func updateArticles(
-        callback: @escaping AWGQLArticleApiHelper.UpdatedNewsCallback,
-        errorCallback: @escaping AWGQLArticleApiHelper.ErrorCallback
-    ) {
-        articleHelper.updateArticles(callback: callback, errorCallback: errorCallback)
+    // FIXME: passes an internal graphql type (that is not uniqued) rather than creating another temp type to work around CoreData's needs
+    public func getArticles(completion: @escaping ([NewsQuery.Data.Article.Datum]?, Error?) -> Void) {
+        articleHelper.getArticles { articles in
+            completion(articles, nil)
+        } errorCallback: {
+            completion(nil, $0)
+        }
     }
     
+    enum Errors: Error {
+        case missingData
+    }
 }
