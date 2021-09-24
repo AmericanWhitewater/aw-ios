@@ -4,7 +4,7 @@ import CoreLocation
 
 extension AWApiReachHelper {
     class AWRapid {
-        let rapidId: Int
+        let rapidId: Int?
         let name: String?
         let description: String?
         let difficulty: String?
@@ -18,8 +18,7 @@ extension AWApiReachHelper {
         var isWaterfall = false
         
         init(json:JSON) {
-            
-            rapidId = json["rapidid"].int ?? 0
+            rapidId = Int(json["id"].string ?? "")
             name = json["name"].string
             description = json["description"].string
             rapidLatitude = json["rlat"].string
