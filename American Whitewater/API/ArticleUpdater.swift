@@ -7,35 +7,12 @@
 //
 
 import Foundation
-import CoreData
+import GRDB
 
 class ArticleUpdater {
     private let api = API.shared
     
-    /// The main NSManagedObjectContext this updater will operate on
-    private let managedObjectContext: NSManagedObjectContext
-    
-    init(managedObjectContext: NSManagedObjectContext) {
-        self.managedObjectContext = managedObjectContext
-    }
-    
-    private func getExistingOrNewArticle(id: String?, context: NSManagedObjectContext) -> NewsArticle {
-        let request = NewsArticle.fetchRequest() as NSFetchRequest<NewsArticle>
-        request.predicate = NSPredicate(format: "id == %@", id ?? "")
-        
-        guard
-            let result = try? context.fetch(request),
-                let fetchedNewsArticle = result.first
-        else {
-            // no article found
-            let newNewsArticle = NewsArticle(context: context)
-            newNewsArticle.id = id
-            return newNewsArticle
-        }
-        
-        return fetchedNewsArticle
-    }
-    
+    /// Retrieves and updates news articles. Must not be called from within a DB write block
     public func updateArticles(completion: @escaping (Error?) -> Void) {
         api.getArticles { articles, error in
             guard
@@ -46,34 +23,56 @@ class ArticleUpdater {
                 return
             }
             
-            // TODO: saves on the main context, make a private queue child context, do the work there and merge?
-            // This is what ReachUpdater does, but probably unnecessary here (presumably this only gets a few news articles not 1000s)
-            let context = self.managedObjectContext
-            
-            context.perform {
-                for article in articles {
-                    let newsArticle = self.getExistingOrNewArticle(id: article.id, context: context)
-                    newsArticle.abstract = article.abstract
-                    newsArticle.abstractImage = article.abstractimage?.uri?.medium
-                    newsArticle.author = article.author
-                    newsArticle.contents = article.contents
-                    newsArticle.icon = article.icon
-                    newsArticle.image = article.image?.uri?.medium
-                    newsArticle.postedDate = article.postedDate
-                    newsArticle.releaseDate = article.releaseDate
-                    newsArticle.shortName = article.shortName
-                    newsArticle.title = article.title
-                    newsArticle.uid = article.uid
+            do {
+                try DB.shared.write { db in
+                    for a in articles {
+                        // We're no longer going to accept articles with a nil ID, since we must have a primary key to identify with
+                        guard let id = a.id else {
+                            continue
+                        }
+                        
+                        // Create and save the article
+                        // It's not necessary to retrieve local copies, because on conflict the new version will replace
+                        let newsArticle = NewsArticle(
+                            id: id,
+                            uid: a.uid,
+                            createdAt: Date(),
+                            postedDate: self.isoDate(a.postedDate),
+                            releaseDate: self.isoDate(a.releaseDate),
+                            abstract: a.abstract,
+                            abstractImage: a.abstractimage?.uri?.medium, // FIXME: this drops other sizes, Photo is a struct that can hold them all...
+                            title: a.title,
+                            author: a.author,
+                            contents: a.contents,
+                            icon: a.icon,
+                            image: a.image?.uri?.medium, // FIXME: this drops other sizes, Photo is a struct that can hold them all...
+                            shortName: a.shortName
+                        )
+                        
+                        try newsArticle.save(db)
+                    }
                 }
                 
-                do {
-                    try context.save()
-                    DefaultsManager.shared.articlesLastUpdated = Date()
-                    completion(nil)
-                } catch {
-                    completion(error)
-                }
+                DefaultsManager.shared.articlesLastUpdated = Date()
+                completion(nil)
+            } catch {
+                completion(error)
             }
         }
+    }
+    
+    
+    //
+    // MARK: - Dates
+    //
+    
+    private lazy var dateFormatter = DateFormatter(dateFormat: "yyyy-MM-dd HH:mm:ss")
+    
+    /// Convenience func that formats an optional ISO 8601 date string, returning a Date if possible
+    private func isoDate(_ dateString: String?) -> Date? {
+        guard let dateString = dateString else {
+            return nil
+        }
+        return dateFormatter.date(from: dateString)
     }
 }

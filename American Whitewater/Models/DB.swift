@@ -25,7 +25,7 @@ class DB {
     }
     
     let url: URL
-    private let pool: DatabasePool
+    let pool: DatabasePool
     
     //
     // MARK: - read/write
@@ -51,6 +51,28 @@ class DB {
     
     private var migrator: DatabaseMigrator {
         var m = DatabaseMigrator()
+        
+        m.registerMigration("create-newsArticle") { db in
+            try db.create(table: "newsArticle") { t in
+                t.column("id", .text) // String
+                    .primaryKey(onConflict: .replace)
+                t.column("uid", .text)
+                
+                t.column("createdAt", .datetime)
+                    .notNull().defaults(sql: "CURRENT_TIMESTAMP")
+                t.column("postedDate", .datetime)
+                t.column("releaseDate", .datetime)
+                
+                t.column("abstract", .text)
+                t.column("abstractImage", .text) // FIXME: should be/reference a Photo
+                t.column("title", .text)
+                t.column("author", .text)
+                t.column("contents", .text)
+                t.column("icon", .text)
+                t.column("image", .text)  // FIXME: should be/reference a Photo
+                t.column("shortName", .text)
+            }
+        }
         
         
         return m

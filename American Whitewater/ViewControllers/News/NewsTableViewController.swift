@@ -1,17 +1,13 @@
 import UIKit
-import CoreData
+import GRDB
 
 class NewsTableViewController: UITableViewController {
-
     @IBOutlet weak var donateButton: UIButton!
-
-    // CoreData properties we use for managing the context and fetched results
-    private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    private var fetchedResultsController: NSFetchedResultsController<NewsArticle>?
-        
-    private var selectedImage: UIImage?
     
-    private lazy var updater = ArticleUpdater(managedObjectContext: managedObjectContext)
+    private var selectedImage: UIImage?
+    private lazy var updater = ArticleUpdater()
+    
+    var articles = [NewsArticle]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,19 +24,21 @@ class NewsTableViewController: UITableViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        // get the data from CoreData if there is any to display
-        fetchArticlesFromCoreData()
-        self.tableView.reloadData()
+        super.viewWillAppear(animated)
         
-        // check how long it's been since we updated from the server
-        // if it's too long we just update
-        if let lastUpdated = DefaultsManager.shared.articlesLastUpdated {
-            if lastUpdated < Date(timeIntervalSinceNow: -120) { //60s * 10m == 600s
-                self.refresh()
-            }
-        } else {
+        beginObserving()
+        
+        // Update from server, at most every 120 sec
+        let lastUpdated = DefaultsManager.shared.articlesLastUpdated
+        if lastUpdated == nil || (lastUpdated?.timeIntervalSinceNow ?? 0) < -120 {
             self.refresh()
         }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        
     }
     
     /// Opens the donate view in Safari per Apple's guidelines
@@ -64,29 +62,33 @@ class NewsTableViewController: UITableViewController {
                 self.showToast(message: "Connection Error: " + error.localizedDescription)
                 return
             }
-            
-            self.fetchArticlesFromCoreData()
         }
     }
     
-    /// Uses a NSFetchRequest to request a sorted list of articles from the local CoreData storage
-    func fetchArticlesFromCoreData() {
-        // setup fetched results controller
-        //let request = NSFetchRequest<Article>(entityName: "Article")
-        let request = NewsArticle.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "postedDate", ascending: false)]
+    //
+    // MARK: - Data observation
+    //
+    
+    private var articleObserver: DatabaseCancellable? = nil
+    
+    func beginObserving() {
+        let observer = ValueObservation.tracking(
+            NewsArticle
+                .order(NewsArticle.Columns.releaseDate.desc)
+                .fetchAll
+        )
         
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-        print("Fetched results: \(fetchedResultsController?.fetchedObjects?.count ?? -1)")
-        fetchedResultsController?.delegate = self
-        
-        do {
-            try fetchedResultsController?.performFetch()
-        } catch {
-            let error = error as NSError
-            print("Error fetching articles from coredata: \(error), \(error.userInfo)")
-            self.showToast(message: "Connection Error: " + error.userInfo.description)
-        }
+        articleObserver = observer.start(
+            in: DB.shared.pool,
+            onError: { error in
+                print("Error fetching articles from coredata: \(error)")
+                self.showToast(message: "Error: " + error.localizedDescription)
+            }, onChange: { articles in
+                // TODO: for now, this just fetches articles and reloads the whole tableView. This could be made much more elegant by using a UITableViewDiffableDataSource
+                self.articles = articles
+                self.tableView.reloadData()
+            }
+        )
     }
     
     //
@@ -102,84 +104,37 @@ class NewsTableViewController: UITableViewController {
                 detailVC.selectedImage = self.selectedImage
             }
         }
-
     }
-}
-
-extension NewsTableViewController: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-    }
-
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-        
-        let index = indexPath ?? (newIndexPath ?? nil)
-        guard let cellIndex = index else {
-            return
-        }
-        
-        switch type {
-            case .insert:
-                tableView.insertRows(at: [cellIndex], with: .automatic)
-            case .delete:
-                tableView.deleteRows(at: [cellIndex], with: .automatic)
-            case .update:
-                tableView.reloadRows(at: [cellIndex], with: .automatic)
-            default:
-                break;
-        }
-    }
-}
-
-
-// MARK: - Table view data source
-
-extension NewsTableViewController {
     
+    //
+    // MARK: - Formatters
+    //
+    
+    private let simpleDateFormatter = DateFormatter(dateFormat: "MMM dd, yyyy h:mm a")
+}
+
+/// Table view data source
+extension NewsTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
+    // AWTODO: add place holder cell if no objects are returned
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        // AWTODO: add place holder cell if no objects are returned
-        let count = fetchedResultsController?.fetchedObjects?.count ?? 0
-        print("Count:", count)
-        return count
+        articles.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell2", for: indexPath) as! NewsTableViewCell
-
-        guard let awArticle = fetchedResultsController?.object(at: indexPath) else { return cell }
+        let article = articles[indexPath.row]
         
-        // get the date into a sexy format
         var releasedDatePretty = ""
-        if let releaseDate = awArticle.releaseDate {
-            //print("Posted Date: \(releaseDate)")
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let date = dateFormatter.date(from: releaseDate)
-            let simpleDateFormat = DateFormatter()
-            simpleDateFormat.dateFormat = "MMM dd, yyyy h:mm a"
-            
-            if date != nil {
-                releasedDatePretty = simpleDateFormat.string(from: date!)
-            }
+        if let releaseDate = article.releaseDate {
+            releasedDatePretty = simpleDateFormatter.string(from: releaseDate)
         }
-        print(awArticle.abstractImage ?? "no abstract photo")
-        cell.articleImageView.image = nil
         
-        if let abstractPhoto = awArticle.abstractImage, abstractPhoto.count > 0 {
+        cell.articleImageView.image = nil
+        if let abstractPhoto = article.abstractImage, !abstractPhoto.isEmpty {
             let url = !abstractPhoto.contains("http") ? "\(AWGC.AW_BASE_URL)\(abstractPhoto)" : "\(abstractPhoto)"
             cell.activityIndicator.startAnimating()
             cell.articleImageView.load(url: URL(string: url)!) {
@@ -190,17 +145,18 @@ extension NewsTableViewController {
             }
         }
         
-        cell.articleTitleLabel.text = (awArticle.title ?? "")
-        cell.articleAuthorAndDateLabel.text = "By: " + (awArticle.author ?? "") + ((releasedDatePretty.count > 0) ? " - \(releasedDatePretty)" : "")
-        cell.articleAbstractLabel.text = stripHTML(string: awArticle.abstract)
+        cell.articleTitleLabel.text = article.title
+        cell.articleAuthorAndDateLabel.text = "By: " + (article.author ?? "") + ((releasedDatePretty.count > 0) ? " - \(releasedDatePretty)" : "")
+        cell.articleAbstractLabel.text = stripHTML(string: article.abstract)
         
         return cell
     }
         
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedArticle = articles[indexPath.row]
         
-        guard let selectedArticle = fetchedResultsController?.object(at: indexPath) else { return }
-        
+        // FIXME: wat (this is using an instance var as a kind of argument to prepareForSegue)
+        // lots of reasons to change this, starting with: tap an article, go back, tap one with no image, it will pass the wrong image
         if let cell = tableView.cellForRow(at: indexPath) as? NewsTableViewCell, let img = cell.articleImageView.image {
             self.selectedImage = img
         }
@@ -213,6 +169,7 @@ extension NewsTableViewController {
      Helper function to strip out HTML tags for display as a UILabel
      NOTE: Used multiple times, should be put in a helper wrapper
     */
+    // FIXME: this won't reliably remove all tags, also there's a second, different stripHTML() defined in RunRapidDetailsTableViewController
     private func stripHTML(string: String?) -> String {
         if let string = string {
             let strippedString = string.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)

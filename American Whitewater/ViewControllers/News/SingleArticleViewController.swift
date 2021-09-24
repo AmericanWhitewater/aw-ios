@@ -12,6 +12,8 @@ class SingleArticleViewController: UIViewController, WKNavigationDelegate  {
     var selectedArticle: NewsArticle?
     var selectedImage: UIImage?
     
+    private let postedDateFormatter = DateFormatter(dateFormat: "MMM dd, yyyy")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,19 +45,11 @@ class SingleArticleViewController: UIViewController, WKNavigationDelegate  {
             }
             
             if let postedDate = article.postedDate {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-mm-dd hh:mm:ssZ"
-                let date = dateFormatter.date(from: postedDate)
-                let simpleDateFormat = DateFormatter()
-                simpleDateFormat.dateFormat = "MMM dd, yyyy"
-                
-                if date != nil {
-                    let postedDatePretty = simpleDateFormat.string(from: date!)
-                    if articleAuthorDateLabel.text!.count > 0 {
-                        articleAuthorDateLabel.text = articleAuthorDateLabel.text! + " - \(postedDatePretty)"
-                    } else {
-                        articleAuthorDateLabel.text = postedDatePretty
-                    }
+                let postedDatePretty = postedDateFormatter.string(from: postedDate)
+                if articleAuthorDateLabel.text!.count > 0 {
+                    articleAuthorDateLabel.text = articleAuthorDateLabel.text! + " - \(postedDatePretty)"
+                } else {
+                    articleAuthorDateLabel.text = postedDatePretty
                 }
             } else {
                 articleAuthorDateLabel.text = ""
