@@ -60,50 +60,54 @@ class RunMapViewController: UIViewController, MKMapViewDelegate {
         // remove all annotations because we are resetting them
         mapView.removeAnnotations(mapView.annotations)
         
-        if let selectedRun = selectedRun {
-            if let putinLat = Double( selectedRun.putInLat ?? "" ), let putinLon = Double( selectedRun.putInLon ?? "")  {
-                let putinCoordinate = CLLocationCoordinate2D(latitude: putinLat, longitude: putinLon)
-                let putinAnnotation = RunMapAnnotation(title: "Put-In", sectionSubtitle: "", coordinate: putinCoordinate, reach: selectedRun)
-                mapView.addAnnotation(putinAnnotation)
-            }
-            
-            if let takeoutLat = Double( selectedRun.takeOutLat ?? "" ), let takeoutLon = Double( selectedRun.takeOutLon ?? "") {
-                let takeoutCoordinate = CLLocationCoordinate2D(latitude: takeoutLat, longitude: takeoutLon)
-                let takeoutAnnotation = RunMapAnnotation(title: "Take-Out", sectionSubtitle: "", coordinate: takeoutCoordinate, reach: selectedRun)
-                mapView.addAnnotation(takeoutAnnotation)
-            }
-
-            // Handle rapid annotations
-            guard let rapids = selectedRun.rapids else { print("no rapids to process"); return }
-            
-            for rapid in rapids {
-                if let rapid = rapid as? Rapid, rapid.lat != 0, rapid.lon != 0 {
-                    var subtitle = (rapid.difficulty?.count ?? 0) > 0 ? "Class \(rapid.difficulty ?? "n/a"): " : ""
-                    
-                    if rapid.isHazard {
-                        subtitle = "\(subtitle) - Hazard, Use Caution!"
-                    } else {
-                        subtitle = "\(subtitle)\(rapid.isPlaySpot ? "Play Spot" : "Rapid")"
-                    }
-                    
-                    let annotation = RunMapAnnotation(
-                        title: rapid.name ?? "",
-                        sectionSubtitle: subtitle,
-                        coordinate: CLLocationCoordinate2D(latitude: rapid.lat, longitude: rapid.lon),
-                        reach: rapid.reach
-                    )
-                    
-                    mapView.addAnnotation(annotation)
-                }
-            }
-            
-            // set the bounding region to the put in and take out
-            let annotations = mapView.annotations.filter({ annotation in
-                !(annotation is MKUserLocation)
-            })
-            mapView.showAnnotations(annotations, animated: false)
+        guard let selectedRun = selectedRun else {
+            return
         }
         
+        if let putIn =  selectedRun.putIn?.coordinate {
+            mapView.addAnnotation(RunMapAnnotation(
+                title: "Put-In",
+                sectionSubtitle: "",
+                coordinate: putIn
+            ))
+        }
+        
+        if let takeOut = selectedRun.takeOut?.coordinate {
+            mapView.addAnnotation(RunMapAnnotation(
+                title: "Take-Out",
+                sectionSubtitle: "",
+                coordinate: takeOut
+            ))
+        }
+        
+            // Handle rapid annotations
+            // TODO: rapid annotations
+//            guard let rapids = selectedRun.rapids else { print("no rapids to process"); return }
+//
+//            for rapid in rapids {
+//                if let rapid = rapid as? Rapid, rapid.lat != 0, rapid.lon != 0 {
+//                    var subtitle = (rapid.difficulty?.count ?? 0) > 0 ? "Class \(rapid.difficulty ?? "n/a"): " : ""
+//
+//                    if rapid.isHazard {
+//                        subtitle = "\(subtitle) - Hazard, Use Caution!"
+//                    } else {
+//                        subtitle = "\(subtitle)\(rapid.isPlaySpot ? "Play Spot" : "Rapid")"
+//                    }
+//
+//                    let annotation = RunMapAnnotation(
+//                        title: rapid.name ?? "",
+//                        sectionSubtitle: subtitle,
+//                        coordinate: CLLocationCoordinate2D(latitude: rapid.lat, longitude: rapid.lon),
+//                        reach: rapid.reach
+//                    )
+//
+//                    mapView.addAnnotation(annotation)
+//                }
+//            }
+            
+        // set the bounding region to the put in and take out
+        let annotations = mapView.annotations.filter { !($0 is MKUserLocation) }
+        mapView.showAnnotations(annotations, animated: false)
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -153,21 +157,23 @@ class RunMapViewController: UIViewController, MKMapViewDelegate {
                 alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
                 present(alert, animated: true)
             } else {
+    
+                // TODO: rapids
                 
-                // open detail view
-                guard let rapids = annotation.reach?.rapids else { return }
-
-                let rapidMatch = rapids.filter {
-                    if let rapid = $0 as? Rapid {
-                        return rapid.name == annotation.title
-                    } else {
-                        return false
-                    }
-                }
-
-                if let rapid = rapidMatch.first {
-                    performSegue(withIdentifier: "mapRapidDetails", sender: rapid)
-                }
+//                // open detail view
+//                guard let rapids = annotation.reach?.rapids else { return }
+//
+//                let rapidMatch = rapids.filter {
+//                    if let rapid = $0 as? Rapid {
+//                        return rapid.name == annotation.title
+//                    } else {
+//                        return false
+//                    }
+//                }
+//
+//                if let rapid = rapidMatch.first {
+//                    performSegue(withIdentifier: "mapRapidDetails", sender: rapid)
+//                }
             }
         }
     }

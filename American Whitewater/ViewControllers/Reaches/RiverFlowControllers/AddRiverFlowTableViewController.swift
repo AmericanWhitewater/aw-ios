@@ -172,7 +172,7 @@ class AddRiverFlowTableViewController: UITableViewController {
         
         AWProgressModal.shared.show(fromViewController: self, message: "Posting...");
         
-        let gageId = selectedRun.gageId == -1 ? nil : Int(selectedRun.gageId)
+        let gageId = selectedRun.gageId == -1 ? nil : selectedRun.gageId
         let dateString = Self.isoDateFormatter.string(from: dateObserved)
         let reading = reading ?? 0
         

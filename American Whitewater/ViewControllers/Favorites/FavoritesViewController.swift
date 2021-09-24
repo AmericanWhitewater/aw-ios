@@ -1,5 +1,5 @@
 import UIKit
-import CoreData
+import GRDB
 
 class FavoritesViewController: UIViewController {
     
@@ -7,9 +7,9 @@ class FavoritesViewController: UIViewController {
 
     let refreshControl = UIRefreshControl()
     
-    private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    private var fetchedResultsController: NSFetchedResultsController<Reach>?
-    private lazy var reachUpdater = ReachUpdater(managedObjectContext: managedObjectContext)
+    private lazy var reachUpdater = ReachUpdater()
+    
+    var favorites = [Reach]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +28,11 @@ class FavoritesViewController: UIViewController {
         // fetch the data from the DB and tell tableView to reload
         // this forces a refresh of the view to display correctly
         // on the main view
-        fetchRiversFromCoreData()
-        favoritesTableView.reloadData()
+        beginObserving()
 
         // check how long its been since we pulled from the server
         // user can always pull to refresh too
-        if fetchedResultsController?.fetchedObjects?.count ?? 0 > 0 {
+        if favorites.count > 0 {
             // check how long it's been since we updated from the server
             // if it's too long we just update
             if let lastUpdated = DefaultsManager.shared.favoritesLastUpdated {
@@ -48,42 +47,58 @@ class FavoritesViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        fetchedResultsController?.delegate = nil
+        // Stop observing changes
+        observer = nil
     }
     
     @objc func favoriteButtonPressed(_ sender: UIButton?) {
-        if let button = sender {
-            let reach = fetchedResultsController?.object(at: IndexPath(row: button.tag, section: 0))
-            reach?.favorite = false
-            do {
-                try managedObjectContext.save()
-            } catch {
-                let error = error as NSError
-                print("Unable to save reaches in core data: \(error), \(error.localizedDescription)")
-            }
-
-            favoritesTableView.reloadData()
+        guard
+            let button = sender,
+            button.tag < favorites.count
+        else {
+            return
         }
+        
+        // Despite the observer which should keep things in sync, fetch and write within a transaction to ensure we don't write out stale data:
+        do {
+            try DB.shared.write { db in
+                var reach = try Reach.fetchOne(db, id: favorites[button.tag].id)
+                reach?.favorite = false
+                try reach?.save(db)
+            }
+        } catch {
+            print("Unable to save reaches in core data: \(error), \(error.localizedDescription)")
+        }
+        
+        favoritesTableView.reloadData()
     }
     
+    //
+    // MARK: - Observation
+    //
     
-    func fetchRiversFromCoreData() {
-        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        request.predicate = NSPredicate(format: "favorite == %@", NSNumber(value: true))
+    private var observer: DatabaseCancellable? = nil
+    
+    func beginObserving() {
+        let obs = ValueObservation.tracking(
+            Reach
+                .all()
+                .isFavorite()
+                .order(Reach.Columns.name.asc)
+                .fetchAll
+        )
         
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
-                                                              managedObjectContext: managedObjectContext,
-                                                              sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultsController?.delegate = self
-        
-        do {
-            try fetchedResultsController?.performFetch()
-        } catch {
-            let error = error as NSError
-            print("Error fetching favorites from core data: \(error), \(error.userInfo)")
-            self.showToast(message: "Connection Error: " + error.userInfo.description)
-        }
+        observer = obs.start(
+            in: DB.shared.pool,
+            onError: { error in
+                print("Error fetching favorites from core data: \(error)")
+                self.showToast(message: "Connection Error: " + error.localizedDescription)
+            }, onChange: { favorites in
+                self.favorites = favorites
+                
+                // TODO: this could be improved by using UITableViewDiffableDataSource
+                self.favoritesTableView.reloadData()
+            })
     }
 
     @objc func refreshFavorites(refreshControl: UIRefreshControl) {
@@ -91,16 +106,12 @@ class FavoritesViewController: UIViewController {
     }
 
     func refresh() {
-        guard
-            let reaches = fetchedResultsController?.fetchedObjects,
-            reaches.count > 0
-        else {
-            refreshControl.endRefreshing()
-            print("no ids")
+        guard favorites.count > 0 else {
+            refreshControl.endRefreshing() // ??
             return
         }
         
-        reachUpdater.updateReaches(reachIds: reaches.map(\.id)) { error in
+        reachUpdater.updateReaches(reachIds: favorites.map(\.id)) { error in
             self.refreshControl.endRefreshing()
             
             if let error = error {
@@ -108,8 +119,6 @@ class FavoritesViewController: UIViewController {
                 return
             }
 
-            print("Fetched favorite rivers")
-            self.fetchRiversFromCoreData()
             DefaultsManager.shared.favoritesLastUpdated = Date()
         }
     }
@@ -131,17 +140,13 @@ class FavoritesViewController: UIViewController {
 
 
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("fetched count: \(fetchedResultsController?.fetchedObjects?.count ?? -1)")
-        
-        if fetchedResultsController?.fetchedObjects?.count == 0 {
-            favoritesTableView.isHidden = true;
-        } else {
-            favoritesTableView.isHidden = false;
-        }
-        
-        return fetchedResultsController?.fetchedObjects?.count ?? 0
+        favoritesTableView.isHidden = favorites.count == 0
+        return favorites.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -155,15 +160,13 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
 
         // show the favorites
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavRunCell", for: indexPath) as! RunsListTableViewCell
-
-        guard let favorite = fetchedResultsController?.object(at: indexPath) else { return cell }
+        let favorite = favorites[indexPath.row]
         
         cell.runTitleLabel.text = favorite.name ?? "Unknown"
         cell.runSectionLabel.text = favorite.section ?? "Unknown Section"
         
-        var level = favorite.currentGageReading ?? "n/a"
-        level = level.trimmingCharacters(in: .whitespacesAndNewlines)
-        cell.runLevelAndClassLabel.text = "Level: \(level) Class: \(favorite.difficulty ?? "n/a")"
+        let level = (favorite.currentGageReading ?? "n/a").trimmingCharacters(in: .whitespacesAndNewlines)
+        cell.runLevelAndClassLabel.text = "Level: \(level) Class: \(favorite.classRating ?? "n/a")"
         
         // set highlight color
         let color = favorite.runnabilityColor
@@ -182,45 +185,9 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedRun = fetchedResultsController?.object(at: indexPath)
-        performSegue(withIdentifier: Segue.runDetailFavorites.rawValue, sender: selectedRun)
+        performSegue(
+            withIdentifier: Segue.runDetailFavorites.rawValue,
+            sender: favorites[indexPath.row]
+        )
     }
-
-}
-
-extension FavoritesViewController: NSFetchedResultsControllerDelegate {
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        favoritesTableView.beginUpdates()
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        favoritesTableView.endUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-        
-        let index = indexPath ?? (newIndexPath ?? nil)
-        guard let cellIndex = index else { return }
-        
-        switch type {
-            case .insert:
-                favoritesTableView.insertRows(at: [cellIndex], with: .automatic)
-            case .delete:
-                favoritesTableView.deleteRows(at: [cellIndex], with: .automatic)
-            case .move:
-                guard let fromIndex = indexPath, let toIndex = newIndexPath else { return }
-                favoritesTableView.moveRow(at: fromIndex, to: toIndex)
-            case .update:
-                favoritesTableView.reloadRows(at: [cellIndex], with: .automatic)
-            default:
-                break
-        }
-    }
-    
-
 }

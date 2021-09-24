@@ -11,9 +11,6 @@ class DefaultsManager {
     public static let shared = DefaultsManager()
     private let defaults: UserDefaults
     
-    private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    private lazy var reachUpdater = ReachUpdater(managedObjectContext: managedObjectContext)
-    
     private init(userDefaults: UserDefaults = .standard) {
         self.defaults = userDefaults
     }
@@ -61,15 +58,6 @@ class DefaultsManager {
         set {
             latitude = newValue.latitude
             longitude = newValue.longitude
-            
-            // .003 degrees of latitude is approx 1000ft.
-            if lastDistanceLatitude == 0 ||
-                newValue.hasChanged(from: lastDistanceCoordinate, byMoreThan: 0.003) {
-                print("Updating distances of reaches")
-                
-                reachUpdater.updateAllReachDistances{}
-                lastDistanceCoordinate = newValue
-            }
         }
     }
 

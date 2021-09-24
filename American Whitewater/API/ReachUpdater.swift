@@ -1,16 +1,9 @@
 import Foundation
-import CoreData
+import GRDB
 import CoreLocation
 
 class ReachUpdater {
     private let api = API.shared
-    
-    /// The main NSManagedObjectContext this updater will operate on
-    private let managedObjectContext: NSManagedObjectContext
-    
-    init(managedObjectContext: NSManagedObjectContext) {
-        self.managedObjectContext = managedObjectContext
-    }
     
     //
     // MARK: - Public API
@@ -39,26 +32,15 @@ class ReachUpdater {
                 completion(error)
                 return
             }
-            
-            let context = self.privateQueueContext()
-            context.perform {
-                print("Processing \(awReaches.count) reaches")
-                                
-                do {
-                    self.createOrUpdateReaches(newReaches: awReaches, context: context)
-                    try context.save()
-                    
-                    self.mergeMainContext(
-                        completion: {
-                            DefaultsManager.shared.lastUpdated = Date()
-                            completion(nil)
-                        },
-                        errorCallback: completion
-                    )
-                    
-                } catch {
-                    completion(error)
+         
+            do {
+                try DB.shared.write { db in
+                    try self.createOrUpdateReaches(newReaches: awReaches, database: db)
+                    DefaultsManager.shared.lastUpdated = Date()
                 }
+                completion(nil)
+            } catch {
+                completion(error)
             }
         }
     }
@@ -74,26 +56,17 @@ class ReachUpdater {
                 return
             }
             
-            let context = self.privateQueueContext()
-            context.perform {
-                do {
-                    self.createOrUpdateReaches(newReaches: awReaches, context: context)
-                    try context.save()
+            do {
+                try DB.shared.write { db in
+                    try self.createOrUpdateReaches(newReaches: awReaches, database: db)
                     
-                    self.mergeMainContext(
-                        completion: {
-                            DefaultsManager.shared.lastUpdated = Date()
-                            
-                            // FIXME: This call is used for things other than favorites. This needs to be set elsewhere
-                            DefaultsManager.shared.favoritesLastUpdated = Date()
-
-                            completion(nil)
-                        },
-                        errorCallback: completion
-                    )
-                } catch {
-                    completion(error)
+                    DefaultsManager.shared.lastUpdated = Date()
+                    
+                    // FIXME: This call is used for things other than favorites. This needs to be set elsewhere
+                    DefaultsManager.shared.favoritesLastUpdated = Date()
                 }
+            } catch {
+                completion(error)
             }
         }
     }
@@ -110,225 +83,141 @@ class ReachUpdater {
                 return
             }
             
-            let context = self.privateQueueContext()
-            context.perform {
-                do {
-                    try self.updateDetail(reachId: reachId, details: detail, context: context)
-                    try context.save()
-                    self.mergeMainContext(
-                        completion: { completion(nil) },
-                        errorCallback: completion
-                    )
-                } catch {
-                    completion(error)
-                }
-            }
-        }
-    }
-    
-    /// Updates local reach distances based on the user's current location. This method should be removed
-    public func updateAllReachDistances(completion: @escaping () -> Void) {
-        let coord = DefaultsManager.shared.coordinate
-        
-        guard CLLocationCoordinate2DIsValid(coord) else {
-            print("Unable to update distance - user location is \(coord.latitude)x\(coord.longitude)")
-            return
-        }
-        
-        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        
-        if let results = try? managedObjectContext.fetch(request), results.count > 0 {
-            for reach in results {
-                guard let lat = reach.putInLat, let latitude = Double(lat),
-                      let lon = reach.putInLon, let longitude = Double(lon) else { print("Update: Invalid reach: \(reach.name ?? "?")  location \(reach.putInLat ?? "?")x\(reach.putInLat ?? "?")"); continue; }
-                
-                let reachLocation = CLLocation(latitude: latitude, longitude: longitude)
-                
-                guard CLLocationCoordinate2DIsValid(reachLocation.coordinate) else { continue }
-                
-                let distance = reachLocation.distance(from: DefaultsManager.shared.location)
-                print("Distance: \(distance / 1609)")
-                reach.distance = distance / 1609
-            }
-            
-            // save changes
             do {
-                try managedObjectContext.save()
-                print("Saved Global Context")
-                completion()
-            } catch {
-                let error = error as NSError
-                print("Unable to save main view context: \(error), \(error.userInfo)")
-            }
-        }
-    }
-    
-    //
-    // MARK: - ManagedObjectContexts and core data mapping
-    //
-    
-    private func privateQueueContext() -> NSManagedObjectContext {
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        context.parent = self.managedObjectContext
-        return context
-    }
-    
-    private func mergeMainContext(completion: @escaping () -> Void, errorCallback: ((Error) -> Void)? = nil) {
-        let context = managedObjectContext
-        DispatchQueue.main.async {
-            context.perform {
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                do {
-                    try context.save()
-                    completion()
-                } catch {
-                    errorCallback?(error)
+                try DB.shared.write { db in
+                    try self.updateDetail(reachId: reachId, details: detail, database: db)
                 }
+            } catch {
+                completion(error)
             }
         }
     }
     
-    private func createOrUpdateReaches(newReaches: [AWApiReachHelper.AWReach], context: NSManagedObjectContext) {
-        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        
-        for newReach in newReaches {
-            let reach = findOrNewReach(newReach: newReach, context: context)
-            
-            reach.name = newReach.name
-            reach.sortName = newReach.section
-            reach.putInLat = newReach.plat
-            reach.putInLon = newReach.plon
-            reach.takeOutLat = newReach.tlat
-            reach.takeOutLon = newReach.tlon
-            reach.currentGageReading = newReach.gauge_reading // ** check
-            reach.lastGageReading = newReach.last_gauge_reading
-            reach.id = newReach.id ?? 0
-            reach.difficulty = newReach.classRating
-            reach.condition = newReach.cond
-            reach.unit = newReach.unit
-            reach.rc = newReach.rc
-            reach.delta = newReach.reading_delta
-            reach.gageId = Int32(newReach.gauge_id ?? -1)
-            reach.gageMetric = Int16(newReach.gauge_metric ?? -1)
-            reach.gageMax = newReach.gauge_max
-            reach.gageMin = newReach.gauge_min
-            reach.state = newReach.state
-            
-            reach.altname = newReach.altname
-            reach.section = newReach.section
-            
-            // API returns the total seconds before the present time as a string
-            // converting this to a Date
-            if let updatedSecondsString = newReach.last_gauge_updated,
-               let updatedSecondsAgo = Int(updatedSecondsString) {
-                reach.gageUpdated = Date().addingTimeInterval(TimeInterval(-updatedSecondsAgo))
+    private func createOrUpdateReaches(newReaches: [AWApiReachHelper.AWReach], database db: Database) throws {
+        for newReach in newReaches { 
+            guard let id = newReach.id else {
+                continue
             }
             
-            // calculate the distance from the user
-            if let distance = newReach.distanceFrom(location: DefaultsManager.shared.location) {
-                reach.distance = distance / 1609
-            } else {
-                reach.distance = 999999
-            }
+            let existingReach = try? Reach.fetchOne(db, id: id)
+            let difficultyRange = DifficultyHelper.parseDifficulty(difficulty: newReach.classRating ?? existingReach?.classRating ?? "")
             
-            let difficultyRange = DifficultyHelper.parseDifficulty(difficulty: newReach.classRating ?? "")
-            if difficultyRange.contains(1) {
-                reach.difficulty1 = true
-            }
-            if difficultyRange.contains(2) {
-                reach.difficulty2 = true
-            }
-            if difficultyRange.contains(3) {
-                reach.difficulty3 = true
-            }
-            if difficultyRange.contains(4) {
-                reach.difficulty4 = true
-            }
-            if difficultyRange.contains(5) {
-                reach.difficulty5 = true
-            }
+            // FIXME: what a mess, pull into funcs on model objects
+            let reach = Reach(
+                id: id,
+                createdAt: Date(),
+                altname: newReach.altname ?? existingReach?.altname,
+                avgGradient: newReach.detailAverageGradient ?? existingReach?.avgGradient ?? 0,
+                maxGradient: existingReach?.maxGradient ?? 0, // not available from response
+                condition: newReach.cond ?? existingReach?.condition,
+                county: newReach.county ?? existingReach?.county,
+                currentGageReading: newReach.gauge_reading ?? existingReach?.currentGageReading,
+                delta: newReach.reading_delta ?? existingReach?.delta,
+                description: newReach.detailDescription ?? existingReach?.description,
+                detailUpdated: existingReach?.detailUpdated, // FIXME: never set
+                classRating: newReach.classRating ?? existingReach?.classRating,
+                isClass1: difficultyRange.contains(1),
+                isClass2: difficultyRange.contains(2),
+                isClass3: difficultyRange.contains(3),
+                isClass4: difficultyRange.contains(4),
+                isClass5: difficultyRange.contains(5),
+                favorite: existingReach?.favorite ?? false,
+                gageId: newReach.gauge_id ?? existingReach?.gageId,
+                gageMax: newReach.gauge_max ?? existingReach?.gageMax,
+                gageMetric: newReach.gauge_metric ?? existingReach?.gageMetric ?? -1,
+                gageMin: newReach.gauge_min ?? existingReach?.gageMin,
+                gageUpdated: dateFromTimeAgoInSeconds(newReach.last_gauge_updated) ?? existingReach?.gageUpdated,
+                lastGageReading: newReach.last_gauge_reading ?? existingReach?.lastGageReading,
+                length: Double(newReach.detailLength ?? "") ?? existingReach?.length,
+                name: newReach.name ?? existingReach?.name,
+                photoId: existingReach?.photoId ?? 0, //FIXME: not available
+                putInLat: Double(newReach.plat ?? "") ?? existingReach?.putInLat,
+                putInLon: Double(newReach.plon ?? "") ?? existingReach?.putInLon,
+                takeOutLat: Double(newReach.tlat ?? "") ?? existingReach?.takeOutLat,
+                takeOutLon: Double(newReach.tlon ?? "") ?? existingReach?.takeOutLon,
+                rc: newReach.rc ?? existingReach?.rc,
+                river: newReach.river ?? existingReach?.river,
+                section: newReach.section ?? existingReach?.section,
+                shuttleDetails: newReach.detailShuttleDescription ?? existingReach?.shuttleDetails,
+                state: newReach.state ?? existingReach?.state,
+                unit: newReach.unit ?? existingReach?.unit ?? existingReach?.unit,
+                zipcode: newReach.zipcode ?? existingReach?.zipcode
+            )
+            
+            try reach.save(db)
         }
     }
     
-    private func findOrNewReach(newReach: AWApiReachHelper.AWReach, context: NSManagedObjectContext) -> Reach {
-        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
-        //print("nReach name: \(newReach.name ?? "na") ID: \(NSNumber(value: newReach.id ?? 0))")
-        guard let id = newReach.id else {
-            print("invalid id: \(newReach.id ?? -1)")
-            return Reach(context: context)
-        }
-        
-        request.predicate = NSPredicate(format: "id == %i", id)
-                
-        guard let result = try? context.fetch(request), result.count > 0 else {
-            let reach = Reach(context: context)
-            reach.id = newReach.id ?? 0
-            return reach
-        }
-
-        return result.first!
-    }
-    
-    private func updateDetail(reachId: Int, details: AWApiReachHelper.AWReachDetail, context: NSManagedObjectContext) throws {
-        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
-        request.predicate = NSPredicate(format: "id = %i", reachId)
-        
-        let reaches = try context.fetch(request)
-        
-        // update the information if it came back correctly
-        guard let reach = reaches.first else {
+    private func updateDetail(reachId: Int, details: AWApiReachHelper.AWReachDetail, database db: Database) throws {
+        guard var reach = try Reach.fetchOne(db, id: reachId) else {
             throw Errors.noMatchingReach
         }
         
-        reach.avgGradient = Int16(details.detailAverageGradient ?? 0)
-        reach.photoId = Int32(details.detailPhotoId ?? 0)
-        reach.maxGradient = Int16(details.detailMaxGradient ?? 0)
-        reach.length = details.detailLength
-        reach.longDescription = details.detailDescription
+        reach.avgGradient = details.detailAverageGradient ?? 0
+        reach.photoId = details.detailPhotoId ?? 0
+        reach.maxGradient = details.detailMaxGradient ?? 0
+        reach.length = Double(details.detailLength ?? "")
+        reach.description = details.detailDescription
         reach.shuttleDetails = details.detailShuttleDescription
-        reach.gageName = details.detailGageName
         reach.detailUpdated = Date()
         
-        if let rapidsList = details.detailRapids {
-            for rapid in rapidsList {
-                createOrUpdateRapid(awRapid: rapid, reach: reach, context: context)
-            }
-        }
+        // FIXME: doesn't look like this handles rapid deletion on the server
+        // TODO: rapid creation
+//        if let rapidsList = details.detailRapids {
+//            for rapid in rapidsList {
+//                createOrUpdateRapid(awRapid: rapid, reach: reach, context: context)
+//            }
+//        }
     }
     
-    // FIXME: doesn't look like this handles rapid deletion on the server
-    private func createOrUpdateRapid(awRapid: AWApiReachHelper.AWRapid, reach: Reach, context: NSManagedObjectContext) {
-        let predicate = NSPredicate(format: "id == %i", awRapid.rapidId)
-        let request = Rapid.fetchRequest() as NSFetchRequest<Rapid>
-        request.predicate = predicate
-        
-        let rapid: Rapid
-        
-        if let result = try? context.fetch(request), result.count > 0, let first = result.first {
-            rapid = first
-        } else {
-            rapid = Rapid(context: context)
-            rapid.id = Int32(awRapid.rapidId)
-        }
-        
-        if let lat = awRapid.rapidLatitude, let lon = awRapid.rapidLongitude, let latitude = Double(lat), let longitude = Double(lon) {
-            rapid.lat = latitude
-            rapid.lon = longitude
-        }
-        
-        rapid.rapidDescription = awRapid.description
-        rapid.name = awRapid.name
-        rapid.difficulty = awRapid.difficulty
-        rapid.isHazard = awRapid.isHazard
-        rapid.isPutIn = awRapid.isPutIn
-        rapid.isPortage = awRapid.isPortage
-        rapid.isTakeOut = awRapid.isTakeOut
-        rapid.isPlaySpot = awRapid.isPlaySpot
-        rapid.isWaterfall = awRapid.isWaterfall
-        
-        rapid.reach = reach
+    // TODO: rapid creation
+    private func createOrUpdateRapid(awRapid: AWApiReachHelper.AWRapid, reach: Reach, database db: Database) {
+//        let predicate = NSPredicate(format: "id == %i", awRapid.rapidId)
+//        let request = Rapid.fetchRequest() as NSFetchRequest<Rapid>
+//        request.predicate = predicate
+//
+//        let rapid: Rapid
+//
+//        if let result = try? context.fetch(request), result.count > 0, let first = result.first {
+//            rapid = first
+//        } else {
+//            rapid = Rapid(context: context)
+//            rapid.id = Int32(awRapid.rapidId)
+//        }
+//
+//        if let lat = awRapid.rapidLatitude, let lon = awRapid.rapidLongitude, let latitude = Double(lat), let longitude = Double(lon) {
+//            rapid.lat = latitude
+//            rapid.lon = longitude
+//        }
+//
+//        rapid.rapidDescription = awRapid.description
+//        rapid.name = awRapid.name
+//        rapid.difficulty = awRapid.difficulty
+//        rapid.isHazard = awRapid.isHazard
+//        rapid.isPutIn = awRapid.isPutIn
+//        rapid.isPortage = awRapid.isPortage
+//        rapid.isTakeOut = awRapid.isTakeOut
+//        rapid.isPlaySpot = awRapid.isPlaySpot
+//        rapid.isWaterfall = awRapid.isWaterfall
+//
+//        rapid.reach = reach
     }
+    
+    //
+    // MARK: - Helpers
+    //
+    
+    private func dateFromTimeAgoInSeconds(_ timeString: String?) -> Date? {
+        guard
+            let timeString = timeString,
+            let seconds = Double(timeString)
+        else {
+            return nil
+        }
+        
+        return Date(timeIntervalSinceNow: -seconds)
+    }
+
     
     //
     // MARK: - Errors

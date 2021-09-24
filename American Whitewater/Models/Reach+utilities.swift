@@ -2,6 +2,13 @@ import Foundation
 import MapKit
 
 extension Reach {
+    var title: String? {
+        if let classRating = classRating, let name = name {
+            return "\(name) (\(classRating))"
+        } else {
+            return name
+        }
+    }
 
     var readingFormatted: String {
         guard let currentReading = currentGageReading, let unit = unit else {
@@ -10,13 +17,11 @@ extension Reach {
         return "\(currentReading) \(unit)"
     }
 
-    var distanceFormatted: String? {
-        return distance != 0 ? "\(Int(distance)) mi" : ""
-    }
-
     var lengthFormatted: String? {
-        guard let length = length else { return nil }
-        return length != "" ? "\(length) mi" : ""
+        guard let length = length else {
+            return nil
+        }
+        return "\(length) mi"
     }
 
     var updatedString: String? {
@@ -67,7 +72,7 @@ extension Reach {
     }
 
     var runnableClass: String {
-        return "Level: \(readingFormatted) Class: \(difficulty ?? "Unknown")"
+        return "Level: \(readingFormatted) Class: \(classRating ?? "Unknown")"
     }
     
     var gageMaxRecommended: String {
@@ -87,55 +92,6 @@ extension Reach {
             return String(format: formatString, minFloat)
         } else {
             return ""
-        }
-    }
-}
-
-// MARK: - MKAnnotation
-extension Reach: MKAnnotation {
-    public var title: String? {
-        if let difficulty = difficulty, let name = name {
-            return "\(name) (\(difficulty))"
-        } else {
-            return name
-        }
-    }
-
-    public var subtitle: String? {
-        if let sub = section {
-            return sub
-        } else {
-            return ""
-        }
-    }
-    
-    public var coordinate: CLLocationCoordinate2D {
-        guard let lat = putInLat, let latitude = Double(lat),
-            let lon = putInLon, let longitude = Double(lon) else {
-                return kCLLocationCoordinate2DInvalid
-        }
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        if CLLocationCoordinate2DIsValid(coordinate) {
-            return coordinate
-        } else {
-            return kCLLocationCoordinate2DInvalid
-        }
-    }
-    
-    public var imageName: String {
-        if let condition = condition {
-            switch condition {
-                case "low":
-                    return "mapPinLowSm"
-                case "med":
-                    return "mapPinRunningSm"
-                case "high":
-                    return "mapPinHighSm"
-                default:
-                    return "mapPinNoneSm"
-            }
-        } else {
-            return "mapPinNoneSm"
         }
     }
 }

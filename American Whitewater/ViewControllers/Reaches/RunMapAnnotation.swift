@@ -7,13 +7,10 @@ class RunMapAnnotation: NSObject, MKAnnotation {
     let sectionSubtitle: String
     let coordinate: CLLocationCoordinate2D
     var imageName: String = ""
-    let reach: Reach?
     
-    
-    init(title: String, sectionSubtitle: String, coordinate: CLLocationCoordinate2D, reach: Reach?) {
+    init(title: String, sectionSubtitle: String, coordinate: CLLocationCoordinate2D) {
         self.title = title
         self.sectionSubtitle = sectionSubtitle
-        self.reach = reach
         self.coordinate = coordinate
         
         if title.uppercased() == "Put-In".uppercased() {

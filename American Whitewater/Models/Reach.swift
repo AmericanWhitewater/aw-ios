@@ -1,69 +1,137 @@
 import Foundation
-import CoreData
+import GRDB
+import CoreLocation
 
-public class Reach: NSManagedObject {
-    @nonobjc public class func reachFetchRequest() -> NSFetchRequest<Reach> {
-        return NSFetchRequest<Reach>(entityName: "Reach")
+struct Reach: Identifiable, Codable {
+    var id: Int
+    var createdAt: Date
+    
+    var altname: String?
+    var avgGradient: Int
+    var maxGradient: Int
+    var condition: String?
+    var county: String?
+    var currentGageReading: String?
+    var delta: String?
+    var description: String?
+    var detailUpdated: Date?
+    var classRating: String?
+    var isClass1: Bool
+    var isClass2: Bool
+    var isClass3: Bool
+    var isClass4: Bool
+    var isClass5: Bool
+    var favorite: Bool // TODO: move out of this model
+    var gageId: Int?
+    var gageMax: String?
+    var gageMetric: Int
+    var gageMin: String?
+    var gageUpdated: Date?
+    var lastGageReading: String?
+    var length: Double?
+    var name: String?
+    var photoId: Int
+    var putInLat: Double?
+    var putInLon: Double?
+    var takeOutLat: Double?
+    var takeOutLon: Double?
+    var rc: String?
+    var river: String?
+    var section: String?
+    var shuttleDetails: String?
+    var state: String?
+    var unit: String?
+    var zipcode: String?
+    
+    // TODO: association for rapids
+    //    var rapids: NSSet?
+    
+    var putIn: CLLocation? {
+        get {
+            guard let lat = putInLat, let lon = putInLon else {
+                return nil
+            }
+            
+            return .init(latitude: lat, longitude: lon)
+        }
+        
+        set {
+            putInLat = newValue?.coordinate.latitude
+            putInLon = newValue?.coordinate.longitude
+        }
     }
-
-    @NSManaged public var altname: String?
-    @NSManaged public var avgGradient: Int16
-    @NSManaged public var maxGradient: Int16
-    @NSManaged public var classRating: String?
-    @NSManaged public var condition: String?
-    @NSManaged public var county: String?
-    @NSManaged public var currentGageReading: String?
-    @NSManaged public var delta: String?
-    @NSManaged public var detailUpdated: Date?
-    @NSManaged public var difficulty: String?
-    @NSManaged public var difficulty1: Bool
-    @NSManaged public var difficulty2: Bool
-    @NSManaged public var difficulty3: Bool
-    @NSManaged public var difficulty4: Bool
-    @NSManaged public var difficulty5: Bool
-    @NSManaged public var distance: Double
-    @NSManaged public var favorite: Bool
-    @NSManaged public var gageId: Int32
-    @NSManaged public var gageMax: String?
-    @NSManaged public var gageMetric: Int16
-    @NSManaged public var gageMin: String?
-    @NSManaged public var gageName: String?    
-    @NSManaged public var gageUpdated: Date?
-    @NSManaged public var id: Int
-    @NSManaged public var lastGageReading: String?
-    @NSManaged public var length: String?
-    @NSManaged public var longDescription: String?
-    @NSManaged public var name: String?
-    @NSManaged public var photoId: Int32
-    @NSManaged public var putInLat: String?
-    @NSManaged public var putInLon: String?
-    @NSManaged public var rc: String?
-    @NSManaged public var river: String?
-    @NSManaged public var section: String?
-    @NSManaged public var shuttleDetails: String?
-    @NSManaged public var sortName: String?
-    @NSManaged public var state: String?
-    @NSManaged public var takeOutLat: String?
-    @NSManaged public var takeOutLon: String?
-    @NSManaged public var unit: String?
-    @NSManaged public var zipcode: String?
-    @NSManaged public var rapids: NSSet?
-
+    
+    var takeOut: CLLocation? {
+        get {
+            guard let lat = takeOutLat, let lon = takeOutLon else {
+                return nil
+            }
+            
+            return .init(latitude: lat, longitude: lon)
+        }
+        
+        set {
+            takeOutLat = newValue?.coordinate.latitude
+            takeOutLon = newValue?.coordinate.longitude
+        }
+    }
 }
 
-// MARK: Generated accessors for rapids
-extension Reach {
+extension Reach: TableRecord, FetchableRecord, PersistableRecord {
+    enum Columns {
+        static let id = Column(CodingKeys.id)
+        static let createdAt = Column(CodingKeys.createdAt)
+        static let altname = Column(CodingKeys.altname)
+        static let avgGradient = Column(CodingKeys.avgGradient)
+        static let maxGradient = Column(CodingKeys.maxGradient)
+        static let condition = Column(CodingKeys.condition)
+        static let county = Column(CodingKeys.county)
+        static let currentGageReading = Column(CodingKeys.currentGageReading)
+        static let delta = Column(CodingKeys.delta)
+        static let description = Column(CodingKeys.description)
+        static let detailUpdated = Column(CodingKeys.detailUpdated)
+        static let classRating = Column(CodingKeys.classRating)
+        static let isClass1 = Column(CodingKeys.isClass1)
+        static let isClass2 = Column(CodingKeys.isClass2)
+        static let isClass3 = Column(CodingKeys.isClass3)
+        static let isClass4 = Column(CodingKeys.isClass4)
+        static let isClass5 = Column(CodingKeys.isClass5)
+        static let favorite = Column(CodingKeys.favorite)
+        static let gageId = Column(CodingKeys.gageId)
+        static let gageMax = Column(CodingKeys.gageMax)
+        static let gageMetric = Column(CodingKeys.gageMetric)
+        static let gageMin = Column(CodingKeys.gageMin)
+        static let gageUpdated = Column(CodingKeys.gageUpdated)
+        static let lastGageReading = Column(CodingKeys.lastGageReading)
+        static let length = Column(CodingKeys.length)
+        static let name = Column(CodingKeys.name)
+        static let photoId = Column(CodingKeys.photoId)
+        static let putInLat = Column(CodingKeys.putInLat)
+        static let putInLon = Column(CodingKeys.putInLon)
+        static let takeOutLat = Column(CodingKeys.takeOutLat)
+        static let takeOutLon = Column(CodingKeys.takeOutLon)
+        static let rc = Column(CodingKeys.rc)
+        static let river = Column(CodingKeys.river)
+        static let section = Column(CodingKeys.section)
+        static let shuttleDetails = Column(CodingKeys.shuttleDetails)
+        static let state = Column(CodingKeys.state)
+        static let unit = Column(CodingKeys.unit)
+        static let zipcode = Column(CodingKeys.zipcode)
+    }
+}
 
-    @objc(addRapidsObject:)
-    @NSManaged public func addToRapids(_ value: Rapid)
-
-    @objc(removeRapidsObject:)
-    @NSManaged public func removeFromRapids(_ value: Rapid)
-
-    @objc(addRapids:)
-    @NSManaged public func addToRapids(_ values: NSSet)
-
-    @objc(removeRapids:)
-    @NSManaged public func removeFromRapids(_ values: NSSet)
-
+extension DerivableRequest where RowDecoder == Reach {
+    func isFavorite() -> Self {
+        filter(Reach.Columns.favorite == true)
+    }
+    
+    func search(_ query: String?) -> Self {
+        guard let query = query, !query.isEmpty else {
+            return self
+        }
+        
+        let like = "%\(query)%"
+        
+        return filter(literal: "name LIKE \(like) OR section LIKE \(like)")
+    }
 }

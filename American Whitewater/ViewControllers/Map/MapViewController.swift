@@ -1,6 +1,7 @@
 import UIKit
 import MapKit
 import CoreData
+import GRDB
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
@@ -10,9 +11,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var legendContainerView: UIView!
     @IBOutlet weak var mapTypeButton: UIButton!
     
-    private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    private var fetchedResultsController: NSFetchedResultsController<Reach>?
-    private lazy var reachUpdater = ReachUpdater(managedObjectContext: managedObjectContext)
+    private lazy var reachUpdater = ReachUpdater()
     
     private var filters: Filters { DefaultsManager.shared.filters }
     
@@ -20,6 +19,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     var lastLocation: CLLocation? = nil
     
     private var notificationObservers = [NSObjectProtocol]()
+    
+    private var reaches = [Reach]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +35,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         locationManager.delegate = self
         
         updateFilterButton()
-        fetchReachesFromCoreData()
+        beginObserving()
         
         notificationObservers.append(
             NotificationCenter.default.addObserver(
@@ -42,7 +43,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
-                self?.fetchReachesFromCoreData()
+                self?.beginObserving()
             }
         )
     }
@@ -79,6 +80,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         self.lastLocation = newLocation
     }
     
+//    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+//        beginObserving()
+//    }
+    
     func updateFilterButton() {
         navigationItem.rightBarButtonItem?.title = ""
 
@@ -86,41 +91,47 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: imageName), for: .normal, barMetrics: .default)
     }
     
-    func fetchReachesFromCoreData() {
-        print("Fetching reaches")
-        let request = Reach.reachFetchRequest()
-        
-        // Map view always sorts by distance
-        request.sortDescriptors = Filters.sortByDistanceAndName
-        
-        // FIXME: this filters with the runnableFilter, which isn't settable from the map view. Is that wrong to do? Could resolve by providing a way to set, or by not applying that filter here.
-        request.predicate = filters.combinedPredicate()
-        
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
-                                                      managedObjectContext: managedObjectContext,
-                                                        sectionNameKeyPath: nil, cacheName: nil)
-        
-        fetchedResultsController?.delegate = self
-        
-        do {
-            try fetchedResultsController?.performFetch()
-        } catch {
-            let error = error as NSError
-            print("Error fetching reaches for map: \(error), \(error.userInfo)")
-            self.showToast(message: "Connection Error: " + error.userInfo.description)
-        }
-        
-        // add the reaches from core data to the map
-        if let reaches = fetchedResultsController?.fetchedObjects {
-            mapView.removeAnnotations(mapView.annotations)
-            mapView.addAnnotations(reaches)
+    //
+    // MARK: - Observation
+    //
+    
+    private var observer: DatabaseCancellable? = nil
+    
+    func beginObserving() {
+        let obs = ValueObservation.tracking { db in
+            try Reach
+                .all()
+//                .geoboxed(rect: self.mapView.visibleMapRect)
             
-            // Zoom to updated coordinates
-            let cleanedAnnotations = mapView.annotations.filter { $0.coordinate.latitude > 0 && $0.coordinate.longitude > -170 }
-            if cleanedAnnotations.count > 0 {
-                mapView.fitAll(in: cleanedAnnotations, andShow: true)
-            }
+            // TODO: respect other filters
+            
+                .fetchAll(db)
         }
+        
+        observer = obs.start(
+            in: DB.shared.pool,
+            onError: { error in
+                let error = error as NSError
+                print("Error fetching reaches for map: \(error), \(error.userInfo)")
+                self.showToast(message: "Connection Error: " + error.userInfo.description)
+            }, onChange: { reaches in
+                self.reaches = reaches
+                self.updateAnnotations()
+            })
+    }
+    
+    func updateAnnotations() {
+        mapView.removeAnnotations(mapView.annotations)
+        
+        let annotations = reaches.map { ReachAnnotation($0) }
+        mapView.addAnnotations(annotations)
+        
+//        // Zoom to updated coordinates
+//        let cleanedAnnotations = mapView.annotations.filter { $0.coordinate.latitude > 0 && $0.coordinate.longitude > -170 }
+//        if cleanedAnnotations.count > 0 {
+//            mapView.fitAll(in: cleanedAnnotations, andShow: true)
+//        }
+
     }
 
     func mapViewChangedFromUserInteraction() -> Bool {
@@ -136,7 +147,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? Reach else { return nil }
+        guard let annotation = annotation as? ReachAnnotation else { return nil }
                 
         var view:MKAnnotationView
         
@@ -162,7 +173,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     // User Clicked on the info of a callout
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
-        let selectedReach = view.annotation as! Reach
+        let selectedReach = view.annotation as! ReachAnnotation
         
         performSegue(withIdentifier: Segue.runDetailMap.rawValue, sender: selectedReach)
         
@@ -213,38 +224,53 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 }
 
-extension MapViewController: NSFetchedResultsControllerDelegate {
-
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-
-        guard let reach = anObject as? Reach, let mapView = mapView else { return }
-
-        switch type {
-            case .insert:
-                mapView.addAnnotation(reach)
-            case .delete:
-                mapView.removeAnnotation(reach)
-            case .update:
-                mapView.removeAnnotation(reach)
-                mapView.addAnnotation(reach)
-            case .move:
-                mapView.removeAnnotation(reach)
-                mapView.addAnnotation(reach)
-                print("reach moved: \(reach.name ?? "unknown reach")) - \(reach.section ?? "unknown section")")
-            default:
-                break
-        }
-    }
-}
+//extension MapViewController: NSFetchedResultsControllerDelegate {
+//
+//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+//                    didChange anObject: Any,
+//                    at indexPath: IndexPath?,
+//                    for type: NSFetchedResultsChangeType,
+//                    newIndexPath: IndexPath?) {
+//
+//        guard let reach = anObject as? Reach, let mapView = mapView else { return }
+//
+//        switch type {
+//            case .insert:
+//                mapView.addAnnotation(reach)
+//            case .delete:
+//                mapView.removeAnnotation(reach)
+//            case .update:
+//                mapView.removeAnnotation(reach)
+//                mapView.addAnnotation(reach)
+//            case .move:
+//                mapView.removeAnnotation(reach)
+//                mapView.addAnnotation(reach)
+//                print("reach moved: \(reach.name ?? "unknown reach")) - \(reach.section ?? "unknown section")")
+//            default:
+//                break
+//        }
+//    }
+//}
 
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse || status == .authorizedAlways {
             showUserLocation()
         }
+    }
+}
+
+extension DerivableRequest where RowDecoder == Reach {
+    func geoboxed(rect: MKMapRect) -> Self {
+        let origin = rect.origin.coordinate
+        let maxPt = MKMapPoint(x: rect.maxX, y: rect.maxY).coordinate
+        
+        // TODO: could check putIn OR takeOut in box
+        return filter(
+            Reach.Columns.putInLat >= min(origin.latitude, maxPt.latitude) &&
+            Reach.Columns.putInLon >= min(origin.longitude, maxPt.longitude) &&
+            Reach.Columns.putInLat <= max(origin.latitude, maxPt.latitude) &&
+            Reach.Columns.putInLon >= max(origin.longitude, maxPt.longitude)
+        )
     }
 }

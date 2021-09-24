@@ -24,8 +24,8 @@ class RunRapidDetailsTableViewController: UITableViewController {
         
         if let selectedRapid = selectedRapid {
             rapidNameLabel?.text = selectedRapid.name ?? "Unnamed Rapid"
-            rapidDescriptionLabel?.text = stripHTML(string: selectedRapid.rapidDescription ?? "No Description Available")
-            rapidClassLabel?.text = selectedRapid.difficulty ?? "N/A"
+            rapidDescriptionLabel?.text = stripHTML(string: selectedRapid.description ?? "No Description Available")
+            rapidClassLabel?.text = selectedRapid.classRating ?? "N/A"
             rapidPlaySpotLabel?.text = selectedRapid.isPlaySpot ? "Yes" : "No"
         }
         

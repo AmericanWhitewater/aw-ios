@@ -38,7 +38,8 @@ class NewsTableViewController: UITableViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        
+        // Clearing the observer reference stops db observation:
+        articleObserver = nil
     }
     
     /// Opens the donate view in Safari per Apple's guidelines

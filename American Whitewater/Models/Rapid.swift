@@ -1,23 +1,62 @@
 import Foundation
-import CoreData
+import GRDB
+import CoreLocation
 
-public class Rapid: NSManagedObject {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Rapid> {
-        return NSFetchRequest<Rapid>(entityName: "Rapid")
+struct Rapid: Identifiable, Codable {
+    var id: Int
+    var reachId: Int
+    var name: String?
+    var description: String?
+    var classRating: String?
+    var isHazard: Bool
+    var isPlaySpot: Bool
+    var isPortage: Bool
+    var isPutIn: Bool
+    var isTakeOut: Bool
+    var isWaterfall: Bool
+    var lat: Double?
+    var lon: Double?
+    
+    var location: CLLocation? {
+        get {
+            guard
+                let lat = lat,
+                let lon = lon
+            else {
+                return nil
+            }
+            return .init(latitude: lat, longitude: lon)
+        }
+        set {
+            lat = newValue?.coordinate.latitude
+            lon = newValue?.coordinate.longitude
+        }
     }
+    
+    // TODO: Association for reach
+//    @NSManaged public var reach: Reach?
+}
 
-    @NSManaged public var difficulty: String?
-    @NSManaged public var id: Int32
-    @NSManaged public var isHazard: Bool
-    @NSManaged public var isPlaySpot: Bool
-    @NSManaged public var isPortage: Bool
-    @NSManaged public var isPutIn: Bool
-    @NSManaged public var isTakeOut: Bool
-    @NSManaged public var isWaterfall: Bool
-    @NSManaged public var lat: Double
-    @NSManaged public var lon: Double
-    @NSManaged public var name: String?
-    @NSManaged public var rapidDescription: String?
-    @NSManaged public var reach: Reach?
+extension Rapid: TableRecord, FetchableRecord, PersistableRecord {
+    static let reach = belongsTo(Reach.self)
+    
+    enum Columns {
+        static let id = Column(CodingKeys.id)
+        static let reachId = Column(CodingKeys.reachId)
+        static let name = Column(CodingKeys.name)
+        static let description = Column(CodingKeys.description)
+        static let classRating = Column(CodingKeys.classRating)
+        static let isHazard = Column(CodingKeys.isHazard)
+        static let isPlaySpot = Column(CodingKeys.isPlaySpot)
+        static let isPortage = Column(CodingKeys.isPortage)
+        static let isPutIn = Column(CodingKeys.isPutIn)
+        static let isTakeOut = Column(CodingKeys.isTakeOut)
+        static let isWaterfall = Column(CodingKeys.isWaterfall)
+        static let lat = Column(CodingKeys.lat)
+        static let lon = Column(CodingKeys.lon)
+    }
+}
 
+extension Reach {
+    static let rapids = hasMany(Rapid.self)
 }

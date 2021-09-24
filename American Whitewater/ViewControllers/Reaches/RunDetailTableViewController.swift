@@ -1,11 +1,11 @@
 import UIKit
 import CoreData
+import GRDB
 
 class RunDetailTableViewController: UITableViewController {
     var selectedRun:Reach?
     
-    private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    private lazy var reachUpdater = ReachUpdater(managedObjectContext: managedObjectContext)
+    private lazy var reachUpdater = ReachUpdater()
     
     @IBOutlet weak var favoriteButton: UIBarButtonItem!
     @IBOutlet weak var runNameLabel: UILabel!
@@ -57,20 +57,18 @@ class RunDetailTableViewController: UITableViewController {
         viewSegmentControl.selectedSegmentIndex = 0
         
         if let selectedRun = selectedRun {
-            updateDetailDisplay(selectedRun)
+            self.beginObserving()
 
             reachUpdater.updateReachDetail(reachId: selectedRun.id) { error in
                 if let error = error {
                     // Only show an error state if there aren't details stored locally
-                    if selectedRun.longDescription == nil || selectedRun.longDescription?.isEmpty == true {
+                    if selectedRun.description == nil || selectedRun.description?.isEmpty == true {
                         self.isShowingError = true
                     }
 
                     print("Error: \(error.localizedDescription)")
                     return
                 }
-                
-                self.fetchDetailsFromCoreData()
             }
         }
         
@@ -80,9 +78,16 @@ class RunDetailTableViewController: UITableViewController {
         checkBannerImages()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        // Stop observing changes
+        observer = nil
+    }
+    
     
     @IBAction func tapForMoreButtonPressed(_ sender: Any) {
-        guard let longDescription = selectedRun?.longDescription else {
+        guard let longDescription = selectedRun?.description else {
             return
         }
         
@@ -185,20 +190,30 @@ class RunDetailTableViewController: UITableViewController {
         self.performSegue(withIdentifier: Segue.gallerySeg.rawValue, sender: nil)
     }
     
-    func fetchDetailsFromCoreData() {
+    //
+    // MARK: - Data observation
+    //
+    
+    private var observer: DatabaseCancellable? = nil
+    
+    func beginObserving() {
         guard let selectedRun = self.selectedRun else { return }
         
-        let request = Reach.reachFetchRequest() as NSFetchRequest<Reach>
-        request.predicate = NSPredicate(format: "id == %i", selectedRun.id)
-        
-        guard let result = try? managedObjectContext.fetch(request), let fetchedReach = result.first else {
-            print("Unable to find matching details in db")
-            return
-        }
-        
-        self.selectedRun = fetchedReach
-        
-        updateDetailDisplay(fetchedReach)
+        observer = ValueObservation
+            .tracking(Reach.filter(id: selectedRun.id).fetchOne)
+            .start(
+                in: DB.shared.pool,
+                onError: { error in
+                    print("Unable to find matching details in db: \(error.localizedDescription)")
+                }, onChange: { reach in
+                    guard let reach = reach else {
+                        return
+                    }
+                    
+                    self.selectedRun = reach
+                    self.updateDetailDisplay(reach)
+                }
+            )
     }
     
     private func updateDetailDisplay(_ reach: Reach) {
@@ -213,7 +228,7 @@ class RunDetailTableViewController: UITableViewController {
         
         runUnitsLabel.text = selectedRun?.unit ?? ""
         runGaugeDeltaLabel.text = selectedRun?.delta ?? ""
-        runClassLabel.text = selectedRun?.difficulty ?? "n/a"
+        runClassLabel.text = selectedRun?.classRating ?? "n/a"
         runLevelLabel.text = selectedRun?.currentGageReading ?? "n/a"
         
         let color = reach.runnabilityColor
@@ -222,10 +237,10 @@ class RunDetailTableViewController: UITableViewController {
     
         seeGaugeInfoCell.isHidden = selectedRun?.condition == nil || selectedRun?.currentGageReading == nil
         
-        runLengthLabel.text = reach.length ?? "n/a"
+        runLengthLabel.text = reach.lengthFormatted ?? "n/a"
         runGradientLabel.text = reach.avgGradient == 0 ? "\(reach.avgGradient) fpm" : "n/a fpm"
         
-        if let details = reach.longDescription {
+        if let details = reach.description {
             let maxCount = min(details.count, detailTextMaxCount)
             let truncatedDetails = String(details.prefix(maxCount))
             runDetailInfoTextView.set(html: truncatedDetails)
@@ -289,14 +304,22 @@ class RunDetailTableViewController: UITableViewController {
     }
     
     @IBAction func didTapFavoriteButton() {
-        guard let reach = selectedRun else {
+        guard let id = selectedRun?.id else {
             return
         }
         
-        reach.favorite.toggle()
-        try? managedObjectContext.save()
-        
-        favoriteButton.image = favoriteImage(selected: reach.favorite)
+        do {
+            try DB.shared.write { db in
+                guard var reach = try Reach.fetchOne(db, id: id) else {
+                    return
+                }
+                
+                reach.favorite.toggle()
+                try reach.save(db)
+            }
+        } catch {
+            showToast(message: "Couldn't update favorite")
+        }
     }
     
     private func favoriteImage(selected: Bool) -> UIImage {

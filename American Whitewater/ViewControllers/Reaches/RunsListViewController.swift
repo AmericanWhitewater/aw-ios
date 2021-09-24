@@ -4,11 +4,10 @@ import OneSignal
 import SwiftyJSON
 import CoreLocation
 import KeychainSwift
+import GRDB
 
 class RunsListViewController: UIViewController {
-    private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    private var fetchedResultsController: NSFetchedResultsController<Reach>?
-    private lazy var reachUpdater = ReachUpdater(managedObjectContext: managedObjectContext)
+    private lazy var reachUpdater = ReachUpdater()
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var runnableFilterContainerView: UIView!
@@ -16,6 +15,7 @@ class RunsListViewController: UIViewController {
     let searchBar = UISearchBar()
     let refreshControl = UIRefreshControl()
     
+    private var reaches = [Reach]()
     private var filters: Filters { DefaultsManager.shared.filters }
     
     private let lastUpdatedDateFormatter = DateFormatter(dateFormat: "MMM d, h:mm a")
@@ -51,11 +51,7 @@ class RunsListViewController: UIViewController {
                     
                     DefaultsManager.shared.completedFirstRun = true
                     
-                    do {
-                        try self.updateFetchedResultsController()
-                    } catch {
-                        print("Error in updateFetchedResultsController: \(error)")
-                    }
+                    self.beginObserving()
                 }
             )
         }
@@ -64,7 +60,7 @@ class RunsListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        updateData();
+        updateData()
         
         showOnboardingIfNeeded()
 
@@ -82,8 +78,7 @@ class RunsListViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        fetchedResultsController?.delegate = nil
-        fetchedResultsController = nil
+        
     }
     
     func showOnboardingIfNeeded() {
@@ -128,11 +123,7 @@ class RunsListViewController: UIViewController {
     // - TableView.reloadData() will be called automatically
     // - LastUpdate will be updated automatically
     func updateData(fromNetwork: Bool = false) {
-        do {
-            try updateFetchedResultsController()
-        } catch {
-            print("Error in updateFetchedResultsController: \(error)")
-        }
+        beginObserving()
         
         // Update from network if requested or if data is more than 1 hour old
         guard fromNetwork || isDataStale else {
@@ -169,7 +160,7 @@ class RunsListViewController: UIViewController {
                 refreshByRegion(completion: onCompletion)
             }
         } else {
-            guard let reaches = fetchedResultsController?.fetchedObjects else {
+            guard !reaches.isEmpty else {
                 // FIXME: should this indicate failure?
                 // By indicating success, lastUpdated gets set
                 onCompletion(nil)
@@ -180,56 +171,51 @@ class RunsListViewController: UIViewController {
         }
     }
     
-    private var searchPredicate: NSPredicate? {
-        guard let searchText = searchBar.searchTextField.text, searchText.count > 0 else { return nil }
-        
-        let searchName = NSPredicate(format: "name contains[cd] %@", searchText)
-        let searchSection = NSPredicate(format: "section contains[cd] %@", searchText)
-        
-        return NSCompoundPredicate(orPredicateWithSubpredicates: [searchName, searchSection])
-    }
+    private var searchText: String? { searchBar.searchTextField.text }
     
-    /// This is the combination of the filter's predicate and the current search query (which Filters doesn't know about)
-    private var combinedPredicateWithSearch: NSPredicate {
-        NSCompoundPredicate(andPredicateWithSubpredicates: [
-            filters.combinedPredicate(),
-            searchPredicate
-        ].compactMap({$0}))
-    }
+//    /// This is the combination of the filter's predicate and the current search query (which Filters doesn't know about)
+//    private var combinedPredicateWithSearch: NSPredicate {
+//        NSCompoundPredicate(andPredicateWithSubpredicates: [
+//            filters.combinedPredicate(),
+//            searchPredicate
+//        ].compactMap({$0}))
+//    }
     
     /// The count of all reaches cached locally.
     /// Used to ask, essentially, "do we have any data?" below when deciding whether to show the loading or empty state for no results
     private var totalReachCount: Int {
-        let count = try? managedObjectContext.count(for: Reach.fetchRequest())
-        return count ?? 0
+        (try? DB.shared.read({ try Reach.fetchCount($0) })) ?? 0
     }
     
-    func updateFetchedResultsController() throws {
-        print("Fetching rivers from core data")
-        
-        if let fetchedResultsController = fetchedResultsController {
-            // Update sort descriptors and predicate if the controller already exists
-            fetchedResultsController.fetchRequest.sortDescriptors = filters.sortDescriptors
-            fetchedResultsController.fetchRequest.predicate = combinedPredicateWithSearch
-        } else {
-            // Create the fetched results controller if it doesn't exist
-            let request = Reach.reachFetchRequest()
-            request.sortDescriptors = filters.sortDescriptors
-            request.predicate = combinedPredicateWithSearch
-            fetchedResultsController = NSFetchedResultsController(
-                fetchRequest: request,
-                managedObjectContext: managedObjectContext,
-                sectionNameKeyPath: nil,
-                cacheName: nil
-            )
-            fetchedResultsController?.delegate = self
+    
+    //
+    // MARK: - Observation
+    //
+    
+    private var observer: DatabaseCancellable? = nil
+    
+    func beginObserving() {
+        let obs = ValueObservation.tracking {
+            try Reach
+                .all()
+                .filter(by: self.filters)
+                .search(self.searchText)
+            
+            // TODO: order by distance when appropriate
+                .order(Reach.Columns.name.asc)
+                .fetchAll($0)
         }
         
-        try fetchedResultsController?.performFetch()
-        
-        // Still have to update the tableView after the initial fetch
-        // (the delegate will handle further updates)
-        tableView.reloadData()
+        observer = obs.start(
+            in: DB.shared.pool,
+            onError: { error in
+                // TODO: handle this error
+            },
+            onChange: { reaches in
+                self.reaches = reaches
+                self.tableView.reloadData()
+            }
+        )
     }
     
     func refreshByRegion(completion: @escaping (Error?) -> Void) {
@@ -275,22 +261,19 @@ class RunsListViewController: UIViewController {
             print("User accepted notifications: \(accepted)")
         })
         
-        
-        guard let reach = fetchedResultsController?.object(at: IndexPath(row: button.tag, section: 0)) else {
-            return
-        }
-        
-        reach.favorite.toggle()
-        
         do {
-            try managedObjectContext.save()
+            try DB.shared.write { db in
+                guard var reach = try Reach.fetchOne(db, id: reaches[button.tag].id) else {
+                    return
+                }
+                
+                reach.favorite.toggle()
+                try reach.save(db)
+            }
         } catch {
-            print("Unable to save context after save button pressed")
+            print("Unable to favorite: \(error.localizedDescription)")
         }
-        
-        self.tableView.reloadData()
     }
-    
     
     // MARK: - Navigation
 
@@ -325,7 +308,7 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // AWTODO: when 0 items exist we return 1 to show placeholder values
         // i.e. Check your filters before searching
-        let count = fetchedResultsController?.fetchedObjects?.count ?? 0
+        let count = reaches.count
         if section == 0 {
             return count
         } else {
@@ -338,7 +321,7 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
         // handle the case when there are no fetched objects
         if
             indexPath.section == 1,
-            (fetchedResultsController?.fetchedObjects?.count ?? 0) == 0
+            reaches.count == 0
         {
             if totalReachCount == 0 {
                 // The loading state.
@@ -356,23 +339,19 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
                 return cell
             }
             
-            
             let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingRiversCell", for: indexPath) as! LoadingRiversCell
             cell.activityIndicator.startAnimating()
             return cell
-            
         } else {
-        
             let cell = tableView.dequeueReusableCell(withIdentifier: "RunCell", for: indexPath) as! RunsListTableViewCell
-
-            guard let reach = fetchedResultsController?.object(at: indexPath) else { return cell }
+            let reach = reaches[indexPath.row]
 
             cell.runTitleLabel.text = reach.name ?? "Unknown"
             cell.runSectionLabel.text = reach.section ?? "Unknown Section"
             
             var level = reach.currentGageReading ?? "n/a"
             level = level.trimmingCharacters(in: .whitespacesAndNewlines)
-            cell.runLevelAndClassLabel.text = "Level: \(level)\(reach.unit ?? "") Class: \(reach.difficulty ?? "n/a")"
+            cell.runLevelAndClassLabel.text = "Level: \(level)\(reach.unit ?? "") Class: \(reach.classRating ?? "n/a")"
             
             // set highlight color
             let color = reach.runnabilityColor
@@ -396,14 +375,16 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
             // show distance to the river if we have it
             // this 999999 value is an ugly hack for invalid distance values to prevent
             // them from showing up first in the listing
-            cell.runDistanceAwayLabel.isHidden = true
-            if reach.distance == 999999 || reach.distance == 0.0 {
-                cell.runDistanceAwayLabel.text = "n/a miles"
-                cell.runDistanceAwayLabel.isHidden = true
-            } else if reach.distance > 0.0 {
-                cell.runDistanceAwayLabel.text = String(format: "%.1f miles", reach.distance)
-                cell.runDistanceAwayLabel.isHidden = true
-            }
+            
+            // TODO: distance label
+//            cell.runDistanceAwayLabel.isHidden = true
+//            if reach.distance == 999999 || reach.distance == 0.0 {
+//                cell.runDistanceAwayLabel.text = "n/a miles"
+//                cell.runDistanceAwayLabel.isHidden = true
+//            } else if reach.distance > 0.0 {
+//                cell.runDistanceAwayLabel.text = String(format: "%.1f miles", reach.distance)
+//                cell.runDistanceAwayLabel.isHidden = true
+//            }
                 
             // set index on button for later lookup
             cell.runFavoritesButton.tag = indexPath.row
@@ -423,11 +404,9 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let selectedRun = fetchedResultsController?.object(at: indexPath) else {
-            return
-        }
+        let reach = reaches[indexPath.row]
         
-        performSegue(withIdentifier: Segue.runDetail.rawValue, sender: selectedRun)
+        performSegue(withIdentifier: Segue.runDetail.rawValue, sender: reach)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
