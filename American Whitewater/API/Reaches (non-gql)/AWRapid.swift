@@ -10,6 +10,7 @@ extension AWApiReachHelper {
         let difficulty: String?
         let rapidLatitude: String?
         let rapidLongitude: String?
+        let photoId: String?
         var isHazard = false
         var isPlaySpot = false
         var isPortage = false
@@ -23,6 +24,14 @@ extension AWApiReachHelper {
             description = json["description"].string
             rapidLatitude = json["rlat"].string
             rapidLongitude = json["rlon"].string
+            
+            // Often the API appears to return "0" to indicate no photo...
+            if let photoId = json["photo_id"].string, photoId != "0" {
+                self.photoId = photoId
+            } else {
+                self.photoId = nil
+            }
+            
             difficulty = json["difficulty"].string
             
             isHazard = (json["ishazard"].int ?? 0) == 1 ? true : false

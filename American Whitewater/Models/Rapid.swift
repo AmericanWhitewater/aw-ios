@@ -8,6 +8,7 @@ struct Rapid: Identifiable, Codable {
     var name: String?
     var description: String?
     var classRating: String?
+    var photoId: String?
     var isHazard: Bool
     var isPlaySpot: Bool
     var isPortage: Bool
@@ -46,6 +47,7 @@ extension Rapid: TableRecord, FetchableRecord, PersistableRecord {
         static let name = Column(CodingKeys.name)
         static let description = Column(CodingKeys.description)
         static let classRating = Column(CodingKeys.classRating)
+        static let photoId = Column(CodingKeys.photoId)
         static let isHazard = Column(CodingKeys.isHazard)
         static let isPlaySpot = Column(CodingKeys.isPlaySpot)
         static let isPortage = Column(CodingKeys.isPortage)

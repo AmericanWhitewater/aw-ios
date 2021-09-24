@@ -136,6 +136,7 @@ class DB {
                 t.column("name", .text) // String?
                 t.column("description", .text) // String?
                 t.column("classRating", .text) // String?
+                t.column("photoId", .text) // String?
                 t.column("isHazard", .boolean) // Bool
                 t.column("isPlaySpot", .boolean) // Bool
                 t.column("isPortage", .boolean) // Bool

@@ -187,6 +187,7 @@ class ReachUpdater {
             name: awRapid.name,
             description: awRapid.description,
             classRating: awRapid.difficulty,
+            photoId: awRapid.photoId,
             isHazard: awRapid.isHazard,
             isPlaySpot: awRapid.isPlaySpot,
             isPortage: awRapid.isPortage,
