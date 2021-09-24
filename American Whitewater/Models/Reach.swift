@@ -135,3 +135,20 @@ extension DerivableRequest where RowDecoder == Reach {
         return filter(literal: "name LIKE \(like) OR section LIKE \(like)")
     }
 }
+
+extension Array where Element == Reach {
+    func sortedByDistance(from location: CLLocation?) -> [Reach] {
+        guard let location = location else {
+            return self
+        }
+        
+        // Map to a tuple of (distance, reach)
+        return map {
+            ($0.putIn?.distance(from: location), $0)
+        }
+        // Sort by distance asc, with nils last
+        .sorted { ($0.0 ?? 99999) <= ($1.0 ?? 99999) }
+        // Extract reach for return
+        .map(\.1)
+    }
+}

@@ -1,5 +1,7 @@
 import Foundation
 import GRDB
+import CoreLocation
+import MapKit
 
 enum FilterType: String {
     case region
@@ -45,28 +47,13 @@ struct Filters: Equatable {
 // Custom requests to implement filters.
 // See https://github.com/groue/GRDB.swift/blob/master/Documentation/GoodPracticesForDesigningRecordTypes.md#define-record-requests
 extension DerivableRequest where RowDecoder == Reach {
-    func filter(by filters: Filters) -> Self {
+    func filter(by filters: Filters, from userLocation: CLLocationCoordinate2D? = nil) -> Self {
         self
             .difficultiesFilter(filters.classFilter)
             .runnableFilter(filters.runnableFilter)
-            .distanceFilter(filters.isDistance, filters.distanceFilter)
+            .distanceFilter(max: filters.isDistance ? filters.distanceFilter : nil, from: userLocation)
             .regionsFilter(filters.isRegion, filters.regionsFilter)
     }
-    
-    
-    // based on our filtering settings (distance, region, or class) we request Reaches that
-    // match these settings
-//    public func combinedPredicate() -> NSPredicate {
-//        let subPredicates = [
-//            difficultiesPredicate,
-//            runnablePredicate,
-//            distancePredicate,
-//            regionsPredicate
-//        ]
-//            .compactMap { $0 }
-//
-//        return NSCompoundPredicate(andPredicateWithSubpredicates: subPredicates)
-//    }
     
     private func runnableFilter(_ onlyRunnable: Bool) -> Self {
         if onlyRunnable {
@@ -101,21 +88,40 @@ extension DerivableRequest where RowDecoder == Reach {
         return filter(states.contains(Reach.Columns.state))
     }
     
-    private func distanceFilter(_ isDistance: Bool, _ distanceFilter: Double) -> Self {
+    /// Appproximate distance predicate: returns a predicate for reaches in a bounding box with sides roughly `distance` away from `coordinate`.
+    private func distanceFilter(max miles: Double?, from coordinate: CLLocationCoordinate2D?) -> Self {
         guard
-            isDistance,
-            distanceFilter > 0
+            let coordinate = coordinate,
+            let miles = miles
         else {
             return self
         }
         
-        // FIXME: put distance filter back using geobox
-        return self
-//        return [
-//            Reach.Columns.distance <= distanceFilter,
-//            Reach.Columns.distance != 0
-//        ]
-//            .joined(operator: .and)
+        let meters = Measurement(value: miles, unit: UnitLength.miles)
+            .converted(to: UnitLength.meters)
+            .value
+        
+        // Use MapKit to get a region thats 2x distance on each side, centered on location
+        // FIXME: What I'm doing here is not quite right: it doesn't handle crossing the prime meridian or wrapping over a pole. Should be mostly OK for spans of a few 100 miles in the continental US, but my experience has been that stuff like this tends to come back and bite you -- should revisit.
+        let region = MKCoordinateRegion(
+            center: coordinate,
+            latitudinalMeters: meters * 2,
+            longitudinalMeters: meters * 2
+        )
+        
+        // subtract to get bounding box
+        let minLat = coordinate.latitude - (region.span.latitudeDelta / 2)
+        let maxLat = coordinate.latitude + (region.span.latitudeDelta / 2)
+        let minLon = coordinate.longitude - (region.span.longitudeDelta / 2)
+        let maxLon = coordinate.longitude + (region.span.longitudeDelta / 2)
+                
+        // Check that put in is withing bounding box
+        return filter(
+            Reach.Columns.putInLat >= minLat &&
+            Reach.Columns.putInLon >= minLon &&
+            Reach.Columns.putInLat <= maxLat &&
+            Reach.Columns.putInLon <= maxLon
+        )
     }
     
     

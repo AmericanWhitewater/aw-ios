@@ -198,7 +198,7 @@ class RunsListViewController: UIViewController {
         let obs = ValueObservation.tracking {
             try Reach
                 .all()
-                .filter(by: self.filters)
+                .filter(by: self.filters, from: DefaultsManager.shared.coordinate)
                 .search(self.searchText)
             
             // TODO: order by distance when appropriate
@@ -212,7 +212,15 @@ class RunsListViewController: UIViewController {
                 // TODO: handle this error
             },
             onChange: { reaches in
-                self.reaches = reaches
+                // Sort by distance if using distance filter
+                // Since distance is no longer pre-baked, this sort needs to be done with the query results
+                if self.filters.isDistance {
+                    self.reaches = reaches
+                        .sortedByDistance(from: DefaultsManager.shared.location)
+                } else {
+                    self.reaches = reaches
+                }
+                
                 self.tableView.reloadData()
             }
         )
@@ -365,6 +373,7 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.runFavoritesButton.setImage(UIImage(named: "icon_favorite"), for: .normal)
             }
             
+            // FIXME: wat?
     // DEBUG ONLY! AWTODO Fix this to set alert image correctly
             if let name = reach.name, name.lowercased().contains("watauga") {
                 cell.runAlertsButton.setImage(UIImage(named: "alert-filled"), for: .normal)
@@ -372,20 +381,17 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.runAlertsButton.setImage(UIImage(named: "alert-empty"), for: .normal)
             }
             
-            // show distance to the river if we have it
-            // this 999999 value is an ugly hack for invalid distance values to prevent
-            // them from showing up first in the listing
-            
-            // TODO: distance label
-//            cell.runDistanceAwayLabel.isHidden = true
-//            if reach.distance == 999999 || reach.distance == 0.0 {
-//                cell.runDistanceAwayLabel.text = "n/a miles"
-//                cell.runDistanceAwayLabel.isHidden = true
-//            } else if reach.distance > 0.0 {
-//                cell.runDistanceAwayLabel.text = String(format: "%.1f miles", reach.distance)
-//                cell.runDistanceAwayLabel.isHidden = true
-//            }
+            if let distance = reach.putIn?.distance(from: DefaultsManager.shared.location) {
+                let miles = Measurement(value: distance, unit: UnitLength.meters)
+                    .converted(to: UnitLength.miles)
+                    .value
                 
+                cell.runDistanceAwayLabel.text = "\(Int(round(miles))) miles"
+                cell.runDistanceAwayLabel.isHidden = false
+            } else {
+                cell.runDistanceAwayLabel.isHidden = true
+            }
+
             // set index on button for later lookup
             cell.runFavoritesButton.tag = indexPath.row
             
