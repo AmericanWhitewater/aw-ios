@@ -20,4 +20,15 @@ extension Rapid {
             
         return subtitle
     }
+    
+    var photoUrl: URL? {
+        guard
+            let photoId = photoId,
+            let url = URL(string: "\(AWGC.AW_BASE_URL)/photos/archive/medium/\(photoId).jpg")
+        else {
+            return nil
+        }
+        
+        return url
+    }
 }

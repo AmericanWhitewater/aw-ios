@@ -4114,7 +4114,29 @@ Special thanks to the following people for making this app a reality:       
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Rapid Name" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="okS-X6-5hK">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YEx-NF-wHz">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="180" id="9vj-QR-tRh"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="YEx-NF-wHz" secondAttribute="bottom" id="DOX-mw-8GS"/>
+                                                <constraint firstItem="YEx-NF-wHz" firstAttribute="leading" secondItem="qeK-kC-hok" secondAttribute="leading" id="OQL-To-vep"/>
+                                                <constraint firstItem="YEx-NF-wHz" firstAttribute="top" secondItem="qeK-kC-hok" secondAttribute="top" id="nuz-82-13w"/>
+                                                <constraint firstAttribute="trailing" secondItem="YEx-NF-wHz" secondAttribute="trailing" id="s8I-n9-YhV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="59" id="s9y-xt-ihl">
+                                        <rect key="frame" x="0.0" y="94" width="375" height="59"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="s9y-xt-ihl" id="FMN-8S-SL2">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Rapid Name" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="l6d-Kf-bi9">
                                                     <rect key="frame" x="15" y="15" width="345" height="29"/>
                                                     <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="22"/>
                                                     <nil key="textColor"/>
@@ -4122,10 +4144,10 @@ Special thanks to the following people for making this app a reality:       
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="okS-X6-5hK" firstAttribute="top" secondItem="qeK-kC-hok" secondAttribute="top" constant="15" id="OUk-ol-7GX"/>
-                                                <constraint firstItem="okS-X6-5hK" firstAttribute="leading" secondItem="qeK-kC-hok" secondAttribute="leading" constant="15" id="ix4-Ud-CBC"/>
-                                                <constraint firstAttribute="trailing" secondItem="okS-X6-5hK" secondAttribute="trailing" constant="15" id="moB-xJ-50o"/>
-                                                <constraint firstAttribute="bottom" secondItem="okS-X6-5hK" secondAttribute="bottom" constant="15" id="r4b-qm-QYj"/>
+                                                <constraint firstItem="l6d-Kf-bi9" firstAttribute="top" secondItem="FMN-8S-SL2" secondAttribute="top" constant="15" id="4Du-2t-yJh"/>
+                                                <constraint firstAttribute="bottom" secondItem="l6d-Kf-bi9" secondAttribute="bottom" constant="15" id="AxN-cW-JgL"/>
+                                                <constraint firstAttribute="trailing" secondItem="l6d-Kf-bi9" secondAttribute="trailing" constant="15" id="XS6-1f-2LK"/>
+                                                <constraint firstItem="l6d-Kf-bi9" firstAttribute="leading" secondItem="FMN-8S-SL2" secondAttribute="leading" constant="15" id="o6a-F7-PSK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -4134,7 +4156,7 @@ Special thanks to the following people for making this app a reality:       
                             <tableViewSection id="Y6y-pr-0T5">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="95" id="tvw-07-Zcj">
-                                        <rect key="frame" x="0.0" y="130" width="375" height="95"/>
+                                        <rect key="frame" x="0.0" y="189" width="375" height="95"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tvw-07-Zcj" id="XBY-NQ-RPP">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
@@ -4176,7 +4198,7 @@ Special thanks to the following people for making this app a reality:       
                             <tableViewSection id="Myr-CQ-j0v">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="85" id="Fc0-nm-CXY">
-                                        <rect key="frame" x="0.0" y="261" width="375" height="85"/>
+                                        <rect key="frame" x="0.0" y="320" width="375" height="85"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Fc0-nm-CXY" id="HdG-qg-Vc7">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="85"/>
@@ -4242,9 +4264,10 @@ Special thanks to the following people for making this app a reality:       
                         <barButtonItem key="backBarButtonItem" title=" " id="rbA-oN-iSj"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="imageView" destination="YEx-NF-wHz" id="MmL-HR-2Dr"/>
                         <outlet property="rapidClassLabel" destination="Nhs-37-Cbx" id="JJo-P9-f6S"/>
                         <outlet property="rapidDescriptionLabel" destination="XDS-Uh-iVy" id="Aci-FW-olu"/>
-                        <outlet property="rapidNameLabel" destination="okS-X6-5hK" id="w0U-en-t5C"/>
+                        <outlet property="rapidNameLabel" destination="l6d-Kf-bi9" id="Mgk-DE-Kze"/>
                         <outlet property="rapidPlaySpotLabel" destination="S90-vh-ufA" id="gnY-aM-5Fj"/>
                         <outlet property="readAllButton" destination="xGn-Yl-t4E" id="CQ9-GD-IsW"/>
                     </connections>

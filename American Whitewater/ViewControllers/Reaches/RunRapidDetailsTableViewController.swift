@@ -4,6 +4,7 @@ import SwiftyJSON
 class RunRapidDetailsTableViewController: UITableViewController {
 
     
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var rapidNameLabel: UILabel!
     @IBOutlet weak var rapidDescriptionLabel: UILabel!
     @IBOutlet weak var rapidClassLabel: UILabel!
@@ -24,9 +25,21 @@ class RunRapidDetailsTableViewController: UITableViewController {
         
         if let selectedRapid = selectedRapid {
             rapidNameLabel?.text = selectedRapid.name ?? "Unnamed Rapid"
-            rapidDescriptionLabel?.text = stripHTML(string: selectedRapid.description ?? "No Description Available")
             rapidClassLabel?.text = selectedRapid.classRating ?? "N/A"
             rapidPlaySpotLabel?.text = selectedRapid.isPlaySpot ? "Yes" : "No"
+            
+            if let description = selectedRapid.description, !description.isEmpty {
+                rapidDescriptionLabel.text = stripHTML(string: selectedRapid.description!)
+            } else {
+                rapidDescriptionLabel.text = "No Description Available"
+                readAllButton.isHidden = true
+            }
+            
+            if let url = selectedRapid.photoUrl {
+                imageView.load(url: url)
+            } else {
+                imageView.isHidden = true
+            }
         }
         
         self.tableView.reloadData()
