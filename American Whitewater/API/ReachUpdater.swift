@@ -103,6 +103,7 @@ class ReachUpdater {
             let difficultyRange = DifficultyHelper.parseDifficulty(difficulty: newReach.classRating ?? existingReach?.classRating ?? "")
             
             // FIXME: what a mess, pull into funcs on model objects
+            // FIXME: and split into Reach/Details/Favorites?
             let reach = Reach(
                 id: id,
                 createdAt: Date(),
@@ -161,46 +162,36 @@ class ReachUpdater {
         reach.shuttleDetails = details.detailShuttleDescription
         reach.detailUpdated = Date()
         
-        // FIXME: doesn't look like this handles rapid deletion on the server
-        // TODO: rapid creation
-//        if let rapidsList = details.detailRapids {
-//            for rapid in rapidsList {
-//                createOrUpdateRapid(awRapid: rapid, reach: reach, context: context)
-//            }
-//        }
+        try reach.save(db)
+        
+        if let rapidsList = details.detailRapids {
+            // Remove existing rapids for reach -- this will keep server side deletions in sync
+            try Rapid.filter(Rapid.Columns.reachId == reach.id).deleteAll(db)
+            
+            // Re-add rapids
+            try rapidsList
+                .map { rapid(awRapid: $0, reach: reach) }
+                .forEach { try $0.save(db) }
+        }
     }
     
     // TODO: rapid creation
-    private func createOrUpdateRapid(awRapid: AWApiReachHelper.AWRapid, reach: Reach, database db: Database) {
-//        let predicate = NSPredicate(format: "id == %i", awRapid.rapidId)
-//        let request = Rapid.fetchRequest() as NSFetchRequest<Rapid>
-//        request.predicate = predicate
-//
-//        let rapid: Rapid
-//
-//        if let result = try? context.fetch(request), result.count > 0, let first = result.first {
-//            rapid = first
-//        } else {
-//            rapid = Rapid(context: context)
-//            rapid.id = Int32(awRapid.rapidId)
-//        }
-//
-//        if let lat = awRapid.rapidLatitude, let lon = awRapid.rapidLongitude, let latitude = Double(lat), let longitude = Double(lon) {
-//            rapid.lat = latitude
-//            rapid.lon = longitude
-//        }
-//
-//        rapid.rapidDescription = awRapid.description
-//        rapid.name = awRapid.name
-//        rapid.difficulty = awRapid.difficulty
-//        rapid.isHazard = awRapid.isHazard
-//        rapid.isPutIn = awRapid.isPutIn
-//        rapid.isPortage = awRapid.isPortage
-//        rapid.isTakeOut = awRapid.isTakeOut
-//        rapid.isPlaySpot = awRapid.isPlaySpot
-//        rapid.isWaterfall = awRapid.isWaterfall
-//
-//        rapid.reach = reach
+    private func rapid(awRapid: AWApiReachHelper.AWRapid, reach: Reach) -> Rapid {
+        Rapid(
+            id: awRapid.rapidId,
+            reachId: reach.id,
+            name: awRapid.name,
+            description: awRapid.description,
+            classRating: awRapid.difficulty,
+            isHazard: awRapid.isHazard,
+            isPlaySpot: awRapid.isPlaySpot,
+            isPortage: awRapid.isPortage,
+            isPutIn: awRapid.isPutIn,
+            isTakeOut: awRapid.isTakeOut,
+            isWaterfall: awRapid.isWaterfall,
+            lat: Double(awRapid.rapidLatitude ?? ""),
+            lon: Double(awRapid.rapidLongitude ?? "")
+        )
     }
     
     //
