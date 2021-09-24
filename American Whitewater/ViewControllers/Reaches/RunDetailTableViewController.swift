@@ -356,7 +356,7 @@ class RunDetailTableViewController: UITableViewController {
             gaugeVC?.selectedRun = selectedRun
         case Segue.reachMapEmbed.rawValue:
             let mapVC = segue.destination as? RunMapViewController
-            mapVC?.selectedRun = selectedRun
+            mapVC?.reachId = selectedRun?.id
         case Segue.riverAlertsSeg.rawValue:
             let alertsVC = segue.destination as? RunAlertsViewController
             alertsVC?.selectedRun = selectedRun

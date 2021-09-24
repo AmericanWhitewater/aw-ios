@@ -59,4 +59,8 @@ extension Rapid: TableRecord, FetchableRecord, PersistableRecord {
 
 extension Reach {
     static let rapids = hasMany(Rapid.self)
+    
+    var rapids: QueryInterfaceRequest<Rapid> {
+        request(for: Reach.rapids)
+    }
 }

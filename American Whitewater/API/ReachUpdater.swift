@@ -170,15 +170,19 @@ class ReachUpdater {
             
             // Re-add rapids
             try rapidsList
-                .map { rapid(awRapid: $0, reach: reach) }
+                .compactMap { rapid(awRapid: $0, reach: reach) }
                 .forEach { try $0.save(db) }
         }
     }
     
     // TODO: rapid creation
-    private func rapid(awRapid: AWApiReachHelper.AWRapid, reach: Reach) -> Rapid {
-        Rapid(
-            id: awRapid.rapidId,
+    private func rapid(awRapid: AWApiReachHelper.AWRapid, reach: Reach) -> Rapid? {
+        guard let id = awRapid.rapidId else {
+            return nil
+        }
+        
+        return Rapid(
+            id: id,
             reachId: reach.id,
             name: awRapid.name,
             description: awRapid.description,
@@ -189,9 +193,22 @@ class ReachUpdater {
             isPutIn: awRapid.isPutIn,
             isTakeOut: awRapid.isTakeOut,
             isWaterfall: awRapid.isWaterfall,
-            lat: Double(awRapid.rapidLatitude ?? ""),
-            lon: Double(awRapid.rapidLongitude ?? "")
+            lat: latOrLon(awRapid.rapidLatitude),
+            lon: latOrLon(awRapid.rapidLongitude)
         )
+    }
+    
+    /// Unwraps and parses a String? as Double, returning nil if it is 0 (which indicates no location in some responses)
+    private func latOrLon(_ val: String?) -> Double? {
+        guard
+            let val = val,
+            let d = Double(val),
+            d != 0.0
+        else {
+            return nil
+        }
+        
+        return d
     }
     
     //

@@ -1,9 +1,23 @@
-//
-//  Rapid+utilities.swift
-//  American Whitewater
-//
-//  Created by Phillip Kast on 9/24/21.
-//  Copyright © 2021 American Whitewater. All rights reserved.
-//
-
 import Foundation
+
+extension Rapid {
+    var subtitle: String {
+        var subtitle: String
+        
+        if let classRating = classRating, !classRating.isEmpty {
+            subtitle = "Class \(classRating): "
+        } else {
+            subtitle = ""
+        }
+        
+        if isHazard {
+            subtitle += "Hazard, Use Caution!"
+        } else if isPlaySpot {
+            subtitle += "Play Spot"
+        } else {
+            subtitle += "Rapid"
+        }
+            
+        return subtitle
+    }
+}

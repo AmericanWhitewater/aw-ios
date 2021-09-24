@@ -2,6 +2,7 @@ import UIKit
 import MapKit
 import CoreLocation
 import SwiftyJSON
+import GRDB
 
 class RunMapViewController: UIViewController, MKMapViewDelegate {
 
@@ -11,7 +12,14 @@ class RunMapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapLegendViewContainer: UIView!
     @IBOutlet weak var viewSegmentControl: UISegmentedControl!
     
-    var selectedRun: Reach?
+    /// The ID of the reach to display
+    var reachId: Int?
+    
+    /// The fetched reach, updated on change
+    private var reach: Reach?
+    
+    /// The fetched rapids, updated on change
+    private var rapids = [Rapid]()
     
     private let locationManager = CLLocationManager()
     
@@ -20,9 +28,10 @@ class RunMapViewController: UIViewController, MKMapViewDelegate {
         
         self.navigationItem.hidesBackButton = false
         
-        let selectedSegTitle = [NSAttributedString.Key.foregroundColor: UIColor(named: "primary") ?? UIColor.black]
-                                       as [NSAttributedString.Key : Any]
-        viewSegmentControl.setTitleTextAttributes(selectedSegTitle, for: .selected)
+        viewSegmentControl.setTitleTextAttributes(
+            [.foregroundColor: UIColor(named: "primary") ?? UIColor.black],
+            for: .selected
+        )
         
         // set button styling to match our rounded corners like all
         // other buttons - also round the legend container view
@@ -42,6 +51,12 @@ class RunMapViewController: UIViewController, MKMapViewDelegate {
         locationManager.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        beginObserving()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -50,60 +65,87 @@ class RunMapViewController: UIViewController, MKMapViewDelegate {
         if CLLocationManager.isAuthorized {
             showUserLocation()
         }
-        
-        // setup all map markers/annotation
-        processMapMarkers()
     }
     
-    private func processMapMarkers() {
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         
-        // remove all annotations because we are resetting them
-        mapView.removeAnnotations(mapView.annotations)
-        
-        guard let selectedRun = selectedRun else {
+        observer = nil
+    }
+    
+    //
+    // MARK: - Observation
+    //
+    
+    private var observer: DatabaseCancellable? = nil
+    
+    private func beginObserving() {
+        guard let id = reachId else {
             return
         }
         
-        if let putIn =  selectedRun.putIn?.coordinate {
+        let obs = ValueObservation.tracking { db in
+            (
+                try Reach.fetchOne(db, id: id),
+                try Rapid.filter(Rapid.Columns.reachId == id).fetchAll(db)
+            )
+        }
+        
+        observer = obs.start(
+            in: DB.shared.pool,
+            onError: { error in
+                // TODO handle error
+            }, onChange: { (reach, rapids) in
+                self.reach = reach
+                self.rapids = rapids
+                self.processMapMarkers()
+            }
+        )
+    }
+    
+    private func processMapMarkers() {
+        // remove all annotations because we are resetting them
+        mapView.removeAnnotations(mapView.annotations)
+        
+        guard let reach = reach else {
+            return
+        }
+        
+        // Putin/takeout annotations:
+        
+        if let putIn = reach.putIn?.coordinate {
             mapView.addAnnotation(RunMapAnnotation(
+                kind: .putin,
                 title: "Put-In",
                 sectionSubtitle: "",
                 coordinate: putIn
             ))
         }
         
-        if let takeOut = selectedRun.takeOut?.coordinate {
+        if let takeOut = reach.takeOut?.coordinate {
             mapView.addAnnotation(RunMapAnnotation(
+                kind: .takeout,
                 title: "Take-Out",
                 sectionSubtitle: "",
                 coordinate: takeOut
             ))
         }
         
-            // Handle rapid annotations
-            // TODO: rapid annotations
-//            guard let rapids = selectedRun.rapids else { print("no rapids to process"); return }
-//
-//            for rapid in rapids {
-//                if let rapid = rapid as? Rapid, rapid.lat != 0, rapid.lon != 0 {
-//                    var subtitle = (rapid.difficulty?.count ?? 0) > 0 ? "Class \(rapid.difficulty ?? "n/a"): " : ""
-//
-//                    if rapid.isHazard {
-//                        subtitle = "\(subtitle) - Hazard, Use Caution!"
-//                    } else {
-//                        subtitle = "\(subtitle)\(rapid.isPlaySpot ? "Play Spot" : "Rapid")"
-//                    }
-//
-//                    let annotation = RunMapAnnotation(
-//                        title: rapid.name ?? "",
-//                        sectionSubtitle: subtitle,
-//                        coordinate: CLLocationCoordinate2D(latitude: rapid.lat, longitude: rapid.lon),
-//                        reach: rapid.reach
-//                    )
-//
-//                    mapView.addAnnotation(annotation)
-//                }
-//            }
+        // Rapid annotations:
+        for rapid in rapids {
+            guard let loc = rapid.location else {
+                continue
+            }
+            
+            let annotation = RunMapAnnotation(
+                kind: .rapid(rapid),
+                title: rapid.name ?? "",
+                sectionSubtitle: rapid.subtitle,
+                coordinate: loc.coordinate
+            )
+            
+            mapView.addAnnotation(annotation)
+        }
             
         // set the bounding region to the put in and take out
         let annotations = mapView.annotations.filter { !($0 is MKUserLocation) }
@@ -137,44 +179,28 @@ class RunMapViewController: UIViewController, MKMapViewDelegate {
     
     // User Clicked on the info of a callout
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        
-        if let annotation = view.annotation as? RunMapAnnotation {
+        guard let annotation = view.annotation as? RunMapAnnotation else {
+            return
+        }
 
-            // check if put in or take out, if so open in apple maps (ask first?)
-            if annotation.title?.lowercased().contains("Put-In".lowercased()) == true ||
-               annotation.title?.lowercased().contains("Take-Out".lowercased()) == true {
-                
-                let alert = UIAlertController(
-                    title: "Open in Maps?",
-                    message: "Would you like directions to the \(annotation.title ?? "River")",
-                    preferredStyle: .alert
-                )
-                alert.addAction(.init(title: "Get Directions", style: .default, handler: { _ in
-                    // take them to Apple Maps
-                    let url = "http://maps.apple.com/maps?daddr=\(annotation.coordinate.latitude),\(annotation.coordinate.longitude)"
-                    UIApplication.shared.open(URL(string: url)!, options: [:], completionHandler: nil)
-                }))
-                alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-                present(alert, animated: true)
-            } else {
-    
-                // TODO: rapids
-                
-//                // open detail view
-//                guard let rapids = annotation.reach?.rapids else { return }
-//
-//                let rapidMatch = rapids.filter {
-//                    if let rapid = $0 as? Rapid {
-//                        return rapid.name == annotation.title
-//                    } else {
-//                        return false
-//                    }
-//                }
-//
-//                if let rapid = rapidMatch.first {
-//                    performSegue(withIdentifier: "mapRapidDetails", sender: rapid)
-//                }
-            }
+        // check if put in or take out, if so open in apple maps (ask first?)
+        switch annotation.kind {
+        case .putin, .takeout:
+            let alert = UIAlertController(
+                title: "Open in Maps?",
+                message: "Would you like directions to the \(annotation.title ?? "River")",
+                preferredStyle: .alert
+            )
+            alert.addAction(.init(title: "Get Directions", style: .default, handler: { _ in
+                // take them to Apple Maps
+                let url = "http://maps.apple.com/maps?daddr=\(annotation.coordinate.latitude),\(annotation.coordinate.longitude)"
+                UIApplication.shared.open(URL(string: url)!, options: [:], completionHandler: nil)
+            }))
+            alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+            present(alert, animated: true)
+        case .rapid(let rapid):
+            // open detail view
+            performSegue(withIdentifier: "mapRapidDetails", sender: rapid)
         }
     }
     

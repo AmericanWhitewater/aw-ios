@@ -19,6 +19,7 @@
 		4A74F7B626DC85D700637A88 /* GaugeDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74F7B526DC85D700637A88 /* GaugeDataPoint.swift */; };
 		4A7F530026BA192000DFBDFF /* UIStoryboard+convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F52FF26BA192000DFBDFF /* UIStoryboard+convenience.swift */; };
 		4A8BFB6E26FDC7430031B40D /* ReachAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8BFB6D26FDC7430031B40D /* ReachAnnotation.swift */; };
+		4A8BFB7026FE79D00031B40D /* Rapid+utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8BFB6F26FE79D00031B40D /* Rapid+utilities.swift */; };
 		4A93B75126E6682A00497603 /* Gauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A93B75026E6682A00497603 /* Gauge.swift */; };
 		4A93B75326E66C2800497603 /* Metric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A93B75226E66C2800497603 /* Metric.swift */; };
 		4AA01D3C26CDA6F00041BB4B /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA01D3B26CDA6F00041BB4B /* Photo.swift */; };
@@ -169,6 +170,7 @@
 		4A74F7B526DC85D700637A88 /* GaugeDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeDataPoint.swift; sourceTree = "<group>"; };
 		4A7F52FF26BA192000DFBDFF /* UIStoryboard+convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+convenience.swift"; sourceTree = "<group>"; };
 		4A8BFB6D26FDC7430031B40D /* ReachAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachAnnotation.swift; sourceTree = "<group>"; };
+		4A8BFB6F26FE79D00031B40D /* Rapid+utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rapid+utilities.swift"; sourceTree = "<group>"; };
 		4A93B75026E6682A00497603 /* Gauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gauge.swift; sourceTree = "<group>"; };
 		4A93B75226E66C2800497603 /* Metric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metric.swift; sourceTree = "<group>"; };
 		4AA01D3B26CDA6F00041BB4B /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
@@ -559,6 +561,7 @@
 				631EFFAA23688A3600BA17F7 /* Reach.swift */,
 				63203C0D23694BFF006A4148 /* Reach+utilities.swift */,
 				631EFFA023677CB600BA17F7 /* Rapid.swift */,
+				4A8BFB6F26FE79D00031B40D /* Rapid+utilities.swift */,
 				4AC4685E26C097060032D68F /* Accident.swift */,
 				4AC4686226C0B15A0032D68F /* Alert.swift */,
 				4AC4686426C104D70032D68F /* GaugeObservation.swift */,
@@ -989,6 +992,7 @@
 				2FE342CE26A1FF8100352D1E /* UIViewController+Toast.swift in Sources */,
 				4A544983271F853B003AEFEA /* UINavigationController+preferredStatusBarStyle.swift in Sources */,
 				4AC4BB5B26A0F5B50058D8B7 /* NewsArticle.swift in Sources */,
+				4A8BFB7026FE79D00031B40D /* Rapid+utilities.swift in Sources */,
 				63B5B49E2457B2270062F54B /* AwGraphQLAPI.swift in Sources */,
 				63D7BD1F231A205500935693 /* NewsTableViewController.swift in Sources */,
 				6394995B246F6EA70061552C /* GlobalConfig.swift in Sources */,
