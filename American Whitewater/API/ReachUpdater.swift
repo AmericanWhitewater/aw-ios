@@ -175,7 +175,6 @@ class ReachUpdater {
         }
     }
     
-    // TODO: rapid creation
     private func rapid(awRapid: AWApiReachHelper.AWRapid, reach: Reach) -> Rapid? {
         guard let id = awRapid.rapidId else {
             return nil

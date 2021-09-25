@@ -43,9 +43,6 @@ struct Reach: Identifiable, Codable {
     var unit: String?
     var zipcode: String?
     
-    // TODO: association for rapids
-    //    var rapids: NSSet?
-    
     var putIn: CLLocation? {
         get {
             guard let lat = putInLat, let lon = putInLon else {

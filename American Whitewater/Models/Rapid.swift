@@ -33,9 +33,6 @@ struct Rapid: Identifiable, Codable {
             lon = newValue?.coordinate.longitude
         }
     }
-    
-    // TODO: Association for reach
-//    @NSManaged public var reach: Reach?
 }
 
 extension Rapid: TableRecord, FetchableRecord, PersistableRecord {
