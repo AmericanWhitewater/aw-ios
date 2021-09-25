@@ -401,8 +401,16 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let reach = reaches[indexPath.row]
+        // This tableView uses a second section to indicate emptiness and display its empty cell,
+        // so it's necessary to guard against that being selected
+        guard
+            indexPath.section == 0,
+            reaches.count > indexPath.row
+        else {
+            return
+        }
         
+        let reach = reaches[indexPath.row]
         performSegue(withIdentifier: Segue.runDetail.rawValue, sender: reach)
     }
     
