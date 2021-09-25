@@ -65,6 +65,7 @@ class ReachUpdater {
                     // FIXME: This call is used for things other than favorites. This needs to be set elsewhere
                     DefaultsManager.shared.favoritesLastUpdated = Date()
                 }
+                completion(nil)
             } catch {
                 completion(error)
             }
