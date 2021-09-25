@@ -1,5 +1,4 @@
 import UIKit
-import CoreData
 import OneSignal
 import SwiftyJSON
 import CoreLocation
@@ -296,14 +295,6 @@ class RunsListViewController: UIViewController {
         detailVC.selectedRun = reach
     }
 }
-
-/// A minimal implementation that reloads the whole tableView every time the fetched results change
-extension RunsListViewController: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.reloadData()
-    }
-}
-
 
 extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
 

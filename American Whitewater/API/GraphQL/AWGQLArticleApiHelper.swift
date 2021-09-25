@@ -1,7 +1,6 @@
 import Foundation
 import Alamofire
 import Apollo
-import CoreData
 
 class AWGQLArticleApiHelper
 {

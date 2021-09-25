@@ -1,6 +1,5 @@
 import UIKit
 import MapKit
-import CoreData
 import GRDB
 
 class MapViewController: UIViewController, MKMapViewDelegate {

@@ -1,6 +1,5 @@
 import UIKit
 import netfox
-import CoreData
 import Firebase
 import OneSignal
 import OAuthSwift
@@ -8,35 +7,8 @@ import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-    
+    var window: UIWindow?    
     var runsListViewController: RunsListViewController? = nil
-    
-    // setup CoreData functions and properties
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "AmericanWhitewaterV2")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            print(storeDescription)
-            if let error = error {
-                fatalError("Unresolved Error: \(error), \(error.localizedDescription)")
-            }
-        })
-        
-        return container
-    }()
-    
-    func saveAWContext() {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let error = error as NSError
-                fatalError("Unresolved error: \(error), \(error.userInfo)")
-            }
-        }
-    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         

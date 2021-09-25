@@ -1,11 +1,3 @@
-
-/*
- This represents the JSON that is returned from Alamofire and
- is used to create the CoreData values. This is modified
- from the original app design
- */
-
-
 import Foundation
 import SwiftyJSON
 import CoreLocation

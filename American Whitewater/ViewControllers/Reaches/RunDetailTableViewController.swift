@@ -1,5 +1,4 @@
 import UIKit
-import CoreData
 import GRDB
 
 class RunDetailTableViewController: UITableViewController {

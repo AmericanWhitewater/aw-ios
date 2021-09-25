@@ -106,7 +106,6 @@
 		63B5B4A724591A460062F54B /* RunAccidentDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B4A624591A460062F54B /* RunAccidentDetailsTableViewController.swift */; };
 		63B5B4A92459298F0062F54B /* UILabel+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B4A82459298F0062F54B /* UILabel+HTML.swift */; };
 		63B5B4AC2459CB3B0062F54B /* AWImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5B4AB2459CB3B0062F54B /* AWImagePicker.swift */; };
-		63C1DAC1235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63C1DABF235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld */; };
 		63D7BD152319774500935693 /* Regions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD142319774500935693 /* Regions.swift */; };
 		63D7BD172319980600935693 /* OnboardLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD162319980600935693 /* OnboardLocationViewController.swift */; };
 		63D7BD1923199D1900935693 /* DuffekDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BD1823199D1900935693 /* DuffekDialog.swift */; };
@@ -267,7 +266,6 @@
 		63B5B4A82459298F0062F54B /* UILabel+HTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+HTML.swift"; sourceTree = "<group>"; };
 		63B5B4AA245939650062F54B /* alerts.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = alerts.graphql; sourceTree = "<group>"; };
 		63B5B4AB2459CB3B0062F54B /* AWImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWImagePicker.swift; sourceTree = "<group>"; };
-		63C1DAC0235FEEFA00587A20 /* AmericanWhitewater.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AmericanWhitewater.xcdatamodel; sourceTree = "<group>"; };
 		63D7BD142319774500935693 /* Regions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regions.swift; sourceTree = "<group>"; };
 		63D7BD162319980600935693 /* OnboardLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardLocationViewController.swift; sourceTree = "<group>"; };
 		63D7BD1823199D1900935693 /* DuffekDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuffekDialog.swift; sourceTree = "<group>"; };
@@ -555,7 +553,6 @@
 			children = (
 				4A8BFB6D26FDC7430031B40D /* ReachAnnotation.swift */,
 				4AF6BFAE26FD4ED600354CE5 /* DB.swift */,
-				63C1DABF235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld */,
 				63203C0F23694C59006A4148 /* Runnable.swift */,
 				4AC4BB5926A0F5B50058D8B7 /* NewsArticle.swift */,
 				631EFFAA23688A3600BA17F7 /* Reach.swift */,
@@ -998,7 +995,6 @@
 				6394995B246F6EA70061552C /* GlobalConfig.swift in Sources */,
 				6389BFAE234CC59E00DE7D6C /* RunMapViewController.swift in Sources */,
 				63491B11232933370036A906 /* RunDetailTableViewController.swift in Sources */,
-				63C1DAC1235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld in Sources */,
 				4AF6BFAF26FD4ED600354CE5 /* DB.swift in Sources */,
 				63D7BD152319774500935693 /* Regions.swift in Sources */,
 				6389BFB0234E311500DE7D6C /* RunMapAnnotation.swift in Sources */,
@@ -1331,19 +1327,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		63C1DABF235FEEFA00587A20 /* AmericanWhitewaterV2.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				63C1DAC0235FEEFA00587A20 /* AmericanWhitewater.xcdatamodel */,
-			);
-			currentVersion = 63C1DAC0235FEEFA00587A20 /* AmericanWhitewater.xcdatamodel */;
-			path = AmericanWhitewaterV2.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 63387B5722CDBFFC0089BAA8 /* Project object */;
 }

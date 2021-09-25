@@ -82,7 +82,6 @@ class NewsTableViewController: UITableViewController {
         articleObserver = observer.start(
             in: DB.shared.pool,
             onError: { error in
-                print("Error fetching articles from coredata: \(error)")
                 self.showToast(message: "Error: " + error.localizedDescription)
             }, onChange: { articles in
                 // TODO: for now, this just fetches articles and reloads the whole tableView. This could be made much more elegant by using a UITableViewDiffableDataSource
