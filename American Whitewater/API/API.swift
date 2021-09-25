@@ -291,16 +291,54 @@ struct API {
     // MARK: - GraphQL Articles
     //
     
-    // FIXME: passes an internal graphql type (that is not uniqued) rather than creating another temp type to work around CoreData's needs
-    public func getArticles(completion: @escaping ([NewsQuery.Data.Article.Datum]?, Error?) -> Void) {
-        articleHelper.getArticles { articles in
+    /// Retrieves articles, parses into unpersisted NewsArticles and passes them to its completion block
+    public func getArticles(completion: @escaping ([NewsArticle]?, Error?) -> Void) {
+        articleHelper.getArticles { results in
+            guard let results = results else {
+                completion([], nil)
+                return
+            }
+            
+            let articles = results.compactMap { a -> NewsArticle? in
+                // Don't accept articles with a nil ID, since we must have a primary key to identify with
+                guard let id = a.id else {
+                    return nil
+                }
+                
+                return NewsArticle(
+                    id: id,
+                    uid: a.uid,
+                    createdAt: Date(),
+                    postedDate: self.isoDate(a.postedDate),
+                    releaseDate: self.isoDate(a.releaseDate),
+                    abstract: a.abstract,
+                    abstractImage: a.abstractimage?.uri?.medium, // FIXME: this drops other sizes, Photo is a struct that can hold them all...
+                    title: a.title,
+                    author: a.author,
+                    contents: a.contents,
+                    icon: a.icon,
+                    image: a.image?.uri?.medium, // FIXME: this drops other sizes, Photo is a struct that can hold them all...
+                    shortName: a.shortName
+                )
+            }
+            
             completion(articles, nil)
         } errorCallback: {
             completion(nil, $0)
         }
     }
     
-    enum Errors: Error {
-        case missingData
+    //
+    // MARK: - Dates
+    //
+    
+    private let dateFormatter = DateFormatter(dateFormat: "yyyy-MM-dd HH:mm:ss")
+    
+    /// Convenience func that formats an optional ISO 8601 date string, returning a Date if possible
+    private func isoDate(_ dateString: String?) -> Date? {
+        guard let dateString = dateString else {
+            return nil
+        }
+        return dateFormatter.date(from: dateString)
     }
 }
