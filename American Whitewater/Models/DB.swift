@@ -146,6 +146,9 @@ class DB {
                 t.column("lat", .double) // Double
                 t.column("lon", .double) // Double
             })
+            
+            // Distance queries search by lat/lon:
+            try db.create(index: "putin", on: "reach", columns: ["putInLat", "putInLon"])
         }
 
         
