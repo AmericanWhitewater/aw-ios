@@ -109,9 +109,19 @@ class RunsListViewController: UIViewController {
         tabBarController?.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
     }
     
+    /// Returns true if data has been fetched, but hasn't been updated in at least an hour
+    // TODO: this has the effect of preventing a fetch on the first run before onboarding is shown, and trying to present an alert at the same time onboarding is presented. But that's not obvious -- and that should be more explicit
+    private var isDataStale: Bool {
+        guard let lastUpdate = DefaultsManager.shared.lastUpdated else {
+            return false
+        }
+
+        return lastUpdate < Date(timeIntervalSinceNow: -60 * 60)
+    }
+    
     // Contract for updating data
     // - Uses the settings in the defaults manager
-    // - The data will not be returned, but will be in the fetchedResultsController
+    // - The data will not be returned, but will be written to the DB so changes can be observed
     // - TableView.reloadData() will be called automatically
     // - LastUpdate will be updated automatically
     func updateData(fromNetwork: Bool = false) {
@@ -122,10 +132,7 @@ class RunsListViewController: UIViewController {
         }
         
         // Update from network if requested or if data is more than 1 hour old
-        guard
-            let lastUpdate = DefaultsManager.shared.lastUpdated,
-            fromNetwork || lastUpdate < Date(timeIntervalSinceNow: -60 * 60)
-        else {
+        guard fromNetwork || isDataStale else {
             return
         }
         
