@@ -18,6 +18,7 @@ class RunsListViewController: UIViewController {
     private var filters: Filters { DefaultsManager.shared.filters }
     
     private let lastUpdatedDateFormatter = DateFormatter(dateFormat: "MMM d, h:mm a")
+    private var notificationObservers = [NSObjectProtocol]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,10 +60,22 @@ class RunsListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        updateData()
+        // Observe database changes
+        // The observer emits an initial set of results, which is what populates the table view
+        beginObserving()
         
+        // Observe filter changes
+        // I don't think filters ever change while this controller is visible currently -- but if that were to change, this will make sure correct results are displayed
+        notificationObservers.append(
+            NotificationCenter.default.addObserver(forName: .filtersDidChange, object: nil, queue: .main) { [weak self] _ in
+                self?.beginObserving()
+            }
+        )
+        
+        updateData()
         showOnboardingIfNeeded()
 
+        // FIXME: this attempts to show the login screen on first run, the onboarding is presented first and wins. But it's poor practice to repeatedly call present() multiple times in viewWillAppear()
         // check if user is logged in
         let keychain = KeychainSwift();
         //keychain.set(credential.oauthToken, forKey: "ios-aw-auth-key")
@@ -77,7 +90,10 @@ class RunsListViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
+        notificationObservers.removeAll()
         
+        // Stop observing DB changes
+        observer = nil
     }
     
     func showOnboardingIfNeeded() {
@@ -122,8 +138,6 @@ class RunsListViewController: UIViewController {
     // - TableView.reloadData() will be called automatically
     // - LastUpdate will be updated automatically
     func updateData(fromNetwork: Bool = false) {
-        beginObserving()
-        
         // Update from network if requested or if data is more than 1 hour old
         guard fromNetwork || isDataStale else {
             return
