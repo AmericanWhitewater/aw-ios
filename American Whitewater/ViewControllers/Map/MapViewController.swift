@@ -171,11 +171,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // User Clicked on the info of a callout
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        guard let annotation = view.annotation as? ReachAnnotation else {
+            return
+        }
         
-        let selectedReach = view.annotation as! ReachAnnotation
-        
-        performSegue(withIdentifier: Segue.runDetailMap.rawValue, sender: selectedReach)
-        
+        performSegue(withIdentifier: Segue.runDetailMap.rawValue, sender: annotation.reach)
     }
     
     func showUserLocation() {
