@@ -122,14 +122,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func updateAnnotations() {
         mapView.removeAnnotations(mapView.annotations)
         
-        let annotations = reaches.map { ReachAnnotation($0) }
+        let annotations = reaches
+            .filter { $0.putIn != nil }
+            .map { ReachAnnotation($0) }
+        
         mapView.addAnnotations(annotations)
         
-        // Zoom to updated coordinates
-        let cleanedAnnotations = mapView.annotations.filter { $0.coordinate.latitude > 0 && $0.coordinate.longitude > -170 }
-        if cleanedAnnotations.count > 0 {
-            mapView.fitAll(in: cleanedAnnotations, andShow: true)
-        }
+        // Zoom to updated annotations
+        mapView.fitAll(in: annotations, andShow: true)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
