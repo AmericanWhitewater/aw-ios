@@ -32,6 +32,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         updateFilterButton()
         beginObserving()
@@ -47,13 +51,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         )
     }
     
-    deinit {
-        // Have to deregister block-based notification observers or they will continue to call their blocks:
-        notificationObservers.forEach {
-            NotificationCenter.default.removeObserver($0)
-        }
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -64,8 +61,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        // Stop observing DB:
+        observer = nil
+        
+        notificationObservers.forEach {
+            NotificationCenter.default.removeObserver($0)
+        }
         
         mapView.showsUserLocation = false
     }
@@ -78,11 +82,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         DefaultsManager.shared.coordinate = newLocation.coordinate
         self.lastLocation = newLocation
     }
-    
-//    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-//        beginObserving()
-//    }
-    
+
     func updateFilterButton() {
         navigationItem.rightBarButtonItem?.title = ""
 
@@ -100,10 +100,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         let obs = ValueObservation.tracking { db in
             try Reach
                 .all()
-//                .geoboxed(rect: self.mapView.visibleMapRect)
-            
-            // TODO: respect other filters
-            
+                .filter(
+                    by: self.filters,
+                    from: (self.lastLocation ?? DefaultsManager.shared.location).coordinate
+                )
                 .fetchAll(db)
         }
         
@@ -125,24 +125,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         let annotations = reaches.map { ReachAnnotation($0) }
         mapView.addAnnotations(annotations)
         
-//        // Zoom to updated coordinates
-//        let cleanedAnnotations = mapView.annotations.filter { $0.coordinate.latitude > 0 && $0.coordinate.longitude > -170 }
-//        if cleanedAnnotations.count > 0 {
-//            mapView.fitAll(in: cleanedAnnotations, andShow: true)
-//        }
-
-    }
-
-    func mapViewChangedFromUserInteraction() -> Bool {
-        if let view = self.mapView.subviews.first, let gestureRecogs = view.gestureRecognizers {
-            for recog in gestureRecogs {
-                if recog.state == UIGestureRecognizer.State.began || recog.state == UIGestureRecognizer.State.ended {
-                    return true
-                }
-            }
+        // Zoom to updated coordinates
+        let cleanedAnnotations = mapView.annotations.filter { $0.coordinate.latitude > 0 && $0.coordinate.longitude > -170 }
+        if cleanedAnnotations.count > 0 {
+            mapView.fitAll(in: cleanedAnnotations, andShow: true)
         }
-        
-        return false
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -223,53 +210,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 }
 
-//extension MapViewController: NSFetchedResultsControllerDelegate {
-//
-//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-//                    didChange anObject: Any,
-//                    at indexPath: IndexPath?,
-//                    for type: NSFetchedResultsChangeType,
-//                    newIndexPath: IndexPath?) {
-//
-//        guard let reach = anObject as? Reach, let mapView = mapView else { return }
-//
-//        switch type {
-//            case .insert:
-//                mapView.addAnnotation(reach)
-//            case .delete:
-//                mapView.removeAnnotation(reach)
-//            case .update:
-//                mapView.removeAnnotation(reach)
-//                mapView.addAnnotation(reach)
-//            case .move:
-//                mapView.removeAnnotation(reach)
-//                mapView.addAnnotation(reach)
-//                print("reach moved: \(reach.name ?? "unknown reach")) - \(reach.section ?? "unknown section")")
-//            default:
-//                break
-//        }
-//    }
-//}
-
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse || status == .authorizedAlways {
             showUserLocation()
         }
-    }
-}
-
-extension DerivableRequest where RowDecoder == Reach {
-    func geoboxed(rect: MKMapRect) -> Self {
-        let origin = rect.origin.coordinate
-        let maxPt = MKMapPoint(x: rect.maxX, y: rect.maxY).coordinate
-        
-        // TODO: could check putIn OR takeOut in box
-        return filter(
-            Reach.Columns.putInLat >= min(origin.latitude, maxPt.latitude) &&
-            Reach.Columns.putInLon >= min(origin.longitude, maxPt.longitude) &&
-            Reach.Columns.putInLat <= max(origin.latitude, maxPt.latitude) &&
-            Reach.Columns.putInLon >= max(origin.longitude, maxPt.longitude)
-        )
     }
 }
