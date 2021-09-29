@@ -181,9 +181,8 @@ extension RiverFlowsViewController: UITableViewDataSource, UITableViewDelegate {
         
         let flow = riverFlows[indexPath.row]
 
-        // FIXME: this was trying to use different cell types, but RiverFlowNoPicCell doesn't exist and the as! below would crash
-//        let cellType = flow.photos.isEmpty ? "RiverFlowNoPicCell" : "RiverFlowCell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RiverFlowCell", for: indexPath) as! RiverFlowCell
+        let cellType = flow.photos.isEmpty ? "RiverFlowNoPicCell" : "RiverFlowCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellType, for: indexPath) as! RiverFlowCell
         
         if let url = flow.photos.first?.mediumURL {
             cell.postedImageView.load(url: url)
