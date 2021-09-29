@@ -130,18 +130,21 @@ class AWGQLApiHelper
         }
     }
     
-    public func postGaugeObservationFor(reach_id: Int, metric_id: Int, title: String, dateString: String, reading: Double, callback: @escaping PostObservationsCallback, errorCallback: @escaping AWGraphQLError) {
-
+    public func postGaugeObservationFor(reach_id: Int, gauge_id: Int?, metric_id: Int, observation: Double?, title: String?, dateString: String, reading: Double, callback: @escaping PostObservationsCallback, errorCallback: @escaping AWGraphQLError) {
         let newID = NanoID.new(alphabet: .allLettersAndNumbers, size: 21)
 
-        let newObservation = PostInput(title: title,
-                                detail: nil,
-                              postType: PostType.gaugeObservation,
-                              postDate: dateString,
-                               reachId: "\(reach_id)",
-                                userId: nil,
-                              metricId: metric_id,
-                               reading: reading)
+        let newObservation = PostInput(
+            title: title,
+            detail: nil,
+            postType: PostType.gaugeObservation,
+            postDate: dateString,
+            reachId: "\(reach_id)",
+            gaugeId: gauge_id != nil ? "\(gauge_id)" : nil,
+            userId: nil,
+            metricId: metric_id,
+            reading: reading,
+            observation: observation
+        )
 
         if keychain.get(AWGC.AuthKeychainToken) != nil {
             apollo.perform(mutation: PostObservationMutation(id: newID, post: newObservation)) { result in
@@ -177,7 +180,7 @@ class AWGQLApiHelper
         photoPostType: PostType = PostType.photoPost,
         image: UIImage,
         reach_id: Int,
-        caption: String,
+        caption: String?,
         description: String,
         photoDate: String,
         reachObservation: Double? = nil,

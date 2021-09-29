@@ -155,15 +155,19 @@ struct API {
     // FIXME: this doesn't take a gaugeId. Shouldn't it need one to post a gauge observation?!
     public func postGaugeObservation(
         reachId: Int,
+        gaugeId: Int?,
         metricId: Int,
-        title: String,
+        observation: Double?,
+        title: String?,
         dateString: String,
         reading: Double,
         completion: @escaping (GaugeObservation?, Error?) -> Void
     ) {
         graphQLHelper.postGaugeObservationFor(
             reach_id: reachId,
+            gauge_id: gaugeId,
             metric_id: metricId,
+            observation: observation,
             title: title,
             dateString: dateString,
             reading: reading,
@@ -204,7 +208,7 @@ struct API {
         photoPostType: PostType = PostType.photoPost,
         image: UIImage,
         reachId: Int,
-        caption: String,
+        caption: String?,
         description: String,
         photoDate: String,
         reachObservation: Double? = nil,
