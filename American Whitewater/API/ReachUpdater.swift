@@ -154,8 +154,6 @@ class ReachUpdater {
                 let error = error as NSError
                 print("Unable to save main view context: \(error), \(error.userInfo)")
             }
-            
-            DefaultsManager.shared.lastUpdated = Date()
         }
     }
     
