@@ -28,6 +28,10 @@ class ReachUpdater {
         Self.isFetchingReaches = true
         
         api.getReaches(regionCodes: regionCodes) { awReaches, error in
+            defer {
+                Self.isFetchingReaches = false
+            }
+            
             guard
                 let awReaches = awReaches,
                 error == nil
@@ -39,17 +43,19 @@ class ReachUpdater {
             let context = self.privateQueueContext()
             context.perform {
                 print("Processing \(awReaches.count) reaches")
-                
+                                
                 do {
                     self.createOrUpdateReaches(newReaches: awReaches, context: context)
                     try context.save()
                     
                     self.mergeMainContext(
-                        completion: { completion(nil) },
+                        completion: {
+                            DefaultsManager.shared.lastUpdated = Date()
+                            completion(nil)
+                        },
                         errorCallback: completion
                     )
                     
-                    Self.isFetchingReaches = false
                 } catch {
                     completion(error)
                 }
@@ -76,8 +82,9 @@ class ReachUpdater {
                     
                     self.mergeMainContext(
                         completion: {
-                            // FIXME: this should be set consistently by all the update reach methods
                             DefaultsManager.shared.lastUpdated = Date()
+                            
+                            // FIXME: This call is used for things other than favorites. This needs to be set elsewhere
                             DefaultsManager.shared.favoritesLastUpdated = Date()
 
                             completion(nil)
@@ -154,8 +161,6 @@ class ReachUpdater {
                 let error = error as NSError
                 print("Unable to save main view context: \(error), \(error.userInfo)")
             }
-            
-            DefaultsManager.shared.lastUpdated = Date()
         }
     }
     

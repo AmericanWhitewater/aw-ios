@@ -18,6 +18,8 @@ class RunsListViewController: UIViewController {
     
     private var filters: Filters { DefaultsManager.shared.filters }
     
+    private let lastUpdatedDateFormatter = DateFormatter(dateFormat: "MMM d, h:mm a")
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,22 +39,23 @@ class RunsListViewController: UIViewController {
         runnableSwitch.isOn = filters.runnableFilter
         API.shared.updateAccountInfo()
         
-        // AWTODO: loading UI states
-        // TODO: respect returned error -- should this not set completedFirstRun? That will retry the initial fetch next time but may have other effects
         if !DefaultsManager.shared.completedFirstRun {
             print("downloading all reaches")
             reachUpdater.updateReaches(
                 regionCodes: Region.all.map({ $0.code }),
                 completion: { error in
-                    print("Completed downloading all data")
+                    if let error = error {
+                        // TODO: respect returned error -- should this return and not set completedFirstRun? That will retry the initial fetch next time
+                        print("Error while doing initial fetch: \(error.localizedDescription)")
+                    }
+                    
+                    DefaultsManager.shared.completedFirstRun = true
                     
                     do {
                         try self.updateFetchedResultsController()
                     } catch {
                         print("Error in updateFetchedResultsController: \(error)")
                     }
-                    
-                    DefaultsManager.shared.completedFirstRun = true
                 }
             )
         }
@@ -145,8 +148,7 @@ class RunsListViewController: UIViewController {
                 self.showToast(message: "Error fetching data: " + error.localizedDescription)
                 return
             }
-            
-            DefaultsManager.shared.lastUpdated = Date()
+
             self.tableView.reloadData()
         }
         
@@ -422,20 +424,16 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
+        if
+            section == 0,
+            let lastUpdatedDate = DefaultsManager.shared.lastUpdated
+        {
             let view = UIView()
             let label = UILabel()
             
-            var lastUpdatedMessage = "Refreshing..."
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMM d, h:mm a"
-            if let lastUpdatedDate = DefaultsManager.shared.lastUpdated {
-                lastUpdatedMessage = "Last Updated: \(dateFormatter.string(from: lastUpdatedDate))"
-            }
-            
             view.backgroundColor = UIColor.systemGroupedBackground
             
-            label.text = lastUpdatedMessage
+            label.text = "Last Updated: \(lastUpdatedDateFormatter.string(from: lastUpdatedDate))"
             label.textAlignment = .center
             label.textColor = UIColor.darkGray
             
@@ -455,7 +453,7 @@ extension RunsListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
+        if section == 0, DefaultsManager.shared.lastUpdated != nil {
             return 44
         } else {
             return 0
