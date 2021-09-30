@@ -59,7 +59,7 @@ class ReachUpdater {
     
     /// Requests reaches with the given `reachIds` from the network and creates or updates the local copies
     public func updateReaches(reachIds: [Int], completion: @escaping (Error?) -> Void) {
-        api.updateReaches(reachIds: reachIds) { awReaches, error in
+        api.getReaches(reachIds: reachIds) { awReaches, error in
             guard
                 let awReaches = awReaches,
                 error == nil

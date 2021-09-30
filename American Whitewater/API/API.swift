@@ -61,7 +61,7 @@ struct API {
         }
     }
     
-    public func updateReaches(reachIds: [Int], completion: @escaping ([AWApiReachHelper.AWReach]?, Error?) -> Void) {
+    public func getReaches(reachIds: [Int], completion: @escaping ([AWApiReachHelper.AWReach]?, Error?) -> Void) {
         reachHelper.getReaches(
             reachIds: reachIds.map { "\($0)" },
             callback: { completion($0, nil) },
