@@ -11,6 +11,7 @@ import UIKit
 import Apollo
 
 /// Collects and provides access to fetching data from the network
+/// While this isn't 100% true yet, API's methods should be functions without side effects. When called, they should always make a network request, and should call a completion block with an error, or the returned parsed response.
 struct API {
     static let shared = API()
     
@@ -81,6 +82,7 @@ struct API {
     // MARK: - GraphQL based
     //
     
+    // FIXME: Has no completion block, can't report errors or success. Saves result with DefaultsManager, but should return values instead
     public func updateAccountInfo() {
         graphQLHelper.updateAccountInfo()
     }
