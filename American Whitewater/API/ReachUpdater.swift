@@ -28,6 +28,10 @@ class ReachUpdater {
         Self.isFetchingReaches = true
         
         api.getReaches(regionCodes: regionCodes) { awReaches, error in
+            defer {
+                Self.isFetchingReaches = false
+            }
+            
             guard
                 let awReaches = awReaches,
                 error == nil
@@ -52,7 +56,6 @@ class ReachUpdater {
                         errorCallback: completion
                     )
                     
-                    Self.isFetchingReaches = false
                 } catch {
                     completion(error)
                 }
