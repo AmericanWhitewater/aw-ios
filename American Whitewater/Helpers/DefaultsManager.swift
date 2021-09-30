@@ -67,6 +67,7 @@ class DefaultsManager {
                 newValue.hasChanged(from: lastDistanceCoordinate, byMoreThan: 0.003) {
                 print("Updating distances of reaches")
                 
+                lastDistanceCoordinate = newValue
                 reachUpdater.updateAllReachDistances{}
             }
         }
