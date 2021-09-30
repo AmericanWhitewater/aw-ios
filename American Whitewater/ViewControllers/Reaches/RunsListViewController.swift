@@ -49,7 +49,6 @@ class RunsListViewController: UIViewController {
                         print("Error while doing initial fetch: \(error.localizedDescription)")
                     }
                     
-                    DefaultsManager.shared.lastUpdated = Date()
                     DefaultsManager.shared.completedFirstRun = true
                     
                     do {
@@ -149,8 +148,7 @@ class RunsListViewController: UIViewController {
                 self.showToast(message: "Error fetching data: " + error.localizedDescription)
                 return
             }
-            
-            DefaultsManager.shared.lastUpdated = Date()
+
             self.tableView.reloadData()
         }
         
