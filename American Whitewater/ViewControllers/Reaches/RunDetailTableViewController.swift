@@ -204,9 +204,11 @@ class RunDetailTableViewController: UITableViewController {
         runNameLabel.text = reach.name ?? "Unknown"
         runSectionLabel.text = reach.section ?? ""
         
-        // FIXME: Date() is not the right date to use
-        // Reach.detailUpdated is a property in the CD model, but it is never set
-        lastUpdateLabel.text = dateFormatter.string(from: Date())
+        if let d = reach.detailUpdated {
+            lastUpdateLabel.text = dateFormatter.string(from: d)
+        } else {
+            lastUpdateLabel.text = nil
+        }
         
         runUnitsLabel.text = selectedRun?.unit ?? ""
         runGaugeDeltaLabel.text = selectedRun?.delta ?? ""

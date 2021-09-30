@@ -283,6 +283,7 @@ class ReachUpdater {
         reach.longDescription = details.detailDescription
         reach.shuttleDetails = details.detailShuttleDescription
         reach.gageName = details.detailGageName
+        reach.detailUpdated = Date()
         
         if let rapidsList = details.detailRapids {
             for rapid in rapidsList {
