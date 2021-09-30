@@ -9,8 +9,7 @@
 import UIKit
 
 class RunAccidentDetailsTableViewController: UITableViewController {
-
-    var selectedAccident: ReachAccidentsQuery.Data.Reach.Accident.Datum?
+    var selectedAccident: Accident? = nil
     
     @IBOutlet weak var runTitleLabel: UILabel!
     @IBOutlet weak var runSectionLabel: UILabel!
@@ -37,36 +36,9 @@ class RunAccidentDetailsTableViewController: UITableViewController {
             runAgeLabel.text = selectedAccident.age == 0 ? "N/A" : "\(selectedAccident.age ?? 0)"
             runDifficultyLabel.text = selectedAccident.difficulty ?? "N/A"
             runDescriptionLabel.set(html: selectedAccident.description ?? "<h3>No Description Available</h3>")
-            
-            runFactorsLabel.text = ""
-            if let factors = selectedAccident.factors {
-                for (index, factorItem) in factors.enumerated() {
-                    runFactorsLabel?.text? += "\(factorItem.factor ?? "")"
-                    if index != factors.count - 1 {
-                        runFactorsLabel?.text? += "\n"
-                    }
-                }
-            }
-            
-            runInjuriesLabel.text = ""
-            if let injuries = selectedAccident.injuries {
-                for (index, injuryItem) in injuries.enumerated() {
-                    runInjuriesLabel?.text? += "\(injuryItem.injury ?? "")"
-                    if index != injuries.count - 1 {
-                        runFactorsLabel?.text? += "\n"
-                    }
-                }
-            }
-
-            runCausesLabel.text = ""
-            if let causes = selectedAccident.causes {
-                for (index, causeItem) in causes.enumerated() {
-                    runCausesLabel?.text? += "\(causeItem.cause ?? "")"
-                    if index != causes.count - 1 {
-                        runCausesLabel.text? += "\n"
-                    }
-                }
-            }
+            runFactorsLabel?.text = selectedAccident.factors.joined(separator: "\n")
+            runInjuriesLabel.text = selectedAccident.injuries.joined(separator: "\n")
+            runCausesLabel.text = selectedAccident.causes.joined(separator: "\n")
         }
     }
 

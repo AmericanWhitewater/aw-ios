@@ -8,6 +8,7 @@ import KeychainSwift
 class RunsListViewController: UIViewController {
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
+    private lazy var reachUpdater = ReachUpdater(managedObjectContext: managedObjectContext)
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var runnableFilterContainerView: UIView!
@@ -34,22 +35,26 @@ class RunsListViewController: UIViewController {
         tableView.estimatedRowHeight = 120
         
         runnableSwitch.isOn = filters.runnableFilter
-        AWGQLApiHelper.shared.updateAccountInfo()
+        API.shared.updateAccountInfo()
         
-        // AWTODO loading UI states
+        // AWTODO: loading UI states
+        // TODO: respect returned error -- should this not set completedFirstRun? That will retry the initial fetch next time but may have other effects
         if !DefaultsManager.shared.completedFirstRun {
             print("downloading all reaches")
-            AWApiReachHelper.shared.downloadAllReachesInBackground {
-                print("Completed downloading all data")
-
-                do {
-                    try self.updateFetchedResultsController()
-                } catch {
-                    print("Error in updateFetchedResultsController: \(error)")
+            reachUpdater.updateReaches(
+                regionCodes: Region.all.map({ $0.code }),
+                completion: { error in
+                    print("Completed downloading all data")
+                    
+                    do {
+                        try self.updateFetchedResultsController()
+                    } catch {
+                        print("Error in updateFetchedResultsController: \(error)")
+                    }
+                    
+                    DefaultsManager.shared.completedFirstRun = true
                 }
-                
-                DefaultsManager.shared.completedFirstRun = true
-            }
+            )
         }
     }
     
@@ -104,9 +109,19 @@ class RunsListViewController: UIViewController {
         tabBarController?.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
     }
     
+    /// Returns true if data has been fetched, but hasn't been updated in at least an hour
+    // TODO: this has the effect of preventing a fetch on the first run before onboarding is shown, and trying to present an alert at the same time onboarding is presented. But that's not obvious -- and that should be more explicit
+    private var isDataStale: Bool {
+        guard let lastUpdate = DefaultsManager.shared.lastUpdated else {
+            return false
+        }
+
+        return lastUpdate < Date(timeIntervalSinceNow: -60 * 60)
+    }
+    
     // Contract for updating data
     // - Uses the settings in the defaults manager
-    // - The data will not be returned, but will be in the fetchedResultsController
+    // - The data will not be returned, but will be written to the DB so changes can be observed
     // - TableView.reloadData() will be called automatically
     // - LastUpdate will be updated automatically
     func updateData(fromNetwork: Bool = false) {
@@ -117,51 +132,49 @@ class RunsListViewController: UIViewController {
         }
         
         // Update from network if requested or if data is more than 1 hour old
-        let lastUpdate = DefaultsManager.shared.lastUpdated
-        let isDataStale = lastUpdate != nil ? lastUpdate! < Date(timeIntervalSinceNow: -60 * 60) : false
-        if fromNetwork || isDataStale {
-            refreshControl.beginRefreshing()
-
-            func onUpdateSuccessful() {
-                self.refreshControl.endRefreshing()
-                DefaultsManager.shared.lastUpdated = Date()
-                self.tableView.reloadData()
-            }
+        guard fromNetwork || isDataStale else {
+            return
+        }
+        
+        refreshControl.beginRefreshing()
+        
+        func onCompletion(_ error: Error?) {
+            self.refreshControl.endRefreshing()
             
-            func onUpdateFailed(error: Error) {
-                self.refreshControl.endRefreshing()
+            if let error = error {
                 self.showToast(message: "Error fetching data: " + error.localizedDescription)
+                return
             }
             
-            if filters.isRegion {
-                if filters.regionsFilter.isEmpty {
-                    let alert = UIAlertController(
-                        title: "Pull All Data?",
-                        message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.",
-                        preferredStyle: .alert
-                    )
-                
-                    alert.addAction(.init(title: "Continue", style: .default, handler: { _ in
-                        self.refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
-                    }))
-                    alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-                    present(alert, animated: true)
-                } else {
-                    refreshByRegion(success: onUpdateSuccessful, failure: onUpdateFailed)
-                }
-            } else {
-                guard let results = fetchedResultsController?.fetchedObjects else {
-                    // FIXME: is this a success or failure?
-                    onUpdateSuccessful()
-                    return
-                }
-                
-                AWApiReachHelper.shared.updateReaches(
-                    reachIds: results.map{ "\($0.id)" },
-                    callback: onUpdateSuccessful,
-                    callbackError: onUpdateFailed
+            DefaultsManager.shared.lastUpdated = Date()
+            self.tableView.reloadData()
+        }
+        
+        if filters.isRegion {
+            if filters.regionsFilter.isEmpty {
+                let alert = UIAlertController(
+                    title: "Pull All Data?",
+                    message: "You didn't select a region or distance to pull data from. This will download all river data for the USA.\n\nOn a slower connection this can take a few minutes.\n\nYou can set filters to speed this up.",
+                    preferredStyle: .alert
                 )
+                
+                alert.addAction(.init(title: "Continue", style: .default, handler: { _ in
+                    self.refreshByRegion(completion: onCompletion)
+                }))
+                alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+                present(alert, animated: true)
+            } else {
+                refreshByRegion(completion: onCompletion)
             }
+        } else {
+            guard let reaches = fetchedResultsController?.fetchedObjects else {
+                // FIXME: should this indicate failure?
+                // By indicating success, lastUpdated gets set
+                onCompletion(nil)
+                return
+            }
+            
+            reachUpdater.updateReaches(reachIds: reaches.map(\.id), completion: onCompletion)
         }
     }
     
@@ -217,13 +230,12 @@ class RunsListViewController: UIViewController {
         tableView.reloadData()
     }
     
-    func refreshByRegion(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    func refreshByRegion(completion: @escaping (Error?) -> Void) {
         print("Updating reaches by region")
         
-        AWApiReachHelper.shared.updateRegionalReaches(
+        reachUpdater.updateReaches(
             regionCodes: filters.regionsFilter.count > 0 ? filters.regionsFilter : Region.all.map { $0.code },
-            callback: success,
-            callbackError: failure
+            completion: completion
         )
     }
     

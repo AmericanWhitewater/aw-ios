@@ -12,7 +12,7 @@ import SafariServices
 
 class GalleryViewController: UIViewController {
     var selectedRun: Reach?
-    var imageLinks = [[String:String?]]()
+    var imageLinks = [Photo]()
     
     @IBOutlet weak var runNameLabel: UILabel!
     @IBOutlet weak var runSectionLabel: UILabel!
@@ -63,6 +63,16 @@ class GalleryViewController: UIViewController {
         super.viewWillAppear(animated)
         
 
+        // if nothing is selected we try and load one
+        if
+            let selectedRun = selectedRun,
+            selectedRun.photoUrl == nil,
+            let url = imageLinks.first?.mediumURL
+        {
+            print("Trying to load url: \(url)")
+            selectedImageView.load(url: url)
+        }
+        
         // reload local data while we wait for
         // API data
         galleryCollectionView.reloadData()
@@ -117,60 +127,23 @@ class GalleryViewController: UIViewController {
     
     @objc private func refreshPictures() {
         guard let selectedRun = selectedRun else { print("selected run is nil"); return }
-                
-        AWGQLApiHelper.shared.getPhotosForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 100, callback: { (photoResults) in
-            
-            self.refreshControl.endRefreshing()
-            
-            if let photoResults = photoResults {
-                for result in photoResults {
-                    let photos = result.photos
-                    
-                    for photo in photos {
-                        if let image = photo.image, let uri = image.uri,
-                           let thumb = uri.thumb, let medium = uri.medium, let big = uri.big {
-                            
-                            //print("PhotoDate: \(photo.photoDate ?? "no photo date") - author: \(photo.author ?? "no author") - caption \(photo.caption ?? "no caption")")
-                            
-                            let dateString = photo.photoDate ?? result.postDate ?? ""
-                            let author = photo.author ?? result.user?.uname ?? ""
-                            let reading = result.reading ?? 0.0
-                            
-                            // only add the new photo if we already have it
-                            if !self.alreadyHavePhoto(thumb: thumb) {
-                                var newUri = [String:String?]()
-                                newUri["thumb"] = thumb
-                                newUri["med"] = medium
-                                newUri["big"] = big
-                                newUri["caption"] = photo.caption ?? ""
-                                newUri["description"] = photo.description ?? result.detail ?? ""
-                                newUri["author"] = author
-                                newUri["photoDate"] = dateString
-                                if reading > 0.001 {
-                                    newUri["reading"] = "\(reading)"
-                                }
-                                print("New URI:", newUri)
-                                self.imageLinks.insert(newUri, at: 0)
-                            }
-                        }
-                    }
-                    
-                    self.galleryCollectionView.reloadData()
-                }
+        
+        API.shared.getPhotos(reachId: Int(selectedRun.id), page: 1, pageSize: 100) { (photos, error) in
+            defer {
+                self.refreshControl.endRefreshing()
             }
-        }) { (error, message) in
-            print("Photos GraphQL Error: \(GQLError.handleGQLError(error: error, altMessage: message))")
-            self.refreshControl.endRefreshing()
-        }
-    }
-
-    private func alreadyHavePhoto(thumb: String) -> Bool {
-        for image in imageLinks {
-            if image["thumb"] as? String == thumb {
-                return true
+            
+            guard
+                let photos = photos,
+                error == nil
+            else {
+                print("Photos GraphQL Error: \(String(describing: error))")
+                return
             }
+            
+            self.imageLinks = photos
+            self.galleryCollectionView.reloadData()
         }
-        return false
     }
     
     private var initialPhotoURL: URL? {
@@ -179,56 +152,48 @@ class GalleryViewController: UIViewController {
             return url
         }
         
-        // Otherwise, take the first photo from imageLinks
-        if
-            let imgLink = imageLinks.first?["med"] as? String,
-            let url = URL(string: "\(AWGC.AW_BASE_URL)\(imgLink)")
-        {
-            return url
-        }
-        
-        // Otherwise, there's no initial photo
-        return nil
+        // Otherwise, take the first photo from imageLinks if available
+        return imageLinks.first?.mediumURL
     }
     
     /// Set the selected image and all its associated labels, failing if an image URL can't be constructed
-    private func setSelectedImage(_ imageDict: [String: String?]){
-        guard
-            let medUrlString = imageDict["med"] as? String,
-            let url = URL(string: "\(AWGC.AW_BASE_URL)\(medUrlString)")
-        else {
+    private func setSelectedImage(_ image: Photo){
+        guard let url = image.mediumURL else {
             return
         }
         
         selectedImageUrl = url
         
-        if let author = imageDict["author"] as? String {
+        if let author = image.author {
             self.postedByLabel.text = "Posted by: \(author.count > 0 ? author : "n/a")"
         } else {
             self.postedByLabel.text = ""
         }
         
-        if let postedDate = imageDict["photoDate"] as? String {
-            self.postedDateLabel.text = "Date: \(postedDate.count > 0 ? postedDate : "n/a")"
+        if let postedDate = image.date {
+            self.postedDateLabel.text = "Date: \(Self.dateFormatter.string(from: postedDate))"
         } else {
             self.postedDateLabel.text = ""
         }
         
-        if let caption = imageDict["caption"] as? String {
+        if let caption = image.caption {
             self.captionLabel.text = caption.count > 0 ? caption : "No Caption Available"
         } else {
             self.captionLabel.text = "No Caption Available"
         }
         
-        if let description = imageDict["description"] as? String {
+        if let description = image.description {
             self.captionLabel.text = "\(self.captionLabel.text ?? "")\n\(description)"
         }
         
-        if let reading = imageDict["reading"] as? String {
-            self.riverObservationLabel.text = reading.count > 0 ? reading : ""
-        } else {
-            self.riverObservationLabel.text = ""
-        }
+        // FIXME: this isn't part of Photo now -- but wasn't it wrong before?
+//        if let reading = image["reading"] as? String {
+//            self.riverObservationLabel.text = reading.count > 0 ? reading : ""
+//        } else {
+//            self.riverObservationLabel.text = ""
+//        }
+        
+        selectedImageUrl = image.mediumURL
     }
     
     // MARK: - Navigation
@@ -290,16 +255,15 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
         // else show image's from server
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "awImageCell", for: indexPath) as! AwImageCell
         cell.imageView.image = nil
-        
-        let imageLink = imageLinks[indexPath.row]
-        
-        if let imageUrlString = imageLink["med"] as? String,
-            let url = URL(string: "\(AWGC.AW_BASE_URL)\(imageUrlString)") {
+
+        if let url = imageLinks[indexPath.row].mediumURL {
             cell.imageView.load(url: url)
         }
         
         return cell
     }
+    
+    static private let dateFormatter = DateFormatter(dateFormat: "MMM d, h:mm a")
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         

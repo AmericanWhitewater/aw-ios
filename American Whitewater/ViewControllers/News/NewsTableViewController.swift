@@ -11,6 +11,8 @@ class NewsTableViewController: UITableViewController {
         
     private var selectedImage: UIImage?
     
+    private lazy var updater = ArticleUpdater(managedObjectContext: managedObjectContext)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,57 +43,37 @@ class NewsTableViewController: UITableViewController {
         }
     }
     
-    /*
-     donateButtonPressed()
-     opens the donate view in Safari per Apple's guidelines
-    */
+    /// Opens the donate view in Safari per Apple's guidelines
     @IBAction func donateButtonPressed(_ sender: Any) {
         let urlString = "https://www.americanwhitewater.org/content/Membership/donate"
         UIApplication.shared.open(URL(string: urlString)!, options: [:], completionHandler: nil)
     }
     
-    /*
-     getArticleData(refreshControl:)
-     used by the refreshControl to handle pull down refresh gestures
-    */
+    /// Handles pull down refresh gestures
     @objc func getArticleData(refreshControl: UIRefreshControl) {
         // refresh the data from the server at the users request
-        self.refresh()
+        refresh()
     }
     
-    /*
-     refresh()
-     This is our work horse that will pull a fresh version of the articles
-     down from the server and will store them in CoreData. When then
-     fetch the results and reload
-    */
+    /// Requests updated articles from the server
     func refresh() {
-        //AWApiArticleHelper.shared.updateArticles(callback: {
-        AWGQLArticleApiHelper.shared.updateArticles(callback: {
+        updater.updateArticles { error in
             self.refreshControl?.endRefreshing()
+
+            if let error = error {
+                self.showToast(message: "Connection Error: " + error.localizedDescription)
+                return
+            }
             
-            print("Articles fetched and updated!")
             self.fetchArticlesFromCoreData()
-            
-        }) { (error) in
-            self.refreshControl?.endRefreshing()
-            
-            var message = "Unknown Reason"
-            if let error = error { message = error.localizedDescription }
-            print("Error updating articles: \(message)")
-            self.showToast(message: "Connection Error: " + message)
         }
     }
     
-    /*
-     fetchArticlesFromCoreData()
-     Uses a NSFetchRequest to request a sorted list of articles from
-     the local CoreData storage
-    */
+    /// Uses a NSFetchRequest to request a sorted list of articles from the local CoreData storage
     func fetchArticlesFromCoreData() {
         // setup fetched results controller
         //let request = NSFetchRequest<Article>(entityName: "Article")
-        let request = NewsArticle.fetchRequest() as NSFetchRequest<NewsArticle>
+        let request = NewsArticle.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: "postedDate", ascending: false)]
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -107,10 +89,10 @@ class NewsTableViewController: UITableViewController {
         }
     }
     
-    
+    //
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    //
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let article = sender as? NewsArticle {

@@ -1,9 +1,7 @@
 import Foundation
 import CoreData
 
-
-extension Reach {
-
+public class Reach: NSManagedObject {
     @nonobjc public class func reachFetchRequest() -> NSFetchRequest<Reach> {
         return NSFetchRequest<Reach>(entityName: "Reach")
     }
@@ -31,7 +29,7 @@ extension Reach {
     @NSManaged public var gageMin: String?
     @NSManaged public var gageName: String?    
     @NSManaged public var gageUpdated: Date?
-    @NSManaged public var id: Int16
+    @NSManaged public var id: Int
     @NSManaged public var lastGageReading: String?
     @NSManaged public var length: String?
     @NSManaged public var longDescription: String?

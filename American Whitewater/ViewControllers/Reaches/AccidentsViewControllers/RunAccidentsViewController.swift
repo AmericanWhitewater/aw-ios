@@ -10,12 +10,12 @@ import UIKit
 import SafariServices
 
 class RunAccidentsViewController: UIViewController {
-
     var selectedRun: Reach?
-    var accidentsList = [ReachAccidentsQuery.Data.Reach.Accident.Datum]()
-    var inputDateFormatter = DateFormatter()
-    var outDateFormatter = DateFormatter()
-    let refreshControl = UIRefreshControl()
+    
+    private var accidentsList = [Accident]()
+    private var inputDateFormatter = DateFormatter()
+    private var outDateFormatter = DateFormatter()
+    private let refreshControl = UIRefreshControl()
 
     @IBOutlet weak var riverTitleLabel: UILabel!
     @IBOutlet weak var riverSectionLabel: UILabel!
@@ -40,7 +40,6 @@ class RunAccidentsViewController: UIViewController {
         tableView.refreshControl = refreshControl
         
         // setup dateFormatter
-        inputDateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
         outDateFormatter.dateFormat = "MMM d, yyyy"
     }
     
@@ -57,39 +56,29 @@ class RunAccidentsViewController: UIViewController {
         
         guard let reach = selectedRun else { print("can't get reach id on accidents list"); return }
         
-        AWGQLApiHelper.shared.getAccidentsForReach(reach_id: Int(reach.id), first: 100, page: 1, callback: { (accidentResults) in
-            self.accidentsList.removeAll()
+        // FIXME: are there reaches with more than 100 accidents? If so, is it OK to ignore anything after the first 100?
+        API.shared.getAccidents(reachId: Int(reach.id), first: 100, page: 1) { (accidents, error) in
+            defer { self.refreshControl.endRefreshing() }
             
-            // handle server sending back multiple of the same results
-            // server issue but needs client side handling for now
-            if let accidentResults = accidentResults {
-                for item in accidentResults {
-                    let accidentIds = self.accidentsList.map { $0.id }
-                    if !accidentIds.contains(item.id) {
-                        self.accidentsList.append(item)
-                    }
-                }
+            guard let accidents = accidents else {
+                print("Accidents Query Error: \(String(describing: error))")
                 
-                // sort the alerts list by postDate
-                self.accidentsList = self.accidentsList.sorted(by: { (first, second) -> Bool in
-                    let firstDateString = first.accidentDate ?? ""
-                    let secondDateString = second.accidentDate ?? ""
-                    
-                    if let date1 = self.inputDateFormatter.date(from: firstDateString),
-                        let date2 = self.inputDateFormatter.date(from: secondDateString) {
-                        return date1 > date2
-                    }
-                    
-                    return false
-                })
+                return
             }
             
-            //self.accidentsList = accidentResults
+            // server may send back multiple of the same results so unique by id
+            // sort the alerts list by postDate
+            self.accidentsList = Dictionary(grouping: accidents, by: \.id)
+                .values
+                .compactMap(\.first)
+                .sorted {
+                    guard let a = $0.date, let b = $1.date else {
+                        return false
+                    }
+                    return a > b
+                }
+            
             self.tableView.reloadData()
-            self.refreshControl.endRefreshing()
-        }) { (error, message) in
-            self.refreshControl.endRefreshing()
-            print("Accidents Query Error: \(GQLError.handleGQLError(error: error, altMessage: message))")
         }
     }
     
@@ -105,11 +94,15 @@ class RunAccidentsViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        if segue.identifier == Segue.accidentDetailsSeg.rawValue {
-            let detailsVC = segue.destination as? RunAccidentDetailsTableViewController
-            detailsVC?.selectedAccident = sender as? ReachAccidentsQuery.Data.Reach.Accident.Datum
+        guard
+            segue.identifier == Segue.accidentDetailsSeg.rawValue,
+            let accident = sender as? Accident
+        else {
+            return
         }
+        
+        let detailsVC = segue.destination as? RunAccidentDetailsTableViewController
+        detailsVC?.selectedAccident = accident
     }
 }
 
@@ -135,8 +128,7 @@ extension RunAccidentsViewController: UITableViewDelegate, UITableViewDataSource
         
         let accident = accidentsList[indexPath.row]
         
-        let date = inputDateFormatter.date(from: accident.accidentDate ?? "")
-        if let date = date {
+        if let date = accident.date {
             cell.accidentDateTimeLabel.text = outDateFormatter.string(from: date)
         } else {
             cell.accidentDateTimeLabel.text = ""
@@ -160,8 +152,10 @@ extension RunAccidentsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let selectedAccident = self.accidentsList[indexPath.row]
-        self.performSegue(withIdentifier: Segue.accidentDetailsSeg.rawValue, sender: selectedAccident)
+        self.performSegue(
+            withIdentifier: Segue.accidentDetailsSeg.rawValue,
+            sender: self.accidentsList[indexPath.row]
+        )
     }
     
 }

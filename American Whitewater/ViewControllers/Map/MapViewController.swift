@@ -12,6 +12,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
+    private lazy var reachUpdater = ReachUpdater(managedObjectContext: managedObjectContext)
     
     private var filters: Filters { DefaultsManager.shared.filters }
     
@@ -84,9 +85,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if newLocation.coordinate.hasChanged(from: DefaultsManager.shared.coordinate, byMoreThan: 0.01) {
             print("Updating distances of reaches")
             
-            AWApiReachHelper.shared.updateAllReachDistances(callback: {
+            reachUpdater.updateAllReachDistances {
                 self.fetchReachesFromCoreData()
-            })
+            }
         }
         
         DefaultsManager.shared.coordinate = newLocation.coordinate

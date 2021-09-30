@@ -10,20 +10,15 @@ import UIKit
 import KeychainSwift
 
 class RunAlertsViewController: UIViewController {
-
     var selectedRun: Reach?
-    var alertsList = [ [String: String] ]()
-    //var alertsList = [AlertsQuery.Data.Post.Datum]()
-    var loadingAlerts = true
+    var alertsList = [Alert]()
     
     @IBOutlet weak var riverTitleLabel: UILabel!
     @IBOutlet weak var riverSectionLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addAlertButton: UIButton!
-    let refreshControl = UIRefreshControl()
-    
-    var inputDateFormatter = DateFormatter()
-    var outDateFormatter = DateFormatter()
+    private let refreshControl = UIRefreshControl()
+    private var outDateFormatter = DateFormatter(dateFormat: "MMM d, yyyy")
     
         
     override func viewDidLoad() {
@@ -32,10 +27,6 @@ class RunAlertsViewController: UIViewController {
         // set the river title and label
         riverTitleLabel.text = selectedRun?.name ?? "Unknown River"
         riverSectionLabel.text = selectedRun?.section ?? "Unknown Section"
-        
-        // setup dateFormatters for converting graphql date formats
-        inputDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        outDateFormatter.dateFormat = "MMM d, yyyy"
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 70
@@ -68,26 +59,37 @@ class RunAlertsViewController: UIViewController {
         guard let selectedRun = selectedRun else { refreshControl.endRefreshing(); return }
         print(selectedRun.id)
                 
-        AWGQLApiHelper.shared.getAlertsForReach(reach_id: Int(selectedRun.id), page: 1, page_size: 50, callback: { (alertResults) in
-            self.refreshControl.endRefreshing()
+        API.shared.getAlerts(reachId: Int(selectedRun.id), page: 1, pageSize: 50) { (alertResults, error) in
+            defer { self.refreshControl.endRefreshing() }
             
-            if let alertResults = alertResults {
-                print("Alert Results count: \(alertResults.count)")
-                // if the server is returning less alerts than we have we
-                // display the alerts we already have (likely slow server response to add)
-                if alertResults.count < self.alertsList.count { return; }
-                
-                self.alertsList.removeAll()
-                self.convertAlertsResponse(alertResults: alertResults)
-                self.saveAlerts()
-            } else {
-                print("No alerts returned")
+            guard
+                let alertResults = alertResults,
+                error == nil
+            else {
+                print("Alert GraphQL Error: \(String(describing: error))")
+                self.tableView.reloadData()
+                return
             }
-
-            self.tableView.reloadData()
-        }) { (error, message) in
-            print("Alert GraphQL Error: \(GQLError.handleGQLError(error: error, altMessage: message))")
-            self.refreshControl.endRefreshing()
+            
+            print("Alert Results count: \(alertResults.count)")
+            
+            // if the server is returning less alerts than we have we
+            // display the alerts we already have (likely slow server response to add)
+            if alertResults.count < self.alertsList.count {
+                return
+            }
+            
+            self.alertsList = alertResults
+                .sorted {
+                    guard let a = $0.date, let b = $1.date else {
+                        return false
+                    }
+                    return a > b
+                }
+                
+//            self.convertAlertsResponse(alertResults: alertResults)
+            self.saveAlerts()
+        
             self.tableView.reloadData()
         }
     }
@@ -111,52 +113,26 @@ class RunAlertsViewController: UIViewController {
     
     
     func saveAlerts() {
-        var storedAlerts = DefaultsManager.shared.reachAlerts
+        guard
+            let selectedRun = selectedRun,
+            selectedRun.id != 0
+        else {
+            return
+        }
         
-        if let selectedRun = selectedRun, selectedRun.id != 0 {
-            storedAlerts["\(selectedRun.id)"] = alertsList
-            DefaultsManager.shared.reachAlerts = storedAlerts
-        }
+        let alertsDicts = alertsList.map { $0.dictionary }
+        DefaultsManager.shared.reachAlerts["\(selectedRun.id)"] = alertsDicts
     }
     
+    // FIXME: do not keep this in UserDefaults, it may become quite large
     func loadAlerts() {
-        if let selectedRun = selectedRun, selectedRun.id != 0 {
-            let storedAlerts = DefaultsManager.shared.reachAlerts
-            if let reachAlerts = storedAlerts["\(selectedRun.id)"], reachAlerts.count > 0 {
-                alertsList.removeAll()
-                alertsList = reachAlerts
-                tableView.reloadData()
-            }
-        }
-    }
-    
-    func convertAlertsResponse(alertResults: [AlertsQuery.Data.Post.Datum]) {
-        if alertResults.count > 0 {
-            alertsList.removeAll()
-            
-            for alert in alertResults {
-                //print("Alert: \(alert.postDate ?? "na") - \(alert.detail ?? "na") - \(alert.user?.uname ?? "")")
-                
-                var newAlert = [String:String]()
-                newAlert["postDate"] = alert.postDate ?? ""
-                newAlert["message"] = alert.detail ?? ""
-                newAlert["poster"] = alert.user?.uname ?? ""
-                alertsList.append(newAlert)
-            }
-            
-            // sort the alerts list by postDate
-            alertsList = alertsList.sorted(by: { (first, second) -> Bool in
-                let firstDateString = first["postDate"] ?? ""
-                let secondDateString = second["postDate"] ?? ""
-                
-                if let date1 = inputDateFormatter.date(from: firstDateString),
-                    let date2 = inputDateFormatter.date(from: secondDateString) {
-                    return date1 > date2
-                }
-                
-                return false
-            })
-                        
+        if
+            let selectedRun = selectedRun,
+            selectedRun.id != 0,
+            let reachAlerts = DefaultsManager.shared.reachAlerts["\(selectedRun.id)"],
+            reachAlerts.count > 0
+        {
+            alertsList = reachAlerts.map { Alert(dict: $0) }
             tableView.reloadData()
         }
     }
@@ -196,23 +172,21 @@ extension RunAlertsViewController: UITableViewDelegate, UITableViewDataSource {
         let alert = self.alertsList[indexPath.row]
         
         cell.alertMessageLabel.set(html: "<h3>No details provided</h3>")
-        if let detail = alert["message"] {
-            if detail.count > 1 {
-                cell.alertMessageLabel.set(html: detail)
+        if let message = alert.message {
+            if message.count > 1 {
+                cell.alertMessageLabel.set(html: message)
             }
         }
         
-        cell.alertPosterLabel.text = ""
-        if let user = alert["poster"] {
-            cell.alertPosterLabel.text = user.count > 0 ? "by \(user)" : ""
+        if let user = alert.poster, !user.isEmpty {
+            cell.alertPosterLabel.text = "by \(user)"
+        } else {
+            cell.alertPosterLabel.text = ""
         }
         
         cell.alertDateTimeLabel.text = ""
-        if let dateString = alert["postDate"] {
-            if let date = inputDateFormatter.date(from: dateString) { //yyyy-MM-dd hh:mm:ss
-                let outString = outDateFormatter.string(from: date)
-                cell.alertDateTimeLabel.text = outString
-            }
+        if let date = alert.date {
+            cell.alertDateTimeLabel.text = outDateFormatter.string(from: date)
         }
         
         return cell

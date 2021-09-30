@@ -1,9 +1,7 @@
 import Foundation
 import CoreData
 
-
-extension Rapid {
-
+public class Rapid: NSManagedObject {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Rapid> {
         return NSFetchRequest<Rapid>(entityName: "Rapid")
     }

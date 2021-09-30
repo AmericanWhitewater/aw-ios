@@ -9,6 +9,7 @@ class FavoritesViewController: UIViewController {
     
     private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedResultsController: NSFetchedResultsController<Reach>?
+    private lazy var reachUpdater = ReachUpdater(managedObjectContext: managedObjectContext)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,23 +91,26 @@ class FavoritesViewController: UIViewController {
     }
 
     func refresh() {
-        
-        guard let reachIds = (fetchedResultsController?.fetchedObjects?.map { String($0.id) }), reachIds.count > 0 else {
+        guard
+            let reaches = fetchedResultsController?.fetchedObjects,
+            reaches.count > 0
+        else {
             refreshControl.endRefreshing()
             print("no ids")
             return
         }
         
-        AWApiReachHelper.shared.updateReaches(reachIds: reachIds, callback: {
+        reachUpdater.updateReaches(reachIds: reaches.map(\.id)) { error in
             self.refreshControl.endRefreshing()
             
+            if let error = error {
+                print("Error fetching by IDs: \(error.localizedDescription)")
+                return
+            }
+
             print("Fetched favorite rivers")
             self.fetchRiversFromCoreData()
             DefaultsManager.shared.favoritesLastUpdated = Date()
-            
-        }) { (error) in
-            self.refreshControl.endRefreshing()
-            print("Error fetching by IDs: \(error.localizedDescription)")
         }
     }
     

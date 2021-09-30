@@ -57,50 +57,34 @@ class AddAlertTableViewController: UITableViewController {
         print("Date using: \(dateString)")
         print("Selected Run Id: \(Int(selectedRun.id))")
 
-        AWGQLApiHelper.shared.postAlertFor(reach_id: Int(selectedRun.id), message: alertTextView.text, callback: { (postUpdate) in
-            print("Success - PostUpdate: \(postUpdate?.id ?? "no detail") -reach_id: \(postUpdate?.reachId ?? "no reach id")")
-
+        API.shared.postAlert(reachId: Int(selectedRun.id), message: alertTextView.text) { (alert, error) in
+            if let error = error {
+                switch error {
+                case AWGQLApiHelper.Errors.notSignedIn:
+                    self.showToast(message: "You must sign in to submit an alert.")
+                    self.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
+                default:
+                    AWProgressModal.shared.hideWith {
+                        print("Error:", error.localizedDescription)
+                        self.showToast(message: "Connection error: \(error.localizedDescription)")
+                    }
+                }
+                
+                return
+            }
+            
+            guard let alert = alert else { return }
+            
             AWProgressModal.shared.hide()
             
-            // convert postUpdate response to alert object
-            var newAlert = [String:String]()
-            newAlert["postDate"] = postUpdate?.postDate ?? ""
-            newAlert["message"] = postUpdate?.detail ?? ""
-            newAlert["poster"] = postUpdate?.user?.uname ?? ""
-
             // save the alert to local storage in case GQL is slow
             // this gets loaded first in the AlertsView while GQL call
             // happens in background
-            var storedAlerts = DefaultsManager.shared.reachAlerts
-            print("Total Stored Alerts:", storedAlerts.count)
-            if var reachAlerts = storedAlerts["\(selectedRun.id)"] {
-                reachAlerts.insert(newAlert, at: 0)
-                storedAlerts["\(selectedRun.id)"] = reachAlerts
-                DefaultsManager.shared.reachAlerts = storedAlerts
-            } else {
-                // no alerts have been stored for this group yet
-                var alertsList = [ [String: String] ]()
-                alertsList.append(newAlert)
-                storedAlerts["\(selectedRun.id)"] = alertsList
-                DefaultsManager.shared.reachAlerts = storedAlerts
-            }
+            // FIXME: replace, don't use defaults
+            let reachAlerts = DefaultsManager.shared.reachAlerts["\(selectedRun.id)"]
+            DefaultsManager.shared.reachAlerts["\(selectedRun.id)"] = [alert.dictionary] + (reachAlerts ?? [])
             
             self.successAndDismissView()
-            
-        }) { (error, message) in
-            if
-                let error = error,
-                case AWGQLApiHelper.Errors.notSignedIn = error
-            {
-                self.showToast(message: "You must sign in to submit an alert.")
-                self.present(SignInViewController.fromStoryboard(), animated: true, completion: nil)
-            } else {
-                AWProgressModal.shared.hideWith {
-                    let errorMessage = GQLError.handleGQLError(error: error, altMessage: message)
-                    print("Error:", errorMessage)
-                    self.showToast(message: "Connection error: \(errorMessage)")
-                }
-            }
         }
     }
     

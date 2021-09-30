@@ -1,43 +1,35 @@
 import UIKit
-import Alamofire
-import SwiftyJSON
 import Foundation
 
 class GageDetailsTableViewController: UITableViewController {
 
     var selectedRun: Reach?
-    var gagesList: [ [String: String] ]?
-    var gageFlowData = [[String:Any?]]()
+    var gauges = [Gauge]()
+    var gageFlowData = [GaugeDataPoint]()
     
                         //Day,  Week, Month, Year
     let graphResolutions = [1, 21600, 86400, 172800]
     var currentResolutionIndex = 0
     
-    var dateFormatter = DateFormatter();
+    var dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         dateFormatter.dateFormat = "MMM dd, yyyy h:mm:ss a"
     }
-    
 
     override func viewDidAppear(_ animated: Bool) {
         if let selectedRun = selectedRun{
-            let reachId = selectedRun.id
-            let reachIdString = "\(reachId)"
-            print("Selected Run ReachID: \(reachId)")
-            AWGQLApiHelper.shared.getGagesForReach(id: reachIdString) { (gagesResult) in
-                
-                self.gagesList = gagesResult
-                self.tableView.reloadData()
-                
-                for gage in gagesResult {
-                    print("Gage: \(gage["gageName"] ?? "n/a")")
-                    print("-> \(gage["source"] ?? "n/a")")
-                    print("-> \(gage["metricName"] ?? "n/a")")
-                    print("-> \(gage["unit"] ?? "n/a")")
+            print("Selected Run ReachID: \(selectedRun.id)")
+            API.shared.getGauges(reachId: selectedRun.id) { (gauges, error) in
+                guard let gauges = gauges, error == nil else {
+                    print("Error getting gauges: \(String(describing: error))")
+                    return
                 }
+                
+                self.gauges = gauges
+                self.tableView.reloadData()
             }
         } else {
             print("Selected run issue")
@@ -48,93 +40,42 @@ class GageDetailsTableViewController: UITableViewController {
     }
     
     func refreshGraphData() {
-        getGageGraphData { (results) in
+        guard let gageId = selectedRun?.gageId else { print("no gage for this river"); return }
+        
+        let currentResolution = graphResolutions[currentResolutionIndex]
+        
+        API.shared.getGaugeGraphData(
+            gaugeId: Int(gageId),
+            dateInterval: dateInterval(index: currentResolutionIndex),
+            resolution: currentResolution
+        ) { (results, error) in
+            guard
+                let results = results,
+                error == nil
+            else {
+                print("Error getting gauge data: \(String(describing: error))")
+                return
+            }
+            
             self.gageFlowData = results
             print("Refreshing table data: \(results.count)")
             self.tableView.reloadData()
         }
     }
     
-    func getDateSpan(index: Int) -> [Int]? {
-        let now = Date()
-        var dayComponent = DateComponents()
-        let theCalendar = Calendar.current
-        
-        // Day
-        if index == 0 {
-            dayComponent.day = -1
-        }
-        // Week
-        else if index == 1 {
-            dayComponent.day = -7
-        }
-        // Month
-        else if index == 2 {
-            dayComponent.day = -30
-        }
-        // Year
-        else {
-            dayComponent.day = -365
+    func dateInterval(index: Int) -> DateInterval {
+        let days: Int
+        switch index {
+        case 0: days = 1 // Day
+        case 1: days = 7 // Week
+        case 2: days = 30 // Month (lol, sort of)
+        default: days = 365 // Year
         }
         
-        let startDate = theCalendar.date(byAdding: dayComponent, to: now)
-        let startDateEpoch = Int(round(startDate!.timeIntervalSince1970))
-        let endDateEpoch = Int(round(now.timeIntervalSince1970))
-        print("startDate Epoch: \(startDateEpoch)")
-        print("now Epoch: \(endDateEpoch)")
-
-        return [startDateEpoch, endDateEpoch]
-
-    }
-    
-    func getGageGraphData(callback: @escaping ([ [String: Any?] ]) -> Void ) {
-        
-        guard let gageId = selectedRun?.gageId else { print("no gage for this river"); return }
-        
-        let selectedIndex = currentResolutionIndex
-        let currentResolution = graphResolutions[selectedIndex]
-        guard let dateSpan = getDateSpan(index: selectedIndex) else { print("unable to get epoch dates"); return}
-                
-        let urlString = "https://www.americanwhitewater.org/api/gauge/\(gageId)/flows/2?from=\(dateSpan[0])&to=\(dateSpan[1])&resolution=\(currentResolution)"
-        print(urlString)
-        
-        AF.request(urlString).responseJSON { (response) in
-            
-            switch response.result {
-                case .success(let value):
-
-                    var flowData = [[String:Any?]]()
-                             
-                    let json = JSON(value)
-                    
-                    if let flowArray = json.array {
-                        for flow in flowArray {
-                            var flowDict = [String: Any?]()
-                            flowDict["gauge_id"] = flow["gauge_id"].intValue
-                            flowDict["metric"] = flow["metric"].intValue
-                            flowDict["nv"] = flow["nv"].doubleValue
-                            flowDict["reading"] = flow["reading"].stringValue
-                            flowDict["updated"] = flow["updated"].doubleValue 
-                            flowDict["id"] = flow["id"].int32Value
-                            flowData.append(flowDict)
-                        }
-                    }
-                    
-                    print("Total flow data points from server: \(json.count)")
-                                        
-                    // convert epoc date/times to date objects
-                
-                    callback(flowData)
-
-                case .failure(let error):
-                    print("Failed trying to call: \(urlString)")
-                    print("Response: \(response)")
-                    print("Response Description: \(response.debugDescription)")
-                    print("HTTP Response: \(response.response.debugDescription)")
-                    print("Error:", error)
-            }
-            
-        }
+        return .init(
+            start: Calendar.current.date(byAdding: .day, value: -days, to: Date())!,
+            end: Date()
+        )
     }
 
     @IBAction func graphResolutionChanged(segment: UISegmentedControl) {
@@ -144,7 +85,6 @@ class GageDetailsTableViewController: UITableViewController {
     
     // MARK: - Table view data source
 
-    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 20
     }
@@ -164,13 +104,11 @@ class GageDetailsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if section == 0 || section == 1 {
             return 1
         } else {
-            return gagesList?.count ?? 0
+            return gauges.count
         }
-        
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -200,14 +138,11 @@ class GageDetailsTableViewController: UITableViewController {
             return cell
             
         } else { //if indexPath.section == 2
-            let gage = gagesList?[indexPath.row]
-            
+            let gage = gauges[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "GageForRunCell", for: indexPath) as! GageForRunCell
             
-            if let gage = gage {
-                cell.gageTitleLabel.text = gage["gageName"] ?? ""
-                cell.gageDetailsLabel.text = "Type: \(gage["source"] ?? "n/a") - Metric: \(gage["metricName"] ?? "n/a") - Unit: \(gage["unit"] ?? "n/a")"
-            }
+            cell.gageTitleLabel.text = gage.name
+            cell.gageDetailsLabel.text = "Type: \(gage.source ?? "n/a") - Metric: \(gage.metric?.name ?? "n/a") - Unit: \(gage.metric?.unit ?? "n/a")"
 
             return cell
         }
@@ -215,22 +150,13 @@ class GageDetailsTableViewController: UITableViewController {
     
     func setTimePeriodForIndex(cell: GageGraphCell) {
         if currentResolutionIndex == 0 {
-            cell.currentTimePeriod = .Day
+            cell.currentTimePeriod = .day
         } else if currentResolutionIndex == 1 {
-            cell.currentTimePeriod = .Week
+            cell.currentTimePeriod = .week
         } else if currentResolutionIndex == 2 {
-            cell.currentTimePeriod = .Month
+            cell.currentTimePeriod = .month
         } else {
-            cell.currentTimePeriod = .Year
+            cell.currentTimePeriod = .year
         }
     }
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-
-    }
-
 }

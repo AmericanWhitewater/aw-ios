@@ -65,55 +65,48 @@ class ReviewPhotoTableViewController: UITableViewController {
 
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        if let image = takenImage, let selectedRun = selectedRun, let capText = captionTextField.text {
-            
-            var description = ""
-            if let desc = descriptionTextView.text, desc != DESCRIPTION_PLACEHOLDER {
-                description = desc
-            }
-
-            let serverDateString = serverDateFormatter.string(from: approxDate)
-            
-            AWProgressModal.shared.show(fromViewController: self, message: "Saving...")
-            
-            AWGQLApiHelper.shared.postPhotoForReach(image: image, reach_id: Int(selectedRun.id), caption: capText,
-                                                           description: description, photoDate: serverDateString,
-                                                           callback: { (photoFileUpdate, photoPostUpdate) in
+        guard
+            let image = takenImage,
+            let selectedRun = selectedRun,
+            let capText = captionTextField.text
+        else {
+            return
+        }
+        
+        var description = ""
+        if let desc = descriptionTextView.text, desc != DESCRIPTION_PLACEHOLDER {
+            description = desc
+        }
+        
+        let serverDateString = serverDateFormatter.string(from: approxDate)
+        
+        AWProgressModal.shared.show(fromViewController: self, message: "Saving...")
+        
+        API.shared.postPhoto(image: image,
+                             reachId: selectedRun.id,
+                             caption: capText,
+                             description: description,
+                             photoDate: serverDateString
+        ) { (photo, error) in
+            defer {
                 AWProgressModal.shared.hide()
-                print("Photo uploaded - callback returned")
-                
-                if let imageResult = photoFileUpdate.image, let uri = imageResult.uri {
-                    self.showToast(message: "Your photo has been successfully saved.")
-                    if let _ = self.senderVC {
-                        var newUri = [String:String?]()
-                        newUri["thumb"] = uri.thumb
-                        newUri["med"] = uri.medium
-                        newUri["big"] = uri.big
-                        newUri["caption"] = self.captionTextField.text ?? ""
-                        if let description = self.descriptionTextView.text {
-                            newUri["description"] = description
-                        }
-                        newUri["author"] = "You"
-                        newUri["photoDate"] = self.approxDateTimeLabel.text ?? ""
-                        if let observed = self.addObservationLabel.text {
-                            if observed != self.OBSERVED_PLACEHOLDER {
-                                newUri["observed"] = observed
-                            }
-                        }
-                        
-                        self.senderVC?.imageLinks.insert(newUri, at: 0)
-                    }
-
-                    self.navigationController?.popViewController(animated: true)
-                } else {
-                    self.showToast(message: "We were unable to save your photo to the server. Please try again or try another photo.")
-                }                
-                
-            }) { (error, message) in
-                AWProgressModal.shared.hide()
-                print("Error: \(error?.localizedDescription ?? "no error object") -- \(message ?? "no message")")
-                self.showToast(message: "An Error Occured: \(error?.localizedDescription ?? "")\n\(message ?? "")")
             }
+            
+            guard let photo = photo, error == nil else {
+                print("Error: \(String(describing:error?.localizedDescription))")
+                self.showToast(message: "An Error Occured: \(String(describing:error?.localizedDescription))")
+                
+                // FIXME: also had a path that showed this error, which is correct to show the user?
+                // self.showToast(message: "We were unable to save your photo to the server. Please try again or try another photo.")
+                
+                return
+            }
+            
+            print("Photo uploaded - callback returned")
+            
+            self.showToast(message: "Your photo has been successfully saved.")
+            self.senderVC?.imageLinks.insert(photo, at: 0)
+            self.navigationController?.popViewController(animated: true)
         }
     }
 }
