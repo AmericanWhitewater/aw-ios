@@ -28,7 +28,7 @@ class RunsListViewController: UIViewController {
         setupSearchBar()
         // add tap-away from search to dismiss keyboard
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tapGesture.cancelsTouchesInView = false;
+        tapGesture.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGesture)
         
         tableView.rowHeight = UITableView.automaticDimension
@@ -66,7 +66,7 @@ class RunsListViewController: UIViewController {
         showOnboardingIfNeeded()
 
         // check if user is logged in
-        let keychain = KeychainSwift();
+        let keychain = KeychainSwift()
         //keychain.set(credential.oauthToken, forKey: "ios-aw-auth-key")
         //keychain.delete("ios-aw-auth-key") // for sign out
         if keychain.get(AWGC.AuthKeychainToken) == nil || DefaultsManager.shared.signedInAuth == nil {
@@ -91,8 +91,7 @@ class RunsListViewController: UIViewController {
             return
         }
  
-        modalOnboardingVC.modalPresentationStyle = .overCurrentContext
-        modalOnboardingVC.referenceViewController = self
+        modalOnboardingVC.modalPresentationStyle = .fullScreen
         tabBarController?.present(modalOnboardingVC, animated: true, completion: nil)
     }
 
