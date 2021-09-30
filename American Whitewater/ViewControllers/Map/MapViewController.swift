@@ -75,21 +75,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             return
         }
         
-        // Do nothing if new location is close to old location
-        if let lastLocation = lastLocation, lastLocation.distance(from: newLocation) < 100 {
-            print("Last Location Distance to new location: \(lastLocation.distance(from: newLocation))")
-            return
-        }
-        
-        // check if we need to update distances
-        if newLocation.coordinate.hasChanged(from: DefaultsManager.shared.coordinate, byMoreThan: 0.01) {
-            print("Updating distances of reaches")
-            
-            reachUpdater.updateAllReachDistances {
-                self.fetchReachesFromCoreData()
-            }
-        }
-        
         DefaultsManager.shared.coordinate = newLocation.coordinate
         self.lastLocation = newLocation
     }

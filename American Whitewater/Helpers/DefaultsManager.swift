@@ -9,8 +9,10 @@ extension Notification.Name {
 
 class DefaultsManager {
     public static let shared = DefaultsManager()
-    
     private let defaults: UserDefaults
+    
+    private let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private lazy var reachUpdater = ReachUpdater(managedObjectContext: managedObjectContext)
     
     private init(userDefaults: UserDefaults = .standard) {
         self.defaults = userDefaults
@@ -59,6 +61,14 @@ class DefaultsManager {
         set {
             latitude = newValue.latitude
             longitude = newValue.longitude
+            
+            // .003 degrees of latitude is approx 1000ft.
+            if lastDistanceLatitude == 0 ||
+                newValue.hasChanged(from: lastDistanceCoordinate, byMoreThan: 0.003) {
+                print("Updating distances of reaches")
+                
+                reachUpdater.updateAllReachDistances{}
+            }
         }
     }
 
@@ -70,6 +80,25 @@ class DefaultsManager {
     private var longitude: Double {
         get { defaults.double(forKey: Keys.longitude) }
         set { defaults.set(newValue, forKey: Keys.longitude) }
+    }
+    
+    // The last user location we used to update reach distances
+    private var lastDistanceCoordinate:CLLocationCoordinate2D {
+        get { .init(latitude: lastDistanceLatitude, longitude: lastDistanceLongitude) }
+        set {
+            lastDistanceLatitude = newValue.latitude
+            lastDistanceLongitude = newValue.longitude
+        }
+    }
+    
+    private var lastDistanceLatitude: Double {
+        get { defaults.double(forKey: Keys.lastDistanceLatitude) }
+        set { defaults.set(newValue, forKey: Keys.lastDistanceLatitude) }
+    }
+    
+    private var lastDistanceLongitude: Double {
+        get { defaults.double(forKey: Keys.lastDistanceLongitude) }
+        set { defaults.set(newValue, forKey: Keys.lastDistanceLongitude) }
     }
     
     //
@@ -196,6 +225,8 @@ class DefaultsManager {
         static let filterType = "filterType"
         static let latitude = "latitudeKey"
         static let longitude = "longitudeKey"
+        static let lastDistanceLatitude = "lastDistanceLatitudeKey"
+        static let lastDistanceLongitude = "lastDistanceLongitudeKey"
         static let classFilter = "classFilterKey"
         static let runnableFilter = "runnableFilterKey"
         static let updated = "updatedKey"
