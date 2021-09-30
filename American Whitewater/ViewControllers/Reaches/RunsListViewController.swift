@@ -63,6 +63,12 @@ class RunsListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // If the refresh control was refreshing when the view disappeared, it ends up in a weird state (visible but not animating)
+        // This just hides it:
+        if tableView.contentOffset.y < 0 {
+            tableView.contentOffset.y = 0
+        }
 
         updateData();
         
