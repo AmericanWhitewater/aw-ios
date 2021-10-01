@@ -68,6 +68,7 @@ class DefaultsManager {
                 print("Updating distances of reaches")
                 
                 reachUpdater.updateAllReachDistances{}
+                lastDistanceCoordinate = newValue
             }
         }
     }
