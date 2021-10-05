@@ -166,16 +166,17 @@ class RunDetailTableViewController: UITableViewController {
         let thumbs = imageLinks
             .compactMap(\.thumbURL)
             .prefix(3)
+    
         
-        if thumbs.count > 2 {
+        if thumbs.indices.contains(2) {
             preview3ImageView.load(url: thumbs[2])
         }
         
-        if imageLinks.count > 1 {
+        if thumbs.indices.contains(1) {
             preview2ImageView.load(url: thumbs[1])
         }
 
-        if imageLinks.count > 0 {
+        if thumbs.indices.contains(0) {
             preview1ImageView.load(url: thumbs[0])
         }
     }
