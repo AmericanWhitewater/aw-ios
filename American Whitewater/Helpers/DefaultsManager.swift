@@ -70,26 +70,7 @@ class DefaultsManager {
         get { defaults.double(forKey: Keys.longitude) }
         set { defaults.set(newValue, forKey: Keys.longitude) }
     }
-    
-    // The last user location we used to update reach distances
-    private var lastDistanceCoordinate:CLLocationCoordinate2D {
-        get { .init(latitude: lastDistanceLatitude, longitude: lastDistanceLongitude) }
-        set {
-            lastDistanceLatitude = newValue.latitude
-            lastDistanceLongitude = newValue.longitude
-        }
-    }
-    
-    private var lastDistanceLatitude: Double {
-        get { defaults.double(forKey: Keys.lastDistanceLatitude) }
-        set { defaults.set(newValue, forKey: Keys.lastDistanceLatitude) }
-    }
-    
-    private var lastDistanceLongitude: Double {
-        get { defaults.double(forKey: Keys.lastDistanceLongitude) }
-        set { defaults.set(newValue, forKey: Keys.lastDistanceLongitude) }
-    }
-    
+
     //
     // MARK: - Filters
     //
@@ -214,8 +195,6 @@ class DefaultsManager {
         static let filterType = "filterType"
         static let latitude = "latitudeKey"
         static let longitude = "longitudeKey"
-        static let lastDistanceLatitude = "lastDistanceLatitudeKey"
-        static let lastDistanceLongitude = "lastDistanceLongitudeKey"
         static let classFilter = "classFilterKey"
         static let runnableFilter = "runnableFilterKey"
         static let updated = "updatedKey"
