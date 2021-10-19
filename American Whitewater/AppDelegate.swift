@@ -51,9 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // This nice library moves text fields out of the way of the keyboard automagically
         IQKeyboardManager.shared.enable = true
         
-        // This sets preferred status bar style to .lightContent within our nav controllers
-        UINavigationBar.appearance().barStyle = .black
-        
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: "primary")!], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
 

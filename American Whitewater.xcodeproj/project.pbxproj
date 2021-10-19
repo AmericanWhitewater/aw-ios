@@ -13,6 +13,7 @@
 		4A26322426C5DC5E001B026B /* CLLocationManager+convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A26322326C5DC5E001B026B /* CLLocationManager+convenience.swift */; };
 		4A36D1E726A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */; };
 		4A4F6EBA26FA6EEE00AC82F6 /* ArticleUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6EB926FA6EEE00AC82F6 /* ArticleUpdater.swift */; };
+		4A544983271F853B003AEFEA /* UINavigationController+preferredStatusBarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A544982271F853B003AEFEA /* UINavigationController+preferredStatusBarStyle.swift */; };
 		4A5684B726F8F7800088D15E /* ReachUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5684B626F8F7800088D15E /* ReachUpdater.swift */; };
 		4A74F7B426DC7B4B00637A88 /* API+GaugeGraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74F7B326DC7B4B00637A88 /* API+GaugeGraphData.swift */; };
 		4A74F7B626DC85D700637A88 /* GaugeDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74F7B526DC85D700637A88 /* GaugeDataPoint.swift */; };
@@ -160,6 +161,7 @@
 		4A26322326C5DC5E001B026B /* CLLocationManager+convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+convenience.swift"; sourceTree = "<group>"; };
 		4A36D1E626A6749E00C85B79 /* UIImagePickerController+FullResolutionEditedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+FullResolutionEditedImage.swift"; sourceTree = "<group>"; };
 		4A4F6EB926FA6EEE00AC82F6 /* ArticleUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleUpdater.swift; sourceTree = "<group>"; };
+		4A544982271F853B003AEFEA /* UINavigationController+preferredStatusBarStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+preferredStatusBarStyle.swift"; sourceTree = "<group>"; };
 		4A5684B626F8F7800088D15E /* ReachUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachUpdater.swift; sourceTree = "<group>"; };
 		4A74F7B326DC7B4B00637A88 /* API+GaugeGraphData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+GaugeGraphData.swift"; sourceTree = "<group>"; };
 		4A74F7B526DC85D700637A88 /* GaugeDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeDataPoint.swift; sourceTree = "<group>"; };
@@ -537,6 +539,7 @@
 				4AFEA9C926C4E85400738A62 /* MKMapView+hasLocation.swift */,
 				4A26322326C5DC5E001B026B /* CLLocationManager+convenience.swift */,
 				4AC4686026C09FBE0032D68F /* DateFormatter+convenience.swift */,
+				4A544982271F853B003AEFEA /* UINavigationController+preferredStatusBarStyle.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -977,6 +980,7 @@
 				631EFFA223677CB600BA17F7 /* Rapid.swift in Sources */,
 				63B5B4A324589EAB0062F54B /* RunAccidentsViewController.swift in Sources */,
 				2FE342CE26A1FF8100352D1E /* UIViewController+Toast.swift in Sources */,
+				4A544983271F853B003AEFEA /* UINavigationController+preferredStatusBarStyle.swift in Sources */,
 				4AC4BB5B26A0F5B50058D8B7 /* NewsArticle.swift in Sources */,
 				63B5B49E2457B2270062F54B /* AwGraphQLAPI.swift in Sources */,
 				63D7BD1F231A205500935693 /* NewsTableViewController.swift in Sources */,
