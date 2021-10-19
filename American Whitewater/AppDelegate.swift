@@ -51,8 +51,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // This nice library moves text fields out of the way of the keyboard automagically
         IQKeyboardManager.shared.enable = true
         
-        // This sets preferred status bar style to .lightContent within our nav controllers
-        UINavigationBar.appearance().barStyle = .black
+        // Nav bar appearance incantations to set background color and title color, on both scrolled and scroll edge appearance
+        // This wasn't necessary until iOS 15, see this thread for some good background: https://developer.apple.com/forums/thread/682420
+        let navAppearance = UINavigationBarAppearance()
+        navAppearance.backgroundColor = UIColor(named: "primary")
+        navAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().standardAppearance = navAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
         
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: "primary")!], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
