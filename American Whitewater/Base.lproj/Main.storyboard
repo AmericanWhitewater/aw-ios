@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DZd-kw-GNv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DZd-kw-GNv">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -229,6 +229,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <tabBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tabBarAppearance>
+                        <tabBarAppearance key="scrollEdgeAppearance">
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tabBarAppearance>
                     </tabBar>
                     <connections>
                         <segue destination="QT0-m2-D7j" kind="relationship" relationship="viewControllers" id="6vZ-mu-48n"/>
@@ -2090,7 +2096,7 @@ Description: n/a</string>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="at8-jU-TA3" userLabel="empty view hack">
-                            <rect key="frame" x="0.0" y="706" width="375" height="1"/>
+                            <rect key="frame" x="0.0" y="793" width="375" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
@@ -3133,7 +3139,7 @@ and check your internet connection.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="zTT-Se-xoI">
-                            <rect key="frame" x="0.0" y="300.5" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="301" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Q0f-Tk-yCb">
@@ -3266,14 +3272,14 @@ and check your internet connection.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="mb0-8w-R5d">
-                                        <rect key="frame" x="0.0" y="235.5" width="375" height="47"/>
+                                        <rect key="frame" x="0.0" y="235.5" width="375" height="47.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mb0-8w-R5d" id="6ss-zz-Tt2">
-                                            <rect key="frame" x="0.0" y="0.0" width="349.5" height="47"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="349.5" height="47.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N0g-Nm-CE2">
-                                                    <rect key="frame" x="61" y="11" width="103" height="24"/>
+                                                    <rect key="frame" x="61" y="11" width="103" height="24.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="103" id="Gjd-zq-ZBB"/>
                                                     </constraints>
@@ -5758,13 +5764,13 @@ Don't worry, you'll be checking levels in no time!</string>
                                             <rect key="frame" x="0.0" y="0.0" width="357.5" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="July 1, 2020 4:33pm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFQ-Nm-LfI">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="July 1, 2020 4:33pm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFQ-Nm-LfI">
                                                     <rect key="frame" x="130" y="0.0" width="211.5" height="55"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                     <color key="textColor" name="primary"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Observed:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Amd-rr-2Lc">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Date Observed:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Amd-rr-2Lc">
                                                     <rect key="frame" x="16" y="0.0" width="106" height="55"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="106" id="VoH-Vg-8W2"/>
