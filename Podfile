@@ -36,7 +36,7 @@ target 'American Whitewater' do
   pod 'Firebase/Crashlytics'
   
   # Pod Charts
-  pod 'Charts', '~> 3.6.0', :inhibit_warnings => true
+  pod 'Charts', '~> 4', :inhibit_warnings => true
   
   # Advanced debugging - only loads in debug
   pod 'netfox'

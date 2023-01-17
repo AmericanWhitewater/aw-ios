@@ -14,7 +14,7 @@ class ChartXAxisFormatter: NSObject {
 }
 
 
-extension ChartXAxisFormatter: IAxisValueFormatter {
+extension ChartXAxisFormatter: AxisValueFormatter {
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         let date = Date(timeIntervalSince1970: value * 3600 * 24 + referenceTimeInterval)
         return dateFormatter.string(from: date)

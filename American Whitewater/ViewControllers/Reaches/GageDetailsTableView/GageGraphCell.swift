@@ -104,14 +104,13 @@ class GageGraphCell: UITableViewCell {
         line1.mode = .cubicBezier
         line1.drawValuesEnabled = false
         
-        let data = LineChartData()
-        data.addDataSet(line1)
+        let data = LineChartData(dataSet: line1)
         gageLineChart.data = data
         
         gageLineChart.leftAxis.axisMinimum = 0
         gageLineChart.leftAxis.axisMaximum = (values.max() ?? 1.0) + (values.max() ?? 1.0) / 2
         //gageLineChart.chartDescription?.text = "River Gage Data"
-        gageLineChart.chartDescription?.enabled = false
+        gageLineChart.chartDescription.enabled = false
         gageLineChart.dragEnabled = true
         gageLineChart.setScaleEnabled(true)
         gageLineChart.pinchZoomEnabled = true
