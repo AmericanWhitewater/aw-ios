@@ -37,10 +37,7 @@
 		630F3D222465F4160077130D /* NanoID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630F3D212465F4160077130D /* NanoID.swift */; };
 		630F7EC825C3439000F17D8A /* LoadingRiversCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630F7EC725C3439000F17D8A /* LoadingRiversCell.swift */; };
 		63164494246C07C700807E19 /* UIRefreshControl+ManualRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63164493246C07C700807E19 /* UIRefreshControl+ManualRefresh.swift */; };
-		63164496246C08AA00807E19 /* AWProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63164495246C08AA00807E19 /* AWProgress.swift */; };
 		63164498246C1C6D00807E19 /* UITextView+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63164497246C1C6D00807E19 /* UITextView+HTML.swift */; };
-		6316449C246CAAD200807E19 /* awLocal.png in Resources */ = {isa = PBXBuildFile; fileRef = 6316449B246CAAD100807E19 /* awLocal.png */; };
-		6316449E246CAE3C00807E19 /* awLocal2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6316449D246CAE3A00807E19 /* awLocal2.jpg */; };
 		631644A0246ED6B100807E19 /* UIImage+AsyncURLLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316449F246ED6B100807E19 /* UIImage+AsyncURLLoad.swift */; };
 		631644A2246ED80C00807E19 /* UIButton+UrlImageLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631644A1246ED80B00807E19 /* UIButton+UrlImageLoad.swift */; };
 		631B3573237C722200738889 /* OpenSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 631B3572237C722200738889 /* OpenSans-ExtraBoldItalic.ttf */; };
@@ -186,12 +183,9 @@
 		630F3D212465F4160077130D /* NanoID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanoID.swift; sourceTree = "<group>"; };
 		630F7EC725C3439000F17D8A /* LoadingRiversCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingRiversCell.swift; sourceTree = "<group>"; };
 		63164493246C07C700807E19 /* UIRefreshControl+ManualRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+ManualRefresh.swift"; sourceTree = "<group>"; };
-		63164495246C08AA00807E19 /* AWProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWProgress.swift; sourceTree = "<group>"; };
 		63164497246C1C6D00807E19 /* UITextView+HTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+HTML.swift"; sourceTree = "<group>"; };
 		63164499246C29A600807E19 /* photos.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = photos.graphql; sourceTree = "<group>"; };
 		6316449A246C422100807E19 /* createPhotos.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = createPhotos.graphql; sourceTree = "<group>"; };
-		6316449B246CAAD100807E19 /* awLocal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = awLocal.png; sourceTree = "<group>"; };
-		6316449D246CAE3A00807E19 /* awLocal2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = awLocal2.jpg; sourceTree = "<group>"; };
 		6316449F246ED6B100807E19 /* UIImage+AsyncURLLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+AsyncURLLoad.swift"; sourceTree = "<group>"; };
 		631644A1246ED80B00807E19 /* UIButton+UrlImageLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+UrlImageLoad.swift"; sourceTree = "<group>"; };
 		631B3572237C722200738889 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
@@ -397,8 +391,6 @@
 		63387B6122CDBFFC0089BAA8 /* American Whitewater */ = {
 			isa = PBXGroup;
 			children = (
-				6316449B246CAAD100807E19 /* awLocal.png */,
-				6316449D246CAE3A00807E19 /* awLocal2.jpg */,
 				4AC4685B26C02A3E0032D68F /* API */,
 				63E90EAE22EAA28900C8DAA3 /* Etc */,
 				63E90EB122EAA32300C8DAA3 /* Models */,
@@ -639,7 +631,6 @@
 				638811CB23EE09780068D2A0 /* Upload-dSyms.txt */,
 				630F3D212465F4160077130D /* NanoID.swift */,
 				63164493246C07C700807E19 /* UIRefreshControl+ManualRefresh.swift */,
-				63164495246C08AA00807E19 /* AWProgress.swift */,
 				6376508C2487E8AB00DD0FCE /* AWProgressModal.swift */,
 				63FF68FD25AE249100AF0F37 /* ChartXAxisFormatter.swift */,
 				2FE342CF26A2846100352D1E /* LocationHelper.swift */,
@@ -760,7 +751,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6316449E246CAE3C00807E19 /* awLocal2.jpg in Resources */,
 				63387B6D22CDBFFE0089BAA8 /* LaunchScreen.storyboard in Resources */,
 				63387B6A22CDBFFE0089BAA8 /* Assets.xcassets in Resources */,
 				638811CC23EE09780068D2A0 /* Upload-dSyms.txt in Resources */,
@@ -771,7 +761,6 @@
 				63E90EC022EAB5CC00C8DAA3 /* OpenSans-Regular.ttf in Resources */,
 				634154B925242191009DD31D /* AccountInfo.graphql in Resources */,
 				63387B6822CDBFFC0089BAA8 /* Main.storyboard in Resources */,
-				6316449C246CAAD200807E19 /* awLocal.png in Resources */,
 				63081BF8236B2EDE00FC3823 /* GoogleService-Info.plist in Resources */,
 				63EDA74F24B3F5AF0020382A /* GaugeMetrics.graphql in Resources */,
 				6392147825A634350042E97E /* GageInfoForReach.graphql in Resources */,
@@ -1017,7 +1006,6 @@
 				63B5B4A524589EC40062F54B /* AccidentTableViewCell.swift in Sources */,
 				63DEF1B12450A7BF0034E3CF /* RunAlertsViewController.swift in Sources */,
 				63A276D4242961A400EDAD69 /* SignInViewController.swift in Sources */,
-				63164496246C08AA00807E19 /* AWProgress.swift in Sources */,
 				63491B16232952E30036A906 /* FavoritesViewController.swift in Sources */,
 				63203C1023694C59006A4148 /* Runnable.swift in Sources */,
 				630586642350428800A436BE /* RunRapidDetailsTableViewController.swift in Sources */,
