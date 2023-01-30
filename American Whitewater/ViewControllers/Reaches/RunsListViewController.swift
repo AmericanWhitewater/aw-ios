@@ -36,6 +36,12 @@ class RunsListViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 120
         
+        // In iOS 15, UITableView changed and automatically pads section header views by default.
+        // This doesn't work with the 'last updated' header view, so turn it off:
+        if #available(iOS 15, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
+        
         runnableSwitch.isOn = filters.runnableFilter
         API.shared.updateAccountInfo()
         
