@@ -96,7 +96,7 @@ class AWApiReachHelper {
                         }
                     }
                 
-                    print("Processed \(riversList.count) favorite rivers.")
+                    print("Processed \(riversList.count) rivers.")
                 
                     callback(riversList)
 
