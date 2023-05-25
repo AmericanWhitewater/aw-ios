@@ -56,6 +56,7 @@ class RunsListViewController: UIViewController {
                     }
                     
                     DefaultsManager.shared.completedFirstRun = true
+                    DefaultsManager.shared.lastUpdated = Date()
                     
                     do {
                         try self.updateFetchedResultsController()
@@ -154,7 +155,8 @@ class RunsListViewController: UIViewController {
                 self.showToast(message: "Error fetching data: " + error.localizedDescription)
                 return
             }
-
+            
+            DefaultsManager.shared.lastUpdated = Date()
             self.tableView.reloadData()
         }
         

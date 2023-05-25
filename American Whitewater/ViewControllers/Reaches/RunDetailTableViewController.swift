@@ -28,9 +28,8 @@ class RunDetailTableViewController: UITableViewController {
     @IBOutlet weak var preview1ImageView: UIImageView!
     @IBOutlet weak var preview2ImageView: UIImageView!
     @IBOutlet weak var preview3ImageView: UIImageView!
-    
-    let dateFormatter = DateFormatter()
-    
+    let dateFormatter = RelativeDateTimeFormatter()
+
     var imageLinks = [Photo]()
     
     private let detailTextMaxCount = 400
@@ -38,6 +37,10 @@ class RunDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // setup pull to refresh
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.addTarget(self, action: #selector(didPullRefreshControl), for: .valueChanged)
+
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 120
 
@@ -46,7 +49,7 @@ class RunDetailTableViewController: UITableViewController {
         let selectedSegTitle = [NSAttributedString.Key.foregroundColor: UIColor(named: "primary") ?? UIColor.black]
                                 as [NSAttributedString.Key : Any]
         viewSegmentControl.setTitleTextAttributes(selectedSegTitle, for: .selected)
-        dateFormatter.dateFormat = "MMM dd, yyyy h:mm:ss a"
+        dateFormatter.unitsStyle = .full
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -91,6 +94,30 @@ class RunDetailTableViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
+    @objc func didPullRefreshControl(refreshControl: UIRefreshControl) {
+        print("Refresh called from refresh control")
+
+        func onCompletion(_ error: Error?) {
+            self.refreshControl!.endRefreshing()
+
+            if let error = error {
+                self.showToast(message: "Error fetching data: " + error.localizedDescription)
+                return
+            }
+            self.fetchDetailsFromCoreData()
+        }
+
+        reachUpdater.updateReaches(reachIds: [selectedRun!.id], completion: onCompletion)
+    }
+
+    /// Returns true if gage reading is older than an hour
+    private var isGageDataStale: Bool {
+        guard let lastUpdate = self.selectedRun?.gageUpdated else {
+            return false
+        }
+
+        return lastUpdate < Date(timeIntervalSinceNow: -60 * 60)
+    }
     
     //
     // MARK: - Error state
@@ -205,8 +232,8 @@ class RunDetailTableViewController: UITableViewController {
         runNameLabel.text = reach.name ?? "Unknown"
         runSectionLabel.text = reach.section ?? ""
         
-        if let d = reach.detailUpdated {
-            lastUpdateLabel.text = dateFormatter.string(from: d)
+        if let d = reach.gageUpdated {
+            lastUpdateLabel.text = dateFormatter.localizedString(for: d, relativeTo: Date()) + (self.isGageDataStale ? " (pull to refresh)" : "")
         } else {
             lastUpdateLabel.text = nil
         }

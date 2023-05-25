@@ -50,7 +50,6 @@ class ReachUpdater {
                     
                     self.mergeMainContext(
                         completion: {
-                            DefaultsManager.shared.lastUpdated = Date()
                             completion(nil)
                         },
                         errorCallback: completion
@@ -82,8 +81,6 @@ class ReachUpdater {
                     
                     self.mergeMainContext(
                         completion: {
-                            DefaultsManager.shared.lastUpdated = Date()
-                            
                             // FIXME: This call is used for things other than favorites. This needs to be set elsewhere
                             DefaultsManager.shared.favoritesLastUpdated = Date()
 
